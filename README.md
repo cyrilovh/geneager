@@ -27,6 +27,7 @@ controller: logic program
 ### Requirement
 Apache2:
 - RewriteEngine
+
 PHP mods required: 
 - Imagick
 - Curl
