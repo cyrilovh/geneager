@@ -6,6 +6,7 @@ Twitter: https://twitter.com/geneager_cyril
 
 ## Informations
 Languages:
+
 -HTML
 -CSS
 -JS
@@ -14,10 +15,13 @@ Languages:
 
 ### Architecture MVC
 public --> all public ressources (Javascript, CSS, Images, ...)
+
 src --> All my programs (view / model / controller)
 
 view: HTML (with few php)
+
 model: class
+
 controller: logic program
 
 ### Requirement

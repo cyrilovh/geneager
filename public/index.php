@@ -5,6 +5,6 @@
 
     require_once MVC."config.php"; // Config file (for database, ...)
     require_once MVC."model/index.model.php";
-    autoload::load();
+    \geneager\autoload::load();
 ?>
 <!DOCTYPE html><!-- for all files -->
