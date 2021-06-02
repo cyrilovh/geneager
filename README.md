@@ -6,12 +6,11 @@ Twitter: https://twitter.com/geneager_cyril
 
 ## Informations
 Languages:
-
--HTML
--CSS
--JS
--PHP
--MySQL
+- HTML
+- CSS
+- JS
+- PHP
+- MySQL
 
 ### Architecture MVC
 public --> all public ressources (Javascript, CSS, Images, ...)
@@ -26,7 +25,8 @@ controller: logic program
 
 ### Requirement
 Apache2:
-- RewriteEngine
-PHP mods required: 
-- Imagick
-- Curl
+- RewriteEngine required
+
+PHP mods: 
+- Imagick recommended
+- Curl recommended
