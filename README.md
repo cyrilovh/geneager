@@ -7,11 +7,11 @@ Twitter: https://twitter.com/geneager_cyril
 ## Informations
 Languages:
 
--HTML
--CSS
--JS
--PHP
--MySQL
+- HTML
+- CSS
+- JS
+- PHP
+- MySQL
 
 ## Licence
 Attribution - Non Commercial - ShareAlike 4.0 International (CC BY-NC-SA 4.0)
@@ -30,8 +30,8 @@ controller: logic program
 
 ### Requirement
 Apache2:
-- RewriteEngine
+- RewriteEngine required
 
-PHP mods required: 
-- Imagick
-- Curl
+PHP mods: 
+- Imagick recommened
+- Curl recommended

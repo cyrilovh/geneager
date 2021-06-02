@@ -1,3 +1,4 @@
+<!DOCTYPE html><!-- for all files -->
 <?php
     /* This page is the router */
     define('MVC', "../src/"); // We defined "MVC" folder
@@ -7,4 +8,3 @@
     require_once MVC."model/index.model.php";
     \geneager\autoload::load();
 ?>
-<!DOCTYPE html><!-- for all files -->
