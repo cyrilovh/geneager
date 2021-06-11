@@ -18,11 +18,11 @@
 }
 @font-face{
     font-family:CaviarLight;
-    src:url(/assets/font/CaviarDreams.ttf);
+    src:url(/assets/fonts/CaviarDreams.ttf);
 }
 @font-face{
     font-family:CaviarMedium;
-    src:url(/assets/font/Caviar_Dreams_Bold.ttf);
+    src:url(/assets/fonts/Caviar_Dreams_Bold.ttf);
 }
 /* DEFAULT FONT FAMILY*/
 body,input,button,textarea{
@@ -50,4 +50,22 @@ body{
 header, nav, main, footer{
     margin:0px 10px 0px 10px;
     background-color:var(--bg-content);
+}
+/*
+  __  __  _____  _____     _____  ________      __
+ |  \/  |/ ____|/ ____|   |  __ \|  ____\ \    / /
+ | \  / | (___ | |  __    | |  | | |__   \ \  / / 
+ | |\/| |\___ \| | |_ |   | |  | |  __|   \ \/ /  
+ | |  | |____) | |__| |   | |__| | |____   \  /   
+ |_|  |_|_____/ \_____|   |_____/|______|   \/    
+                                                  
+                                                  
+*/
+p.dev_critical{
+    padding:10px;
+    border:2px solid red;
+    border-radius:3px;
+    color:#fff;
+    font-weight:bold;
+    background-color: rgb(201, 68, 68);
 }

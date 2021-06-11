@@ -35,3 +35,6 @@ Apache2:
 PHP mods: 
 - Imagick recommened
 - Curl recommended
+
+## Kanban (FR)
+https://trello.com/b/XcDhHC0M/mod%C3%A8le-kanban

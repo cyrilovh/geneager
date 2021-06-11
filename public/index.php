@@ -5,6 +5,6 @@
     define('FULLPATH', $_SERVER['REQUEST_URI']);
 
     require_once MVC."config.php"; // Config file (for database, ...)
-    require_once MVC."model/index.model.php";
-    \geneager\autoload::load();
+    require_once MVC."model/router.model.php"; // classes of index
+    require_once MVC."controller/router.controller.php"; // le template
 ?>
