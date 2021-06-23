@@ -6,5 +6,7 @@
 
     require_once MVC."config.php"; // Config file (for database, ...)
     require_once MVC."model/router.model.php"; // classes of index
+    // i connect me to database
+    \gng\db::connect();
     require_once MVC."controller/router.controller.php"; // le template
 ?>

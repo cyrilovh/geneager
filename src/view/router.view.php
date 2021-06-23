@@ -1,3 +1,6 @@
+<!--
+    THIS FILE THE BASE OF THE VIEWS ("TEMPLATE")
+-->
 <html>
 <head>
     <meta charset="<?=ENCODE; ?>">
@@ -32,4 +35,7 @@
     ?>
 </body>
 </html>
+<?php 
+    $conn=null; // we close DB connection
+?>
 

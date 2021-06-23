@@ -1,3 +1,5 @@
+<style>body{filter: invert(1);}</style>
+
 <?php
     echo "<p>test test test test test</p>";
     echo test::test2();
@@ -39,6 +41,20 @@
         echo "--------------------------------<br>";
         echo "--------------------------------<br>";
         echo "--------------------------------<br>";
+
+?>
+<br><br><br>FORM<br>
+<?php
+    echo $myForm->display();
+?>
+
+<br><br><br>SQL<br>
+<?php
+    $user = \gng\db::select("* FROM user WHERE id='1'");
+    var_dump($user);
+    echo "<br>";
+    echo "<br>";
+    echo $user[0]["id"];
 ?>
 
 <?php
