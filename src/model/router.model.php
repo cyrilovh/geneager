@@ -155,127 +155,6 @@ YOU MUST use this class in the controller of YOUR (new) page
         }
     }
 
-
-/*****************************************************************************************************
-   _  _____   ____   _____ _______ 
-  | ||  __ \ / __ \ / ____|__   __|
- / __) |__) | |  | | (___    | |   
- \__ \  ___/| |  | |\___ \   | |   
- (   / |    | |__| |____) |  | |   
-  |_||_|     \____/|_____/   |_|   
-                                                                         
-Basic functionality
-Use this class when you want retrieve $post data for security reasons
-
-*****************************************************************************************************/
-    
-    class post{
-        public static function init(){
-            global $post;
-            $post = array();
-            if(isset($_POST)){
-                foreach($_POST as $k => $v){
-                    if (ctype_alnum($k)) {
-                        $post[$k] = htmlentities($v, ENT_QUOTES, ENCODE);
-                    }else{
-                        trigger_error("<p class='dev_critical'>Error \$post: only alphanumerics characters.</p>", E_USER_ERROR); 
-                    }
-                }
-            }
-        }
-
-        public static function get(string $param){
-            global $post;
-
-            if(trim($param)==""){
-                unset($param);
-            }
-            if(isset($_POST) && isset($post)){ // i check if request POST and if $post exist (have been init)
-                if($param !== NULL){ // if param is NULL
-                        if(count($post)>=0 && count($_POST)>0){ // if $post is not empty
-                            if(array_key_exists($param, $post)) { // if the key exist
-                                return $post[$param];
-                            }else{
-                                trigger_error("<p class='dev_critical'>Error \$post: can't return undefined parameter.</p>", E_USER_ERROR);
-                            }
-                        }else{
-                            trigger_error("<p class='dev_critical'>Error \$post: can't return empty array.</p>", E_USER_ERROR);
-                        }
-                }else{
-                        return var_dump($post);
-                }
-            }else{ // if post is !isset we return empty array (for limit bugs)
-                    trigger_error("<p class='dev_critical'>Error \$post: is undefined use \gng\post::init(); in router.controller.php !</p> ", E_USER_ERROR);
-            }
-
-        }
-    }
-
-/*****************************************************************************************************
-   _   _____ ______ _______ 
-  | | / ____|  ____|__   __|
- / __) |  __| |__     | |   
- \__ \ | |_ |  __|    | |   
- (   / |__| | |____   | |   
-  |_| \_____|______|  |_|   
-                                                                                                         
-Basic functionality
-Use this class when you want retrieve $get data for security reasons form URL
-
-*****************************************************************************************************/
-class get{
-
-    public static function init(){
-
-        global $get;
-        $get = array();
-        $parse_get_o = parse_url(FULLPATH, PHP_URL_QUERY); // i retrieve parameters form URL ($_GET)
-        $parse_get = explode("&", $parse_get_o); // for explode 1 parameter with is own value
-        if(count($parse_get)>=1 && strlen($parse_get_o)>1){ // if url
-            foreach($parse_get as $pv){
-                $explode = explode("=", $pv);
-                if(isset($explode[0])){ // if there is not a trap in URL
-                    $k = $explode[0];
-                    if (ctype_alnum($k)) { // if the key is alphanumeric
-                        $v = $explode[0];
-                        if(isset($explode[1])){ // i check if value of the parameter is not undefined
-                            $v = htmlentities($explode[1], ENT_QUOTES, ENCODE);
-                        }else{
-                            $v = NULL;
-                        }
-                        $get[$k] = $v; // i use htmlentities for security reasons
-                    }else{
-                        trigger_error("<p class='dev_critical'>Error \$get: only alphanumerics characters OR bad request.</p>", E_USER_ERROR); 
-                    }
-                }
-            }
-        }
-    }
-
-    public static function get(string $param = NULL){
-        global $get;
-        if(trim($param)==""){
-            unset($param);
-        }
-        if(isset($get)){ // si $get exist
-            if(isset($param)){
-                if(count($get)>0){ // if my Array is not empty
-                    if(array_key_exists($param, $get)) { // if my parameter (key) exist
-                        return $get[$param];
-                    }else{ // if dev call an undefined parameter
-                        trigger_error("<p class='dev_critical'>Error \$get: can't return undefined parameter.</p>", E_USER_ERROR);
-                    }
-                }else{ // if param is defined BUT EMPTY array
-                    trigger_error("<p class='dev_critical'>Error \$get: can't return parameter of empty array (\$_GET).</p>", E_USER_ERROR);
-                }
-            }else{
-                    return var_dump($get);
-            }
-        }else{
-            trigger_error("<p class='dev_critical'>Error \$get: is undefined use \gng\get::init(); in router.controller.php !</p>", E_USER_ERROR);
-        }
-    }
-}
 /*****************************************************************************************************
   _    _ ______          _____  ______ _____  
  | |  | |  ____|   /\   |  __ \|  ____|  __ \ 
@@ -422,6 +301,15 @@ class form{
     }
 
 }
+/*
+   _____       _______       ____           _____ ______ 
+ |  __ \   /\|__   __|/\   |  _ \   /\    / ____|  ____|
+ | |  | | /  \  | |  /  \  | |_) | /  \  | (___ | |__   
+ | |  | |/ /\ \ | | / /\ \ |  _ < / /\ \  \___ \|  __|  
+ | |__| / ____ \| |/ ____ \| |_) / ____ \ ____) | |____ 
+ |_____/_/    \_\_/_/    \_\____/_/    \_\_____/|______|                                                   
+                                                        
+ */
 // https://phpdelusions.net/pdo_examples/select
 class db{
     public static function connect(){
@@ -441,28 +329,67 @@ class db{
             die("<p>Erreur : {$error->getMessage()}</p>");
         }
     }
-    // Create
-
-    // Read
-    public static function select(string $request, int $allLines = 1){
-        global $db;
-        $reponse = $db->query("SELECT $request");
-        // si all lines
-        if($allLines==1){
-            while($data = $reponse->fetchAll(\PDO::FETCH_ASSOC)){
-                return $data;       
-            }
-        }else{
-            $data = $reponse->fetch(\PDO::FETCH_ASSOC);
-            return $data;
-        }
-        // si not all lines
-    }
-
-    // Update
-
-    //Delete OR Drop
-
 }
 
+
+/*
+  _____         _____ _______          ______  _____  _____  
+ |  __ \ /\    / ____/ ____\ \        / / __ \|  __ \|  __ \ 
+ | |__) /  \  | (___| (___  \ \  /\  / / |  | | |__) | |  | |
+ |  ___/ /\ \  \___ \\___ \  \ \/  \/ /| |  | |  _  /| |  | |
+ | |  / ____ \ ____) |___) |  \  /\  / | |__| | | \ \| |__| |
+ |_| /_/    \_\_____/_____/    \/  \/   \____/|_|  \_\_____/ 
+                                                                                                                      
+*/
+class password{
+    public static function hash(string $password, string $algo = "ripemd320"){
+        global $password_salt;
+        $password_time = strval(time());
+        $hash = hash($algo, $password_salt.$password_time.$password);
+        return $password_time.",".$hash;
+    }
+
+    public static function match(string $data, string $password, string $algo = "ripemd320"){ // first parameter come from db (salt,hash) and the second password (clear to compare)
+        global $password_salt;
+        $password1_time = explode(",",$data)[0]; // salt form $data
+        $password1_hash = explode(",",$data)[1]; // password hash form $data
+
+        $password2_hash = hash($algo, $password_salt.$password1_time.$password); // password (2) to compare
+
+        if($password1_hash==$password2_hash){ // check if hash is same
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public static function genPassword(){
+        $length = rand(8,10); // password length
+        
+        $data = '123456789ABCDEFGHIJKLMNPQRSTUVWXYZabcefghjkmnpqrstuvwxyz'; // 0oO are excludes
+        return substr(str_shuffle($data), 0, $length);
+    }
+}
+
+/*
+  ______ ____  _____  __  __       _______ 
+ |  ____/ __ \|  __ \|  \/  |   /\|__   __|
+ | |__ | |  | | |__) | \  / |  /  \  | |   
+ |  __|| |  | |  _  /| |\/| | / /\ \ | |   
+ | |   | |__| | | \ \| |  | |/ ____ \| |   
+ |_|    \____/|_|  \_\_|  |_/_/    \_\_|   
+                                           
+                                           
+*/
+class format{
+    public static function phone($n){
+        return preg_replace('/(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})/','\1.\2.\3.\4.\5',$n);
+    }
+    public static function phoneInternational($n){
+        return preg_replace('/^0/', "+33", $n);
+    }
+    public static function mailProtect($str){
+        return str_replace("@","<i class='fas fa-at'></i>",$str);
+    }
+}
 ?>

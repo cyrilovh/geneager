@@ -43,4 +43,4 @@ https://trello.com/b/XcDhHC0M/mod%C3%A8le-kanban
 https://geneager.cyril.ovh
 
 ## PHP
-Dev with PHP 8.0.7
+Dev with PHP 8.0.6

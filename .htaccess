@@ -1,4 +1,19 @@
-# ROUTER
 RewriteEngine on
+
+# PHOTOS PROTECTED ACCESS
+RewriteCond %{REQUEST_URI} ^/photo/
+RewriteRule ^(.*)/(.*)/(.*)$ /public/photo.php?name=$3&%{QUERY_STRING} [NC,L]
+
+# ACCESS TO /page IS INCORRECT
+RewriteCond %{REQUEST_URI} ^/page
+RewriteRule ^(.*)$ /public/index.php?page=404 [NC,L]
+
+#ROUTER
 RewriteCond %{REQUEST_URI} !^/public/
-RewriteRule ^(.*)$ /public/index.php?p=$1 [L]
+RewriteCond %{REQUEST_URI} !^/robots.txt
+RewriteRule ^(.*)$ /public/index.php?page=$1&%{QUERY_STRING} [NC,L]
+
+<Files .htaccess>
+    order allow,deny
+    deny from all
+</Files>
