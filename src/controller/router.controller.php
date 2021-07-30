@@ -27,9 +27,6 @@
  
      $obj_MetaTitle = new \gng\MetaTitle($meta_title, $meta_description, $meta_keyword, $meta_author); // i create my object "meta title"
 
-      \gng\post::init(); // i call my static function for init $post
-      \gng\get::init(); // i call my static function for init $get
-
       $obj_HNF = new \gng\customHNF($include_header, $include_navbar, $include_footer); // i create my object for custom header, navbar and footer
 
      require MVC."view/router.view.php";

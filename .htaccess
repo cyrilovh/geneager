@@ -1,5 +1,9 @@
 RewriteEngine on
 
+# REWRITE ASSETS
+RewriteCond %{REQUEST_URI} ^/assets
+RewriteRule ^(.*)$ /public/$1 [NC,L]
+
 # PHOTOS PROTECTED ACCESS
 RewriteCond %{REQUEST_URI} ^/photo/
 RewriteRule ^(.*)/(.*)/(.*)$ /public/photo.php?name=$3&%{QUERY_STRING} [NC,L]
@@ -7,6 +11,7 @@ RewriteRule ^(.*)/(.*)/(.*)$ /public/photo.php?name=$3&%{QUERY_STRING} [NC,L]
 # ACCESS TO /page IS INCORRECT
 RewriteCond %{REQUEST_URI} ^/page
 RewriteRule ^(.*)$ /public/index.php?page=404 [NC,L]
+
 
 #ROUTER
 RewriteCond %{REQUEST_URI} !^/public/
