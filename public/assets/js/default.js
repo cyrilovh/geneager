@@ -13,8 +13,10 @@ var navbar = document.querySelector("nav");
 document.querySelector("nav .fa-bars").addEventListener("click",function(){
     if (navbar.className == "topnav") {
         navbar.className += " responsive";
+        document.body.style.overflow = 'hidden';
     }else{
         navbar.className = "topnav";
+        document.body.style.overflow = 'auto';
     }
 });
 
@@ -32,18 +34,17 @@ window.addEventListener("scroll", function(event) {
         //console.log(space+"/"+top);
         var menu2 = document.querySelector("nav");
         if(top>=space){
+            navbar.className = "topnav";
             menu2.style.position="fixed";
             menu2.style.top="0px";
             menu2.style.left="0px";
             menu2.style.width="100%";
             menu2.style.zIndex="98";
-
         }else{
             menu2.style.position="";
             menu2.style.top="";
             menu2.style.left="";
             menu2.style.width="";
-
         }
 }, false);
 
@@ -68,7 +69,13 @@ document.querySelectorAll(".dropdownMenu").forEach(function(element){
             dropdownMenu.classList.add("open"); // i open my dropdown
         }
 
-        dropdownMenu.style.top=element.getBoundingClientRect().bottom+"px";
+        if(dropdownMenu.parentElement.parentElement.parentElement.classList.contains("responsive")){ // if dropdown is in navbar responsive
+            dropdownMenu.style.top="0px";
+            dropdownMenu.style.position="relative";
+        }else{
+            dropdownMenu.style.top=element.getBoundingClientRect().bottom+"px";
+            dropdownMenu.style.position="fixed";
+        }
         dropdownMenu.style.left=element.getBoundingClientRect().left+"px";
        
         let dropdownMenuWidth = element.getBoundingClientRect().right-element.getBoundingClientRect().left;
@@ -89,12 +96,16 @@ document.addEventListener("click", function(ElementClicked) {
             targetElement = targetElement.parentNode;
         } while (targetElement);
 
-        if(ElementClicked.target.getAttribute("data-dropdown") === null){ // if i click outside the dropdown
+        if(ElementClicked.target.getAttribute("data-dropdown") === null || ElementClicked.target.getAttribute("data-dropdown") != dropdownList.getAttribute("data-dropdown")){ // if i click outside the dropdown or clic on another dropdown
             dropdownList.classList.remove("open");
         }
     });
 });
-
+window.addEventListener("resize",function(){
+    document.querySelectorAll("div.dropdownList[data-dropdown]").forEach(function(dropdownMenu){
+        alert("debuuger !")
+    });
+});
 /*
   _      _____ _   _ _  __ _____          _    __      __      _____  _____ _____  _____ _____ _______ 
  | |    |_   _| \ | | |/ // ____|        | |  /\ \    / /\    / ____|/ ____|  __ \|_   _|  __ \__   __|

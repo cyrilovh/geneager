@@ -10,52 +10,13 @@
     <input type="text" value="" name="inputtest"/>
     <input type="submit" value="ok" />
 </form>
-<?php
-        echo "--------------------------------<br>";
-        echo "--------------------------------<br>";
-        echo "--------------------------------<br>";
-        echo "<hr>\$_POST:<br>";
-        if(isset($_POST)){
-            var_dump($_POST);
-        }
-        echo "<hr>";
-        echo "--------------------------------<br>";
-        echo "--------------------------------<br>";
-        echo "--------------------------------<br>";
-?>
 
-<?php
 
-        echo "<hr>\$post:<br>";
-        if(isset($_POST['inputtest'])){
-            echo \gng\post::get("inputtest");
-        }
-        echo "<hr>";
-        echo "--------------------------------<br>";
-        echo "--------------------------------<br>";
-        echo "--------------------------------<br>";
-        echo "\$GET:<br>";
-        echo \gng\get::get();
-
-        echo "--------------------------------<br>";
-        echo "--------------------------------<br>";
-        echo "--------------------------------<br>";
-        echo "--------------------------------<br>";
-
-?>
 <br><br><br>FORM<br>
 <?php
     echo $myForm->display();
 ?>
 
-<br><br><br>SQL<br>
-<?php
-    $user = \gng\db::select("* FROM user WHERE id='1'");
-    var_dump($user);
-    echo "<br>";
-    echo "<br>";
-    echo $user[0]["id"];
-?>
 
 <?php
 
