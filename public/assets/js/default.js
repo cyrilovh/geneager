@@ -28,12 +28,12 @@ document.querySelector("nav .fa-times-circle").addEventListener("click",function
 /* FIX NAVBAR ON TOP ON SCROLL */
 window.addEventListener("scroll", function(event) {
     var top = this.scrollY,
-        left =this.scrollX;
+        left = this.scrollX;
 
         var space = document.querySelector("header").offsetTop + document.querySelector("header").clientHeight; // space between top of menu2 and the top of the DOM
         //console.log(space+"/"+top);
         var menu2 = document.querySelector("nav");
-        if(top>=space){
+        if(top>=space){ // fixe navbar on top
             navbar.className = "topnav";
             menu2.style.position="fixed";
             menu2.style.top="0px";
@@ -46,6 +46,13 @@ window.addEventListener("scroll", function(event) {
             menu2.style.left="";
             menu2.style.width="";
         }
+        document.querySelectorAll("nav .dropdownMenu").forEach(function(element){
+            //alert(element);
+            //if(!element.parentElement.parentElement.parentElement.classList.contains("responsive")){ // if dropdown is in navbar responsive
+            //    let dropdownName = element.getAttribute("data-dropdown"); // a retrieve the name of dropdown to open
+            //    let dropdownMenu = document.querySelector(`div.dropdownList[data-dropdown=${dropdownName}]`).classList.remove("open");
+            //}
+        });
 }, false);
 
 /*
@@ -103,7 +110,7 @@ document.addEventListener("click", function(ElementClicked) {
 });
 window.addEventListener("resize",function(){
     document.querySelectorAll("div.dropdownList[data-dropdown]").forEach(function(dropdownMenu){
-        alert("debuuger !")
+        dropdownMenu.className = "dropdownMenu";
     });
 });
 /*
