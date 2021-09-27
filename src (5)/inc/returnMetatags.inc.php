@@ -1,0 +1,6 @@
+<?php
+    /*
+        THIS FILE RETURN ALL INFORMATIONS ABOUT THE CURRENT WEBSITE
+        FROM DATABASE
+    */
+?>

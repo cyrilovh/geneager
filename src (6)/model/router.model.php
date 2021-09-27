@@ -34,7 +34,7 @@
         }
 
         /* 2 - INCLUDE THE GOOD FILES MCV IN TEMPLATE (BODY) */
-        public static function loadFiles(string $url){ // CHECK IF FILE EXIST AND INCLUDE IT
+        public static function loadFiles($url){ // CHECK IF FILE EXIST AND INCLUDE IT
             global $include_MVC;
             $include_MVC = array();
             $folder = array("model","controller"); // the view MUST BE include in controller (here we load model firstly then controller)
@@ -72,13 +72,13 @@
         }
         */
         // Function for add view file in main
-        public static function addView(string $page){ // $page must contain filename only without file extensions
+        public static function addView($page){ // $page must contain filename only without file extensions
             global $include_MVC;
             array_push($include_MVC, "view:".MVC."view/".$page.".view.php");
         }
 
         // Function for add Model or Controller files
-        public static function addModelController(string $page, string $type){ // function for add view file in main
+        public static function addModelController($page,$type){ // function for add view file in main
             global $include_MVC;
             array_push($include_MVC, $type.":".$page);
         }
@@ -102,12 +102,11 @@
 *****************************************************************************************************/
     $include_JsCss = array();
     class additionnalJsCss{
-        // for add stylesheet ou javascript (declaration in the second controller)
-        public static function set(string $filename){ // filename = name + file extension. example: slide.js
+        public static function set($filename){ // filename = name + file extension. example: slide.js
             global $include_JsCss;
             array_push($include_JsCss, $filename);
         }
-        public static function get(string $filter){ // $filter= "css" OR "js"
+        public static function get($filter){ // $filter= "css" OR "js"
             global $include_JsCss; // 1 - retrieve list
             $result = "";
             foreach($include_JsCss as $f){ // 2 - foreach file
@@ -144,19 +143,140 @@ YOU MUST use this class in the controller of YOUR (new) page
 *****************************************************************************************************/
   
     class MetaTitle{
-        public function __construct(string $meta_title, string $meta_description, string $meta_keyword, string $meta_author){
+        public function __construct($meta_title, $meta_description, $meta_keyword, $meta_author){
             $this->title = $meta_title;
             $this->description = $meta_description;
             $this->keyword = $meta_keyword;
             $this->author = $meta_author;
         }     
         
-        // get Data from the object
-        public function getData(string $data):string{
+        public function getData($data){
             return $this->$data;
         }
     }
 
+
+/*****************************************************************************************************
+   _  _____   ____   _____ _______ 
+  | ||  __ \ / __ \ / ____|__   __|
+ / __) |__) | |  | | (___    | |   
+ \__ \  ___/| |  | |\___ \   | |   
+ (   / |    | |__| |____) |  | |   
+  |_||_|     \____/|_____/   |_|   
+                                                                         
+Basic functionality
+Use this class when you want retrieve $post data for security reasons
+
+*****************************************************************************************************/
+    
+    class post{
+        public static function init(){
+            global $post;
+            $post = array();
+            if(isset($_POST)){
+                foreach($_POST as $k => $v){
+                    if (ctype_alnum($k)) {
+                        $post[$k] = htmlentities($v, ENT_QUOTES, ENCODE);
+                    }else{
+                        trigger_error("<p class='dev_critical'>Error \$post: only alphanumerics characters.</p>", E_USER_ERROR); 
+                    }
+                }
+            }
+        }
+
+        public static function get($param){
+            global $post;
+
+            if(trim($param)==""){
+                unset($param);
+            }
+            if(isset($_POST) && isset($post)){ // i check if request POST and if $post exist (have been init)
+                if($param !== NULL){ // if param is NULL
+                        if(count($post)>=0 && count($_POST)>0){ // if $post is not empty
+                            if(array_key_exists($param, $post)) { // if the key exist
+                                return $post[$param];
+                            }else{
+                                trigger_error("<p class='dev_critical'>Error \$post: can't return undefined parameter.</p>", E_USER_ERROR);
+                            }
+                        }else{
+                            trigger_error("<p class='dev_critical'>Error \$post: can't return empty array.</p>", E_USER_ERROR);
+                        }
+                }else{
+                        return var_dump($post);
+                }
+            }else{ // if post is !isset we return empty array (for limit bugs)
+                    trigger_error("<p class='dev_critical'>Error \$post: is undefined use \gng\get::init(); in router.controller.php !</p> ", E_USER_ERROR);
+            }
+
+        }
+    }
+
+/*****************************************************************************************************
+   _   _____ ______ _______ 
+  | | / ____|  ____|__   __|
+ / __) |  __| |__     | |   
+ \__ \ | |_ |  __|    | |   
+ (   / |__| | |____   | |   
+  |_| \_____|______|  |_|   
+                                                                                                         
+Basic functionality
+Use this class when you want retrieve $get data for security reasons form URL
+
+*****************************************************************************************************/
+class get{
+
+    public static function init(){
+
+        global $get;
+        $get = array();
+        $parse_get_o = parse_url(FULLPATH, PHP_URL_QUERY); // i retrieve parameters form URL ($_GET)
+        $parse_get = explode("&", $parse_get_o); // for explode 1 parameter with is own value
+        if(count($parse_get)>=1 && strlen($parse_get_o)>1){ // if url
+            foreach($parse_get as $pv){
+                $explode = explode("=", $pv);
+                if(isset($explode[0])){ // if there is not a trap in URL
+                    $k = $explode[0];
+                    if (ctype_alnum($k)) { // if the key is alphanumeric
+                        $v = $explode[0];
+                        if(isset($explode[1])){ // i check if value of the parameter is not undefined
+                            $v = htmlentities($explode[1], ENT_QUOTES, ENCODE);
+                        }else{
+                            $v = NULL;
+                        }
+                        $get[$k] = $v; // i use htmlentities for security reasons
+
+                    }else{
+                        trigger_error("<p class='dev_critical'>Error \$get: only alphanumerics characters OR bad request.</p>", E_USER_ERROR); 
+                    }
+                }
+            }
+        }
+    }
+
+    public static function get($param = NULL){
+        global $get;
+        if(trim($param)==""){
+            unset($param);
+        }
+        if(isset($get)){ // si $get exist
+            if(isset($param)){
+                if(count($get)>0){ // if my Array is not empty
+                    if(array_key_exists($param, $get)) { // if my parameter (key) exist
+                        return $get[$param];
+                    }else{ // if dev call an undefined parameter
+                        trigger_error("<p class='dev_critical'>Error \$get: can't return undefined parameter.</p>", E_USER_ERROR);
+                    }
+                }else{ // if param is defined BUT EMPTY array
+                    trigger_error("<p class='dev_critical'>Error \$get: can't return parameter of empty array (\$_GET).</p>", E_USER_ERROR);
+                }
+            }else{
+                    return var_dump($get);
+            }
+        }else{
+            trigger_error("<p class='dev_critical'>Error \$get: is undefined use \gng\get::init(); in router.controller.php !</p>", E_USER_ERROR);
+        }
+    }
+}
 /*****************************************************************************************************
   _    _ ______          _____  ______ _____  
  | |  | |  ____|   /\   |  __ \|  ____|  __ \ 
@@ -186,8 +306,7 @@ class customHNF{
         $this->footer = $include_footer;
     }     
     
-    // get data from object (header/navbar/footer)
-    public function get(string $data){
+    public function get($data){
         $v = $this->$data;
         if(trim($v)!=""){
             $f = MVC."inc/".$v.".inc.php";
@@ -202,203 +321,6 @@ class customHNF{
         }
     }
 }
-/*
-  ______ ____  _____  __  __  _____ 
- |  ____/ __ \|  __ \|  \/  |/ ____|
- | |__ | |  | | |__) | \  / | (___  
- |  __|| |  | |  _  /| |\/| |\___ \ 
- | |   | |__| | | \ \| |  | |____) |
- |_|    \____/|_|  \_\_|  |_|_____/ 
-                                    
-                                    
-*/
-
-class form{
-    /*
-        object = <form ...></form>
-        $method = get/post
-        $action = URL where data must be send
-        $element => array with the input, select, textarea 
-    */
-    public $method;
-    public $action;
-    public $element;
-
-    public function __construct(string $method, string $action, array $element = array()){
-        $this->method = $method;
-        $this->action = $action;
-        $this->element = $element;
-    }
-
-    /*
-        Function for add elements in form (object)
-        $type = submit/button/text/email/[...]/textarea
-        $attribut = array (key => $value). example: value => "Enter your password"
-    */
-    public function setElement(string $type, array $attribut){ /* array */
-        // input, button
-        $type = strtolower($type);
-        if($type=="input" || $type=="button"){
-            $element = "<$type";
-            foreach($attribut as $k => $v){
-                $element .= " $k='$v'";
-            }
-            $element .= " />";
-            $this->element[] = $element;
-        // Textarea
-        }else if($type=="textarea"){
-            $element = "<textarea";
-            foreach($attribut as $k => $v){
-                $k = strtolower($k);
-                if($k!="value"){ // here the attributes
-                    $element .= " $k='$v'";
-                }
-            }
-            $element .= ">";
-            $value ="";
-            if (array_key_exists("value",$attribut)){
-                $value = $attribut["value"]; // the value of textarea if tje key value exist
-            }
-            $element .= "$value</textarea>";
-            $this->element[] = $element;
-        // select
-        }else if($type=="select"){
-            $attr = "";
-            foreach($attribut as $key => $array){
-                if(str_starts_with($key, "attr:")){
-                    if(gettype($array)!="array"){ // i check if it's not an array
-                        trigger_error("<p class='dev_critical'>The value of select with the key 'attr:' MUST contain an array !</p>", E_USER_ERROR);
-                    }else{ // if it's an array
-                        foreach($array as $k => $v){
-                            $attr.= " $k='$v'";
-                        }
-                    }
-                }
-            }
-            $element = "<select$attr>";
-            foreach($attribut as $k => $v){
-                if(!str_starts_with($k, "attr:")){
-                    $element .= "<option value='$k'>$v</option>";
-                }
-                // echo "$v";
-            }
-            $element .= "</select>";
-            $this->element[] = $element;
-        }else{
-            trigger_error("<p class='dev_critical'>Error &laquo; $type &raquo; : is not yet compatible...</p>", E_USER_ERROR);
-        }
-    }
-
-    /*
-        function for display form
-    */
-    public function display(){
-        //$implode = implode("\r\n\t", $this->element);
-        //return "";
-        $return = "<form action='{$this->action}' method='{$this->method}'>";
-        foreach($this->element as $v){
-            $return .= $v;
-        }
-        $return .="</form>";
-        return $return;
-    }
-
-}
-/*
-   _____       _______       ____           _____ ______ 
- |  __ \   /\|__   __|/\   |  _ \   /\    / ____|  ____|
- | |  | | /  \  | |  /  \  | |_) | /  \  | (___ | |__   
- | |  | |/ /\ \ | | / /\ \ |  _ < / /\ \  \___ \|  __|  
- | |__| / ____ \| |/ ____ \| |_) / ____ \ ____) | |____ 
- |_____/_/    \_\_/_/    \_\____/_/    \_\_____/|______|                                                   
-                                                        
- */
-// initialize the  connection to datbase
-class db{
-    public static function connect(){
-        global $db_host;
-        global $db_name;
-        global $db_user;
-        global $bd_password;
-        global $db;
-        try
-        {
-            $db = new \PDO('mysql:host='.$db_host.';dbname='.$db_name, $db_user, $bd_password);
-            $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-            // Obligatoire pour la suite
-        }catch (\PDOException $error){
-            http_response_code(500);
-            echo "<p>Erreur n°'{$error->getCode()}</p>";
-            die("<p>Erreur : {$error->getMessage()}</p>");
-        }
-    }
-}
 
 
-/*
-  _____         _____ _______          ______  _____  _____  
- |  __ \ /\    / ____/ ____\ \        / / __ \|  __ \|  __ \ 
- | |__) /  \  | (___| (___  \ \  /\  / / |  | | |__) | |  | |
- |  ___/ /\ \  \___ \\___ \  \ \/  \/ /| |  | |  _  /| |  | |
- | |  / ____ \ ____) |___) |  \  /\  / | |__| | | \ \| |__| |
- |_| /_/    \_\_____/_____/    \/  \/   \____/|_|  \_\_____/ 
-                                                                                                                      
-*/
-class password{
-    // for hash password
-    public static function hash(string $password, string $algo = "ripemd320"){
-        global $password_salt;
-        $password_time = strval(time());
-        $hash = hash($algo, $password_salt.$password_time.$password);
-        return $password_time.",".$hash;
-    }
-
-    // Check if the provided password (from form) is the same that in the DB.
-    public static function match(string $data, string $password, string $algo = "ripemd320"){ // first parameter come from db (salt,hash) and the second password (clear to compare)
-        global $password_salt;
-        $password1_time = explode(",",$data)[0]; // salt form $data
-        $password1_hash = explode(",",$data)[1]; // password hash form $data
-
-        $password2_hash = hash($algo, $password_salt.$password1_time.$password); // password (2) to compare
-
-        if($password1_hash==$password2_hash){ // check if hash is same
-            return true;
-        }else{
-            return false;
-        }
-    }
-
-    // generate random password (8 to 10 characters)
-    public static function genPassword(){
-        $length = rand(8,10); // password length
-        
-        $data = '123456789ABCDEFGHIJKLMNPQRSTUVWXYZabcefghjkmnpqrstuvwxyz'; // 0oO are excludes
-        return substr(str_shuffle($data), 0, $length);
-    }
-}
-
-/*
-  ______ ____  _____  __  __       _______ 
- |  ____/ __ \|  __ \|  \/  |   /\|__   __|
- | |__ | |  | | |__) | \  / |  /  \  | |   
- |  __|| |  | |  _  /| |\/| | / /\ \ | |   
- | |   | |__| | | \ \| |  | |/ ____ \| |   
- |_|    \____/|_|  \_\_|  |_/_/    \_\_|   
-                                           
-                                           
-*/
-class format{
-    // return phone number (Ten character) pair per pair with a dot between
-    public static function phone(mixed $n){
-        return preg_replace('/(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})/','\1.\2.\3.\4.\5',$n);
-    }
-    // convert a french phone number to international format
-    public static function phoneInternational(mixed $n){
-        return preg_replace('/^0/', "+33", $n);
-    }
-    // replace the character "@" by the "@" of font-awesome (spam prevent)
-    public static function mailProtect(string $str){
-        return str_replace("@","<i class='fas fa-at'></i>",$str);
-    }
-}
 ?>

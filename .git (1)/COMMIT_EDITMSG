@@ -1,0 +1,12 @@
+Mise à jour (base)
+
+New:
+- Function Meta + title
+- Function add view
+- Function add CSS + JS
+- Debug controller
+- Function get + post
+- Function replace  default header/navbar/footer
+Updates:
+- index.*.php  --> router
+- Update doc

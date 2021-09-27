@@ -1,0 +1,1 @@
+<?php echo "<p>test2.view.php</p>";
