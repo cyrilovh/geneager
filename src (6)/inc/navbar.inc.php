@@ -1,3 +1,0 @@
-<nav>
-    default navbar
-</nav>

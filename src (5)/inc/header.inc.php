@@ -1,3 +1,0 @@
-<header>
-    default header
-</header>
