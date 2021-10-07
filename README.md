@@ -28,6 +28,9 @@ model: class
 
 controller: logic program
 
+/!\ WARNING
+Project under construction.
+
 ### Requirement
 Apache2:
 - RewriteEngine required
