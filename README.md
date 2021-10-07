@@ -1,4 +1,8 @@
 # Geneager
+
+/!\ WARNING
+Project under construction.
+
 ## Short description
 Free CMS for the genealogy.
 
@@ -27,9 +31,6 @@ view: HTML (with few php)
 model: class
 
 controller: logic program
-
-/!\ WARNING
-Project under construction.
 
 ### Requirement
 Apache2:
