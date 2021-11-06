@@ -9,7 +9,8 @@
     define('ENCODE', "UTF-8"); // encode
 
     /* DEFAULT META TAGS */
-    $meta_title = ""; // default title
+    $meta_separator = " — "; // default title
+    $meta_title = " Geneager"; // default title
     $meta_description = ""; // default description
     $meta_keyword = ""; // default keywords
     $meta_author = ""; // default author

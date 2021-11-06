@@ -5,10 +5,10 @@
 <head>
     <meta charset="<?=ENCODE; ?>">
     <title><?=$obj_MetaTitle->getData("title"); ?></title>
-    <link rel="Stylesheet" type="text/css" href="assets/css/default.css" />
-    <link rel="stylesheet" href="assets/css/all.min.css">
+    <link rel="Stylesheet" type="text/css" href="/assets/css/default.css" />
+    <link rel="stylesheet" href="/assets/css/all.min.css">
 
-    <script type="text/Javascript" src="assets/js/default.js" defer></script>
+    <script type="text/Javascript" src="/assets/js/default.js" defer></script>
 
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 

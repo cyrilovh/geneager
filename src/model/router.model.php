@@ -115,9 +115,9 @@
                 $filter = strtolower($filter); // here i convert extension
                 if($extension==$filter){ // i check if extension and filter match
                     if($extension=="css"){ // if CSS
-                        $result .= "<link rel='Stylesheet' type='text/css' href='/public/asset/$f' />\n";
+                        $result .= "<link rel='Stylesheet' type='text/css' href='/assets/css/$f' />\n";
                     }else if($extension=="js"){ // if JS
-                        $result .=  "<script type='text/javascript' src='/public/asset/$f' defer></script>\n";  
+                        $result .=  "<script type='text/javascript' src='/assets/js/$f' defer></script>\n";  
                     }else{
                         $result .= "<!-- $f is incorrect -->\n";
                     }

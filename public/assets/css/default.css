@@ -98,6 +98,9 @@ div.dropdownList{
     position:fixed;
     display:none;
 }
+div.dropdownList a{
+    padding:6px !important;
+}
 div.dropdownList.open{
     position:fixed;
     z-index:50;
@@ -700,6 +703,15 @@ body{
 }
 aside{
     margin:15px 8px 15px 8px;
+}
+select{
+    cursor:pointer;
+    outline:none;
+    border:0px;
+    border-bottom:1px solid #2b2d2d;
+}
+option{
+    cursor: pointer;
 }
 header, aside, footer{
     background-color:var(--background);

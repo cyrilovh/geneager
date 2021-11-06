@@ -47,11 +47,10 @@ window.addEventListener("scroll", function(event) {
             menu2.style.width="";
         }
         document.querySelectorAll("nav .dropdownMenu").forEach(function(element){
-            //alert(element);
-            //if(!element.parentElement.parentElement.parentElement.classList.contains("responsive")){ // if dropdown is in navbar responsive
-            //    let dropdownName = element.getAttribute("data-dropdown"); // a retrieve the name of dropdown to open
-            //    let dropdownMenu = document.querySelector(`div.dropdownList[data-dropdown=${dropdownName}]`).classList.remove("open");
-            //}
+            if(!element.parentElement.parentElement.parentElement.classList.contains("responsive")){ // if dropdown is in navbar responsive
+                let dropdownName = element.getAttribute("data-dropdown"); // a retrieve the name of dropdown to open
+                let dropdownMenu = document.querySelector(`div.dropdownList[data-dropdown=${dropdownName}]`).classList.remove("open");
+            }
         });
 }, false);
 

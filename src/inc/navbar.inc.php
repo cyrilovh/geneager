@@ -3,11 +3,11 @@
     <div class="links">
         <i class="far fa-times-circle"></i>
         <div class="links2">
-            <a href="#"><i class="far fa-id-card"></i><span class="txt"> Carte d'identité</span></a>
-            <a href="#"><i class="fas fa-camera"></i><span class="txt"> Photo</span></a>
-            <a href="#"><i class="fas fa-landmark"></i><span class="txt"> Archives</span></a>
-            <a href="#"><i class="fas fa-film"></i><span class="txt"> Vidéos</span></a>
-            <a href="#"><i class="fas fa-sitemap"></i><span class="txt"> Arbre</span></a>
+            <a href="/identityList"><i class="far fa-id-card"></i><span class="txt"> Carte d'identité</span></a>
+            <a href="/pictureList"><i class="fas fa-camera"></i><span class="txt"> Photo</span></a>
+            <a href="/archivesList"><i class="fas fa-landmark"></i><span class="txt"> Archives</span></a>
+            <a href="/videoList"><i class="fas fa-film"></i><span class="txt"> Vidéos</span></a>
+            <a href="/tree"><i class="fas fa-sitemap"></i><span class="txt"> Arbre</span></a>
             <!-- str dropdown -->
             <p data-dropdown="navbarPageList" class="dropdownMenu"><i class="far fa-newspaper"></i> Pages</p>
             <div data-dropdown="navbarPageList" class="dropdownList">
@@ -18,8 +18,8 @@
             <!-- str dropdown -->
             <p data-dropdown="navbarAccount" class="dropdownMenu"><i class="far fa-user"></i> Mon compte</p>
             <div data-dropdown="navbarAccount" class="dropdownList">
-                <p>Paramètres</p>
-                <p>Déconnexion</p>
+                <p><a href="/userSettings">Paramètres</a></p>
+                <p><a href="/logout">Déconnexion</a></p>
             </div>
             <!-- end dropdown -->
         </div>

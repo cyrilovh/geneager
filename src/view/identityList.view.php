@@ -1,7 +1,12 @@
 <aside>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-    <h2>Dernières fiches mises à jour:</h2>
-
+    <h2>Liste des fiches d'identités:</h2>
+    <div>
+        Trier par 
+        <select name="orderBy">
+            <option>Date de mise à jour</option>
+            <option>Date de création</option>
+        </select> (du plus récent au moins récent)
+    </div>
     <div class="txt-center">
         <!-- str label -->
         <div class="ancestorLabel">
@@ -82,3 +87,6 @@
         <!-- end label -->
     </div>
 </aside>
+<div class="paging">
+    <span>1</span><span class="active">2</span><span>3</span><span>4</span><span>5</span>
+</div>
