@@ -37,49 +37,6 @@ body,input,button,textarea,div{
 }
 
 /*
-   _____ _                _____ _____ ______  _____ 
-  / ____| |        /\    / ____/ ____|  ____|/ ____|
- | |    | |       /  \  | (___| (___ | |__  | (___  
- | |    | |      / /\ \  \___ \\___ \|  __|  \___ \ 
- | |____| |____ / ____ \ ____) |___) | |____ ____) |
-  \_____|______/_/    \_\_____/_____/|______|_____/ 
-                                                    
-                                                    
-*/
-
-/* GENERAL */
-.txt-center{
-    text-align:center;
-}
-.float-left{
-    float:left;
-}
-.float-right{
-    float:right;
-}
-.mt10{
-    margin-top:5px;
-}
-.italic{
-    font-style: italic;
-}
-.w100{
-    width:100%;
-}
-.field{
-    display: block;
-    padding: .375rem .75rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: .25rem;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-    outline:none;
-}
-/*
   _____  _____   ____  _____  _____   ______          ___   _ 
  |  __ \|  __ \ / __ \|  __ \|  __ \ / __ \ \        / / \ | |
  | |  | | |__) | |  | | |__) | |  | | |  | \ \  /\  / /|  \| |
@@ -117,6 +74,49 @@ div.dropdownList p::before{
     content:"\00a0";
 }
 
+/*
+   _____ _    _  _____ _______ ____  __  __  _____     _____ _                _____ _____ ______  _____ 
+  / ____| |  | |/ ____|__   __/ __ \|  \/  |/ ____|   / ____| |        /\    / ____/ ____|  ____|/ ____|
+ | |    | |  | | (___    | | | |  | | \  / | (___    | |    | |       /  \  | (___| (___ | |__  | (___  
+ | |    | |  | |\___ \   | | | |  | | |\/| |\___ \   | |    | |      / /\ \  \___ \\___ \|  __|  \___ \ 
+ | |____| |__| |____) |  | | | |__| | |  | |____) |  | |____| |____ / ____ \ ____) |___) | |____ ____) |
+  \_____|\____/|_____/   |_|  \____/|_|  |_|_____/    \_____|______/_/    \_\_____/_____/|______|_____/ 
+                                                                                                        
+                                                                                                        
+*/
+
+/* GENERAL */
+.txt-center{
+    text-align:center;
+}
+.float-left{
+    float:left;
+}
+.float-right{
+    float:right;
+}
+.mt10{
+    margin-top:5px;
+}
+.italic{
+    font-style: italic;
+}
+.w100{
+    width:100%;
+}
+.field{
+    display: block;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    outline:none;
+}
 
 
 /* BOUTONS */

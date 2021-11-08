@@ -88,5 +88,5 @@
     </div>
 </aside>
 <div class="paging">
-    <span>1</span><span class="active">2</span><span>3</span><span>4</span><span>5</span>
+    Pages: <span>1</span><span class="active">2</span><span>3</span><span>4</span><span>5</span>
 </div>

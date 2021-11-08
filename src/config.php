@@ -10,9 +10,10 @@
 
     /* DEFAULT META TAGS */
     $meta_separator = " — "; // default title
-    $meta_title = " Geneager"; // default title
+    $meta_title = " Geneager"; // default title OR website name
     $meta_description = ""; // default description
     $meta_keyword = ""; // default keywords
+    $meta_favicon =""; // favicon PNG (without extension) - Keep blank for the default favicon
     $meta_author = ""; // default author
 
 
