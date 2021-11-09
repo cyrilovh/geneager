@@ -9,7 +9,7 @@
     <div class="ancestorTimeline">
         <p><i class="fas fa-baby-carriage"></i> 01/01/1900 &mdash; Paris, France</p>
         <ul class="timeline">
-            <li class="">1922 &mdash; Mariage avec <a href=''><span class="capitale">marie</span> <span class="uppercase">dufour</span></a></li>
+            <li class="union">1922 &mdash; Mariage avec <a href=''><span class="capitale">marie</span> <span class="uppercase">dufour</span></a></li>
             <li class="picture">1926 &mdash; Photo &mdash; Paris</li>
         </ul>
         <p><i class="fas fa-cross"></i> 01/01/1990 &mdash; Paris, France</p>

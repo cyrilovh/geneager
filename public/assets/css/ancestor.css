@@ -54,16 +54,16 @@ div.ancestorTimeline ul.timeline li::before{
     font-size: 15px;
     color: var(--primary);
     background-color:#fff;
-}
-/* default icon on timeline (if class is missing or empty)*/
-div.ancestorTimeline ul.timeline li[class=""]::before, div.ancestorTimeline ul.timeline li:not([class])::before{
+    font-weight:900;
     content: "\f192";
 }
+/* default icon on timeline (if class is missing or empty)*/
+
 div.ancestorTimeline ul.timeline li.union::before{
-    content: "\f70b";
+    content: "\f70b" !important;
 }
 div.ancestorTimeline ul.timeline li.picture::before{
-    content: "\f03e";
+    content: "\f03e" !important;
 }
 /* SECTIONS FAMILY LINKS, ARCHIVES */
 div.familyLinks div, div.archiveList div, div.pictureList div{
