@@ -1,0 +1,77 @@
+/* THIS STYLESHEET IS USED FOR THE PAGE ANCESTORS */
+:root{
+    --disabled:#3c3c3c;
+}
+h2{
+    color:var(--text) !important;
+    font-size:21px;
+    margin-top:15px !important;
+}
+/* section biography */
+div.ancestorBio img.picture{
+    max-width: 162px;
+    max-height: 192px;
+    float: right;
+    cursor: pointer;
+    border-radius: 4px;
+    -o-border-radius: 4px;
+    -webkit-border-radius:4px;
+    -moz-border-radius:4px;
+    border: 1px solid silver;
+    background-color: #fff;
+}
+div.ancestorBio p+p{
+    margin-top:10px;
+}
+/* space between 2 sections */
+aside div + div{
+    margin-top:20px;
+}
+
+/* timeline */
+div.ancestorTimeline{
+    padding:0px 15px 0px 15px;
+}
+div.ancestorTimeline ul.timeline{
+    list-style-type: none;
+    border-width: 0px 0px 0px 3px;
+    border-style: solid;
+    border-color: var(--disabled);
+    margin-left:5px;
+    padding:15px 0px 15px 0px;
+}
+div.ancestorTimeline ul.timeline li+li{
+    margin-top:15px;
+}
+
+div.ancestorTimeline ul.timeline li::before{
+    position: relative;
+    font-family: "Font Awesome 5 Free";
+    right: 9px;
+    font-size: 15px;
+    content: "\f192";
+    color: var(--primary);
+}
+/* SECTIONS FAMILY LINKS, ARCHIVES */
+div.familyLinks div, div.archiveList div, div.pictureList div{
+    margin:0px;
+}
+div.familyLinks div.etiquette, div.archiveList div.etiquette, div.PictureList div.etiquette{
+    vertical-align: top;
+    display: inline-block;
+    padding: 10px 20px;
+    min-width: 300px;
+}
+div.etiquette div.subetiquette, div.archiveList div.subetiquette, div.pictureList div.subetiquette{
+    display: inline-block;
+    vertical-align: top;
+    padding: 3px;
+}
+div.familyLinks div.etiquette img.thumb{
+    max-width:100px;
+    max-height:50px;
+    border-radius: 4px;
+    -o-border-radius: 4px;
+    -webkit-border-radius:4px;
+    -moz-border-radius:4px;
+}

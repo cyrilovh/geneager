@@ -10,10 +10,11 @@
 */
 /* DEFAULT COLORS */
 :root{
-    --texte:#4C4C57; /* default color for the text */
+    --text:#4C4C57; /* default color for the text */
     --primary:#2594B2; /* color main (for links for example, background-color navbar) */
     --primary2: #1e7a94; /* color main (for hover links for example)*/
     --background: #fdfdfd; /* background-color of header, main and footer*/
+    --disabled:#3c3c3c;
     --font-size:16px;
 }
 @font-face{
@@ -34,6 +35,7 @@
 body,input,button,textarea,div{
     font-family: CaviarLight;
     font-size:var(--font-size);
+    color:var(--text);
 }
 
 /*
@@ -89,11 +91,20 @@ div.dropdownList p::before{
 .txt-center{
     text-align:center;
 }
+.txt-disabled{
+    color:var(--disabled);
+}
 .float-left{
     float:left;
 }
 .float-right{
     float:right;
+}
+.uppercase{
+    text-transform:uppercase;
+}
+.capitale{
+    text-transform:capitalize;
 }
 .mt10{
     margin-top:5px;
@@ -869,6 +880,8 @@ nav:not(.responsive) span.txt {
 nav div.search{
     float: right;
     margin-right:10px;
+    border-bottom:1px solid #fff;
+    padding-top: 10px;
 }
 nav div.search i{
     padding-bottom:6px;
@@ -876,15 +889,14 @@ nav div.search i{
 }
 nav div.search i, nav div.search input{
     display: inline;
-    border-bottom:1px solid #fff;
 }
 nav input[type="search"], nav .fa-search{
     vertical-align: middle;
     color:#fff;
 }
 nav input[type="search"]{
-    margin: 8px 8px 8px 0px;
-    padding:5px 4px 5px 10px;
+    margin: 0px 8px 0px 0px;
+    padding: 5px 4px 0px 10px;
     display: block;
     outline:none;
     background-color: var(--primary);
