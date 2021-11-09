@@ -9,8 +9,8 @@
     <div class="ancestorTimeline">
         <p><i class="fas fa-baby-carriage"></i> 01/01/1900 &mdash; Paris, France</p>
         <ul class="timeline">
-            <li>1922 &mdash; Mariage avec <a href=''><span class="capitale">marie</span> <span class="uppercase">dufour</span></a></li>
-            <li>1926 &mdash; Photo &mdash; Paris</li>
+            <li class="union">1922 &mdash; Mariage avec <a href=''><span class="capitale">marie</span> <span class="uppercase">dufour</span></a></li>
+            <li class="picture">1926 &mdash; Photo &mdash; Paris</li>
         </ul>
         <p><i class="fas fa-cross"></i> 01/01/1990 &mdash; Paris, France</p>
     </div>
@@ -25,7 +25,7 @@
                     <a href="/profil.php?id=35"><span class="capitale">marie</span> <span class="uppercase">dufour</span></a>
                 </div>
                 <div>
-                    <small>[ &Eacute;pouse ]</small>
+                    <p><small>[ &Eacute;pouse ]</small></p>
                 </div>
             </div>
         </div>
@@ -38,7 +38,7 @@
                     <a href="/profil.php?id=35"><span class="capitale">marian</span> <span class="uppercase">dupond</span></a>
                 </div>
                 <div>
-                    <small>[ Enfant ]</small>
+                    <p><small>[ Enfant ]</small></p>
                 </div>
             </div>
         </div>
@@ -56,7 +56,7 @@
                 </div>
                 <div>
                     <p>Courte description du document.</p>
-                    <small>Source: Archives du Nord - Côte ...</small>
+                    <p><small>Source: Archives du Nord - Côte ...</small></p>
                 </div>
             </div>
         </div>
@@ -71,7 +71,7 @@
                 </div>
                 <div>
                     <p>Courte description du document.</p>
-                    <small>Source: Archives du Nord - Côte ...</small>
+                    <p><small>Source: Archives du Nord - Côte ...</small></p>
                 </div>
             </div>
         </div>
@@ -86,11 +86,25 @@
             </div>
             <div class="subetiquette">
                 <div>
-                    <a href="/displayArchive/?id=35">Titre du document</a>
+                    <a href="/displayArchive/?id=35">Photo de famille</a>
                 </div>
                 <div>
-                    <p>Courte description du document.</p>
-                    <small>Source: Archives du Nord - Côte ...</small>
+                    <p>Courte description de la photo.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="etiquette">
+            <div class="subetiquette">
+                <img src="/assets/img/defaultPicture.webp" alt="" title=""/>
+            </div>
+            <div class="subetiquette">
+                <div>
+                    <a href="/displayArchive/?id=35">Photo de famille</a>
+                </div>
+                <div>
+                    <p>Courte description de la photo</p>
+                    <p><small>Source: example.org</small></p>
                 </div>
             </div>
         </div>

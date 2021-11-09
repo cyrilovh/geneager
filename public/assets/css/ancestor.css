@@ -52,11 +52,17 @@ div.ancestorTimeline ul.timeline li::before{
     content: "\f192";
     color: var(--primary);
 }
+div.ancestorTimeline ul.timeline li.union::before{
+    content: "\f70b" !important;
+}
+div.ancestorTimeline ul.timeline li.picture::before{
+    content: "\f03e" !important;
+}
 /* SECTIONS FAMILY LINKS, ARCHIVES */
 div.familyLinks div, div.archiveList div, div.pictureList div{
     margin:0px;
 }
-div.familyLinks div.etiquette, div.archiveList div.etiquette, div.PictureList div.etiquette{
+div.familyLinks div.etiquette, div.archiveList div.etiquette, div.pictureList div.etiquette{
     vertical-align: top;
     display: inline-block;
     padding: 10px 20px;
