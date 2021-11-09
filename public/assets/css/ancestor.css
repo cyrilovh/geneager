@@ -52,16 +52,18 @@ div.ancestorTimeline ul.timeline li::before{
     font-family: "Font Awesome 6 Free";
     right: 9px;
     font-size: 15px;
-    content: "\f192";
     color: var(--primary);
     background-color:#fff;
 }
+/* default icon on timeline (if class is missing or empty)*/
+div.ancestorTimeline ul.timeline li[class=""]::before, div.ancestorTimeline ul.timeline li:not([class])::before{
+    content: "\f192";
+}
 div.ancestorTimeline ul.timeline li.union::before{
-    content: "\f4c7" !important;
-    font-weight: 900;
+    content: "\f70b";
 }
 div.ancestorTimeline ul.timeline li.picture::before{
-    content: "\f03e" !important;
+    content: "\f03e";
 }
 /* SECTIONS FAMILY LINKS, ARCHIVES */
 div.familyLinks div, div.archiveList div, div.pictureList div{
