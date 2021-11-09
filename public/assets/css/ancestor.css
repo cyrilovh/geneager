@@ -1,3 +1,6 @@
+@import url("https://use.fontawesome.com/releases/v5.13.0/css/all.css");
+
+
 /* THIS STYLESHEET IS USED FOR THE PAGE ANCESTORS */
 :root{
     --disabled:#3c3c3c;
@@ -46,14 +49,16 @@ div.ancestorTimeline ul.timeline li+li{
 
 div.ancestorTimeline ul.timeline li::before{
     position: relative;
-    font-family: "Font Awesome 5 Free";
+    font-family: "Font Awesome 6 Free";
     right: 9px;
     font-size: 15px;
     content: "\f192";
     color: var(--primary);
+    background-color:#fff;
 }
 div.ancestorTimeline ul.timeline li.union::before{
-    content: "\f70b" !important;
+    content: "\f4c7" !important;
+    font-weight: 900;
 }
 div.ancestorTimeline ul.timeline li.picture::before{
     content: "\f03e" !important;
