@@ -1,0 +1,40 @@
+/* CARDS */
+div.pictureList{
+    text-align: center;
+}
+div.pictureList div{
+    margin:0px;
+    text-align: left;
+}
+div.pictureList div.etiquette{
+    vertical-align: top;
+    margin: 10px 20px;
+    display: inline-block;
+    border:1px solid silver;
+    border-radius: 4px;
+    -o-border-radius: 4px;
+    -webkit-border-radius:4px;
+    -moz-border-radius:4px;
+}
+div.etiquette div.subetiquette{
+    vertical-align: top;
+}
+div.pictureList div.etiquette img.thumb{
+    width:250px;
+    max-height:500px;
+    border-top-left-radius: 4px;
+    -o-border-top-left-radius: 4px;
+    -webkit-border-top-left-radius:4px;
+    -moz-border-top-left-radius:4px;
+    border-top-right-radius: 4px;
+    -o-border-top-right-radius: 4px;
+    -webkit-border-top-right-radius:4px;
+    -moz-border-top-right-radius:4px;
+}
+div.etiquette div.subetiquette.detail{
+    padding: 3px;
+}
+div.pictureList div.etiquette a.title{
+    font-family: CaviarMedium;
+    font-size:18px;
+}

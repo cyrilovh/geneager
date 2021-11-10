@@ -46,7 +46,10 @@ div.ancestorTimeline ul.timeline{
 div.ancestorTimeline ul.timeline li+li{
     margin-top:15px;
 }
-
+/* default color of the icons on the timeline*/
+div.ancestorTimeline i.fas{
+    color:var(--primary);
+}
 div.ancestorTimeline ul.timeline li::before{
     position: relative;
     font-family: "Font Awesome 6 Free";
@@ -57,10 +60,19 @@ div.ancestorTimeline ul.timeline li::before{
     font-weight:900;
     content: "\f192";
 }
-/* default icon on timeline (if class is missing or empty)*/
-
+div.ancestorTimeline ul.timeline li.divorced::before{
+    content:"\f7a9" !important;
+}
+div.ancestorTimeline ul.timeline li.home::before{
+    right:10px !important;
+    content:"\f015" !important;
+}
 div.ancestorTimeline ul.timeline li.union::before{
     content: "\f70b" !important;
+}
+div.ancestorTimeline ul.timeline li.location::before{
+    right:10px !important;
+    content: "\f14e" !important;
 }
 div.ancestorTimeline ul.timeline li.picture::before{
     content: "\f03e" !important;
