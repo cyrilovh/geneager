@@ -39,6 +39,164 @@ body,input,button,textarea,div{
 }
 
 /*
+   _____ ______ _   _ ______ _____            _      
+  / ____|  ____| \ | |  ____|  __ \     /\   | |     
+ | |  __| |__  |  \| | |__  | |__) |   /  \  | |     
+ | | |_ |  __| | . ` |  __| |  _  /   / /\ \ | |     
+ | |__| | |____| |\  | |____| | \ \  / ____ \| |____ 
+  \_____|______|_| \_|______|_|  \_\/_/    \_\______|
+                                                                                                    
+*/
+/* INIT */
+*, html, body, div{
+    margin:0px;
+    padding:0px;
+}
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background-color: var(--background);
+    overflow-x:hidden;
+}
+a:not(.button), a:hover:not(.button), a:visited:not(.button), a:active:not(.button){
+    text-decoration: none;
+}
+aside{
+    margin:15px 8px 15px 8px;
+}
+select{
+    cursor:pointer;
+    outline:none;
+    border:0px;
+    border-bottom:1px solid #2b2d2d;
+}
+option{
+    cursor: pointer;
+}
+header, aside, footer{
+    background-color:var(--background);
+    z-index:25;
+}
+header{
+    background-color: #2b2d2d;
+    padding:30px 5px 35px 5px;
+    color:#fff;
+    text-align:center;
+}
+header .title{
+    font-family: CaviarMedium;
+    font-size:45px;
+}
+h1,h2,h3,h4,h5{
+    font-family:CaviarMedium;
+    color:var(--primary2);
+}
+h1{
+    font-size:25px;
+}
+h2{
+    font-size:23px;
+}
+h3{
+    font-size:21px;
+}
+h4{
+    font-size:19px;
+}
+img.e40x{ /* Errors 40x*/
+    max-height:50vw;
+    max-width:40vw;
+}
+[data-href]{
+    cursor:pointer;
+}
+/*SCROLLBARS*/
+::-webkit-scrollbar {
+    margin:0px;
+    height: 6px;
+    width: 6px;
+    background: #d4d4d4;
+}
+
+::-webkit-scrollbar-thumb {
+    background: grey;
+    border-radius:1ex;
+    -moz-border-radius:1ex;
+    -o-border-radius:1ex;
+    -webkit-border-radius: 1ex;
+    -webkit-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.75);
+}
+
+::-webkit-scrollbar-corner {
+    background: #000;
+}
+
+
+/*
+   _____ _    _  _____ _______ ____  __  __  _____     _____ _                _____ _____ ______  _____ 
+  / ____| |  | |/ ____|__   __/ __ \|  \/  |/ ____|   / ____| |        /\    / ____/ ____|  ____|/ ____|
+ | |    | |  | | (___    | | | |  | | \  / | (___    | |    | |       /  \  | (___| (___ | |__  | (___  
+ | |    | |  | |\___ \   | | | |  | | |\/| |\___ \   | |    | |      / /\ \  \___ \\___ \|  __|  \___ \ 
+ | |____| |__| |____) |  | | | |__| | |  | |____) |  | |____| |____ / ____ \ ____) |___) | |____ ____) |
+  \_____|\____/|_____/   |_|  \____/|_|  |_|_____/    \_____|______/_/    \_\_____/_____/|______|_____/ 
+                                                                                                        
+                                                                                                        
+*/
+
+/* GENERAL */
+.txt-center{
+    text-align:center;
+}
+.txt-right{
+    text-align:right;
+}
+.txt-left{
+    text-align: left;
+}
+.txt-disabled{
+    color:var(--disabled);
+}
+.float-left{
+    float:left;
+}
+.float-right{
+    float:right;
+}
+.uppercase{
+    text-transform:uppercase;
+}
+.capitale{
+    text-transform:capitalize;
+}
+.mt10{
+    margin-top:5px;
+}
+.bold{
+    font-weight:bold;
+}
+.italic{
+    font-style: italic;
+}
+.w100{
+    width:100%;
+}
+.field{
+    display: block;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    outline:none;
+}
+
+/*
   _____  _____   ____  _____  _____   ______          ___   _ 
  |  __ \|  __ \ / __ \|  __ \|  __ \ / __ \ \        / / \ | |
  | |  | | |__) | |  | | |__) | |  | | |  | \ \  /\  / /|  \| |
@@ -74,59 +232,6 @@ div.dropdownList p{
 }
 div.dropdownList p::before{
     content:"\00a0";
-}
-
-/*
-   _____ _    _  _____ _______ ____  __  __  _____     _____ _                _____ _____ ______  _____ 
-  / ____| |  | |/ ____|__   __/ __ \|  \/  |/ ____|   / ____| |        /\    / ____/ ____|  ____|/ ____|
- | |    | |  | | (___    | | | |  | | \  / | (___    | |    | |       /  \  | (___| (___ | |__  | (___  
- | |    | |  | |\___ \   | | | |  | | |\/| |\___ \   | |    | |      / /\ \  \___ \\___ \|  __|  \___ \ 
- | |____| |__| |____) |  | | | |__| | |  | |____) |  | |____| |____ / ____ \ ____) |___) | |____ ____) |
-  \_____|\____/|_____/   |_|  \____/|_|  |_|_____/    \_____|______/_/    \_\_____/_____/|______|_____/ 
-                                                                                                        
-                                                                                                        
-*/
-
-/* GENERAL */
-.txt-center{
-    text-align:center;
-}
-.txt-disabled{
-    color:var(--disabled);
-}
-.float-left{
-    float:left;
-}
-.float-right{
-    float:right;
-}
-.uppercase{
-    text-transform:uppercase;
-}
-.capitale{
-    text-transform:capitalize;
-}
-.mt10{
-    margin-top:5px;
-}
-.italic{
-    font-style: italic;
-}
-.w100{
-    width:100%;
-}
-.field{
-    display: block;
-    padding: .375rem .75rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: .25rem;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-    outline:none;
 }
 
 
@@ -689,98 +794,6 @@ border-color: #343a40;
 box-shadow: 0 0 0 0.2rem rgba(52, 58, 64, 0.5);
 }
 
-
-/*
-   _____ ______ _   _ ______ _____            _      
-  / ____|  ____| \ | |  ____|  __ \     /\   | |     
- | |  __| |__  |  \| | |__  | |__) |   /  \  | |     
- | | |_ |  __| | . ` |  __| |  _  /   / /\ \ | |     
- | |__| | |____| |\  | |____| | \ \  / ____ \| |____ 
-  \_____|______|_| \_|______|_|  \_\/_/    \_\______|
-                                                                                                    
-*/
-/* INIT */
-*, html, body, div{
-    margin:0px;
-    padding:0px;
-}
-html{
-    scroll-behavior:smooth;
-}
-
-body{
-    background-color: var(--background);
-    overflow-x:hidden;
-}
-aside{
-    margin:15px 8px 15px 8px;
-}
-select{
-    cursor:pointer;
-    outline:none;
-    border:0px;
-    border-bottom:1px solid #2b2d2d;
-}
-option{
-    cursor: pointer;
-}
-header, aside, footer{
-    background-color:var(--background);
-    z-index:25;
-}
-header{
-    background-color: #2b2d2d;
-    padding:30px 5px 35px 5px;
-    color:#fff;
-    text-align:center;
-}
-header .title{
-    font-family: CaviarMedium;
-    font-size:45px;
-}
-h1,h2,h3,h4,h5{
-    font-family:CaviarMedium;
-    color:var(--primary2);
-}
-h1{
-    font-size:25px;
-}
-h2{
-    font-size:23px;
-}
-h3{
-    font-size:21px;
-}
-h4{
-    font-size:19px;
-}
-img.e40x{ /* Errors 40x*/
-    max-height:50vw;
-    max-width:40vw;
-}
-[data-href]{
-    cursor:pointer;
-}
-/*SCROLLBARS*/
-::-webkit-scrollbar {
-    margin:0px;
-    height: 6px;
-    width: 6px;
-    background: #d4d4d4;
-}
-
-::-webkit-scrollbar-thumb {
-    background: grey;
-    border-radius:1ex;
-    -moz-border-radius:1ex;
-    -o-border-radius:1ex;
-    -webkit-border-radius: 1ex;
-    -webkit-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.75);
-}
-
-::-webkit-scrollbar-corner {
-    background: #000;
-}
 
 /*
   _   _     __      ______          _____  

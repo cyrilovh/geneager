@@ -81,18 +81,18 @@ div.ancestorTimeline ul.timeline li.picture::before{
 div.familyLinks div, div.archiveList div, div.pictureList div{
     margin:0px;
 }
-div.familyLinks div.etiquette, div.archiveList div.etiquette, div.pictureList div.etiquette{
+div.familyLinks div.label, div.archiveList div.label, div.pictureList div.label{
     vertical-align: top;
     display: inline-block;
     padding: 10px 20px;
     min-width: 300px;
 }
-div.etiquette div.subetiquette, div.archiveList div.subetiquette, div.pictureList div.subetiquette{
+div.label div.subLabel, div.archiveList div.subLabel, div.pictureList div.subLabel{
     display: inline-block;
     vertical-align: top;
     padding: 3px;
 }
-div.familyLinks div.etiquette img.thumb{
+div.familyLinks div.label img.thumb{
     max-width:100px;
     max-height:50px;
     border-radius: 4px;

@@ -2,7 +2,7 @@
     Function applyMaxH
     Apply the max height all the elements from the taller element
     @query: CSS selector of the elements to check
-            ex: div.etiquette div.subetiquette.detail
+            ex: div.label div.subLabel.detail
 */
 function applyMaxH(query){
     var pictureListMaxH = 0; // init - the taller div of the picture details
@@ -18,5 +18,5 @@ function applyMaxH(query){
 }
 
 window.addEventListener("load", function(){
-    applyMaxH("div.etiquette div.subetiquette.detail");
+    applyMaxH("div.label div.subLabel.detail");
 });

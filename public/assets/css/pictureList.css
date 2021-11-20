@@ -6,7 +6,7 @@ div.pictureList div{
     margin:0px;
     text-align: left;
 }
-div.pictureList div.etiquette{
+div.pictureList div.label{
     vertical-align: top;
     margin: 10px 20px;
     display: inline-block;
@@ -16,10 +16,10 @@ div.pictureList div.etiquette{
     -webkit-border-radius:4px;
     -moz-border-radius:4px;
 }
-div.etiquette div.subetiquette{
+div.label div.subLabel{
     vertical-align: top;
 }
-div.pictureList div.etiquette img.thumb{
+div.pictureList div.label img.thumb{
     width:250px;
     max-height:500px;
     border-top-left-radius: 4px;
@@ -31,10 +31,10 @@ div.pictureList div.etiquette img.thumb{
     -webkit-border-top-right-radius:4px;
     -moz-border-top-right-radius:4px;
 }
-div.etiquette div.subetiquette.detail{
+div.label div.subLabel.detail{
     padding: 3px;
 }
-div.pictureList div.etiquette a.title{
+div.pictureList div.label a.title{
     font-family: CaviarMedium;
     font-size:18px;
 }

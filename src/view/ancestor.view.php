@@ -21,11 +21,11 @@
     <!-- Family links -->
     <div class="familyLinks">
         <h2>Liens parentés:</h2>
-        <div class="etiquette">
-            <div class="subetiquette">
+        <div class="label">
+            <div class="subLabel">
                 <img src="/assets/img/unknownAncestor.webp" alt="" title="" class="thumb">
             </div>
-            <div class="subetiquette">
+            <div class="subLabel">
                 <div>
                     <a href="/profil.php?id=35"><span class="capitale">marie</span> <span class="uppercase">dufour</span></a>
                 </div>
@@ -34,11 +34,11 @@
                 </div>
             </div>
         </div>
-        <div class="etiquette">
-            <div class="subetiquette">
+        <div class="label">
+            <div class="subLabel">
                 <img src="/assets/img/unknownAncestor.webp" alt="" title="" class="thumb">
             </div>
-            <div class="subetiquette">
+            <div class="subLabel">
                 <div>
                     <a href="/profil.php?id=35"><span class="capitale">marian</span> <span class="uppercase">dupond</span></a>
                 </div>
@@ -52,11 +52,11 @@
     <div class="archiveList">
         <h2>Archives o&ucirc; Pierre est identifié:</h2>
 
-        <div class="etiquette">
-            <div class="subetiquette">
+        <div class="label">
+            <div class="subLabel">
                 <img src="/assets/img/defaultDocument.webp" alt="" title=""/>
             </div>
-            <div class="subetiquette">
+            <div class="subLabel">
                 <div>
                     <a href="/displayArchive/?id=35">Titre du document</a>
                 </div>
@@ -67,11 +67,11 @@
             </div>
         </div>
 
-        <div class="etiquette">
-            <div class="subetiquette">
+        <div class="label">
+            <div class="subLabel">
                 <img src="/assets/img/defaultDocument.webp" alt="" title=""/>
             </div>
-            <div class="subetiquette">
+            <div class="subLabel">
                 <div>
                     <a href="/displayArchive/?id=35">Titre du document</a>
                 </div>
@@ -87,11 +87,11 @@
     <div class="pictureList">
         <h2>Photos o&ucirc; Pierre est identifié:</h2>
 
-        <div class="etiquette">
-            <div class="subetiquette">
+        <div class="label">
+            <div class="subLabel">
                 <img src="/assets/img/defaultPicture.webp" alt="" title=""/>
             </div>
-            <div class="subetiquette">
+            <div class="subLabel">
                 <div>
                     <a href="/displayArchive/?id=35">Photo de famille</a>
                 </div>
@@ -103,11 +103,11 @@
             </div>
         </div>
 
-        <div class="etiquette">
-            <div class="subetiquette">
+        <div class="label">
+            <div class="subLabel">
                 <img src="/assets/img/defaultPicture.webp" alt="" title=""/>
             </div>
-            <div class="subetiquette">
+            <div class="subLabel">
                 <div>
                     <a href="/displayArchive/?id=35">Photo de famille</a>
                 </div>
