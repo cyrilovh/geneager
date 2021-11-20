@@ -10,12 +10,10 @@
             </div>
             <div class="subLabel detail">
                 <div>
-                    <a class="title" href="/displayArchive/?id=35">Photo de famille</a>
+                    <a class="title" href="/displayArchive/?id=35">Photos de famille Dupond</a>
                 </div>
                 <div>
-                    <p>Courte description de la photo.</p>
-                    <p><small><i class="fa-solid fa-location-dot"></i> Paris</small></p>
-                    <p><small><i class="fa-solid fa-calendar-days"></i> 1926</small></p>
+                    <p>Courte description de l'album.</p>
                 </div>
             </div>
         </div>
@@ -26,11 +24,10 @@
             </div>
             <div class="subLabel detail">
                 <div>
-                    <a class="title" href="/displayArchive/?id=35">Photo de famille</a>
+                    <a class="title" href="/displayArchive/?id=35">Photo de famille Martin</a>
                 </div>
                 <div>
                     <p>Courte description de la photo</p>
-                    <p><small><i class="fa-solid fa-link"></i> example.org</small></p>
                 </div>
             </div>
         </div>
@@ -41,11 +38,10 @@
             </div>
             <div class="subLabel detail">
                 <div>
-                    <a class="title" href="/displayArchive/?id=35">Photo de famille</a>
+                    <a class="title" href="/displayArchive/?id=35">Photo de famille Lefebvre</a>
                 </div>
                 <div>
-                    <p>Courte description de la photo</p>
-                    <p><small><i class="fa-solid fa-link"></i> example.org</small></p>
+                    <p>Courte description de l'album</p>
                 </div>
             </div>
         </div>
@@ -56,11 +52,10 @@
             </div>
             <div class="subLabel detail">
                 <div>
-                    <a class="title" href="/displayArchive/?id=35">Photo de famille</a>
+                    <a class="title" href="/displayArchive/?id=35">Photo de famille Dufour</a>
                 </div>
                 <div>
-                    <p>Courte description de la photo</p>
-                    <p><small><i class="fa-solid fa-link"></i> example.org</small></p>
+                    <p>Courte description de l'album</p>
                 </div>
             </div>
         </div>

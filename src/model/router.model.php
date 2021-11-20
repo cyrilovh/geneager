@@ -320,6 +320,15 @@ class form{
  |_____/_/    \_\_/_/    \_\____/_/    \_\_____/|______|                                                   
                                                         
  */
+/*
+  _       _ _   
+ (_)     (_) |  
+  _ _ __  _| |_ 
+ | | '_ \| | __|
+ | | | | | | |_ 
+ |_|_| |_|_|\__|
+                            
+*/
 // initialize the  connection to datbase
 class db{
     public static function connect(){
@@ -338,6 +347,49 @@ class db{
             echo "<p>Erreur n°'{$error->getCode()}</p>";
             die("<p>Erreur : {$error->getMessage()}</p>");
         }
+    }
+
+/*
+                      _ 
+                     | |
+   ___ _ __ _   _  __| |
+  / __| '__| | | |/ _` |
+ | (__| |  | |_| | (_| |
+  \___|_|   \__,_|\__,_|
+
+  Create
+  Read
+  Update
+  Delete/Drop
+                                              
+*/
+
+    /* get parameters form database */
+    public static function getParameter(string $param){
+        global $db;
+
+        $query = $db->prepare("SELECT * FROM parameter WHERE parameter=:param");
+        $query->execute(['param' => $param]);
+        return $query->fetch(\PDO::FETCH_ASSOC)["value"];
+        $query->closeCursor();
+    }
+
+    /* get social network links */
+    public static function getSocialLink(){
+        global $db;
+        $return = array(); // string to return
+        $query = $db->query("SELECT * FROM parameter WHERE parameter LIKE 'sn%'"); // i check all line with the parameter start with "sn"
+        while($row = $query->fetch(\PDO::FETCH_ASSOC)){ // i do a loop
+            $nickname = $row["value"];
+            if(trim($nickname)){ // if there is a username (not empty value)
+                $v = strtolower(substr($row["parameter"],2)); // i retrieve the value of the row "parameter", then substr (for remove the 2 firsts characters), then i convert to lower case. ex: snFacebook -> facebook
+                $return[] = "<i class='fab fa-$v' data-href='https://$v.com/$nickname' data-target='blank' rel='nofollow'></i>"; // i add the value in the array
+            }
+        }
+        if(count($return)>0){ // if there is 1 link or more
+            return "<p class='title'>Réseaux sociaux</p><p>".implode(" ", $return)."</p>"; // i return a string
+        }
+        $query->closeCursor();
     }
 }
 

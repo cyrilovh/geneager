@@ -5,7 +5,7 @@
 				Mots-clés
 			</p>
 			<p>
-				Généalogie, Archives, Famille, Histoire
+				<?=\gng\db::getParameter("keywords"); ?>
 			</p>
 			<p>
 				&nbsp;
@@ -27,14 +27,11 @@
 				A propos de
 			</p>
             <p>
-                Site de généalogie personnel gratuit
-            </p>
-            <p class="title">
-                Profils
+                <?=\gng\db::getParameter("defaultDescription"); ?>
             </p>
             <p>
-                <i class="fab fa-twitter" data-href='https://twitter.com/' rel='nofollow'></i>
-                <i class="fab fa-facebook" data-href='https://facebook.com' rel='nofollow'></i>
+                <?=\gng\db::getSocialLink();?>
+                
             </p>
         </div>
 	</div>
