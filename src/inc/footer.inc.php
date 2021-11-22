@@ -5,7 +5,7 @@
 				Mots-clés
 			</p>
 			<p>
-				<?=\gng\db::getParameter("keywords"); ?>
+				<?=\gng\db::getParameter("defaultKeywordList"); ?>
 			</p>
 			<p>
 				&nbsp;

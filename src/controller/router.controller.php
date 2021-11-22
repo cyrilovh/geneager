@@ -1,4 +1,12 @@
 <?php
+    /* DEFAULT META TAGS */
+    $metaFromDatabase = \gng\db::getParameter();
+    $meta_separator = " ".$metaFromDatabase["separator"]." "; // default title
+    $meta_title = $metaFromDatabase["websiteName"]; // default title OR website name
+    $meta_description = $metaFromDatabase["defaultDescription"]; // default description
+    $meta_keyword = $metaFromDatabase["defaultKeywordList"]; // default keywords
+    $meta_favicon = $metaFromDatabase["favicon"]; // favicon PNG (without extension) - Keep blank for the default favicon
+    $meta_author = ""; // default author
     /*
 
     doesn't works !!!
@@ -23,11 +31,11 @@
             include $explode[1];
         }
     }
-     
- 
-     $obj_MetaTitle = new \gng\metaTitle($meta_title, $meta_description, $meta_keyword, $meta_favicon, $meta_author); // i create my object "meta title"
+    
+    $obj_MetaTitle = new \gng\metaTitle($meta_title, $meta_description, $meta_keyword, $meta_favicon, $meta_author); // i create my object "meta title"
 
-      $obj_HNF = new \gng\customHNF($include_header, $include_navbar, $include_footer); // i create my object for custom header, navbar and footer
+    $obj_HNF = new \gng\customHNF($include_header, $include_navbar, $include_footer); // i create my object for custom header, navbar and footer
 
+    
      require MVC."view/router.view.php";
 ?>

@@ -147,7 +147,7 @@ YOU MUST use this class in the controller of YOUR (new) page
             $this->title = trim($meta_title);
             $this->description = $meta_description;
             $this->keyword = $meta_keyword;
-            $this->favicon = (empty($meta_favicon) ? "favicon" : $meta_keyword);
+            $this->favicon = (empty($meta_favicon) ? "favicon" : $meta_favicon);
             $this->author = $meta_author;
         }     
         
@@ -365,13 +365,24 @@ class db{
 */
 
     /* get parameters form database */
-    public static function getParameter(string $param){
+    public static function getParameter(string $param = NULL){
         global $db;
 
-        $query = $db->prepare("SELECT * FROM parameter WHERE parameter=:param");
-        $query->execute(['param' => $param]);
-        return $query->fetch(\PDO::FETCH_ASSOC)["value"];
-        $query->closeCursor();
+        if($param!==NULL){ // if the parameter is specified i return the value
+            $query = $db->prepare("SELECT * FROM parameter WHERE parameter=:param");
+            $query->execute(['param' => $param]);
+            return $query->fetch(\PDO::FETCH_ASSOC)["value"]; // string
+            $query->closeCursor();
+        }else{ // the paramters is not defined (null): i return an array (key => value)
+            $return = array();
+            $query = $db->query("SELECT * FROM parameter WHERE parameter NOT LIKE 'sn%'");
+            
+            while($row = $query->fetch(\PDO::FETCH_ASSOC)){
+                $return[$row["parameter"]] = $row["value"];
+            }
+            return $return;
+            $query->closeCursor();
+        }
     }
 
     /* get social network links */
