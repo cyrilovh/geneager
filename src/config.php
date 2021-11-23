@@ -13,6 +13,9 @@
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
 
+    /* Session start */
+    session_start();
+
 /*
   _____              _ _        _                   _          __      _ _               _                     _ _                 
  |  __ \            ( ) |      | |                 | |        / _|    | | |             (_)                   | (_)                
@@ -37,4 +40,7 @@
     $include_header = ""; // default: header (header = call the file /src/inc/header.inc.php)
     $include_navbar = ""; // default: navbar (")
     $include_footer = ""; // default: footer (")
+
+    /* default values */
+    $meta_robots = ""; // empty, "nofollow", "noindex" or "noindex, nofollow"
 ?>

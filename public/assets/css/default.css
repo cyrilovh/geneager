@@ -63,8 +63,11 @@ body{
 a:not(.button), a:hover:not(.button), a:visited:not(.button), a:active:not(.button){
     text-decoration: none;
 }
+main input, main textarea{
+    padding:5px;
+}
 aside{
-    margin:15px 8px 15px 8px;
+    padding:15px 8px 15px 8px;
 }
 select{
     cursor:pointer;
@@ -180,7 +183,7 @@ img.e40x{ /* Errors 40x*/
     font-style: italic;
 }
 .w100{
-    width:100%;
+    width:100vw;
 }
 .field{
     display: block;

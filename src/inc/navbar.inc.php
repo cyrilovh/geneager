@@ -18,8 +18,12 @@
             <!-- str dropdown -->
             <p data-dropdown="navbarAccount" class="dropdownMenu"><i class="far fa-user"></i> Mon compte</p>
             <div data-dropdown="navbarAccount" class="dropdownList">
+                <?php if(isset($_SESSION["username"])){ ?>
                 <p><a href="/userSettings">Paramètres</a></p>
                 <p><a href="/logout">Déconnexion</a></p>
+                <?php }else{ ?>
+                    <p><a href="/login">Connexion</a></p>
+                <?php } ?>
             </div>
             <!-- end dropdown -->
         </div>

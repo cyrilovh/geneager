@@ -143,12 +143,13 @@ YOU MUST use this class in the controller of YOUR (new) page
 
 *****************************************************************************************************/
     class metaTitle{
-        public function __construct(string $meta_title, string $meta_description, string $meta_keyword, string $meta_favicon, string $meta_author){
+        public function __construct(string $meta_title, string $meta_description, string $meta_keyword, string $meta_favicon, string $meta_author, string $meta_robot){
             $this->title = trim($meta_title);
             $this->description = $meta_description;
             $this->keyword = $meta_keyword;
             $this->favicon = (empty($meta_favicon) ? "favicon" : $meta_favicon);
             $this->author = $meta_author;
+            $this->robot = $meta_robot;
         }     
         
         // get Data from the object
@@ -399,6 +400,29 @@ class db{
         }
         if(count($return)>0){ // if there is 1 link or more
             return "<p class='title'>Réseaux sociaux</p><p>".implode(" ", $return)."</p>"; // i return a string
+        }
+        $query->closeCursor();
+    }
+
+    /* get user data informations (1 user only) */
+    public static function getUserInfo(string $username, array $filter=array("*")){ // username: username/nickname; filter: columns to filter (default: all) exemple: array("id", "username","password").
+        global $db;
+        $filter_str = implode(",", $filter);
+        $query = $db->prepare("SELECT $filter_str FROM user WHERE username=:username");
+        $query->execute(['username' => $username]);
+        if($query->rowCount()>0){
+            if(count($filter)==0){ // if i've any result
+                trigger_error("The array filter can't be empty: try to keep blank the parameter filter or add values inside.", E_USER_ERROR);
+                return NULL;
+            }else{ // if there 1 column or more i return the value(s) as a string or as an array
+                if(count($filter)>1 || $filter[0]=="*"){ // if all columns => i return the data as an array
+                    print_r($query->fetchAll(\PDO::FETCH_ASSOC));
+                }else{ // if have 1 column i return the value as string
+                    echo $query->fetch(\PDO::FETCH_ASSOC)[$filter[0]];  
+                }
+            }
+        }else{
+            return NULL;
         }
         $query->closeCursor();
     }

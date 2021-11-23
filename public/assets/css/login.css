@@ -1,0 +1,27 @@
+form.login{
+    text-align: center;
+    display:flex;
+    justify-content: center;
+    padding:10px 5px 10px 5px;
+}
+form.login input{
+    width:100vw;
+    border-radius:0px;
+    border-top:1px solid silver;
+    border-bottom:1px solid silver;
+    border-left:0px;
+    border-right:0px;
+}
+form.login input:nth-child(1){
+    border-left:1px solid silver;
+    border-right:1px solid silver;
+}
+form.login input:nth-child(2){
+    border-right:1px solid silver;
+}
+
+@media screen and (max-width:600px) {
+    form.login{
+        display:block !important;
+    }
+}
