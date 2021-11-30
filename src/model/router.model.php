@@ -34,7 +34,7 @@
         }
 
         /* 2 - INCLUDE THE GOOD FILES MCV IN TEMPLATE (BODY) */
-        public static function loadFiles(string $url){ // CHECK IF FILE EXIST AND INCLUDE IT
+        protected static function loadFiles(string $url){ // CHECK IF FILE EXIST AND INCLUDE IT
             global $include_MVC;
             $include_MVC = array();
             $folder = array("model","controller"); // the view MUST BE include in controller (here we load model firstly then controller)
@@ -422,7 +422,7 @@ class db{
                 }
             }
         }else{
-            return NULL;
+            return array();
         }
         $query->closeCursor();
     }
@@ -493,6 +493,9 @@ class format{
     // replace the character "@" by the "@" of font-awesome (spam prevent)
     public static function mailProtect(string $str){
         return str_replace("@","<i class='fas fa-at'></i>",$str);
+    }
+    public static function cleanStr(string $str){
+        return htmlentities(trim($str), ENT_QUOTES, "UTF-8");
     }
 }
 ?>

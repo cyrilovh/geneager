@@ -1,11 +1,11 @@
 <?php
     /* DEFAULT META TAGS */
-    $metaFromDatabase = \gng\db::getParameter();
-    $meta_separator = " ".$metaFromDatabase["separator"]." "; // default title
-    $meta_title = $metaFromDatabase["websiteName"]; // default title OR website name
-    $meta_description = $metaFromDatabase["defaultDescription"]; // default description
-    $meta_keyword = $metaFromDatabase["defaultKeywordList"]; // default keywords
-    $meta_favicon = $metaFromDatabase["favicon"]; // favicon PNG (without extension) - Keep blank for the default favicon
+    $parametersFromDB = \gng\db::getParameter();
+    $meta_separator = " ".$parametersFromDB["separator"]." "; // default title
+    $meta_title = $parametersFromDB["websiteName"]; // default title OR website name
+    $meta_description = $parametersFromDB["defaultDescription"]; // default description
+    $meta_keyword = $parametersFromDB["defaultKeywordList"]; // default keywords
+    $meta_favicon = $parametersFromDB["favicon"]; // favicon PNG (without extension) - Keep blank for the default favicon
     $meta_author = ""; // default author
     /*
 
