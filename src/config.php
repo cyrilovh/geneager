@@ -7,6 +7,8 @@
 
     /* GENERAL CONFIG */
     define('ENCODE', "UTF-8"); // encode
+    define('SALT_PASSWORD', "qs--ZU=FxG8eCYCesQ"); // STATIC SALT FOR ENCRYPT PASSWORD IN DATABASE
+    define('KEY_EMAIL', "V-J8#JDyz5Ja#!=V"); // STATIC SALT FOR ENCRYPT PASSWORD IN DATABASE
 
     /* DEV MODE */
     ini_set('display_errors', 1);

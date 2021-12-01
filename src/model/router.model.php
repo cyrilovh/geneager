@@ -409,7 +409,7 @@ class db{
         global $db;
         $filter_str = implode(",", $filter);
         $query = $db->prepare("SELECT $filter_str FROM user WHERE username=:username");
-        $query->execute(['username' => $username]);
+        $query->execute(['username' => \gng\format::cleanStr($username)]);
         if($query->rowCount()>0){
             if(count($filter)==0){ // if i've any result
                 trigger_error("The array filter can't be empty: try to keep blank the parameter filter or add values inside.", E_USER_ERROR);
@@ -470,7 +470,37 @@ class password{
         return substr(str_shuffle($data), 0, $length);
     }
 }
-
+/*
+   _____ ______ _____ _    _ _____  _____ _________     __
+  / ____|  ____/ ____| |  | |  __ \|_   _|__   __\ \   / /
+ | (___ | |__ | |    | |  | | |__) | | |    | |   \ \_/ / 
+  \___ \|  __|| |    | |  | |  _  /  | |    | |    \   /  
+  ____) | |___| |____| |__| | | \ \ _| |_   | |     | |   
+ |_____/|______\_____|\____/|_|  \_\_____|  |_|     |_|   
+                                                                                                                  
+*/
+class security{
+    public static function encrypt(string $str, string $password){
+        $ivlen = openssl_cipher_iv_length($cipher="AES-128-CBC");
+        $iv = openssl_random_pseudo_bytes($ivlen);
+        $ciphertext_raw = openssl_encrypt($str, $cipher, $password, $options=OPENSSL_RAW_DATA, $iv);
+        $hmac = hash_hmac('sha256', $ciphertext_raw, $password, $as_binary=true);
+        return base64_encode( $iv.$hmac.$ciphertext_raw);
+    }
+    public static function decrypt(string $str, string $password){
+        $c = base64_decode($str);
+        $ivlen = openssl_cipher_iv_length($cipher="AES-128-CBC");
+        $iv = substr($c, 0, $ivlen);
+        $hmac = substr($c, $ivlen, $sha2len=32);
+        $ciphertext_raw = substr($c, $ivlen+$sha2len);
+        $original_plaintext = openssl_decrypt($ciphertext_raw, $cipher, $password, $options=OPENSSL_RAW_DATA, $iv);
+        $calcmac = hash_hmac('sha256', $ciphertext_raw, $password, $as_binary=true);
+        if (hash_equals($hmac, $calcmac))// timing attack safe comparison
+        {
+            return $original_plaintext."\n";
+        }
+    }
+}
 /*
   ______ ____  _____  __  __       _______ 
  |  ____/ __ \|  __ \|  \/  |   /\|__   __|
