@@ -416,9 +416,9 @@ class db{
                 return NULL;
             }else{ // if there 1 column or more i return the value(s) as a string or as an array
                 if(count($filter)>1 || $filter[0]=="*"){ // if all columns => i return the data as an array
-                    print_r($query->fetchAll(\PDO::FETCH_ASSOC));
+                    return $query->fetchAll(\PDO::FETCH_ASSOC);
                 }else{ // if have 1 column i return the value as string
-                    echo $query->fetch(\PDO::FETCH_ASSOC)[$filter[0]];  
+                    return $query->fetch(\PDO::FETCH_ASSOC)[$filter[0]];  
                 }
             }
         }else{
@@ -429,6 +429,40 @@ class db{
 }
 
 
+
+/*
+   _____ ______ _____ _    _ _____  _____ _________     __
+  / ____|  ____/ ____| |  | |  __ \|_   _|__   __\ \   / /
+ | (___ | |__ | |    | |  | | |__) | | |    | |   \ \_/ / 
+  \___ \|  __|| |    | |  | |  _  /  | |    | |    \   /  
+  ____) | |___| |____| |__| | | \ \ _| |_   | |     | |   
+ |_____/|______\_____|\____/|_|  \_\_____|  |_|     |_|   
+                                                                                                                  
+*/
+class security{
+    // for encrypt data
+    public static function encrypt(string $str, string $password){
+        $ivlen = openssl_cipher_iv_length($cipher="AES-128-CBC");
+        $iv = openssl_random_pseudo_bytes($ivlen);
+        $ciphertext_raw = openssl_encrypt($str, $cipher, $password, $options=OPENSSL_RAW_DATA, $iv);
+        $hmac = hash_hmac('sha256', $ciphertext_raw, $password, $as_binary=true);
+        return base64_encode( $iv.$hmac.$ciphertext_raw);
+    }
+    // for decrypt data
+    public static function decrypt(string $str, string $password){
+        $c = base64_decode($str);
+        $ivlen = openssl_cipher_iv_length($cipher="AES-128-CBC");
+        $iv = substr($c, 0, $ivlen);
+        $hmac = substr($c, $ivlen, $sha2len=32);
+        $ciphertext_raw = substr($c, $ivlen+$sha2len);
+        $original_plaintext = openssl_decrypt($ciphertext_raw, $cipher, $password, $options=OPENSSL_RAW_DATA, $iv);
+        $calcmac = hash_hmac('sha256', $ciphertext_raw, $password, $as_binary=true);
+        if (hash_equals($hmac, $calcmac))// timing attack safe comparison
+        {
+            return $original_plaintext."\n";
+        }
+    }
+}
 /*
   _____         _____ _______          ______  _____  _____  
  |  __ \ /\    / ____/ ____\ \        / / __ \|  __ \|  __ \ 
@@ -438,7 +472,7 @@ class db{
  |_| /_/    \_\_____/_____/    \/  \/   \____/|_|  \_\_____/ 
                                                                                                                       
 */
-class password{
+class password extends security{
     // for hash password
     public static function hash(string $password, string $algo = "ripemd320"){
         global $password_salt;
@@ -463,44 +497,14 @@ class password{
     }
 
     // generate random password (8 to 10 characters)
-    public static function genPassword(){
+    public static function gen(){
         $length = rand(8,10); // password length
         
         $data = '123456789ABCDEFGHIJKLMNPQRSTUVWXYZabcefghjkmnpqrstuvwxyz'; // 0oO are excludes
         return substr(str_shuffle($data), 0, $length);
     }
 }
-/*
-   _____ ______ _____ _    _ _____  _____ _________     __
-  / ____|  ____/ ____| |  | |  __ \|_   _|__   __\ \   / /
- | (___ | |__ | |    | |  | | |__) | | |    | |   \ \_/ / 
-  \___ \|  __|| |    | |  | |  _  /  | |    | |    \   /  
-  ____) | |___| |____| |__| | | \ \ _| |_   | |     | |   
- |_____/|______\_____|\____/|_|  \_\_____|  |_|     |_|   
-                                                                                                                  
-*/
-class security{
-    public static function encrypt(string $str, string $password){
-        $ivlen = openssl_cipher_iv_length($cipher="AES-128-CBC");
-        $iv = openssl_random_pseudo_bytes($ivlen);
-        $ciphertext_raw = openssl_encrypt($str, $cipher, $password, $options=OPENSSL_RAW_DATA, $iv);
-        $hmac = hash_hmac('sha256', $ciphertext_raw, $password, $as_binary=true);
-        return base64_encode( $iv.$hmac.$ciphertext_raw);
-    }
-    public static function decrypt(string $str, string $password){
-        $c = base64_decode($str);
-        $ivlen = openssl_cipher_iv_length($cipher="AES-128-CBC");
-        $iv = substr($c, 0, $ivlen);
-        $hmac = substr($c, $ivlen, $sha2len=32);
-        $ciphertext_raw = substr($c, $ivlen+$sha2len);
-        $original_plaintext = openssl_decrypt($ciphertext_raw, $cipher, $password, $options=OPENSSL_RAW_DATA, $iv);
-        $calcmac = hash_hmac('sha256', $ciphertext_raw, $password, $as_binary=true);
-        if (hash_equals($hmac, $calcmac))// timing attack safe comparison
-        {
-            return $original_plaintext."\n";
-        }
-    }
-}
+
 /*
   ______ ____  _____  __  __       _______ 
  |  ____/ __ \|  __ \|  \/  |   /\|__   __|
