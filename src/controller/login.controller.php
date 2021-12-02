@@ -1,6 +1,7 @@
 <?php
     \gng\metaTitle::setTitle("Connexion"); // i set the title page + separator + website name
     $meta_robots = "noindex,nofollow";
+    $include_footer = "none";
     \gng\additionnalJsCss::set("login.css");
 
     if(isset($_POST["submit"])){ // check if form is submit

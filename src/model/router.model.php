@@ -201,6 +201,8 @@ class customHNF{
             $f = MVC."inc/".$v.".inc.php";
             if(file_exists($f)){
                 require_once $f;
+            }elseif(trim($v)=="none"){
+                return null;
             }else{
                 require_once MVC."inc/".$data.".inc.php";
                 trigger_error("<p class='dev_critical'><b>$f</b> is missing.</p>", E_USER_WARNING);
