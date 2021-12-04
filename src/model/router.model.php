@@ -103,11 +103,11 @@
     $include_JsCss = array();
     class additionnalJsCss{
         // for add stylesheet ou javascript (declaration in the second controller)
-        public static function set(string $filename){ // filename = name + file extension. example: slide.js
+        public static function set(string $filename):void{ // filename = name + file extension. example: slide.js
             global $include_JsCss;
             array_push($include_JsCss, $filename);
         }
-        public static function get(string $filter){ // $filter= "css" OR "js"
+        public static function get(string $filter):string{ // $filter= "css" OR "js"
             global $include_JsCss; // 1 - retrieve list
             $result = "";
             foreach($include_JsCss as $f){ // 2 - foreach file
@@ -158,7 +158,7 @@ YOU MUST use this class in the controller of YOUR (new) page
         }
 
         // set title with: page title + separator + Website Name
-        public static function setTitle(string $title){
+        public static function setTitle(string $title) :void{
             global $meta_separator;
             global $meta_title;
             $meta_title = $title.$meta_separator.$meta_title;
@@ -234,9 +234,10 @@ class form{
     public $action;
     public $element;
 
-    public function __construct(string $method, string $action, array $element = array()){
-        $this->method = $method;
-        $this->action = $action;
+    public function __construct(array $attr, array $element = array()){
+        $this->method = (array_key_exists('method', $attr)) ? $attr["method"] : "";
+        $this->action = (array_key_exists('action', $attr)) ? $attr["action"] : "";
+        $this->class = (array_key_exists('class', $attr)) ? $attr["class"] : "";
         $this->element = $element;
     }
 
@@ -305,7 +306,7 @@ class form{
     public function display(){
         //$implode = implode("\r\n\t", $this->element);
         //return "";
-        $return = "<form action='{$this->action}' method='{$this->method}'>";
+        $return = "<form action='{$this->action}' method='{$this->method}' class='{$this->class}'>";
         foreach($this->element as $v){
             $return .= $v;
         }
@@ -368,7 +369,7 @@ class db{
 */
 
     /* get parameters form database */
-    public static function getParameter(string $param = NULL){
+    public static function getParameter(string $param = NULL) :mixed{
         global $db;
 
         if($param!==NULL){ // if the parameter is specified i return the value
@@ -389,7 +390,7 @@ class db{
     }
 
     /* get social network links */
-    public static function getSocialLink(){
+    public static function getSocialLink() :mixed{
         global $db;
         $return = array(); // string to return
         $query = $db->query("SELECT * FROM parameter WHERE parameter LIKE 'sn%'"); // i check all line with the parameter start with "sn"
@@ -407,7 +408,7 @@ class db{
     }
 
     /* get user data informations (1 user only) */
-    public static function getUserInfo(string $username, array $filter=array("*")){ // username: username/nickname; filter: columns to filter (default: all) exemple: array("id", "username","password").
+    public static function getUserInfo(string $username, array $filter=array("*")) :array{ // username: username/nickname; filter: columns to filter (default: all) exemple: array("id", "username","password").
         global $db;
         $filter_str = implode(",", $filter);
         $query = $db->prepare("SELECT $filter_str FROM user WHERE username=:username");
@@ -427,6 +428,10 @@ class db{
             return array();
         }
         $query->closeCursor();
+    }
+    
+    public static function setUserinfo(int $userID, array $update) :string{
+        return "hello";
     }
 }
 
@@ -484,7 +489,7 @@ class password extends security{
     }
 
     // Check if the provided password (from form) is the same that in the DB.
-    public static function match(string $data, string $password, string $algo = "ripemd320"){ // first parameter come from db (salt,hash) and the second password (clear to compare)
+    public static function match(string $data, string $password, string $algo = "ripemd320"):bool{ // first parameter come from db (salt,hash) and the second password (clear to compare)
         global $password_salt;
         $password1_time = explode(",",$data)[0]; // salt form $data
         $password1_hash = explode(",",$data)[1]; // password hash form $data
@@ -519,18 +524,18 @@ class password extends security{
 */
 class format{
     // return phone number (Ten character) pair per pair with a dot between
-    public static function phone(mixed $n){
+    public static function phone(mixed $n):string{
         return preg_replace('/(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})/','\1.\2.\3.\4.\5',$n);
     }
     // convert a french phone number to international format
-    public static function phoneInternational(mixed $n){
+    public static function phoneInternational(mixed $n):string{
         return preg_replace('/^0/', "+33", $n);
     }
     // replace the character "@" by the "@" of font-awesome (spam prevent)
-    public static function mailProtect(string $str){
+    public static function mailProtect(string $str):string{
         return str_replace("@","<i class='fas fa-at'></i>",$str);
     }
-    public static function cleanStr(string $str){
+    public static function cleanStr(string $str):string{
         return htmlentities(trim($str), ENT_QUOTES, "UTF-8");
     }
 }

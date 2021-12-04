@@ -4,18 +4,48 @@
     $include_footer = "none";
     \gng\additionnalJsCss::set("login.css");
 
+    $formLogin = new \gng\form(array( // i declare my new object
+        "method" => "post", // i give the method attr
+        "action" => "", // i give action attr
+        "class"=>"login", // i give className ou className list (not required)
+    ));
+
+    $formLogin->setElement("input", array( // here i give the type of tag
+        "type" => "text", // i give the type of input
+        "placeholder" => "Nom d&apos;utilisateur", // i set a placeholder
+        "name" => "username", // i give a className
+        "required" => "required", // i add the attr required
+        "minlength" => \gng\db::getParameter("usernameMinLength"), // i add the attr minlength
+        "maxlength" => \gng\db::getParameter("usernameMaxLength") // i add the attr maxlength
+    ));
+
+    $formLogin->setElement("input", array(
+        "type" => "password",
+        "placeholder" => "Mot de passe",
+        "name" => "password",
+        "required" => "required",
+        "minlength" => \gng\db::getParameter("passwordMinLength"),
+        "maxlength" => \gng\db::getParameter("passwordMaxLength")
+    ));
+
+    $formLogin->setElement("input", array(
+        "type" => "submit",
+        "value" => "Connexion",
+        "name" => "submit",
+        "class" => "btn btn-primary" // i add a class to the element
+    ));
+
     if(isset($_POST["submit"])){ // check if form is submit
         if(isset($_POST["username"]) && isset($_POST["password"])){ // check if the both input are submit
             if(strlen(trim($_POST["username"]))>=$parametersFromDB["usernameMinLength"] && strlen(trim($_POST["password"]))>=$parametersFromDB["passwordMinLength"]){ // we check the min length of the password and username
                 $username = $_POST["username"];
-                //$password = \gng\format::cleanStr($_POST["password"]); // attention hasher pas nettoyer
 
-
-                $userInfo = \gng\db::getUserInfo($username, array("username","password","role")); // i interrogates the database
+                $userInfo = \gng\db::getUserInfo($username, array("id","username","password","role")); // i interrogates the database
 
                 if(count($userInfo)==1){ // if i 1 user matching
                     if(\gng\password::match($userInfo[0]["password"],$_POST["password"])){ // if the passwords match
                         $_SESSION["username"] = $userInfo[0]["username"];
+                        $_SESSION["userid"] = $userInfo[0]["id"];
                         $userInfo[0]["role"] = $userInfo[0]["role"];
                         header('Location: /');
                         exit();
