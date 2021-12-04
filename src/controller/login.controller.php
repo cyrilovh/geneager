@@ -57,7 +57,6 @@
                     $msg_mismatch = "Identifiant ou mot de passe incorrect."; 
                     \gng\mcv::addView("login");
                 }
-                print_r($userInfo);
             }else{ // the min length (parameters from DB) of the password or username is false
                 $msg_mismatch = "Identifiant ou mot de passe incorrect."; 
                 \gng\mcv::addView("login");
