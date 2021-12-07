@@ -72,13 +72,13 @@
         }
         */
         // Function for add view file in main
-        public static function addView(string $page){ // $page must contain filename only without file extensions
+        public static function addView(string $page):void{ // $page must contain filename only without file extensions
             global $include_MVC;
             array_push($include_MVC, "view:".MVC."view/".$page.".view.php");
         }
 
         // Function for add Model or Controller files
-        public static function addModelController(string $page, string $type){ // function for add view file in main
+        public static function addModelController(string $page, string $type):void{ // function for add view file in main
             global $include_MVC;
             array_push($include_MVC, $type.":".$page);
         }
@@ -158,7 +158,7 @@ YOU MUST use this class in the controller of YOUR (new) page
         }
 
         // set title with: page title + separator + Website Name
-        public static function setTitle(string $title) :void{
+        public static function setTitle(string $title):void{
             global $meta_separator;
             global $meta_title;
             $meta_title = $title.$meta_separator.$meta_title;
@@ -224,16 +224,15 @@ class customHNF{
 */
 
 class form{
+    public $attr;
+    public $element;
     /*
         object = <form ...></form>
-        $method = get/post
-        $action = URL where data must be send
-        $element => array with the input, select, textarea 
-    */
-    public $method;
-    public $action;
-    public $element;
+        $attr => array. MUST contain the attr "method" and "action". Can contain the attribute class.
+        $element => array (in array) with the input, select, textarea 
 
+        var_dump(obj): return HTML code   
+    */
     public function __construct(array $attr, array $element = array()){
         $this->method = (array_key_exists('method', $attr)) ? $attr["method"] : "";
         $this->action = (array_key_exists('action', $attr)) ? $attr["action"] : "";
@@ -258,6 +257,7 @@ class form{
             $this->element[] = $element;
         // Textarea
         }else if($type=="textarea"){
+            $value = (array_key_exists("value",$attribut)) ? $attribut["value"] : "";
             $element = "<textarea";
             foreach($attribut as $k => $v){
                 $k = strtolower($k);
@@ -265,12 +265,7 @@ class form{
                     $element .= " $k='$v'";
                 }
             }
-            $element .= ">";
-            $value ="";
-            if (array_key_exists("value",$attribut)){
-                $value = $attribut["value"]; // the value of textarea if tje key value exist
-            }
-            $element .= "$value</textarea>";
+            $element .= ">$value</textarea>";
             $this->element[] = $element;
         // select
         }else if($type=="select"){
@@ -303,7 +298,7 @@ class form{
     /*
         function for display form
     */
-    public function display(){
+    public function display():string{
         //$implode = implode("\r\n\t", $this->element);
         //return "";
         $return = "<form action='{$this->action}' method='{$this->method}' class='{$this->class}'>";
@@ -312,6 +307,24 @@ class form{
         }
         $return .="</form>";
         return $return;
+    }
+
+    // check out if the form is
+    public function check(){
+        // https://stackoverflow.com/questions/3249619/how-to-extract-a-value-of-an-html-input-tag-using-php
+
+        $html = new \DOMDocument();
+        $html->loadHTML(implode(" ", $this->element)); // convert array to HTML string
+
+        $elList = $html->getElementsByTagName("input");
+        foreach($elList as $el){
+            if($el->hasAttribute('value')) {
+                echo "<br><br>-->".$el->getAttribute('value')."<--------";
+            }
+        }
+
+
+        //print_r($this->element);
     }
 
 }
