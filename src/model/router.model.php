@@ -302,10 +302,74 @@ class form{
     }    
 
     // check out if the form is
-    public function check():array{
-        return array();
-    }
+    // WARNING CHECK OUT TOO IS THE FORM EXIST/IS SUBMIT AAAAANNNNDDDD IF THE ATTRIBUTE EXIST
 
+    /*
+    1 - i check if the form is submit
+    2 - i check if all form are submit /!\ WARNING: THEN CHECK OUT IF the name are not modified by visitor
+    3 - i check if the type is true
+    4 - i check attributes minlength, maxlength, required, (min, max)
+     
+    */
+
+    /*
+    public function check():array{
+        $errorList = array();
+        foreach($this->element as $k => $attributList){
+            $tag = format::normalize($attributList["tag"]);
+            if(array_key_exists($tag, array("input", "button","textarea", "select", "option"))){ // i check if the tag is valid
+                foreach($attributList["attributList"] as $attribute => $attrValue){
+                    $attribute = format::normalize($attribute);
+                    // ANY ELEMENT
+                    if(array_key_exists($attribute, array("minlength", "maxlength", "required"))){ // i check the current attribute must be checked
+                        // minlength and maxlength except for select ?
+                    }
+                    // TYPING ELEMENT
+                    if($tag=="input"){
+                        if($attribute=="email"){
+                            if(!filter_var($attrValue, FILTER_VALIDATE_EMAIL)) {
+                                $errorList[] = "Adresse e-mail invalide.";
+                            }
+                        }elseif($attribute=="number"){
+                            // check if min/max
+                            // check if the number is true
+                        }
+                    }
+                }
+            }else{
+                if(PROD==false){
+                    trigger_error("<p class='dev_critical'>Error &laquo; $tag &raquo; : is not yet compatible...</p>", E_USER_ERROR);
+                }
+            }
+        }
+        return $errorList;
+    }
+    */
+    public function check():array{
+        $errorList = array();
+        $methodUsed = (format::normalize($this->method)=="post") ? "POST" : "GET";
+        $dataSubmit = (format::normalize($this->method)=="post") ? $_POST : $_GET;
+        if(count($dataSubmit)<0){ // i check if i have data (if the form is submit)
+
+            //i check missing data
+            if(count($dataSubmit)==count($this->element)){
+                foreach($this->element as $k => $attributList){
+                    // if(array_key_exists('option', $attributList["attributList"])){ <--------------------------
+
+                    //}
+                    //foreach($attributList["attributList"] as $attribute => $attrValue){
+
+                   //}
+                }
+            }else{
+                $errorList = "Elements of the form are missing.";
+                if(PROD==false){
+                    trigger_error("<p class='dev_critical'>Check that all the elements of the form have an attribute &laquo; name &raquo;</p>", E_USER_ERROR);
+                }
+            }
+        }
+        return $errorList;
+    }
 }
 /*
    _____       _______       ____           _____ ______ 
@@ -424,7 +488,7 @@ class db{
         $query->closeCursor();
     }
     
-    public static function setUserinfo(int $userID, array $update) :string{
+    public static function setUserinfo(int $userID, array $update):string{
         return "hello";
     }
 }
