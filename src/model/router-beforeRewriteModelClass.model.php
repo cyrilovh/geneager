@@ -240,16 +240,58 @@ class form{
         $this->element = $element;
     }
 
-    public function setElement(string $tag, array $attribut):void{
-        $element = array();
+    /*
+        Function for add elements in form (object)
+        $type = submit/button/text/email/[...]/textarea
+        $attribut = array (key => $value). example: value => "Enter your password"
+    */
+    public function setElement(string $type, array $attribut){ /* array */
         // input, button
-        $tag = trim(strtolower($tag));
-        if($tag=="input" || $tag=="button" || $tag=="textarea" || "select"){
-            $element["tag"] = $tag;
-            $element["attributList"] = $attribut; 
+        $type = strtolower($type);
+        if($type=="input" || $type=="button"){
+            $element = "<$type";
+            foreach($attribut as $k => $v){
+                $element .= " $k='$v'";
+            }
+            $element .= " />";
+            $this->element[] = $element;
+        // Textarea
+        }else if($type=="textarea"){
+            $value = (array_key_exists("value",$attribut)) ? $attribut["value"] : "";
+            $element = "<textarea";
+            foreach($attribut as $k => $v){
+                $k = strtolower($k);
+                if($k!="value"){ // here the attributes
+                    $element .= " $k='$v'";
+                }
+            }
+            $element .= ">$value</textarea>";
+            $this->element[] = $element;
+        // select
+        }else if($type=="select"){
+            $attr = "";
+            foreach($attribut as $key => $array){
+                if(str_starts_with($key, "attr:")){
+                    if(gettype($array)!="array"){ // i check if it's not an array
+                        trigger_error("<p class='dev_critical'>The value of select with the key 'attr:' MUST contain an array !</p>", E_USER_ERROR);
+                    }else{ // if it's an array
+                        foreach($array as $k => $v){
+                            $attr.= " $k='$v'";
+                        }
+                    }
+                }
+            }
+            $element = "<select$attr>";
+            foreach($attribut as $k => $v){
+                if(!str_starts_with($k, "attr:")){
+                    $element .= "<option value='$k'>$v</option>";
+                }
+                // echo "$v";
+            }
+            $element .= "</select>";
             $this->element[] = $element;
         }else{
-            trigger_error("<p class='dev_critical'>Error &laquo; $tag &raquo; : is not yet compatible...</p>", E_USER_ERROR);
+            trigger_error("<p class='dev_critical'>Error &laquo; $type &raquo; : is not yet compatible...</p>", E_USER_ERROR);
         }
     }
 
@@ -257,52 +299,32 @@ class form{
         function for display form
     */
     public function display():string{
- 
-        $return = "<form action='{$this->action}' method='{$this->method}' class='{$this->class}'>"; // start of the string
-
-        foreach($this->element as $k => $attributList){
-            $tag = trim(strtolower($attributList["tag"]));
-            $attr = "";
-            if($tag=="input"){
-                foreach($attributList["attributList"] as $attribute => $attrValue){
-                    $attr .= " $attribute='$attrValue'";
-                }
-                $return .= "<$tag $attr />";
-            }elseif($tag=="textara" || $tag=="button"){
-                foreach($attributList as $attribute => $attrValue){
-                    if(trim(strtolower($attribute))!="value"){
-                        $attr .= " $attribute='$attrValue'";
-                    }
-                }
-                $value = array_key_exists('value', $attributList) ? $attributList["value"]: "";
-                $return .= "<$tag $attr >$value</textarea>"; 
-            }elseif($tag=="select"){
-                foreach($attributList["attributList"] as $attribute => $attrValue){
-                    if(trim(strtolower($attribute))!="option"){
-                        $attr .= " $attribute='$attrValue'";
-                    }
-                }
-                
-                $optionList = "";
-                if(array_key_exists('option', $attributList["attributList"])){
-                    foreach($attributList["attributList"]["option"] as $kOption => $vOption){
-                        $optionList .= "<option value='$kOption'>$vOption</option>";
-                    }
-                }
-                $return .= "<$tag $attr>$optionList</$tag>";
-
-
-            }else{
-                $return .= "<!-- oups for $tag -->";
-            }
+        //$implode = implode("\r\n\t", $this->element);
+        //return "";
+        $return = "<form action='{$this->action}' method='{$this->method}' class='{$this->class}'>";
+        foreach($this->element as $v){
+            $return .= $v;
         }
-
-        return $return."</form>"; // end of the string
-    }    
+        $return .="</form>";
+        return $return;
+    }
 
     // check out if the form is
     public function check(){
+        // https://stackoverflow.com/questions/3249619/how-to-extract-a-value-of-an-html-input-tag-using-php
 
+        $html = new \DOMDocument();
+        $html->loadHTML(implode(" ", $this->element)); // convert array to HTML string
+
+        $elList = $html->getElementsByTagName("input");
+        foreach($elList as $el){
+            if($el->hasAttribute('value')) {
+                echo "<br><br>-->".$el->getAttribute('value')."<--------";
+            }
+        }
+
+
+        //print_r($this->element);
     }
 
 }
