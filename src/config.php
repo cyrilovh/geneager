@@ -11,9 +11,7 @@
     define('KEY_EMAIL', "V-J8#JDyz5Ja#!=V"); // STATIC SALT FOR ENCRYPT PASSWORD IN DATABASE
 
     /* DEV MODE */
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
+    define("PROD", true);
 
     /* Session start */
     session_start();
@@ -45,4 +43,15 @@
 
     /* default values */
     $meta_robots = ""; // empty, "nofollow", "noindex" or "noindex, nofollow"
+
+    if(PROD==true){
+        ini_set('display_errors', 0);
+        ini_set('display_startup_errors', 0);
+    }else{
+            ini_set('display_errors', 1);
+            ini_set('display_startup_errors', 1);
+            error_reporting(E_ALL);
+    }
+
+    echo array();
 ?>

@@ -205,7 +205,9 @@ class customHNF{
                 return null;
             }else{
                 require_once MVC."inc/".$data.".inc.php";
-                trigger_error("<p class='dev_critical'><b>$f</b> is missing.</p>", E_USER_WARNING);
+                if(PROD==false){
+                    trigger_error("<p class='dev_critical'><b>$f</b> is missing.</p>", E_USER_WARNING);
+                }
             }
         }else{
             require_once MVC."inc/".$data.".inc.php";
@@ -249,7 +251,9 @@ class form{
             $element["attributList"] = $attribut; 
             $this->element[] = $element;
         }else{
-            trigger_error("<p class='dev_critical'>Error &laquo; $tag &raquo; : is not yet compatible...</p>", E_USER_ERROR);
+            if(PROD==false){
+                trigger_error("<p class='dev_critical'>Error &laquo; $tag &raquo; : is not yet compatible...</p>", E_USER_ERROR);
+            }
         }
     }
 
@@ -403,7 +407,9 @@ class db{
         $query->execute(['username' => \gng\security::cleanStr($username)]);
         if($query->rowCount()>0){
             if(count($filter)==0){ // if i've any result
-                trigger_error("The array filter can't be empty: try to keep blank the parameter filter or add values inside.", E_USER_ERROR);
+                if(PROD==false){
+                    trigger_error("The array filter can't be empty: try to keep blank the parameter filter or add values inside.", E_USER_ERROR);
+                }
                 return NULL;
             }else{ // if there 1 column or more i return the value(s) as a string or as an array
                 if(count($filter)>1 || $filter[0]=="*"){ // if all columns => i return the data as an array
