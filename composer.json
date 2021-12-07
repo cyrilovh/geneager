@@ -1,7 +1,6 @@
 {
     "name": "cyrilovh/geneager",
     "description": "Free CMS",
-    "license": "",
     "autoload": {
         "psr-4": {
             "Cyrilovh\\Geneager\\": "src/"
