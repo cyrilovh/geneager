@@ -528,7 +528,7 @@ class format{
         return str_replace("@","<i class='fas fa-at'></i>",$str);
     }
     // convert str to lowercase and remove trim
-    public static function normalize(string $str):string{
+    public static function normalize(string $str):array{
         return strtolower(trim($str));
     }
 }
