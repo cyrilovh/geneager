@@ -261,7 +261,7 @@ class form{
         $return = "<form action='{$this->action}' method='{$this->method}' class='{$this->class}'>"; // start of the string
 
         foreach($this->element as $k => $attributList){
-            $tag = trim(strtolower($attributList["tag"]));
+            $tag = format::normalize($attributList["tag"]);
             $attr = "";
             if($tag=="input"){
                 foreach($attributList["attributList"] as $attribute => $attrValue){
@@ -290,19 +290,16 @@ class form{
                     }
                 }
                 $return .= "<$tag $attr>$optionList</$tag>";
-
-
             }else{
                 $return .= "<!-- oups for $tag -->";
             }
         }
-
         return $return."</form>"; // end of the string
     }    
 
     // check out if the form is
-    public function check(){
-
+    public function check():array{
+        return array();
     }
 
 }
@@ -403,7 +400,7 @@ class db{
         global $db;
         $filter_str = implode(",", $filter);
         $query = $db->prepare("SELECT $filter_str FROM user WHERE username=:username");
-        $query->execute(['username' => \gng\format::cleanStr($username)]);
+        $query->execute(['username' => \gng\security::cleanStr($username)]);
         if($query->rowCount()>0){
             if(count($filter)==0){ // if i've any result
                 trigger_error("The array filter can't be empty: try to keep blank the parameter filter or add values inside.", E_USER_ERROR);
@@ -459,6 +456,10 @@ class security{
         {
             return $original_plaintext."\n";
         }
+    }
+
+    public static function cleanStr(string $str):string{
+        return htmlentities(trim($str), ENT_QUOTES, "UTF-8");
     }
 }
 /*
@@ -526,8 +527,9 @@ class format{
     public static function mailProtect(string $str):string{
         return str_replace("@","<i class='fas fa-at'></i>",$str);
     }
-    public static function cleanStr(string $str):string{
-        return htmlentities(trim($str), ENT_QUOTES, "UTF-8");
+    // convert str to lowercase and remove trim
+    public static function normalize(string $str):string{
+        return strtolower(trim($str));
     }
 }
 ?>

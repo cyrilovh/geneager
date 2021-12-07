@@ -39,7 +39,7 @@ use gng\form;
     ));
 
     //print_r($formLogin);
-    $formLogin->check();
+    //$formLogin->check();
 
     if(isset($_POST["submit"])){ // check if form is submit
         if(isset($_POST["username"]) && isset($_POST["password"])){ // check if the both input are submit
