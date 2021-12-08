@@ -339,17 +339,34 @@ class form{
                         $tag = format::normalize($attributList["tag"]);
                         if($tag=="textarea" || $tag == "input" || $tag=="select"){
                             // CHECK IF FIELD IS REQUIRED
+                            $bypassCheckLength = false;
                             if(array_key_exists('required', $attributList["attributList"])){ // i check if there the attr required in object
                                 if(security::cleanStr($attributList["attributList"]["required"])=="required" || security::cleanStr($attributList["attributList"]["required"])==""){
                                     if(security::cleanStr($dataSubmit[$attributList["attributList"]["name"]])==""){
                                         $errorList[] = "Tous les champs requis ne sont pas complétés.";
+                                        $bypassCheckLength = true;
                                         if(PROD==false){
                                             trigger_error("<p class='dev_critical'>One or more element required bypassed.</p>", E_USER_ERROR);
                                         }  
                                     }
                                 }
                             }
-                            // CHECK IF MAXLENGTH / MINLENGTH
+                            // IT'S NOT NECESSARY TO CHECK MAX/MINLENGTH IF THE REQUIRED FIELD IS EMPTY
+                            if($bypassCheckLength == false){
+                                // CHECK IF MAXLENGTH
+                                if(array_key_exists('maxlength', $attributList["attributList"])){
+                                    if(is_numeric(format::normalize($attributList["attributList"]["maxlength"]))){ // check if it's an integer
+                                        if(strlen(format::normalize($dataSubmit[$attributList["attributList"]["name"]])) > $attributList["attributList"]["maxlength"]){ // if data form form > maxlength
+                                            $errorList[] = "Un ou des champs dépasse la longueur maximum.";
+                                        }
+                                    }else{
+                                        $errorList[] = "Erreur interne. 3".format::normalize($attributList["attributList"]["maxlength"]);
+                                        if(PROD==false){
+                                            trigger_error("<p class='dev_critical'>Maxlength MUST BE an integer.</p>", E_USER_ERROR);
+                                        }  
+                                    }
+                                }
+                            }
                         }else{
                             $errorList[] = "Erreur interne.";
                             if(PROD==false){
@@ -604,7 +621,7 @@ class format{
     }
     // convert str to lowercase and remove trim
     public static function normalize(string $str):string{
-        return strtolower(trim($str));
+        return preg_replace('/\s+/', ' ', strtolower(trim($str)));
     }
 }
 ?>
