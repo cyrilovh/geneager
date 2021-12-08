@@ -337,7 +337,7 @@ class form{
                     $errorList[] = "OK";
                     foreach($this->element as $k => $attributList){
                         $tag = format::normalize($attributList["tag"]);
-                        if($tag=="textarea" || $tag == "input" || $tag=="select"){
+                        if($tag == "textarea" || $tag == "input" || $tag == "select"){
                             // CHECK IF FIELD IS REQUIRED
                             $bypassCheckLength = false;
                             if(array_key_exists('required', $attributList["attributList"])){ // i check if there the attr required in object
@@ -379,6 +379,26 @@ class form{
                                     }
                                 }
                             }
+
+                            if($tag == "input"){
+                                if(array_key_exists('type', $attributList["attributList"])){
+                                    if($attributList["attributList"]["type"]=="email"){
+                                        if (!filter_var($dataSubmit[$attributList["attributList"]["name"]], FILTER_VALIDATE_EMAIL)) {
+                                            $errorList[] = "Un ou des champs e-mail invalide(s): vérifiez le format.";
+                                        }
+                                    }
+                                }else{
+                                    $errorList[] = "Erreur interne.";
+                                    if(PROD==false){
+                                        trigger_error("<p class='dev_critical'>One ore more attribute(s) &quot; type &quot; missing in the tag &quot; input &quot;.</p>", E_USER_ERROR);
+                                    }     
+                                }
+                            }
+
+                            // WARNING
+                            // WARNING
+                            // WARNING
+                            // SELECT IF VALUES SUBMIT ARE IN THE ORIGINAL FORM
                         }else{
                             $errorList[] = "Erreur interne.";
                             if(PROD==false){
