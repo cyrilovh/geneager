@@ -1,4 +1,5 @@
 <?php 
-    \gng\mcv::addView("home");
-    \gng\additionnalJsCss::set("ancestorLabel.css");
+    namespace gng;
+    mcv::addView("home");
+    additionnalJsCss::set("ancestorLabel.css");
 ?>

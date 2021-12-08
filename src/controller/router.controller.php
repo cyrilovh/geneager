@@ -1,6 +1,7 @@
 <?php
+    namespace gng;
     /* DEFAULT META TAGS */
-    $parametersFromDB = \gng\db::getParameter();
+    $parametersFromDB = db::getParameter();
     $meta_separator = " ".$parametersFromDB["separator"]." "; // default title
     $meta_title = $parametersFromDB["websiteName"]; // default title OR website name
     $meta_description = $parametersFromDB["defaultDescription"]; // default description
@@ -22,7 +23,7 @@
 
     */
     // here i load only the "model" about URL 
-    foreach(\gng\mcv::load() as $f){
+    foreach(mcv::load() as $f){
         $explode = explode(":", $f);
         if($explode[0]=="model"){ // first i load the model
             include $explode[1];
@@ -32,9 +33,9 @@
         }
     }
     
-    $obj_MetaTitle = new \gng\metaTitle($meta_title, $meta_description, $meta_keyword, $meta_favicon, $meta_author, $meta_robots); // i create my object "meta title"
+    $obj_MetaTitle = new metaTitle($meta_title, $meta_description, $meta_keyword, $meta_favicon, $meta_author, $meta_robots); // i create my object "meta title"
 
-    $obj_HNF = new \gng\customHNF($include_header, $include_navbar, $include_footer); // i create my object for custom header, navbar and footer
+    $obj_HNF = new customHNF($include_header, $include_navbar, $include_footer); // i create my object for custom header, navbar and footer
 
     
      require MVC."view/router.view.php";

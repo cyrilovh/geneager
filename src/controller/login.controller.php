@@ -1,13 +1,13 @@
 <?php
 
-use gng\form;
+namespace gng;
 
-\gng\metaTitle::setTitle("Connexion"); // i set the title page + separator + website name
+metaTitle::setTitle("Connexion"); // i set the title page + separator + website name
     $meta_robots = "noindex,nofollow";
     $include_footer = "none";
-    \gng\additionnalJsCss::set("login.css");
+    additionnalJsCss::set("login.css");
 
-    $formLogin = new \gng\form(array( // i declare my new object
+    $formLogin = new form(array( // i declare my new object
         "method" => "post", // i give the method attr
         "action" => "", // i give action attr
         "class"=>"login", // i give className ou className list (not required)
@@ -18,8 +18,8 @@ use gng\form;
         "placeholder" => "Nom d&apos;utilisateur", // i set a placeholder
         "name" => "username", // i give a className
         "required" => "required", // i add the attr required
-        "minlength" => \gng\db::getParameter("usernameMinLength"), // i add the attr minlength
-        "maxlength" => \gng\db::getParameter("usernameMaxLength") // i add the attr maxlength
+        "minlength" => db::getParameter("usernameMinLength"), // i add the attr minlength
+        "maxlength" => db::getParameter("usernameMaxLength") // i add the attr maxlength
     ));
 
     $formLogin->setElement("input", array(
@@ -27,8 +27,8 @@ use gng\form;
         "placeholder" => "Mot de passe",
         "name" => "password",
         "required" => "required",
-        "minlength" => \gng\db::getParameter("passwordMinLength"),
-        "maxlength" => \gng\db::getParameter("passwordMaxLength")
+        "minlength" => db::getParameter("passwordMinLength"),
+        "maxlength" => db::getParameter("passwordMaxLength")
     ));
 
     $formLogin->setElement("input", array(
@@ -38,18 +38,19 @@ use gng\form;
         "class" => "btn btn-primary" // i add a class to the element
     ));
 
+    print_r($_POST);
     //print_r($formLogin);
-    //$formLogin->check();
+    $formLogin->check();
 
     if(isset($_POST["submit"])){ // check if form is submit
         if(isset($_POST["username"]) && isset($_POST["password"])){ // check if the both input are submit
             if(strlen(trim($_POST["username"]))>=$parametersFromDB["usernameMinLength"] && strlen(trim($_POST["password"]))>=$parametersFromDB["passwordMinLength"]){ // we check the min length of the password and username
                 $username = $_POST["username"];
 
-                $userInfo = \gng\db::getUserInfo($username, array("id","username","password","role")); // i interrogates the database
+                $userInfo = db::getUserInfo($username, array("id","username","password","role")); // i interrogates the database
 
                 if(count($userInfo)==1){ // if i 1 user matching
-                    if(\gng\password::match($userInfo[0]["password"],$_POST["password"])){ // if the passwords match
+                    if(password::match($userInfo[0]["password"],$_POST["password"])){ // if the passwords match
                         $_SESSION["username"] = $userInfo[0]["username"];
                         $_SESSION["userid"] = $userInfo[0]["id"];
                         $userInfo[0]["role"] = $userInfo[0]["role"];
@@ -57,21 +58,21 @@ use gng\form;
                         exit();
                     }else{ // if password x username mismatch
                         $msg_mismatch = "Identifiant ou mot de passe incorrect."; 
-                        \gng\mcv::addView("login"); 
+                        mcv::addView("login"); 
                     }
                 }else{ // if any or multiple users
                     $msg_mismatch = "Identifiant ou mot de passe incorrect."; 
-                    \gng\mcv::addView("login");
+                    mcv::addView("login");
                 }
             }else{ // the min length (parameters from DB) of the password or username is false
                 $msg_mismatch = "Identifiant ou mot de passe incorrect."; 
-                \gng\mcv::addView("login");
+                mcv::addView("login");
             }
         }else{ // password input or username input missing
             $msg_mismatch = "Identifiant ou mot de passe incorrect."; 
-            \gng\mcv::addView("login");
+            mcv::addView("login");
         }
     }else{ // if form is not submit
-        \gng\mcv::addView("login");
+        mcv::addView("login");
     }
 ?>
