@@ -38,9 +38,8 @@ metaTitle::setTitle("Connexion"); // i set the title page + separator + website 
         "class" => "btn btn-primary" // i add a class to the element
     ));
 
-    print_r($_POST);
     //print_r($formLogin);
-    $formLogin->check();
+    print_r($formLogin->check());
 
     if(isset($_POST["submit"])){ // check if form is submit
         if(isset($_POST["username"]) && isset($_POST["password"])){ // check if the both input are submit

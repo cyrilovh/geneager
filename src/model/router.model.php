@@ -24,12 +24,12 @@
             $url = $parts[1];  // first word after slash
             if($url!=""){ // if not blank
                 if (ctype_alnum($url) && $url!="router"){ // if path is alphanumeric string. example: https://abc.xyz/abc -> abc IS GOOD
-                    return \gng\mcv::loadFiles($url); // i call the good files
+                    return mcv::loadFiles($url); // i call the good files
                 }else{ // else we return 404 page
-                    return \gng\mcv::loadFiles("404");
+                    return mcv::loadFiles("404");
                 }
             }else{ // if $url is blank or empty
-                return \gng\mcv::loadFiles("home"); // if "/" or "/router"
+                return mcv::loadFiles("home"); // if "/" or "/router"
             }
         }
 
@@ -41,14 +41,14 @@
             foreach($folder as $k => $v){
                 $file = MVC.$v."/".$url.".".$v.".php"; // example: ../src/view/accueil.model.php
                 if(file_exists($file)){
-                    \gng\mcv::addModelController($file,$v); // add controller or model in the header
+                    mcv::addModelController($file,$v); // add controller or model in the header
                 }else{
                     if($v=="controller"){ // if controller don't exist we try to load the view
                         $view = MVC."view/".$url.".view.php";
                         if(file_exists($view)){
-                            \gng\mcv::addView($url); // if controller don't exist: i add view in main
+                            mcv::addView($url); // if controller don't exist: i add view in main
                         }else{
-                            \gng\mcv::addView("404"); // controller and view are missing or doesn't exist: add view 404 in main
+                            mcv::addView("404"); // controller and view are missing or doesn't exist: add view 404 in main
                         }
                     }
                 }
@@ -311,7 +311,7 @@ class form{
     4 - i check attributes minlength, maxlength, required, (min, max)
      
     */
-    
+
     public function check():array{
         $errorList = array();
         $methodUsed = (format::normalize($this->method)=="post") ? "POST" : "GET";
@@ -319,27 +319,53 @@ class form{
         if(count($dataSubmit)>0){ // i check if i have data (if the form is submit)
 
             if(count($dataSubmit)==count($this->element)){ // check if number of parameters get/post
+
+                // FIRST ARRAY
                 $elementListNameFromObj = array(); // i create a new array for add the name of all elements form object 
                 foreach($this->element as $k => $attributList){ // for each element
                     $elementListNameFromObj[] = $attributList["attributList"]["name"]; // i add in array the name of all elements from object
                 }
 
+                // SECOND ARRAY
                 $elementListNameFromSubmit = array(); // array for retrieve all names for elements from submit (i don't will use array_reverse for security reasons and possible conflicts)
                 foreach($dataSubmit as $kDataSubmit => $vDataSubmit){
                     $elementListNameFromSubmit[] = security::cleanStr($kDataSubmit); 
                 }
 
+                // COMPARE ARRAYS
                 if(sort($elementListNameFromObj) == sort($elementListNameFromSubmit)){ // all names of the form aren't wrong (all input field names from form are expected)
                     $errorList[] = "OK";
+                    foreach($this->element as $k => $attributList){
+                        $tag = format::normalize($attributList["tag"]);
+                        if($tag=="textarea" || $tag == "input" || $tag=="select"){
+                            // CHECK IF FIELD IS REQUIRED
+                            if(array_key_exists('required', $attributList["attributList"])){ // i check if there the attr required in object
+                                if(security::cleanStr($attributList["attributList"]["required"])=="required" || security::cleanStr($attributList["attributList"]["required"])==""){
+                                    if(security::cleanStr($dataSubmit[$attributList["attributList"]["name"]])==""){
+                                        $errorList[] = "Tous les champs requis ne sont pas complétés.";
+                                        if(PROD==false){
+                                            trigger_error("<p class='dev_critical'>One or more element required bypassed.</p>", E_USER_ERROR);
+                                        }  
+                                    }
+                                }
+                            }
+                            // CHECK IF MAXLENGTH / MINLENGTH
+                        }else{
+                            $errorList[] = "Erreur interne.";
+                            if(PROD==false){
+                                trigger_error("<p class='dev_critical'>Unrecognized form element (tag).</p>", E_USER_ERROR);
+                            }  
+                        }
+                    }
                 }else{
-                    $errorList[] = "Elements unexpected or unexpected.";
+                    $errorList[] = "&Eacute;lements manquant ou en trop.";
                     if(PROD==false){
                         trigger_error("<p class='dev_critical'>Check if all submitted data $methodUsed is expected (that there is no more data sent).</p>", E_USER_ERROR);
                     }  
                 }
                 
             }else{
-                $errorList[] = "Elements of the form are missing.";
+                $errorList[] = "Element de formulaire manquant.";
                 if(PROD==false){
                     trigger_error("<p class='dev_critical'>Check that all the elements of the form have an attribute &laquo; name &raquo;</p>", E_USER_ERROR);
                 }
@@ -447,7 +473,7 @@ class db{
         global $db;
         $filter_str = implode(",", $filter);
         $query = $db->prepare("SELECT $filter_str FROM user WHERE username=:username");
-        $query->execute(['username' => \gng\security::cleanStr($username)]);
+        $query->execute(['username' => security::cleanStr($username)]);
         if($query->rowCount()>0){
             if(count($filter)==0){ // if i've any result
                 if(PROD==false){
@@ -508,7 +534,7 @@ class security{
     }
 
     public static function cleanStr(string $str):string{
-        return htmlentities(trim($str), ENT_QUOTES, "UTF-8");
+        return htmlentities(trim(preg_replace('/\s+/', ' ', $str)), ENT_QUOTES, "UTF-8");
     }
 }
 /*
