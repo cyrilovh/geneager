@@ -380,11 +380,44 @@ class form{
                                 }
                             }
 
+                            // CHECK OUT IF INPUT TYPE IS NOT WRONG
                             if($tag == "input"){
                                 if(array_key_exists('type', $attributList["attributList"])){
                                     if($attributList["attributList"]["type"]=="email"){
                                         if (!filter_var($dataSubmit[$attributList["attributList"]["name"]], FILTER_VALIDATE_EMAIL)) {
                                             $errorList[] = "Un ou des champs e-mail invalide(s): vérifiez le format.";
+                                        }
+                                    }elseif($attributList["attributList"]["type"]=="number"){
+                                        if(!is_numeric($dataSubmit[$attributList["attributList"]["name"]])){
+                                            $errorList[] = "Un ou des champs incorrect(s): une valeur numérique est attendue.";
+                                        }else{
+                                            // IF IS THE VALUE IS NUMERIC
+                                            // attr: min
+                                            if(array_key_exists("min", $attributList["attributList"])){ // if the attribute "min" is init in object
+                                                if(is_numeric($attributList["attributList"]["min"])){
+                                                    if(intval($dataSubmit[$attributList["attributList"]["name"]]) < intval($attributList["attributList"]["min"])){
+                                                        $errorList[] = "Un ou des champs incorrect(s): une valeur numérique est inférieur à celle attendue.";
+                                                    }
+                                                }else{
+                                                    $errorList[] = "Erreur interne.";
+                                                    if(PROD==false){
+                                                        trigger_error("<p class='dev_critical'>Check out if the attribute &quot, min &quot; is a numeric value.</p>", E_USER_ERROR);
+                                                    }    
+                                                }
+                                            }
+                                            // attr: max
+                                            if(array_key_exists("max", $attributList["attributList"])){ // if the attribute "min" is init in object
+                                                if(is_numeric($attributList["attributList"]["max"])){
+                                                    if(intval($dataSubmit[$attributList["attributList"]["name"]]) > intval($attributList["attributList"]["max"])){
+                                                        $errorList[] = "Un ou des champs incorrect(s): une valeur numérique est supérieure à celle attendue.";
+                                                    }
+                                                }else{
+                                                    $errorList[] = "Erreur interne.";
+                                                    if(PROD==false){
+                                                        trigger_error("<p class='dev_critical'>Check out if the attribute &quot, min &quot; is a numeric value.</p>", E_USER_ERROR);
+                                                    }    
+                                                }
+                                            }     
                                         }
                                     }
                                 }else{
