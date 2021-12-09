@@ -11,7 +11,7 @@
     define('KEY_EMAIL', "V-J8#JDyz5Ja#!=V"); // STATIC SALT FOR ENCRYPT PASSWORD IN DATABASE
 
     /* DEV MODE */
-    define("PROD", true);
+    define("PROD", false);
 
     /* Session start */
     session_start();

@@ -265,37 +265,77 @@ class form{
         $return = "<form action='{$this->action}' method='{$this->method}' class='{$this->class}'>"; // start of the string
 
         foreach($this->element as $k => $attributList){
-            $tag = format::normalize($attributList["tag"]);
-            $attr = "";
-            if($tag=="input"){
-                foreach($attributList["attributList"] as $attribute => $attrValue){
-                    $attr .= " $attribute='$attrValue'";
-                }
-                $return .= "<$tag $attr />";
-            }elseif($tag=="textara" || $tag=="button"){
-                foreach($attributList as $attribute => $attrValue){
-                    if(trim(strtolower($attribute))!="value"){
-                        $attr .= " $attribute='$attrValue'";
+            if(array_key_exists('tag', $attributList)){
+                if(array_key_exists('attributList', $attributList)){
+                    if(array_key_exists('name', $attributList["attributList"])){
+                        $tag = format::normalize($attributList["tag"]);
+                        $attr = "";
+                        if($tag=="input"){
+                            foreach($attributList["attributList"] as $attribute => $attrValue){
+                                $attr .= " $attribute='$attrValue'";
+                            }
+                            $return .= "<$tag $attr />";
+                        }elseif($tag=="textara" || $tag=="button"){
+                            foreach($attributList as $attribute => $attrValue){
+                                if(trim(strtolower($attribute))!="value"){
+                                    $attr .= " $attribute='$attrValue'";
+                                }
+                            }
+                            $value = array_key_exists('value', $attributList) ? $attributList["value"]: "";
+                            $return .= "<$tag $attr >$value</textarea>"; 
+                        }elseif($tag=="select"){
+                            foreach($attributList["attributList"] as $attribute => $attrValue){
+                                if(trim(strtolower($attribute))!="option"){
+                                    $attr .= " $attribute='$attrValue'";
+                                }
+                            }
+                            $optionList = "";
+                            if(array_key_exists('option', $attributList["attributList"])){
+                                if(gettype($attributList["attributList"]["option"])=="array"){
+                                    foreach($attributList["attributList"]["option"] as $kOption => $vOption){
+                                        $optionList .= "<option value='$kOption'>$vOption</option>";
+                                    }
+                                }else{
+                                    http_response_code(500);
+                                    if(PROD==false){
+                                        trigger_error("<p class='dev_critical txt-center'>Internal error: the key &quot; option &quot; for the &quot; select &quot; must be an array.</p>", E_USER_ERROR);
+                                    }else{
+                                        die("<p class='dev_critical txt-center'>Erreur 500: activez le mode &laquo; dev &raquo; si vous êtes l'administrateur du site pour plus d'informations.</p>");
+                                    }  
+                                }
+                            }
+                            $return .= "<$tag $attr>$optionList</$tag>";
+                        }else{
+                            http_response_code(500);
+                            if(PROD==false){
+                                trigger_error("<p class='dev_critical txt-center'>Internal error: type of element unknown</p>", E_USER_ERROR);
+                            }else{
+                                die("<p class='dev_critical txt-center'>Erreur 500: activez le mode &laquo; dev &raquo; si vous êtes l'administrateur du site pour plus d'informations.</p>");
+                            }
+                        }
+                    }else{
+                        http_response_code(500);
+                        if(PROD==false){
+                            trigger_error("<p class='dev_critical txt-center'>Internal error: one or severals element(s) of the form has not name.</p>", E_USER_ERROR);
+                        }else{
+                            die("<p class='dev_critical txt-center'>Erreur 500: activez le mode &laquo; dev &raquo; si vous êtes l'administrateur du site pour plus d'informations.</p>");
+                        }    
                     }
+                }else{
+                    http_response_code(500);
+                    if(PROD==false){
+                        trigger_error("<p class='dev_critical txt-center'>Internal error: any HTML attribute found for on more more elements</p>", E_USER_ERROR);
+                    }else{
+                        die("<p class='dev_critical txt-center'>Erreur 500: activez le mode &laquo; dev &raquo; si vous êtes l'administrateur du site pour plus d'informations.</p>");
+                    }    
                 }
-                $value = array_key_exists('value', $attributList) ? $attributList["value"]: "";
-                $return .= "<$tag $attr >$value</textarea>"; 
-            }elseif($tag=="select"){
-                foreach($attributList["attributList"] as $attribute => $attrValue){
-                    if(trim(strtolower($attribute))!="option"){
-                        $attr .= " $attribute='$attrValue'";
-                    }
-                }
-                
-                $optionList = "";
-                if(array_key_exists('option', $attributList["attributList"])){
-                    foreach($attributList["attributList"]["option"] as $kOption => $vOption){
-                        $optionList .= "<option value='$kOption'>$vOption</option>";
-                    }
-                }
-                $return .= "<$tag $attr>$optionList</$tag>";
             }else{
-                $return .= "<!-- oups for $tag -->";
+                http_response_code(500);
+                if(PROD==false){
+                    trigger_error("<p class='dev_critical txt-center'>Internal error: tag unknown</p>", E_USER_ERROR);
+                }else{
+                    die("<p class='dev_critical txt-center'>Erreur 500: activez le mode &laquo; dev &raquo; si vous êtes l'administrateur du site pour plus d'informations.</p>");
+                }    
             }
         }
         return $return."</form>"; // end of the string
@@ -387,7 +427,7 @@ class form{
                                         if (!filter_var($dataSubmit[$attributList["attributList"]["name"]], FILTER_VALIDATE_EMAIL)) {
                                             $errorList[] = "Un ou des champs e-mail invalide(s): vérifiez le format.";
                                         }
-                                    }elseif($attributList["attributList"]["type"]=="number"){
+                                    }elseif($attributList["attributList"]["type"]=="number" || $attributList["attributList"]["type"]=="range"){
                                         if(!is_numeric($dataSubmit[$attributList["attributList"]["name"]])){
                                             $errorList[] = "Un ou des champs incorrect(s): une valeur numérique est attendue.";
                                         }else{
@@ -425,6 +465,30 @@ class form{
                                     if(PROD==false){
                                         trigger_error("<p class='dev_critical'>One ore more attribute(s) &quot; type &quot; missing in the tag &quot; input &quot;.</p>", E_USER_ERROR);
                                     }     
+                                }
+                            }
+
+                            // IF SELECT
+                            if($tag=="select"){
+                                if(array_key_exists('option', $attributList["attributList"])){
+                                    if(gettype($attributList["attributList"]["option"])=="array"){ // i check if the the option value provided is of type "array"
+                                        if(!array_key_exists($dataSubmit[$attributList["attributList"]["name"]], $attributList["attributList"]["option"])){ // i check if the value sended is in array (object)
+                                            $errorList[] = "Erreur: valeur(s) non-attendu(s) d'un ou plusieurs menu déroulants ";
+                                            if(PROD==false){
+                                                trigger_error("<p class='dev_critical'>Security: the value sended form &quot; select &quot; dont't feel be in the object.</p>", E_USER_ERROR);
+                                            }   
+                                        }
+                                    }else{
+                                        $errorList[] = "Erreur interne.";
+                                        if(PROD==false){
+                                            trigger_error("<p class='dev_critical'>Check out the element(s) &quot; select &quot;: value of type array expected.</p>", E_USER_ERROR);
+                                        }   
+                                    }
+                                }else{
+                                    $errorList[] = "Erreur interne.";
+                                    if(PROD==false){
+                                        trigger_error("<p class='dev_critical'>Check out the element(s) &quot; select &quot;: a dropdown must contain an array with value(s).</p>", E_USER_ERROR);
+                                    }   
                                 }
                             }
 
