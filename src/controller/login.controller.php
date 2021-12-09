@@ -31,6 +31,15 @@ metaTitle::setTitle("Connexion"); // i set the title page + separator + website 
         "maxlength" => db::getParameter("passwordMaxLength")
     ));
 
+    $formLogin->setElement("select", array(
+        "name" => "age",
+        "multiple" => "multiple",
+        "option" => array(
+            "majeur" => "+18",
+            "mineur" => "-18"
+        )
+    ));
+
     $formLogin->setElement("input", array(
         "type" => "submit",
         "value" => "Connexion",

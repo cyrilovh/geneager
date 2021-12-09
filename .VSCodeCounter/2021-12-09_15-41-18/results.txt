@@ -1,0 +1,51 @@
+Date : 2021-12-09 15:41:18
+Directory : c:\Users\cyril HAVRET\Documents\PROJETS\GENEALOGIE CMS\WWW\src
+Total : 23 files,  1262 codes, 260 comments, 127 blanks, all 1649 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| PHP      |         23 |      1,262 |        260 |        127 |      1,649 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++-------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                  | files      | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                     |         23 |      1,262 |        260 |        127 |      1,649 |
+| controller                                                                                            |          8 |        164 |         23 |         28 |        215 |
+| inc                                                                                                   |          3 |         79 |          0 |          4 |         83 |
+| model                                                                                                 |          2 |        506 |        207 |         50 |        763 |
+| view                                                                                                  |          9 |        490 |          4 |         38 |        532 |
++-------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                                              | language | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| c:\Users\cyril HAVRET\Documents\PROJETS\GENEALOGIE CMS\WWW\src\config.php                             | PHP      |         23 |         26 |          7 |         56 |
+| c:\Users\cyril HAVRET\Documents\PROJETS\GENEALOGIE CMS\WWW\src\controller\ancestor.controller.php     | PHP      |          7 |          0 |          1 |          8 |
+| c:\Users\cyril HAVRET\Documents\PROJETS\GENEALOGIE CMS\WWW\src\controller\home.controller.php         | PHP      |          5 |          0 |          0 |          5 |
+| c:\Users\cyril HAVRET\Documents\PROJETS\GENEALOGIE CMS\WWW\src\controller\identityList.controller.php | PHP      |          8 |          0 |          0 |          8 |
+| c:\Users\cyril HAVRET\Documents\PROJETS\GENEALOGIE CMS\WWW\src\controller\login.controller.php        | PHP      |         66 |          1 |         10 |         77 |
+| c:\Users\cyril HAVRET\Documents\PROJETS\GENEALOGIE CMS\WWW\src\controller\logout.controller.php       | PHP      |         14 |          0 |          0 |         14 |
+| c:\Users\cyril HAVRET\Documents\PROJETS\GENEALOGIE CMS\WWW\src\controller\pictureList.controller.php  | PHP      |          8 |          0 |          1 |          9 |
+| c:\Users\cyril HAVRET\Documents\PROJETS\GENEALOGIE CMS\WWW\src\controller\router.controller.php       | PHP      |         22 |         15 |          5 |         42 |
+| c:\Users\cyril HAVRET\Documents\PROJETS\GENEALOGIE CMS\WWW\src\controller\test.controller.php         | PHP      |         34 |          7 |         11 |         52 |
+| c:\Users\cyril HAVRET\Documents\PROJETS\GENEALOGIE CMS\WWW\src\inc\footer.inc.php                     | PHP      |         40 |          0 |          2 |         42 |
+| c:\Users\cyril HAVRET\Documents\PROJETS\GENEALOGIE CMS\WWW\src\inc\header.inc.php                     | PHP      |          4 |          0 |          0 |          4 |
+| c:\Users\cyril HAVRET\Documents\PROJETS\GENEALOGIE CMS\WWW\src\inc\navbar.inc.php                     | PHP      |         35 |          0 |          2 |         37 |
+| c:\Users\cyril HAVRET\Documents\PROJETS\GENEALOGIE CMS\WWW\src\model\router.model.php                 | PHP      |        499 |        207 |         50 |        756 |
+| c:\Users\cyril HAVRET\Documents\PROJETS\GENEALOGIE CMS\WWW\src\model\test.model.php                   | PHP      |          7 |          0 |          0 |          7 |
+| c:\Users\cyril HAVRET\Documents\PROJETS\GENEALOGIE CMS\WWW\src\view\404.view.php                      | PHP      |          4 |          0 |          0 |          4 |
+| c:\Users\cyril HAVRET\Documents\PROJETS\GENEALOGIE CMS\WWW\src\view\ancestor.view.php                 | PHP      |        116 |          0 |          6 |        122 |
+| c:\Users\cyril HAVRET\Documents\PROJETS\GENEALOGIE CMS\WWW\src\view\home.view.php                     | PHP      |         78 |          0 |          6 |         84 |
+| c:\Users\cyril HAVRET\Documents\PROJETS\GENEALOGIE CMS\WWW\src\view\identityList.view.php             | PHP      |         87 |          0 |          5 |         92 |
+| c:\Users\cyril HAVRET\Documents\PROJETS\GENEALOGIE CMS\WWW\src\view\login.view.php                    | PHP      |          4 |          0 |          0 |          4 |
+| c:\Users\cyril HAVRET\Documents\PROJETS\GENEALOGIE CMS\WWW\src\view\logout.view.php                   | PHP      |          3 |          0 |          0 |          3 |
+| c:\Users\cyril HAVRET\Documents\PROJETS\GENEALOGIE CMS\WWW\src\view\pictureList.view.php              | PHP      |        124 |          0 |          7 |        131 |
+| c:\Users\cyril HAVRET\Documents\PROJETS\GENEALOGIE CMS\WWW\src\view\router.view.php                   | PHP      |         47 |          1 |          5 |         53 |
+| c:\Users\cyril HAVRET\Documents\PROJETS\GENEALOGIE CMS\WWW\src\view\test.view.php                     | PHP      |         27 |          3 |          9 |         39 |
+| Total                                                                                                 |          |      1,262 |        260 |        127 |      1,649 |
++-------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
