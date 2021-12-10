@@ -284,6 +284,14 @@ class form{
                             $value = array_key_exists('value', $attributList) ? $attributList["value"]: "";
                             $return .= "<$tag $attr >$value</textarea>"; 
                         }elseif($tag=="select"){
+                            // multiple select debug (1/2)
+                            if(in_array(format::normalize("multiple"), $attributList["attributList"])){
+                                if(!in_array(format::normalize("required"), $attributList["attributList"])){
+                                    $attributList["attributList"]["required"] = NULL;
+                                }
+                            }
+
+                            // i continue (multiple or single)
                             foreach($attributList["attributList"] as $attribute => $attrValue){
                                 if(trim(strtolower($attribute))!="option"){
                                     $attr .= " $attribute='$attrValue'";
@@ -292,6 +300,8 @@ class form{
                             $optionList = "";
                             if(array_key_exists('option', $attributList["attributList"])){
                                 if(gettype($attributList["attributList"]["option"])=="array"){
+                                    // multiple select debug (1/2)
+                                    $attributList["attributList"]["option"][NULL]="";
                                     foreach($attributList["attributList"]["option"] as $kOption => $vOption){
                                         $optionList .= "<option value='$kOption'>$vOption</option>";
                                     }
@@ -303,6 +313,8 @@ class form{
                                         die("<p class='dev_critical txt-center'>Erreur 500: activez le mode &laquo; dev &raquo; si vous êtes l'administrateur du site pour plus d'informations.</p>");
                                     }  
                                 }
+                            }else{
+                                
                             }
                             $return .= "<$tag $attr>$optionList</$tag>";
                         }else{
@@ -381,14 +393,12 @@ class form{
                             // CHECK IF FIELD IS REQUIRED
                             $bypassCheckLength = false;
                             if(array_key_exists('required', $attributList["attributList"])){ // i check if there the attr required in object
-                                if(security::cleanStr($attributList["attributList"]["required"])=="required" || security::cleanStr($attributList["attributList"]["required"])==""){
-                                    if(security::cleanStr($dataSubmit[$attributList["attributList"]["name"]])==""){
-                                        $errorList[] = "Tous les champs requis ne sont pas complétés.";
-                                        $bypassCheckLength = true;
-                                        if(PROD==false){
-                                            trigger_error("<p class='dev_critical'>One or more element required bypassed.</p>", E_USER_ERROR);
-                                        }  
-                                    }
+                                if(security::cleanStr($dataSubmit[$attributList["attributList"]["name"]])==""){
+                                    $errorList[] = "Tous les champs requis ne sont pas complétés.";
+                                    $bypassCheckLength = true;
+                                    if(PROD==false){
+                                        trigger_error("<p class='dev_critical'>One or more element required bypassed.</p>", E_USER_ERROR);
+                                    }  
                                 }
                             }
                             // IT'S NOT NECESSARY TO CHECK MAX/MINLENGTH IF THE REQUIRED FIELD IS EMPTY
@@ -471,13 +481,26 @@ class form{
                             // IF SELECT
                             if($tag=="select"){
                                 if(array_key_exists('option', $attributList["attributList"])){
-                                    if(gettype($attributList["attributList"]["option"])=="array"){ // i check if the the option value provided is of type "array"
-                                        if(!array_key_exists($dataSubmit[$attributList["attributList"]["name"]], $attributList["attributList"]["option"])){ // i check if the value sended is in array (object)
-                                            $errorList[] = "Erreur: valeur(s) non-attendu(s) d'un ou plusieurs menu déroulants ";
-                                            if(PROD==false){
-                                                trigger_error("<p class='dev_critical'>Security: the value sended form &quot; select &quot; dont't feel be in the object.</p>", E_USER_ERROR);
-                                            }   
-                                        }
+                                    if(gettype($attributList["attributList"]["option"])=="array"){ // i check if the option value provided is of type "array"
+                                        // MULTIPLE VALUES
+                                            if(gettype($dataSubmit[$attributList["attributList"]["name"]])=="array"){
+                                                foreach($dataSubmit[$attributList["attributList"]["name"]] as $value){
+                                                    if(!array_key_exists($value, $attributList["attributList"]["option"])){
+                                                        $errorList[] = "Erreur: valeur(s) non-attendu(s) d'un ou plusieurs menu déroulants ";
+                                                        if(PROD==false){
+                                                            trigger_error("<p class='dev_critical'>Security: the value sended form &quot; select &quot; dont't feel be in the object.</p>", E_USER_ERROR);
+                                                        }   
+                                                    }
+                                                }
+                                            }else{
+                                                // ALONE VALUE
+                                                if(!array_key_exists($dataSubmit[$attributList["attributList"]["name"]], $attributList["attributList"]["option"])){ // i check if the value sended is in array (object)
+                                                    $errorList[] = "Erreur: valeur(s) non-attendu(s) d'un ou plusieurs menu déroulants ";
+                                                    if(PROD==false){
+                                                        trigger_error("<p class='dev_critical'>Security: the value sended form &quot; select &quot; dont't feel be in the object.</p>", E_USER_ERROR);
+                                                    }   
+                                                }
+                                            }
                                     }else{
                                         $errorList[] = "Erreur interne.";
                                         if(PROD==false){
@@ -495,7 +518,7 @@ class form{
                             // WARNING
                             // WARNING
                             // WARNING
-                            // SELECT IF VALUES SUBMIT ARE IN THE ORIGINAL FORM
+                            // SELECT IF MULTIPLES VALUES SUBMIT ARE IN THE ORIGINAL FORM
                         }else{
                             $errorList[] = "Erreur interne.";
                             if(PROD==false){
@@ -513,6 +536,8 @@ class form{
             }else{
                 $errorList[] = "Element de formulaire manquant.";
                 if(PROD==false){
+                    var_dump(count($dataSubmit));
+                    var_dump(count($this->element));
                     trigger_error("<p class='dev_critical'>Check that all the elements of the form have an attribute &laquo; name &raquo;</p>", E_USER_ERROR);
                 }
             }
