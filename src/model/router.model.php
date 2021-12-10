@@ -419,7 +419,6 @@ class form{
                                                         $errorList[] = "Un ou des champs dépasse la longueur maximum.";
                                                     }
                                                 }
-
                                         }else{
                                             $errorList[] = "Erreur interne.";
                                             if(PROD==false){
@@ -482,10 +481,15 @@ class form{
                             if($tag=="select"){
                                 if(array_key_exists('option', $attributList["attributList"])){
                                     if(gettype($attributList["attributList"]["option"])=="array"){ // i check if the option value provided is of type "array"
-                                        // MULTIPLE VALUES
+                                        if(array_key_exists("multiple", $attributList["attributList"])){ // IF SELECT MULTIPLE EXPECTED
+                                            // MULTIPLE VALUES RETURNED
                                             if(gettype($dataSubmit[$attributList["attributList"]["name"]])=="array"){
                                                 foreach($dataSubmit[$attributList["attributList"]["name"]] as $value){
                                                     if(!array_key_exists($value, $attributList["attributList"]["option"])){
+                                                        // <!------------------------------------------
+                                                            // --> supprimer doublons dans le tableau...
+                                                            // ONLY ALL VALUES ARE NULL (SECURITY PREVENT)
+                                                        // ------------------------------------------!>
                                                         $errorList[] = "Erreur: valeur(s) non-attendu(s) d'un ou plusieurs menu déroulants ";
                                                         if(PROD==false){
                                                             trigger_error("<p class='dev_critical'>Security: the value sended form &quot; select &quot; dont't feel be in the object.</p>", E_USER_ERROR);
@@ -493,14 +497,36 @@ class form{
                                                     }
                                                 }
                                             }else{
-                                                // ALONE VALUE
+                                                // IF ALONE VALUE RETURNED
                                                 if(!array_key_exists($dataSubmit[$attributList["attributList"]["name"]], $attributList["attributList"]["option"])){ // i check if the value sended is in array (object)
+                                                    // <!------------------------------------------
+                                                            // RETURN ERROR IF ONLY...
+                                                    // ------------------------------------------!>
                                                     $errorList[] = "Erreur: valeur(s) non-attendu(s) d'un ou plusieurs menu déroulants ";
                                                     if(PROD==false){
                                                         trigger_error("<p class='dev_critical'>Security: the value sended form &quot; select &quot; dont't feel be in the object.</p>", E_USER_ERROR);
                                                     }   
                                                 }
                                             }
+                                        }else{
+                                            // IF ALONE VALUE EXPECTED
+                                            if(gettype($dataSubmit[$attributList["attributList"]["name"]])=="string"){
+                                                if(!array_key_exists($dataSubmit[$attributList["attributList"]["name"]], $attributList["attributList"]["option"])){ // i check if the value sended is in array (object)
+                                                    // <!------------------------------------------
+                                                        // NOTHING ELSE HERE
+                                                    // ------------------------------------------!>
+                                                    $errorList[] = "Erreur: valeur(s) non-attendu(s) d'un ou plusieurs menu déroulants ";
+                                                    if(PROD==false){
+                                                        trigger_error("<p class='dev_critical'>Security: the value sended form &quot; select &quot; dont't feel be in the object.</p>", E_USER_ERROR);
+                                                    }   
+                                                }
+                                            }else{
+                                                $errorList[] = "Erreur: une seule valeur attendue pour un ou plusieurs menu déroulant.";
+                                                if(PROD==false){
+                                                    trigger_error("<p class='dev_critical'>Security: string expected for &quot; select &quot; field.</p>", E_USER_ERROR);
+                                                }   
+                                            }
+                                        }
                                     }else{
                                         $errorList[] = "Erreur interne.";
                                         if(PROD==false){
@@ -514,11 +540,6 @@ class form{
                                     }   
                                 }
                             }
-
-                            // WARNING
-                            // WARNING
-                            // WARNING
-                            // SELECT IF MULTIPLES VALUES SUBMIT ARE IN THE ORIGINAL FORM
                         }else{
                             $errorList[] = "Erreur interne.";
                             if(PROD==false){
