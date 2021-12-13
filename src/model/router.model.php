@@ -357,7 +357,7 @@ class form{
     }    
 
     public function check():array{
-        $errorListing =  array(
+        $err =  array(
             "ie" => "Internal error.",
             "require" => "Tous les champs sont requis ne sont pas complétés.",
             "nodata" => "Pas de données envoyées.",
@@ -401,7 +401,7 @@ class form{
                             $bypassCheckLength = false;
                             if(array_key_exists('required', $attributList["attributList"])){ // i check if there the attr required in object
                                 if(security::cleanStr($dataSubmit[$attributList["attributList"]["name"]])==""){
-                                    $errorList[] = $errorListing["require"];
+                                    $errorList[] = $err["require"];
                                     $bypassCheckLength = true;
                                     if(PROD==false){
                                         trigger_error("<p class='dev_critical'>One or more element required bypassed.</p>", E_USER_ERROR);
@@ -419,15 +419,15 @@ class form{
                                             
                                                 if($vMinMax=="minlength"){
                                                     if(strlen(format::normalize($dataSubmit[$attributList["attributList"]["name"]])) < $attributList["attributList"][$vMinMax]){ // if data form form > maxlength
-                                                        $errorList[] = $errorListing["minlength"];
+                                                        $errorList[] = $err["minlength"];
                                                     }
                                                 }else{
                                                     if(strlen(format::normalize($dataSubmit[$attributList["attributList"]["name"]])) > $attributList["attributList"][$vMinMax]){ // if data form form > maxlength
-                                                        $errorList[] = $errorListing["maxlength"];
+                                                        $errorList[] = $err["maxlength"];
                                                     }
                                                 }
                                         }else{
-                                            $errorList[] = $errorListing["ie"];
+                                            $errorList[] = $err["ie"];
                                             if(PROD==false){
                                                 trigger_error("<p class='dev_critical'>$vMinMax MUST BE an integer.</p>", E_USER_ERROR);
                                             }  
@@ -441,21 +441,21 @@ class form{
                                 if(array_key_exists('type', $attributList["attributList"])){
                                     if($attributList["attributList"]["type"]=="email"){
                                         if (!filter_var($dataSubmit[$attributList["attributList"]["name"]], FILTER_VALIDATE_EMAIL)) {
-                                            $errorList[] = $errorListing["email"];
+                                            $errorList[] = $err["email"];
                                         }
                                     }elseif($attributList["attributList"]["type"]=="number" || $attributList["attributList"]["type"]=="range"){
                                         if(!is_numeric($dataSubmit[$attributList["attributList"]["name"]])){
-                                            $errorList[] = $errorListing["number"];
+                                            $errorList[] = $err["number"];
                                         }else{
                                             // IF IS THE VALUE IS NUMERIC
                                             // attr: min
                                             if(array_key_exists("min", $attributList["attributList"])){ // if the attribute "min" is init in object
                                                 if(is_numeric($attributList["attributList"]["min"])){
                                                     if(intval($dataSubmit[$attributList["attributList"]["name"]]) < intval($attributList["attributList"]["min"])){
-                                                        $errorList[] = $errorListing["min"];
+                                                        $errorList[] = $err["min"];
                                                     }
                                                 }else{
-                                                    $errorList[] = $errorListing["ie"];
+                                                    $errorList[] = $err["ie"];
                                                     if(PROD==false){
                                                         trigger_error("<p class='dev_critical'>Check out if the attribute &quot, min &quot; is a numeric value.</p>", E_USER_ERROR);
                                                     }    
@@ -465,10 +465,10 @@ class form{
                                             if(array_key_exists("max", $attributList["attributList"])){ // if the attribute "min" is init in object
                                                 if(is_numeric($attributList["attributList"]["max"])){
                                                     if(intval($dataSubmit[$attributList["attributList"]["name"]]) > intval($attributList["attributList"]["max"])){
-                                                        $errorList[] = $errorListing["max"];
+                                                        $errorList[] = $err["max"];
                                                     }
                                                 }else{
-                                                    $errorList[] = $errorListing["ie"];
+                                                    $errorList[] = $err["ie"];
                                                     if(PROD==false){
                                                         trigger_error("<p class='dev_critical'>Check out if the attribute &quot, min &quot; is a numeric value.</p>", E_USER_ERROR);
                                                     }    
@@ -477,14 +477,14 @@ class form{
                                         }
                                     }elseif($attributList["attributList"]["type"]=="color"){
                                         if(!preg_match('/^#[a-f0-9]{6}$/i', $dataSubmit[$attributList["attributList"]["name"]])){
-                                            $errorList[] = $errorListing["hex"];
+                                            $errorList[] = $err["hex"];
                                             if(PROD==false){
                                                 trigger_error("<p class='dev_critical'>One ore more attribute(s) &quot; type &quot; missing in the tag &quot; input &quot;.</p>", E_USER_ERROR);
                                             }         
                                         }
                                     }
                                 }else{
-                                    $errorList[] = $errorListing["ie"];
+                                    $errorList[] = $err["ie"];
                                     if(PROD==false){
                                         trigger_error("<p class='dev_critical'>One ore more attribute(s) &quot; type &quot; missing in the tag &quot; input &quot;.</p>", E_USER_ERROR);
                                     }     
@@ -506,14 +506,14 @@ class form{
                                                                 // --> supprimer doublons dans le tableau...
                                                                 // ONLY ALL VALUES ARE NULL (SECURITY PREVENT)
                                                             // ------------------------------------------!>
-                                                            $errorList[] = $errorListing["unexpectedVal"];
+                                                            $errorList[] = $err["unexpectedVal"];
                                                             if(PROD==false){
                                                                 trigger_error("<p class='dev_critical'>Security: the value sended form &quot; select &quot; dont't feel be in the object.</p>", E_USER_ERROR);
                                                             }   
                                                         }
                                                     }
                                                 }else{
-                                                    $errorList[] = $errorListing["unexpectedVal"];
+                                                    $errorList[] = $err["unexpectedVal"];
                                                 }
                                             }else{
                                                 // IF ALONE VALUE RETURNED
@@ -522,7 +522,7 @@ class form{
                                                             // RETURN ERROR IF ONLY INPUT REQUIRED AND 1 VALUE NULL
                                                     // ------------------------------------------!>
                                                     if(array_key_exists("required", $attributList["attributList"])){
-                                                        $errorList[] = $errorListing["unexpectedVal"];
+                                                        $errorList[] = $err["unexpectedVal"];
                                                         if(PROD==false){
                                                             trigger_error("<p class='dev_critical'>Security: the value sended form &quot; select &quot; dont't feel be in the object.</p>", E_USER_ERROR);
                                                         }   
@@ -536,47 +536,47 @@ class form{
                                                     // <!------------------------------------------
                                                         // NOTHING ELSE HERE
                                                     // ------------------------------------------!>
-                                                    $errorList[] = $errorListing["unexpectedVal"];
+                                                    $errorList[] = $err["unexpectedVal"];
                                                     if(PROD==false){
                                                         trigger_error("<p class='dev_critical'>Security: the value sended form &quot; select &quot; dont't feel be in the object.</p>", E_USER_ERROR);
                                                     }   
                                                 }
                                             }else{
-                                                $errorList[] = $errorListing["unexpectedVal2"];
+                                                $errorList[] = $err["unexpectedVal2"];
                                                 if(PROD==false){
                                                     trigger_error("<p class='dev_critical'>Security: string expected for &quot; select &quot; field.</p>", E_USER_ERROR);
                                                 }   
                                             }
                                         }
                                     }else{
-                                        $errorList[] = $errorListing["ie"];
+                                        $errorList[] = $err["ie"];
                                         if(PROD==false){
                                             trigger_error("<p class='dev_critical'>Check out the element(s) &quot; select &quot;: value of type array expected.</p>", E_USER_ERROR);
                                         }   
                                     }
                                 }else{
-                                    $errorList[] = $errorListing["ie"];
+                                    $errorList[] = $err["ie"];
                                     if(PROD==false){
                                         trigger_error("<p class='dev_critical'>Check out the element(s) &quot; select &quot;: a dropdown must contain an array with value(s).</p>", E_USER_ERROR);
                                     }   
                                 }
                             }
                         }else{
-                            $errorList[] = $errorListing["ie"];
+                            $errorList[] = $err["ie"];
                             if(PROD==false){
                                 trigger_error("<p class='dev_critical'>Unrecognized form element (tag).</p>", E_USER_ERROR);
                             }  
                         }
                     }
                 }else{
-                    $errorList[] = $errorListing["misElmt"];
+                    $errorList[] = $err["misElmt"];
                     if(PROD==false){
                         trigger_error("<p class='dev_critical'>Check if all submitted data $methodUsed is expected (that there is no more data sent).</p>", E_USER_ERROR);
                     }  
                 }
                 
             }else{
-                $errorList[] = $errorListing["misElmt"];
+                $errorList[] = $err["misElmt"];
                 if(PROD==false){
                     var_dump(count($dataSubmit));
                     var_dump(count($this->element));
@@ -584,7 +584,7 @@ class form{
                 }
             }
         }else{
-            $errorList[] = $errorListing["nodata"]; 
+            $errorList[] = $err["nodata"]; 
         }
         return $errorList;
     }
