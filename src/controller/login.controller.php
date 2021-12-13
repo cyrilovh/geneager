@@ -2,7 +2,7 @@
 
 namespace gng;
 
-metaTitle::setTitle("Connexion"); // i set the title page + separator + website name
+    metaTitle::setTitle("Connexion"); // i set the title page + separator + website name
     $meta_robots = "noindex,nofollow";
     $include_footer = "none";
     additionnalJsCss::set("login.css");
@@ -35,6 +35,7 @@ metaTitle::setTitle("Connexion"); // i set the title page + separator + website 
         "name" => "age",
         "style" => "width:150px;",
         "multiple" => "multiple",
+        "required" => NULL,
         "option" => array(
             "majeur" => "+18",
             "mineur" => "-18"

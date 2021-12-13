@@ -301,7 +301,10 @@ class form{
                             if(array_key_exists('option', $attributList["attributList"])){
                                 if(gettype($attributList["attributList"]["option"])=="array"){
                                     // multiple select debug (1/2)
-                                    $attributList["attributList"]["option"][NULL]="";
+                                    if(in_array(format::normalize("multiple"), $attributList["attributList"])){
+                                        $attributList["attributList"]["option"][NULL]="";
+                                    }
+
                                     foreach($attributList["attributList"]["option"] as $kOption => $vOption){
                                         $optionList .= "<option value='$kOption'>$vOption</option>";
                                     }
@@ -363,7 +366,6 @@ class form{
     4 - i check attributes minlength, maxlength, required, (min, max)
      
     */
-
     public function check():array{
         $errorList = array();
         $methodUsed = (format::normalize($this->method)=="post") ? "POST" : "GET";
@@ -484,28 +486,35 @@ class form{
                                         if(array_key_exists("multiple", $attributList["attributList"])){ // IF SELECT MULTIPLE EXPECTED
                                             // MULTIPLE VALUES RETURNED
                                             if(gettype($dataSubmit[$attributList["attributList"]["name"]])=="array"){
-                                                foreach($dataSubmit[$attributList["attributList"]["name"]] as $value){
-                                                    if(!array_key_exists($value, $attributList["attributList"]["option"])){
-                                                        // <!------------------------------------------
-                                                            // --> supprimer doublons dans le tableau...
-                                                            // ONLY ALL VALUES ARE NULL (SECURITY PREVENT)
-                                                        // ------------------------------------------!>
-                                                        $errorList[] = "Erreur: valeur(s) non-attendu(s) d'un ou plusieurs menu déroulants ";
-                                                        if(PROD==false){
-                                                            trigger_error("<p class='dev_critical'>Security: the value sended form &quot; select &quot; dont't feel be in the object.</p>", E_USER_ERROR);
-                                                        }   
+                                                $cleanArr = format::cleanArr($dataSubmit[$attributList["attributList"]["name"]]);
+                                                if(count($cleanArr)>0){
+                                                    foreach($cleanArr as $value){
+                                                        if(!array_key_exists($value, $attributList["attributList"]["option"])){
+                                                            // <!------------------------------------------
+                                                                // --> supprimer doublons dans le tableau...
+                                                                // ONLY ALL VALUES ARE NULL (SECURITY PREVENT)
+                                                            // ------------------------------------------!>
+                                                            $errorList[] = "Erreur: valeur(s) non-attendu(s) d'un ou plusieurs menu déroulants ";
+                                                            if(PROD==false){
+                                                                trigger_error("<p class='dev_critical'>Security: the value sended form &quot; select &quot; dont't feel be in the object.</p>", E_USER_ERROR);
+                                                            }   
+                                                        }
                                                     }
+                                                }else{
+                                                    $errorList[] = "Erreur: valeur(s) non-attendu(s) d'un ou plusieurs menu déroulants.";
                                                 }
                                             }else{
                                                 // IF ALONE VALUE RETURNED
                                                 if(!array_key_exists($dataSubmit[$attributList["attributList"]["name"]], $attributList["attributList"]["option"])){ // i check if the value sended is in array (object)
                                                     // <!------------------------------------------
-                                                            // RETURN ERROR IF ONLY...
+                                                            // RETURN ERROR IF ONLY INPUT REQUIRED AND 1 VALUE NULL
                                                     // ------------------------------------------!>
-                                                    $errorList[] = "Erreur: valeur(s) non-attendu(s) d'un ou plusieurs menu déroulants ";
-                                                    if(PROD==false){
-                                                        trigger_error("<p class='dev_critical'>Security: the value sended form &quot; select &quot; dont't feel be in the object.</p>", E_USER_ERROR);
-                                                    }   
+                                                    if(array_key_exists("required", $attributList["attributList"])){
+                                                        $errorList[] = "Erreur: valeur(s) non-attendu(s) d'un ou plusieurs menu déroulants ";
+                                                        if(PROD==false){
+                                                            trigger_error("<p class='dev_critical'>Security: the value sended form &quot; select &quot; dont't feel be in the object.</p>", E_USER_ERROR);
+                                                        }   
+                                                    }
                                                 }
                                             }
                                         }else{
@@ -798,5 +807,19 @@ class format{
     public static function normalize(string $str):string{
         return preg_replace('/\s+/', ' ', strtolower(trim($str)));
     }
+
+    public static function cleanArr(array $arr):array{
+        $cleanArr = [];
+
+        // first i clean all values and insert into new array
+        foreach($arr as $key => $value){
+            $cleanValue = format::normalize($value);
+            $cleanArr[] = $cleanValue;
+        }
+        // i remove duplicate values
+        array_unique($cleanArr);
+        return $cleanArr;
+    }
+
 }
 ?>

@@ -9,13 +9,6 @@
             <a href="/videoList"><i class="fas fa-film"></i><span class="txt"> Vidéos</span></a>
             <a href="/tree"><i class="fas fa-sitemap"></i><span class="txt"> Arbre</span></a>
             <!-- str dropdown -->
-            <p data-dropdown="navbarPageList" class="dropdownMenu"><i class="far fa-newspaper"></i> Pages</p>
-            <div data-dropdown="navbarPageList" class="dropdownList">
-                <p>Blog</p>
-                <p>Contact</p>
-            </div>
-            <!-- end dropdown -->
-            <!-- str dropdown -->
             <p data-dropdown="navbarAccount" class="dropdownMenu"><i class="far fa-user"></i> Mon compte</p>
             <div data-dropdown="navbarAccount" class="dropdownList">
                 <?php if(isset($_SESSION["username"])){ ?>
