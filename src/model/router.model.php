@@ -356,17 +356,22 @@ class form{
         return $return."</form>"; // end of the string
     }    
 
-    // check out if the form is
-    // WARNING CHECK OUT TOO IS THE FORM EXIST/IS SUBMIT AAAAANNNNDDDD IF THE ATTRIBUTE EXIST
-
-    /*
-    1 - i check if the form is submit
-    2 - i check if all form are submit /!\ WARNING: THEN CHECK OUT IF the name are not modified by visitor
-    3 - i check if the type is true
-    4 - i check attributes minlength, maxlength, required, (min, max)
-     
-    */
     public function check():array{
+        $errorListing =  array(
+            "ie" => "Internal error.",
+            "require" => "Tous les champs sont requis ne sont pas complétés.",
+            "nodata" => "Pas de données envoyées.",
+            "minlength" => "Un ou des champs ne respecte pas la longueur minimum requise.",
+            "maxlength" => "Un ou des champs dépasse la longueur maximum.",
+            "email" => "Un ou des champs e-mail invalide(s): vérifiez le format.",
+            "number" => "Un ou des champs incorrect(s): une valeur numérique est attendue.",
+            "min" => "Un ou des champs incorrect(s): une valeur numérique est inférieur à celle attendue.",
+            "max" => "Un ou des champs incorrect(s): une valeur numérique est supérieure à celle attendue.",
+            "hex" => "Un ou plusieur(s) champ(s) couleur HEX invalides.",
+            "unexpectedVal" => "Erreur: valeur(s) non-attendu(s) d'un ou plusieurs menu déroulants.",
+            "unexpectedVal2" => "Erreur: une seule valeur attendue pour un ou plusieurs menu déroulant.",
+            "misElmt" => "Element(s) de formulaire en trop ou manquant"
+        );
         $errorList = array();
         $methodUsed = (format::normalize($this->method)=="post") ? "POST" : "GET";
         $dataSubmit = (format::normalize($this->method)=="post") ? $_POST : $_GET;
@@ -396,7 +401,7 @@ class form{
                             $bypassCheckLength = false;
                             if(array_key_exists('required', $attributList["attributList"])){ // i check if there the attr required in object
                                 if(security::cleanStr($dataSubmit[$attributList["attributList"]["name"]])==""){
-                                    $errorList[] = "Tous les champs requis ne sont pas complétés.";
+                                    $errorList[] = $errorListing["require"];
                                     $bypassCheckLength = true;
                                     if(PROD==false){
                                         trigger_error("<p class='dev_critical'>One or more element required bypassed.</p>", E_USER_ERROR);
@@ -414,15 +419,15 @@ class form{
                                             
                                                 if($vMinMax=="minlength"){
                                                     if(strlen(format::normalize($dataSubmit[$attributList["attributList"]["name"]])) < $attributList["attributList"][$vMinMax]){ // if data form form > maxlength
-                                                        $errorList[] = "Un ou des champs ne respecte pas la longueur minimum requise.";
+                                                        $errorList[] = $errorListing["minlength"];
                                                     }
                                                 }else{
                                                     if(strlen(format::normalize($dataSubmit[$attributList["attributList"]["name"]])) > $attributList["attributList"][$vMinMax]){ // if data form form > maxlength
-                                                        $errorList[] = "Un ou des champs dépasse la longueur maximum.";
+                                                        $errorList[] = $errorListing["maxlength"];
                                                     }
                                                 }
                                         }else{
-                                            $errorList[] = "Erreur interne.";
+                                            $errorList[] = $errorListing["ie"];
                                             if(PROD==false){
                                                 trigger_error("<p class='dev_critical'>$vMinMax MUST BE an integer.</p>", E_USER_ERROR);
                                             }  
@@ -436,21 +441,21 @@ class form{
                                 if(array_key_exists('type', $attributList["attributList"])){
                                     if($attributList["attributList"]["type"]=="email"){
                                         if (!filter_var($dataSubmit[$attributList["attributList"]["name"]], FILTER_VALIDATE_EMAIL)) {
-                                            $errorList[] = "Un ou des champs e-mail invalide(s): vérifiez le format.";
+                                            $errorList[] = $errorListing["email"];
                                         }
                                     }elseif($attributList["attributList"]["type"]=="number" || $attributList["attributList"]["type"]=="range"){
                                         if(!is_numeric($dataSubmit[$attributList["attributList"]["name"]])){
-                                            $errorList[] = "Un ou des champs incorrect(s): une valeur numérique est attendue.";
+                                            $errorList[] = $errorListing["number"];
                                         }else{
                                             // IF IS THE VALUE IS NUMERIC
                                             // attr: min
                                             if(array_key_exists("min", $attributList["attributList"])){ // if the attribute "min" is init in object
                                                 if(is_numeric($attributList["attributList"]["min"])){
                                                     if(intval($dataSubmit[$attributList["attributList"]["name"]]) < intval($attributList["attributList"]["min"])){
-                                                        $errorList[] = "Un ou des champs incorrect(s): une valeur numérique est inférieur à celle attendue.";
+                                                        $errorList[] = $errorListing["min"];
                                                     }
                                                 }else{
-                                                    $errorList[] = "Erreur interne.";
+                                                    $errorList[] = $errorListing["ie"];
                                                     if(PROD==false){
                                                         trigger_error("<p class='dev_critical'>Check out if the attribute &quot, min &quot; is a numeric value.</p>", E_USER_ERROR);
                                                     }    
@@ -460,10 +465,10 @@ class form{
                                             if(array_key_exists("max", $attributList["attributList"])){ // if the attribute "min" is init in object
                                                 if(is_numeric($attributList["attributList"]["max"])){
                                                     if(intval($dataSubmit[$attributList["attributList"]["name"]]) > intval($attributList["attributList"]["max"])){
-                                                        $errorList[] = "Un ou des champs incorrect(s): une valeur numérique est supérieure à celle attendue.";
+                                                        $errorList[] = $errorListing["max"];
                                                     }
                                                 }else{
-                                                    $errorList[] = "Erreur interne.";
+                                                    $errorList[] = $errorListing["ie"];
                                                     if(PROD==false){
                                                         trigger_error("<p class='dev_critical'>Check out if the attribute &quot, min &quot; is a numeric value.</p>", E_USER_ERROR);
                                                     }    
@@ -472,14 +477,14 @@ class form{
                                         }
                                     }elseif($attributList["attributList"]["type"]=="color"){
                                         if(!preg_match('/^#[a-f0-9]{6}$/i', $dataSubmit[$attributList["attributList"]["name"]])){
-                                            $errorList[] = "Un ou plusieur(s) champ(s) couleur HEX invalides.";
+                                            $errorList[] = $errorListing["hex"];
                                             if(PROD==false){
                                                 trigger_error("<p class='dev_critical'>One ore more attribute(s) &quot; type &quot; missing in the tag &quot; input &quot;.</p>", E_USER_ERROR);
                                             }         
                                         }
                                     }
                                 }else{
-                                    $errorList[] = "Erreur interne.";
+                                    $errorList[] = $errorListing["ie"];
                                     if(PROD==false){
                                         trigger_error("<p class='dev_critical'>One ore more attribute(s) &quot; type &quot; missing in the tag &quot; input &quot;.</p>", E_USER_ERROR);
                                     }     
@@ -501,14 +506,14 @@ class form{
                                                                 // --> supprimer doublons dans le tableau...
                                                                 // ONLY ALL VALUES ARE NULL (SECURITY PREVENT)
                                                             // ------------------------------------------!>
-                                                            $errorList[] = "Erreur: valeur(s) non-attendu(s) d'un ou plusieurs menu déroulants ";
+                                                            $errorList[] = $errorListing["unexpectedVal"];
                                                             if(PROD==false){
                                                                 trigger_error("<p class='dev_critical'>Security: the value sended form &quot; select &quot; dont't feel be in the object.</p>", E_USER_ERROR);
                                                             }   
                                                         }
                                                     }
                                                 }else{
-                                                    $errorList[] = "Erreur: valeur(s) non-attendu(s) d'un ou plusieurs menu déroulants.";
+                                                    $errorList[] = $errorListing["unexpectedVal"];
                                                 }
                                             }else{
                                                 // IF ALONE VALUE RETURNED
@@ -517,7 +522,7 @@ class form{
                                                             // RETURN ERROR IF ONLY INPUT REQUIRED AND 1 VALUE NULL
                                                     // ------------------------------------------!>
                                                     if(array_key_exists("required", $attributList["attributList"])){
-                                                        $errorList[] = "Erreur: valeur(s) non-attendu(s) d'un ou plusieurs menu déroulants ";
+                                                        $errorList[] = $errorListing["unexpectedVal"];
                                                         if(PROD==false){
                                                             trigger_error("<p class='dev_critical'>Security: the value sended form &quot; select &quot; dont't feel be in the object.</p>", E_USER_ERROR);
                                                         }   
@@ -531,47 +536,47 @@ class form{
                                                     // <!------------------------------------------
                                                         // NOTHING ELSE HERE
                                                     // ------------------------------------------!>
-                                                    $errorList[] = "Erreur: valeur(s) non-attendu(s) d'un ou plusieurs menu déroulants ";
+                                                    $errorList[] = $errorListing["unexpectedVal"];
                                                     if(PROD==false){
                                                         trigger_error("<p class='dev_critical'>Security: the value sended form &quot; select &quot; dont't feel be in the object.</p>", E_USER_ERROR);
                                                     }   
                                                 }
                                             }else{
-                                                $errorList[] = "Erreur: une seule valeur attendue pour un ou plusieurs menu déroulant.";
+                                                $errorList[] = $errorListing["unexpectedVal2"];
                                                 if(PROD==false){
                                                     trigger_error("<p class='dev_critical'>Security: string expected for &quot; select &quot; field.</p>", E_USER_ERROR);
                                                 }   
                                             }
                                         }
                                     }else{
-                                        $errorList[] = "Erreur interne.";
+                                        $errorList[] = $errorListing["ie"];
                                         if(PROD==false){
                                             trigger_error("<p class='dev_critical'>Check out the element(s) &quot; select &quot;: value of type array expected.</p>", E_USER_ERROR);
                                         }   
                                     }
                                 }else{
-                                    $errorList[] = "Erreur interne.";
+                                    $errorList[] = $errorListing["ie"];
                                     if(PROD==false){
                                         trigger_error("<p class='dev_critical'>Check out the element(s) &quot; select &quot;: a dropdown must contain an array with value(s).</p>", E_USER_ERROR);
                                     }   
                                 }
                             }
                         }else{
-                            $errorList[] = "Erreur interne.";
+                            $errorList[] = $errorListing["ie"];
                             if(PROD==false){
                                 trigger_error("<p class='dev_critical'>Unrecognized form element (tag).</p>", E_USER_ERROR);
                             }  
                         }
                     }
                 }else{
-                    $errorList[] = "&Eacute;lements manquant ou en trop.";
+                    $errorList[] = $errorListing["misElmt"];
                     if(PROD==false){
                         trigger_error("<p class='dev_critical'>Check if all submitted data $methodUsed is expected (that there is no more data sent).</p>", E_USER_ERROR);
                     }  
                 }
                 
             }else{
-                $errorList[] = "Element de formulaire manquant.";
+                $errorList[] = $errorListing["misElmt"];
                 if(PROD==false){
                     var_dump(count($dataSubmit));
                     var_dump(count($this->element));
@@ -579,7 +584,7 @@ class form{
                 }
             }
         }else{
-            $errorList[] = "Pas de données envoyées"; 
+            $errorList[] = $errorListing["nodata"]; 
         }
         return $errorList;
     }
