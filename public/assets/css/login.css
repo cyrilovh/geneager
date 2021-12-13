@@ -6,9 +6,19 @@ div.login {
     flex-direction: column;
     align-content: space-around;
     align-items: stretch;
-    flex-wrap: wrap
+    flex-wrap: wrap;
 
-}  
+} 
+div.login h1, div.login input, div.login p{
+    text-align: center;
+    display: block;
+}
+div.login h1, div.login p.forgot{
+    margin:10px 0px;
+}
+div.login .back{
+    cursor:pointer;
+} 
 div.modal{
     min-width:350px;
     max-width: 450px;
@@ -20,13 +30,6 @@ div.modal{
     -o-border-radius:5px;
     -moz-border-radius:5px;
 }
-div.login h1, div.login input, div.login p{
-    text-align: center;
-    display: block;
-}
-div.login h1, div.login p.forgot{
-    margin:10px 0px;
-}
 form.login input{
     max-width: 350px;
     width:100vw;
@@ -35,6 +38,9 @@ form.login input{
     border-bottom:1px solid silver;
     outline:none;
     padding:5px 1px !important;
+}
+form.login input:active{
+    border-bottom:1px solid gray;
 }
 form.login input[type="submit"]{
     margin-left:1px !important;

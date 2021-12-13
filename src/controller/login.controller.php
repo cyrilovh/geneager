@@ -8,6 +8,7 @@ namespace gng;
     $include_navbar = "none";
     $include_footer = "none";
     additionnalJsCss::set("login.css");
+    additionnalJsCss::set("login.js");
 
     $formLogin = new form(array( // i declare my new object
         "method" => "post", // i give the method attr

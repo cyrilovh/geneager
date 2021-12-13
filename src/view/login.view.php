@@ -2,6 +2,7 @@
 
 <div class="login">
     <div class="modal">
+        <i class="fas fa-arrow-left back"></i> <i class="fas fa-home home" data-href="/"></i>
         <p><img class="text-center" src="/assets/img/login.webp" /></p>
         <h1>Authentification</h1>
         <?=$formLogin->display(); ?>
