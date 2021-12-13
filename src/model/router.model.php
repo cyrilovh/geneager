@@ -502,10 +502,6 @@ class form{
                                                 if(count($cleanArr)>0){
                                                     foreach($cleanArr as $value){
                                                         if(!array_key_exists($value, $attributList["attributList"]["option"])){
-                                                            // <!------------------------------------------
-                                                                // --> supprimer doublons dans le tableau...
-                                                                // ONLY ALL VALUES ARE NULL (SECURITY PREVENT)
-                                                            // ------------------------------------------!>
                                                             $errorList[] = $err["unexpectedVal"];
                                                             if(PROD==false){
                                                                 trigger_error("<p class='dev_critical'>Security: the value sended form &quot; select &quot; dont't feel be in the object.</p>", E_USER_ERROR);
@@ -518,9 +514,6 @@ class form{
                                             }else{
                                                 // IF ALONE VALUE RETURNED
                                                 if(!array_key_exists($dataSubmit[$attributList["attributList"]["name"]], $attributList["attributList"]["option"])){ // i check if the value sended is in array (object)
-                                                    // <!------------------------------------------
-                                                            // RETURN ERROR IF ONLY INPUT REQUIRED AND 1 VALUE NULL
-                                                    // ------------------------------------------!>
                                                     if(array_key_exists("required", $attributList["attributList"])){
                                                         $errorList[] = $err["unexpectedVal"];
                                                         if(PROD==false){
@@ -533,9 +526,6 @@ class form{
                                             // IF ALONE VALUE EXPECTED
                                             if(gettype($dataSubmit[$attributList["attributList"]["name"]])=="string"){
                                                 if(!array_key_exists($dataSubmit[$attributList["attributList"]["name"]], $attributList["attributList"]["option"])){ // i check if the value sended is in array (object)
-                                                    // <!------------------------------------------
-                                                        // NOTHING ELSE HERE
-                                                    // ------------------------------------------!>
                                                     $errorList[] = $err["unexpectedVal"];
                                                     if(PROD==false){
                                                         trigger_error("<p class='dev_critical'>Security: the value sended form &quot; select &quot; dont't feel be in the object.</p>", E_USER_ERROR);

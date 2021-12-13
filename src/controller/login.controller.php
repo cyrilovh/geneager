@@ -4,6 +4,8 @@ namespace gng;
 
     metaTitle::setTitle("Connexion"); // i set the title page + separator + website name
     $meta_robots = "noindex,nofollow";
+    $include_header = "none";
+    $include_navbar = "none";
     $include_footer = "none";
     additionnalJsCss::set("login.css");
 
@@ -19,29 +21,26 @@ namespace gng;
         "name" => "username", // i give a className
         "required" => "required", // i add the attr required
         "minlength" => db::getParameter("usernameMinLength"), // i add the attr minlength
-        "maxlength" => db::getParameter("usernameMaxLength") // i add the attr maxlength
+        "maxlength" => db::getParameter("usernameMaxLength"), // i add the attr maxlength
+        "data-gngLabel" => "Utilisateur",
+        "class" => "form-control"
     ));
 
     $formLogin->setElement("input", array(
         "type" => "password",
         "placeholder" => "Mot de passe",
         "name" => "password",
-
         "minlength" => db::getParameter("passwordMinLength"),
-        "maxlength" => db::getParameter("passwordMaxLength")
-    ));
-
-    $formLogin->setElement("input", array(
-        "type" => "color",
-        "placeholder" => "#fffff",
-        "name" => "color",
+        "maxlength" => db::getParameter("passwordMaxLength"),
+        "data-gngLabel" => "Mot de passe",
+        "class" => "form-control"
     ));
 
     $formLogin->setElement("input", array(
         "type" => "submit",
         "value" => "Connexion",
         "name" => "submit",
-        "class" => "btn btn-primary" // i add a class to the element
+        "class" => "btn btn-primary form-control" // i add a class to the element
     ));
 
     //print_r($formLogin);
