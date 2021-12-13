@@ -470,6 +470,13 @@ class form{
                                                 }
                                             }     
                                         }
+                                    }elseif($attributList["attributList"]["type"]=="color"){
+                                        if(!preg_match('/^#[a-f0-9]{6}$/i', $dataSubmit[$attributList["attributList"]["name"]])){
+                                            $errorList[] = "Un ou plusieur(s) champ(s) couleur HEX invalides.";
+                                            if(PROD==false){
+                                                trigger_error("<p class='dev_critical'>One ore more attribute(s) &quot; type &quot; missing in the tag &quot; input &quot;.</p>", E_USER_ERROR);
+                                            }         
+                                        }
                                     }
                                 }else{
                                     $errorList[] = "Erreur interne.";

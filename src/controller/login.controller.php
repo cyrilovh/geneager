@@ -31,15 +31,10 @@ namespace gng;
         "maxlength" => db::getParameter("passwordMaxLength")
     ));
 
-    $formLogin->setElement("select", array(
-        "name" => "age",
-        "style" => "width:150px;",
-        "multiple" => "multiple",
-        "required" => NULL,
-        "option" => array(
-            "majeur" => "+18",
-            "mineur" => "-18"
-        )
+    $formLogin->setElement("input", array(
+        "type" => "color",
+        "placeholder" => "#fffff",
+        "name" => "color",
     ));
 
     $formLogin->setElement("input", array(
