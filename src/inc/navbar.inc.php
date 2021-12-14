@@ -23,7 +23,6 @@
             <!-- end dropdown -->
         </div>
     </div>
-
     
     <div class="search">
         <i class="fas fa-search"></i><input type="search" value="" required minlength="2" maxlength="100" autocomplete="off"/>

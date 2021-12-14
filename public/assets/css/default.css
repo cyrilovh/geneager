@@ -937,9 +937,12 @@ nav{
     z-index:50;
     transition: all 500ms ease-in-out;
     overflow:auto;
+    align-items: center;
 }
 nav .dropbtn{
     background-color: var(--primary) !important;
+    width: 100%;
+    text-align: left;
 }
 /* links */
 nav a, nav p,nav .fa-bars{
@@ -947,7 +950,7 @@ nav a, nav p,nav .fa-bars{
     display: block;
     color: #f2f2f2;
     text-align: center;
-    padding: 14px 16px;
+    padding: 15px 16px;
     text-decoration: none;
     cursor:pointer;
 }
@@ -1023,7 +1026,8 @@ nav:not(.responsive) span.txt {
 
 /* FIELD SEARCH */
 nav div.search{
-    float: right;
+    position: absolute;
+    right: 0px;
     margin-right:10px;
     margin-bottom: 1px;
     border-bottom:1px solid #fff;
