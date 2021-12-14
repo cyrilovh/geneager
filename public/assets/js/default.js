@@ -9,21 +9,26 @@
                                                                                                                       
 */
 /* show/hide if small screen */
-var navbar = document.querySelector("nav");
-document.querySelector("nav .fa-bars").addEventListener("click",function(){
-    if (navbar.className == "topnav") {
-        navbar.className += " responsive";
-        document.body.style.overflow = 'hidden';
-    }else{
-        navbar.className = "topnav";
-        document.body.style.overflow = 'auto';
-    }
-});
+const navbar = document.querySelector("nav");
+if (typeof(navbar) != 'undefined' && navbar != null) {
+    document.querySelector("nav .fa-bars").addEventListener("click",function(){
+        if (navbar.className == "topnav") {
+            navbar.className += " responsive";
+            document.body.style.overflow = 'hidden';
+        }else{
+            navbar.className = "topnav";
+            document.body.style.overflow = 'auto';
+        }
+    });
+}
 
 /* CLOSE BTN SIDE NAVBAR */
-document.querySelector("nav .fa-times-circle").addEventListener("click",function(){
-    navbar.className = "topnav";
-});
+const btnCircle = document.querySelector("nav .fa-times-circle");
+if (typeof(btnCircle) != 'undefined' && btnCircle != null) {
+    btnCircle.addEventListener("click",function(){
+        navbar.className = "topnav";
+    });
+}
 
 /* FIX NAVBAR ON TOP ON SCROLL */
 window.addEventListener("scroll", function(event) {
@@ -54,7 +59,32 @@ window.addEventListener("scroll", function(event) {
         });
 }, false);
 
-
+/*
+  _____          _____  _  ____  __  ____  _____  ______ 
+ |  __ \   /\   |  __ \| |/ /  \/  |/ __ \|  __ \|  ____|
+ | |  | | /  \  | |__) | ' /| \  / | |  | | |  | | |__   
+ | |  | |/ /\ \ |  _  /|  < | |\/| | |  | | |  | |  __|  
+ | |__| / ____ \| | \ \| . \| |  | | |__| | |__| | |____ 
+ |_____/_/    \_\_|  \_\_|\_\_|  |_|\____/|_____/|______|
+                                                                                                                 
+*/
+/* ACTION ON BTN TOGGLE */
+var commut = document.querySelector(".darkmodeToggle input[type=checkbox]");
+if (typeof(commut) != 'undefined' && commut != null) {
+    if (typeof(commut) != 'undefined' && commut != null) {
+        commut.addEventListener('click', function() {
+            (document.querySelector("body").className == "dark") ? document.querySelector("body").className = "": document.querySelector("body").className = "dark";
+            (localStorage.getItem("darktheme") == "1") ? localStorage.setItem("darktheme", "0"): localStorage.setItem("darktheme", "1");
+        });
+    }
+    /* ONLOAD */
+    if(localStorage.getItem("darktheme")){
+        if(localStorage.getItem("darktheme")=="1"){
+            document.querySelector("body").className = "dark";
+            commut.checked = true;
+        }
+    }
+}
 /*
   _      _____ _   _ _  __ _____          _    __      __      _____  _____ _____  _____ _____ _______ 
  | |    |_   _| \ | | |/ // ____|        | |  /\ \    / /\    / ____|/ ____|  __ \|_   _|  __ \__   __|

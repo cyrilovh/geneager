@@ -57,6 +57,6 @@ div.ancestorLabel div p.dates {
     font-size: 16px;
 }
 div.ancestorLabel div p.genre {
-    color: #757575;
+    color: var(--main-gray);
     font-size: 13px;
 }
