@@ -962,8 +962,7 @@ nav a:hover, nav a.active, nav p:hover, nav p.active, nav .dropbtn:hover{
 nav .fa-bars, nav .fa-times-circle{
     display: none;
 }
-
-nav:not(.responsive) span.txt {
+nav span.txt{
     display: none;
 }
 
@@ -971,6 +970,10 @@ nav:not(.responsive) span.txt {
     nav .fa-bars{
         float:right;
         display:block;
+    }
+
+    nav span.txt{
+        display:inline;
     }
 
     nav.responsive .fa-times-circle{ /* close button */
