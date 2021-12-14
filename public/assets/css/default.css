@@ -209,33 +209,52 @@ img.e40x{ /* Errors 40x*/
                                                               
                                                               
 */
-p.dropdownMenu::after{ /* the selector */
-    font-family: "FontAwesome";
-    content: "\00a0\00a0\f0dd";
-}
-/* the list: */
-div.dropdownList{
-    position:fixed;
-    display:none;
-}
-div.dropdownList a{
-    padding:6px !important;
-}
-div.dropdownList.open{
-    position:fixed;
-    z-index:50;
-    display:block !important;
-}
-div.dropdownList p{
-    text-align:left;
-    background-color: var(--primary);
-    display:block;
-    width:100%;
-    padding:9px 0px 9px 0px;
-}
-div.dropdownList p::before{
-    content:"\00a0";
-}
+/* Dropdown Button */
+.dropbtn {
+    background-color: #04AA6D;
+    color: white;
+    padding: 15px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* The container <div> - needed to position the dropdown content */
+  .dropdown {
+     display: inline-block;
+     margin:0px 10px 0px 0px;
+
+  }
+  
+  /* Dropdown Content (Hidden by Default) */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1 !important;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    flex-direction: column;
+    align-content: space-around;
+    justify-content: space-between;
+    align-items: stretch;
+  }
+  
+  /* Links inside the dropdown */
+  .dropdown-content a {
+    color: black;
+
+    text-decoration: none;
+    display: block;
+  }
+  
+  /* Change color of dropdown links on hover */
+  .dropdown-content a:hover {background-color: #ddd !important;}
+  
+  /* Show the dropdown menu on hover */
+  .dropdown:hover .dropdown-content {display: flex;}
+  
+  /* Change the background color of the dropdown button when the dropdown content is shown */
+  .dropdown:hover .dropbtn {background-color: #3e8e41;}
 
 
 /* BOUTONS */
@@ -910,13 +929,18 @@ box-shadow: 0 0 0 0.2rem rgba(52, 58, 64, 0.5);
 */
 /* général */
 nav{
+    display: flex;
+    flex-direction: row;
+    align-content: flex-end;
     overflow: hidden;
     background-color: var(--primary);
     z-index:50;
     transition: all 500ms ease-in-out;
     overflow:auto;
 }
-
+nav .dropbtn{
+    background-color: var(--primary) !important;
+}
 /* links */
 nav a, nav p,nav .fa-bars{
     float: left;
@@ -928,8 +952,8 @@ nav a, nav p,nav .fa-bars{
     cursor:pointer;
 }
 
-nav a:hover, nav a.active, nav p:hover, nav p.active{
-    background-color: var(--primary2);
+nav a:hover, nav a.active, nav p:hover, nav p.active, nav .dropbtn:hover{
+    background-color: var(--primary2) !important;
 }
 
 nav .fa-bars, nav .fa-times-circle{
@@ -987,6 +1011,11 @@ nav:not(.responsive) span.txt {
         width:100%;
         text-align:left;
     }
+    nav.responsive div div{
+        padding: 10px 0px 10px 0px;
+        width: 100%;
+        text-align: left;
+    }
     nav.responsive div div a::before, nav.responsive div div p::before{
         content: "\00a0\00a0";
     }
@@ -996,6 +1025,7 @@ nav:not(.responsive) span.txt {
 nav div.search{
     float: right;
     margin-right:10px;
+    margin-bottom: 1px;
     border-bottom:1px solid #fff;
     padding-top: 10px;
 }

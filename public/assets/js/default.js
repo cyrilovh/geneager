@@ -54,64 +54,7 @@ window.addEventListener("scroll", function(event) {
         });
 }, false);
 
-/*
-  _____  _____   ____  _____  _____   ______          ___   _  _____ 
- |  __ \|  __ \ / __ \|  __ \|  __ \ / __ \ \        / / \ | |/ ____|
- | |  | | |__) | |  | | |__) | |  | | |  | \ \  /\  / /|  \| | (___  
- | |  | |  _  /| |  | |  ___/| |  | | |  | |\ \/  \/ / | . ` |\___ \ 
- | |__| | | \ \| |__| | |    | |__| | |__| | \  /\  /  | |\  |____) |
- |_____/|_|  \_\\____/|_|    |_____/ \____/   \/  \/   |_| \_|_____/ 
-                                                                     
-                                                                     
-*/
-/* DEFINED STYLE (POSITION, WIDTH), open/close on click */
-document.querySelectorAll(".dropdownMenu").forEach(function(element){
-    element.addEventListener("click", function(){
-        let dropdownName = element.getAttribute("data-dropdown"); // a retrieve the name of dropdown to open
-        let dropdownMenu = document.querySelector(`div.dropdownList[data-dropdown=${dropdownName}]`);
-        if(dropdownMenu.classList.contains('open')==true){
-            dropdownMenu.classList.remove("open"); // i close my dropdown
-        }else{
-            dropdownMenu.classList.add("open"); // i open my dropdown
-        }
 
-        if(dropdownMenu.parentElement.parentElement.parentElement.classList.contains("responsive")){ // if dropdown is in navbar responsive
-            dropdownMenu.style.top="0px";
-            dropdownMenu.style.position="relative";
-        }else{
-            dropdownMenu.style.top=element.getBoundingClientRect().bottom+"px";
-            dropdownMenu.style.position="fixed";
-        }
-        dropdownMenu.style.left=element.getBoundingClientRect().left+"px";
-       
-        let dropdownMenuWidth = element.getBoundingClientRect().right-element.getBoundingClientRect().left;
-        dropdownMenu.style.width=dropdownMenuWidth+"px";
-    });
-});
-
-/* HIDE ON CLICK OUTSIDE */
-document.addEventListener("click", function(ElementClicked) {
-    document.querySelectorAll(".dropdownList").forEach(function(dropdownList){
-        let targetElement = ElementClicked.target;  // clicked element
-        do {
-            if (targetElement == dropdownList) { // if i click on item
-                dropdownList.classList.remove("open");
-                return;
-            }
-            // Go up the DOM
-            targetElement = targetElement.parentNode;
-        } while (targetElement);
-
-        if(ElementClicked.target.getAttribute("data-dropdown") === null || ElementClicked.target.getAttribute("data-dropdown") != dropdownList.getAttribute("data-dropdown")){ // if i click outside the dropdown or clic on another dropdown
-            dropdownList.classList.remove("open");
-        }
-    });
-});
-window.addEventListener("resize",function(){
-    document.querySelectorAll("div.dropdownList[data-dropdown]").forEach(function(dropdownMenu){
-        dropdownMenu.className = "dropdownMenu";
-    });
-});
 /*
   _      _____ _   _ _  __ _____          _    __      __      _____  _____ _____  _____ _____ _______ 
  | |    |_   _| \ | | |/ // ____|        | |  /\ \    / /\    / ____|/ ____|  __ \|_   _|  __ \__   __|

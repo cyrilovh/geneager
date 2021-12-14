@@ -9,14 +9,16 @@
             <a href="/videoList"><i class="fas fa-film"></i><span class="txt"> Vidéos</span></a>
             <a href="/tree"><i class="fas fa-sitemap"></i><span class="txt"> Arbre</span></a>
             <!-- str dropdown -->
-            <p data-dropdown="navbarAccount" class="dropdownMenu"><i class="far fa-user"></i> Mon compte</p>
-            <div data-dropdown="navbarAccount" class="dropdownList">
-                <?php if(isset($_SESSION["username"])){ ?>
-                <p><a href="/userSettings">Paramètres</a></p>
-                <p><a href="/logout">Déconnexion</a></p>
-                <?php }else{ ?>
-                    <p><a href="/login">Connexion</a></p>
-                <?php } ?>
+            <div class="dropdown">
+                <button class="dropbtn"><i class="far fa-user"></i> Mon compte</button>
+                <div class="dropdown-content">
+                    <?php if(isset($_SESSION["username"])){ ?>
+                    <a href="/userSettings">Paramètres</a>
+                    <a href="/logout">Déconnexion</a>
+                    <?php }else{ ?>
+                        <a href="/login">Connexion</a>
+                    <?php } ?>
+                </div>
             </div>
             <!-- end dropdown -->
         </div>
