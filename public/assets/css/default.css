@@ -34,6 +34,9 @@ body.dark{
 body.dark img{
     background-color: #fff !important;
 }
+body.dark .txt-disabled{
+    color: #fff !important;
+}
 @font-face{
     font-family:CaviarLight;
     src:url(../fonts/CaviarDreams.ttf);
