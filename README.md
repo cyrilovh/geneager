@@ -28,7 +28,9 @@ src --> All my programs (view / model / controller)
 
 view: HTML (with few php)
 
-model: class
+class: PHP classes
+
+model: manages the site data
 
 controller: logic program
 

@@ -37,6 +37,5 @@
 
     $obj_HNF = new customHNF($include_header, $include_navbar, $include_footer); // i create my object for custom header, navbar and footer
 
-    
-     require MVC."view/router.view.php";
+    require MVC."view/router.view.php";
 ?>

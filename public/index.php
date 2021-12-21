@@ -7,7 +7,7 @@
     require_once MVC."config.php"; // Config file (for database, ...)
 
     // autoload PHP classes
-    require_once MVC."class/autoload.class.php";
+    require_once MVC."class/autoload.php";
     autoloader::register();
 
     // i connect me to database
