@@ -27,13 +27,14 @@ class form{
         $this->element = $element;
     }
 
-    public function setElement(string $tag, array $attribut):void{
+    public function setElement(string $tag, array $attribut, array $html=array()):void{
         $element = array();
         // input, button
         $tag = trim(strtolower($tag));
         if($tag=="input" || $tag=="button" || $tag=="textarea" || "select"){
             $element["tag"] = $tag;
             $element["attributList"] = $attribut; 
+            $element["html"] = $html;
             $this->element[] = $element;
         }else{
             if(PROD==false){
@@ -53,13 +54,20 @@ class form{
             if(array_key_exists('tag', $attributList)){
                 if(array_key_exists('attributList', $attributList)){
                     if(array_key_exists('name', $attributList["attributList"])){
+
+                        // add HTML after or before an element
+                        if(array_key_exists('html', $attributList)){
+                            $htmlBefore = (array_key_exists('before', $attributList["html"]["before"])) ? $attributList["html"]["before"] : "";
+                            $htmlAfter = (array_key_exists('after', $attributList["html"]["after"])) ? $attributList["html"]["after"] : "";
+                        }
+
                         $tag = format::normalize($attributList["tag"]);
                         $attr = "";
                         if($tag=="input"){
                             foreach($attributList["attributList"] as $attribute => $attrValue){
                                 $attr .= " $attribute='$attrValue'";
                             }
-                            $return .= "<$tag $attr />";
+                            $return .= "$htmlBefore<$tag $attr />$htmlAfter";
                         }elseif($tag=="textara" || $tag=="button"){
                             foreach($attributList as $attribute => $attrValue){
                                 if(trim(strtolower($attribute))!="value"){
@@ -67,7 +75,7 @@ class form{
                                 }
                             }
                             $value = array_key_exists('value', $attributList) ? $attributList["value"]: "";
-                            $return .= "<$tag $attr >$value</textarea>"; 
+                            $return .= "$htmlBefore<$tag $attr >$value</textarea>$htmlAfter"; 
                         }elseif($tag=="select"){
                             // multiple select debug (1/2)
                             if(in_array(format::normalize("multiple"), $attributList["attributList"])){
@@ -102,9 +110,11 @@ class form{
                                     }  
                                 }
                             }else{
-                                
+                                if(PROD==false){
+                                    trigger_error("<p class='dev_critical txt-center'>Internal error: the key &quot; option &quot; for the &quot; select &quot; is missing.</p>", E_USER_ERROR);
+                                } 
                             }
-                            $return .= "<$tag $attr>$optionList</$tag>";
+                            $return .= "$htmlBefore<$tag $attr>$optionList</$tag>$htmlAfter";
                         }else{
                             http_response_code(500);
                             if(PROD==false){
