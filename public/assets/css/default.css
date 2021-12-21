@@ -132,6 +132,9 @@ img.e40x{ /* Errors 40x*/
     max-height:50vw;
     max-width:40vw;
 }
+.dark img.e40x{
+    background-color: transparent !important;
+}
 [data-href]{
     cursor:pointer;
 }
