@@ -12,5 +12,5 @@
 
     // i connect me to database
     \gng\db::connect();
-    require_once MVC."controller/router.controller.php"; // le template
+    require_once MVC."controller/router.php"; // le template
 ?>

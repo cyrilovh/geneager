@@ -39,12 +39,12 @@ namespace gng;
             $include_MVC = array();
             $folder = array("model","controller"); // the view MUST BE include in controller (here we load model firstly then controller)
             foreach($folder as $k => $v){
-                $file = MVC.$v."/".$url.".".$v.".php"; // example: ../src/view/accueil.model.php
+                $file = MVC.$v."/".$url.".php"; // example: ../src/view/accueil.php
                 if(file_exists($file)){
                     mcv::addModelController($file,$v); // add controller or model in the header
                 }else{
                     if($v=="controller"){ // if controller don't exist we try to load the view
-                        $view = MVC."view/".$url.".view.php";
+                        $view = MVC."view/".$url.".php";
                         if(file_exists($view)){
                             mcv::addView($url); // if controller don't exist: i add view in main
                         }else{
@@ -74,7 +74,7 @@ namespace gng;
         // Function for add view file in main
         public static function addView(string $page):void{ // $page must contain filename only without file extensions
             global $include_MVC;
-            array_push($include_MVC, "view:".MVC."view/".$page.".view.php");
+            array_push($include_MVC, "view:".MVC."view/".$page.".php");
         }
 
         // Function for add Model or Controller files
