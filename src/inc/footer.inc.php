@@ -5,7 +5,7 @@
 				Mots-clés
 			</p>
 			<p>
-				<?=\gng\db::getParameter("defaultKeywordList"); ?>
+				<?=\model\gng\parameter::get("defaultKeywordList"); ?>
 			</p>
 			<p>
 				&nbsp;
@@ -27,10 +27,10 @@
 				A propos de
 			</p>
             <p>
-                <?=\gng\db::getParameter("defaultDescription"); ?>
+                <?=\model\gng\parameter::get("defaultDescription"); ?>
             </p>
             <p>
-                <?=\gng\db::getSocialLink();?>
+                <?=\model\gng\socialLink::get();?>
                 
             </p>
         </div>

@@ -6,7 +6,7 @@ custom header, navbar, footer
 Basic function if user want change the default header, navbar or footer in the page
 
 */
-namespace gng;
+namespace class\gng;
 class customHNF{
     public function __construct($include_header, $include_navbar, $include_footer){
         $this->header = $include_header;

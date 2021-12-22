@@ -9,7 +9,7 @@
                                     
                                     
 */
-namespace gng;
+namespace class\gng;
 class form{
     public $attr;
     public $element;
@@ -57,8 +57,8 @@ class form{
 
                         // add HTML after or before an element
                         if(array_key_exists('html', $attributList)){
-                            $htmlBefore = (array_key_exists('before', $attributList["html"]["before"])) ? $attributList["html"]["before"] : "";
-                            $htmlAfter = (array_key_exists('after', $attributList["html"]["after"])) ? $attributList["html"]["after"] : "";
+                            $htmlBefore = (array_key_exists('before', $attributList["html"])) ? $attributList["html"]["before"] : "";
+                            $htmlAfter = (array_key_exists('after', $attributList["html"])) ? $attributList["html"]["after"] : "";
                         }
 
                         $tag = format::normalize($attributList["tag"]);

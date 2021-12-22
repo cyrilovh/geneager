@@ -7,10 +7,10 @@
     require_once MVC."config.php"; // Config file (for database, ...)
 
     // autoload PHP classes
-    require_once MVC."class/autoload.php";
+    require_once MVC."autoload.php";
     autoloader::register();
 
     // i connect me to database
-    \gng\db::connect();
+    class\gng\db::connect();
     require_once MVC."controller/router.php"; // le template
 ?>

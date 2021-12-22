@@ -12,8 +12,8 @@
 
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 
-    <?php echo \gng\additionnalJsCss::get("css"); ?>
-    <?php echo \gng\additionnalJsCss::get("js"); ?>
+    <?php echo \class\gng\additionnalJsCss::get("css"); ?>
+    <?php echo \class\gng\additionnalJsCss::get("js"); ?>
     <meta name="description" content="<?=$obj_MetaTitle->getData("description"); ?>">
     <meta name="keywords" content="<?=$obj_MetaTitle->getData("keyword"); ?>">
     <meta name="generator" content="Geneager">

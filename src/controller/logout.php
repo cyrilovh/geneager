@@ -1,5 +1,5 @@
 <?php
-    namespace gng;
+    namespace class\gng;
     if(isset($_SESSION["username"])){
         metaTitle::setTitle("Déconnexion");
         $meta_robots = "noindex,nofollow";
