@@ -1,20 +1,11 @@
 <?php
-/*****************************************************************************************************
+/*                                                                    
 
+class additionnalJsCss: for add additionnals JS and CSS files in template 
+YOU MUST use this class in the controller of YOUR (new) page
+/!\ Every files must separated by a comma
 
-            _     _ _ _   _                         _      _      _____         
-           | |   | (_) | (_)                       | |    | |    / ____|        
-   __ _  __| | __| |_| |_ _  ___  _ __  _ __   __ _| |    | |___| |     ___ ___ 
-  / _` |/ _` |/ _` | | __| |/ _ \| '_ \| '_ \ / _` | |_   | / __| |    / __/ __|
- | (_| | (_| | (_| | | |_| | (_) | | | | | | | (_| | | |__| \__ \ |____\__ \__ \
-  \__,_|\__,_|\__,_|_|\__|_|\___/|_| |_|_| |_|\__,_|_|\____/|___/\_____|___/___/
-                                                                                                                                                                   
-    
-    class additionnalJsCss: for add additionnals JS and CSS files in template 
-    YOU MUST use this class in the controller of YOUR (new) page
-    /!\ Every files must separated by a comma
-
-*****************************************************************************************************/
+*/
     namespace gng;
     
     class additionnalJsCss{
