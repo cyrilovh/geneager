@@ -1,7 +1,7 @@
 <?php
 
 namespace class\gng;
-
+use model\gng\{userInfo,parameter};
     metaTitle::setTitle("Connexion"); // i set the title page + separator + website name
     $meta_robots = "noindex,nofollow";
     $include_header = "none";
@@ -21,8 +21,8 @@ namespace class\gng;
         "placeholder" => "Nom d&apos;utilisateur", // i set a placeholder
         "name" => "username", // i give a className
         "required" => "required", // i add the attr required
-        "minlength" => \model\gng\parameter::get("usernameMinLength"), // i add the attr minlength
-        "maxlength" => \model\gng\parameter::get("usernameMaxLength"), // i add the attr maxlength
+        "minlength" => parameter::get("usernameMinLength"), // i add the attr minlength
+        "maxlength" => parameter::get("usernameMaxLength"), // i add the attr maxlength
         "data-gngLabel" => "Utilisateur",
         "class" => "form-control"
     ));
@@ -31,8 +31,8 @@ namespace class\gng;
         "type" => "password",
         "placeholder" => "Mot de passe",
         "name" => "password",
-        "minlength" => \model\gng\parameter::get("passwordMinLength"),
-        "maxlength" => \model\gng\parameter::get("passwordMaxLength"),
+        "minlength" => parameter::get("passwordMinLength"),
+        "maxlength" => parameter::get("passwordMaxLength"),
         "data-gngLabel" => "Mot de passe",
         "class" => "form-control"
     ));
@@ -52,7 +52,7 @@ namespace class\gng;
             if(strlen(trim($_POST["username"]))>=$parametersFromDB["usernameMinLength"] && strlen(trim($_POST["password"]))>=$parametersFromDB["passwordMinLength"]){ // we check the min length of the password and username
                 $username = $_POST["username"];
 
-                $userInfo = \model\gng\userInfo::get($username, array("id","username","password","role")); // i interrogates the database
+                $userInfo = userInfo::get($username, array("id","username","password","role")); // i interrogates the database
 
                 if(count($userInfo)==1){ // if i 1 user matching
                     if(password::match($userInfo[0]["password"],$_POST["password"])){ // if the passwords match
