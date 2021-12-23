@@ -11,6 +11,6 @@
     autoloader::register();
 
     // i connect me to database
-    class\gng\db::connect();
+    class\db::connect();
     require_once MVC."controller/router.php"; // le template
 ?>

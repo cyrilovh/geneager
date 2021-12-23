@@ -1,7 +1,7 @@
 <?php
-    namespace class\gng;
+    namespace class;
     /* DEFAULT META TAGS */
-    $parametersFromDB = \model\gng\parameter::get();
+    $parametersFromDB = \model\parameter::get();
     $meta_separator = " ".$parametersFromDB["separator"]." "; // default title
     $meta_title = $parametersFromDB["websiteName"]; // default title OR website name
     $meta_description = $parametersFromDB["defaultDescription"]; // default description

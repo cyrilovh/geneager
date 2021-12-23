@@ -1,5 +1,5 @@
 <?php
-namespace model\gng;
+namespace model;
 class socialLink{
     public static function get() :mixed{
         global $db;

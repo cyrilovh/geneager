@@ -1,5 +1,5 @@
 <?php
-namespace class\gng;
+namespace class;
 // initialize the  connection to datbase
 class db{
     public static function connect(){

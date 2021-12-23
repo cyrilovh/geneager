@@ -5,7 +5,7 @@ class for change the default title, description, ....
 YOU MUST use this class in the controller of YOUR (new) page
 
 */
-    namespace class\gng;
+    namespace class;
     class metaTitle{
         public function __construct(string $meta_title, string $meta_description, string $meta_keyword, string $meta_favicon, string $meta_author, string $meta_robot){
             $this->title = trim($meta_title);

@@ -6,7 +6,7 @@ YOU MUST use this class in the controller of YOUR (new) page
 /!\ Every files must separated by a comma
 
 */
-    namespace class\gng;
+    namespace class;
     
     class additionnalJsCss{
         // for add stylesheet ou javascript (declaration in the second controller)

@@ -1,5 +1,5 @@
 <?php
-namespace model\gng;
+namespace model;
 class parameter{
     /* get parameters form database */
     public static function get(string $param = NULL) :mixed{

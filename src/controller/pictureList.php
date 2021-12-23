@@ -1,5 +1,5 @@
 <?php
-    namespace class\gng;
+    namespace class;
     metaTitle::setTitle("Liste des photos"); // i set the title page + separator + website name
     $meta_description = "Retrouvez les photographies de ma famille sur mon site personnel.";
 

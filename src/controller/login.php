@@ -1,7 +1,7 @@
 <?php
 
-namespace class\gng;
-use model\gng\{userInfo,parameter};
+namespace class;
+use model\{userInfo,parameter};
     metaTitle::setTitle("Connexion"); // i set the title page + separator + website name
     $meta_robots = "noindex,nofollow";
     $include_header = "none";

@@ -9,7 +9,7 @@
                                     
                                     
 */
-namespace class\gng;
+namespace class;
 class form{
     public $attr;
     public $element;
