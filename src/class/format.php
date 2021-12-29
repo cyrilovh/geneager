@@ -17,7 +17,7 @@ class format{
     public static function normalize(string $str):string{
         return preg_replace('/\s+/', ' ', strtolower(trim($str)));
     }
-
+    // clean values then remove duplicated values
     public static function cleanArr(array $arr):array{
         $cleanArr = [];
 
@@ -29,6 +29,19 @@ class format{
         // i remove duplicate values
         array_unique($cleanArr);
         return $cleanArr;
+    }
+    // Returns the entire all first letters in uppercase from string
+    public static function htmlToUpperFirst(string $str):string{
+        $explode = explode(" ", $str);
+        $return = array();
+        foreach($explode as $value){
+            array_push($return, htmlentities(mb_convert_case(html_entity_decode($value, ENT_QUOTES, "UTF-8"), MB_CASE_TITLE, "UTF-8"), ENT_QUOTES, "UTF-8"));
+        }
+        return implode(" ", $return);
+    }
+    // Returns the whole string in upper case
+    public static function htmlToUpper(string $str):string{
+        return htmlentities(mb_strtoupper(html_entity_decode($str, ENT_QUOTES, "UTF-8")), ENT_QUOTES, "UTF-8");
     }
 
 }

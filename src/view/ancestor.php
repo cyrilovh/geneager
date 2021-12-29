@@ -1,11 +1,15 @@
+<?php
+    namespace class;
+    var_dump($ancestor->get()); 
+?>
 <aside>
     <!-- IDENTITY, GENDER, SUMMARY -->
     <div class="ancestorBio">
         <img class="picture" src="/assets/img/unknownAncestor.webp" alt="" title="">
-        <h1><span class="capitale">pierre</span> <span class="uppercase"><b>dupond</b></span> (né XXXXX)</h1>
-        <p class="txt-disabled"><i class="fas fa-venus-mars"></i> Homme</p>
+        <h1><?=$ancestor->getFullIdentity(true); ?></h1>
+        <p class="txt-disabled"><i class="fas fa-venus-mars"></i> <?=($ancestor->get()["gender"]==1) ? "Homme" : "Femme"; ?></p>
         <h2>Biographie:</h2>
-        <p class="biography">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p class="biography"><?=(strlen(format::normalize($ancestor->get()["biography"]))>0) ? $ancestor->get()["biography"]: "Aucune biographie pour cet individu."; ?></p>
     </div>
     <!-- Timeline -->
     <div class="ancestorTimeline">
