@@ -1,4 +1,4 @@
 /vendor/
-/test/*.php
+/tests/
 /Documentation_fr.wps
 /.VSCodeCounter/debug.log 
