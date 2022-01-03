@@ -14,12 +14,9 @@
         // $html = true ----> for return value as HTML format
         public function getFullIdentity(bool $html = false):string{
             $ancestor = $this->get();
-            if($html == true){
-                $familyNames = (format::normalize($ancestor["maidenName"])!="") ? " ".format::htmlToUpperFirst($ancestor["firstNameList"])." ".format::htmlToUpper($ancestor["lastName"])." (".format::htmlToUpper($ancestor["maidenName"]).")" : " ".format::htmlToUpperFirst($ancestor["firstNameList"])." ".format::htmlToUpper($ancestor["lastName"]);
-            }else{
-                $familyNames = (format::normalize($ancestor["maidenName"])!="") ? " ".ucfirst($ancestor["firstNameList"])." ".strtoupper($ancestor["lastName"])." (".strtoupper($ancestor["maidenName"]).")" : " ".ucfirst($ancestor["firstNameList"])." ".strtoupper($ancestor["lastName"]);
-            }
-            return $familyNames;
+                $allNames = (format::normalize($ancestor["maidenName"])!="") ? " ".format::htmlToUpperFirst($ancestor["firstNameList"], $html)." ".format::htmlToUpper($ancestor["lastName"], $html)." (".format::htmlToUpper($ancestor["maidenName"], $html).")" : " ".format::htmlToUpperFirst($ancestor["firstNameList"], $html)." ".format::htmlToUpper($ancestor["lastName"], $html);
+                $allNames .= (format::normalize($ancestor["birthNameList"])!="") ? " (".format::normalize($ancestor["birthNameList"]).")" : "";
+            return $allNames;
         }
     }
 ?>

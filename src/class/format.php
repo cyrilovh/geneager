@@ -31,17 +31,26 @@ class format{
         return $cleanArr;
     }
     // Returns the entire all first letters in uppercase from string
-    public static function htmlToUpperFirst(string $str):string{
+    public static function htmlToUpperFirst(string $str, bool $html = false):string{
         $explode = explode(" ", $str);
         $return = array();
         foreach($explode as $value){
-            array_push($return, htmlentities(mb_convert_case(html_entity_decode($value, ENT_QUOTES, "UTF-8"), MB_CASE_TITLE, "UTF-8"), ENT_QUOTES, "UTF-8"));
+            $value = mb_convert_case(html_entity_decode($value, ENT_QUOTES, "UTF-8"), MB_CASE_TITLE, "UTF-8");
+            if($html==true){
+                array_push($return, htmlentities($value, ENT_QUOTES, "UTF-8"));
+            }else{
+                array_push($return, $value);
+            }
         }
         return implode(" ", $return);
     }
     // Returns the whole string in upper case
-    public static function htmlToUpper(string $str):string{
-        return htmlentities(mb_strtoupper(html_entity_decode($str, ENT_QUOTES, "UTF-8")), ENT_QUOTES, "UTF-8");
+    public static function htmlToUpper(string $str, bool $html = false):string{
+        $str = mb_strtoupper(html_entity_decode($str, ENT_QUOTES, "UTF-8"));
+        if($html==true){
+            $str = htmlentities($str, ENT_QUOTES, "UTF-8");
+        }
+        return $str;
     }
 
 }
