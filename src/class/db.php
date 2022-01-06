@@ -1,7 +1,11 @@
 <?php
 namespace class;
-// initialize the  connection to datbase
 class db{
+    /**
+     * Initialize the  connection to datbase
+     *
+     * @return void
+     */
     public static function connect(){
         global $db_host;
         global $db_name;

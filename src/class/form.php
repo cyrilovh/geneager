@@ -26,7 +26,14 @@ class form{
         $this->class = (array_key_exists('class', $attr)) ? $attr["class"] : "";
         $this->element = $element;
     }
-
+    /**
+     * Add element into a form
+     *
+     * @param string $tag
+     * @param array $attribut
+     * @param array $html
+     * @return void
+     */
     public function setElement(string $tag, array $attribut, array $html=array()):void{
         $element = array();
         // input, button
@@ -43,9 +50,11 @@ class form{
         }
     }
 
-    /*
-        function for display form
-    */
+    /**
+     * Display form as HTML format
+     *
+     * @return string
+     */
     public function display():string{
  
         $return = "<form action='{$this->action}' method='{$this->method}' class='{$this->class}'>"; // start of the string
@@ -151,6 +160,11 @@ class form{
         return $return."</form>"; // end of the string
     }    
 
+    /**
+     * Check if all fields of the form are corrects
+     *
+     * @return array
+     */
     public function check():array{
         $err =  array(
             "ie" => "Internal error.",

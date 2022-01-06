@@ -14,7 +14,12 @@ class customHNF{
         $this->footer = $include_footer;
     }     
     
-    // get data from object (header/navbar/footer)
+    /**
+     * Get data from object (header/navbar/footer)
+     *
+     * @param string $data
+     * @return void
+     */
     public function get(string $data){
         $v = $this->$data;
         if(trim($v)!=""){

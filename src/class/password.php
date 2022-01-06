@@ -1,7 +1,13 @@
 <?php
 namespace class;
 class password extends security{
-    // for hash password
+    /**
+     * Hash password (can't decrypt data after)
+     *
+     * @param string $password
+     * @param string $algo
+     * @return void
+     */
     public static function hash(string $password, string $algo = "ripemd320"){
         global $password_salt;
         $password_time = strval(time());
@@ -9,7 +15,14 @@ class password extends security{
         return $password_time.",".$hash;
     }
 
-    // Check if the provided password (from form) is the same that in the DB.
+    /**
+     * Check if the provided password (from form) is the same that in the DB.
+     *
+     * @param string $data
+     * @param string $password
+     * @param string $algo
+     * @return boolean
+     */
     public static function match(string $data, string $password, string $algo = "ripemd320"):bool{ // first parameter come from db (salt,hash) and the second password (clear to compare)
         global $password_salt;
         $password1_time = explode(",",$data)[0]; // salt form $data
@@ -24,7 +37,11 @@ class password extends security{
         }
     }
 
-    // generate random password (8 to 10 characters)
+    /**
+     * Generate random password (8 to 10 characters)
+     *
+     * @return void
+     */
     public static function gen(){
         $length = rand(8,10); // password length
         

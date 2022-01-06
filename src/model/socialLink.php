@@ -1,6 +1,11 @@
 <?php
 namespace model;
 class socialLink{
+    /**
+     * Get all social links form DB
+     *
+     * @return mixed
+     */
     public static function get() :mixed{
         global $db;
         $return = array(); // string to return

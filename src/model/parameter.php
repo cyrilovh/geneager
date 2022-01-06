@@ -1,7 +1,12 @@
 <?php
 namespace model;
 class parameter{
-    /* get parameters form database */
+    /**
+     * Get parameters form database
+     *
+     * @param [type] $param
+     * @return mixed
+     */
     public static function get(string $param = NULL) :mixed{
         global $db;
 

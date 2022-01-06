@@ -1,12 +1,20 @@
 <?php
-/*
-                                         
-class for change the default title, description, ....
-YOU MUST use this class in the controller of YOUR (new) page
-
-*/
+/**
+ * class for change the default title, description, ....
+ * 
+ */
     namespace class;
     class metaTitle{
+        /**
+         * Constructor
+         *
+         * @param string $meta_title
+         * @param string $meta_description
+         * @param string $meta_keyword
+         * @param string $meta_favicon
+         * @param string $meta_author
+         * @param string $meta_robot
+         */
         public function __construct(string $meta_title, string $meta_description, string $meta_keyword, string $meta_favicon, string $meta_author, string $meta_robot){
             $this->title = trim($meta_title);
             $this->description = $meta_description;
@@ -16,12 +24,22 @@ YOU MUST use this class in the controller of YOUR (new) page
             $this->robot = $meta_robot;
         }     
         
-        // get Data from the object
+        /**
+         * Get Data from the object
+         *
+         * @param string $data
+         * @return string
+         */
         public function getData(string $data):string{
             return $this->$data;
         }
 
-        // set title with: page title + separator + Website Name
+        /**
+         * Set title with: page title + separator + Website Name
+         *
+         * @param string $title
+         * @return void
+         */
         public static function setTitle(string $title):void{
             global $meta_separator;
             global $meta_title;

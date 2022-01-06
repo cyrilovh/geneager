@@ -2,7 +2,13 @@
     namespace model;
 
     class archive{
-        /* return ancestor informations */
+        /**
+         * Return all informations of an archive
+         *
+         * @param integer $id
+         * @param array $filter
+         * @return array
+         */
         static function get(int $id, array $filter = array("*")):array{
             global $db;
             $filter_str = implode(",", $filter);

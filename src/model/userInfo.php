@@ -1,6 +1,13 @@
 <?php
 namespace model;
 class userInfo{
+    /**
+     * Get all user informations
+     *
+     * @param string $username
+     * @param array $filter
+     * @return array
+     */
     public static function get(string $username, array $filter=array("*")) :array{ // username: username/nickname; filter: columns to filter (default: all) exemple: array("id", "username","password").
         global $db;
         $filter_str = implode(",", $filter);

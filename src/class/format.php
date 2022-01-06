@@ -1,23 +1,48 @@
 <?php
 namespace class;
 class format{
-    // return phone number (Ten character) pair per pair with a dot between
+    /**
+     * return phone number (Ten character) pair per pair with a dot between
+     *
+     * @param mixed $n
+     * @return string
+     */
     public static function phone(mixed $n):string{
         return preg_replace('/(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})/','\1.\2.\3.\4.\5',$n);
     }
-    // convert a french phone number to international format
+    /**
+     * convert a french phone number to international format
+     *
+     * @param mixed $n
+     * @return string
+     */
     public static function phoneInternational(mixed $n):string{
         return preg_replace('/^0/', "+33", $n);
     }
-    // replace the character "@" by the "@" of font-awesome (spam prevent)
+    /**
+     * replace the character "@" by the "@" of font-awesome (spam prevent)
+     *
+     * @param string $str
+     * @return string
+     */
     public static function mailProtect(string $str):string{
         return str_replace("@","<i class='fas fa-at'></i>",$str);
     }
-    // convert str to lowercase and remove trim
+    /**
+     * convert str to lowercase and remove trim
+     *
+     * @param string $str
+     * @return string
+     */
     public static function normalize(string $str):string{
         return preg_replace('/\s+/', ' ', strtolower(trim($str)));
     }
-    // clean values then remove duplicated values
+    /**
+     * clean values (remove whites spaces except between the words) then remove duplicated values
+     *
+     * @param array $arr
+     * @return array
+     */
     public static function cleanArr(array $arr):array{
         $cleanArr = [];
 
@@ -30,7 +55,13 @@ class format{
         array_unique($cleanArr);
         return $cleanArr;
     }
-    // Returns the entire all first letters in uppercase from string
+    /**
+     * Returns the entire all first letters in uppercase from string
+     *
+     * @param string $str
+     * @param boolean $html
+     * @return string
+     */
     public static function htmlToUpperFirst(string $str, bool $html = false):string{
         $explode = explode(" ", $str);
         $return = array();
@@ -44,7 +75,13 @@ class format{
         }
         return implode(" ", $return);
     }
-    // Returns the whole string in upper case
+    /**
+     * Returns the whole string in upper case
+     *
+     * @param string $str
+     * @param boolean $html
+     * @return string
+     */
     public static function htmlToUpper(string $str, bool $html = false):string{
         $str = mb_strtoupper(html_entity_decode($str, ENT_QUOTES, "UTF-8"));
         if($html==true){

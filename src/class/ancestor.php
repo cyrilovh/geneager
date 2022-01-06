@@ -5,7 +5,11 @@
             $this->ancestor = $infoList;
             $this->relation = $relation;
         }
-
+        /**
+         * Return all informations of the ancestor
+         *
+         * @return array
+         */
         public function get():array{
             return $this->ancestor;
         }
