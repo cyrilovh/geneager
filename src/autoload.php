@@ -1,6 +1,11 @@
 <?php
 /* automatic loading of classes if necessary */
 class autoloader{
+    /**
+     * Autoloader
+     *
+     * @return void
+     */
     static function register(){
         spl_autoload_register(array(__CLASS__, 'autoload'));
     }

@@ -25,17 +25,17 @@ class customHNF{
         if(trim($v)!=""){
             $f = MVC."inc/".$v.".inc.php";
             if(file_exists($f)){
-                require_once $f;
+                return $f;
             }elseif(trim($v)=="none"){
                 return null;
             }else{
-                require_once MVC."inc/".$data.".inc.php";
+                return MVC."inc/".$data.".inc.php";
                 if(PROD==false){
                     trigger_error("<p class='dev_critical'><b>$f</b> is missing.</p>", E_USER_WARNING);
                 }
             }
         }else{
-            require_once MVC."inc/".$data.".inc.php";
+            return MVC."inc/".$data.".inc.php";
         }
     }
 }

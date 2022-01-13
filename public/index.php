@@ -13,6 +13,6 @@
     // i connect me to database
     class\db::connect();
     require_once MVC."controller/router.php"; 
-
+    
     require MVC."view/router.php"; // le template
 ?>

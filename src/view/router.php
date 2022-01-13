@@ -27,8 +27,8 @@
 </head>
 <body>
     <?php
-        $obj_HNF->get("header"); 
-        $obj_HNF->get("navbar"); 
+        require_once $obj_HNF->get("header"); 
+        require_once $obj_HNF->get("navbar"); 
     ?>
     <main>
         <?php
@@ -42,7 +42,7 @@
         ?>
     </main>
     <?php
-        $obj_HNF->get("footer"); 
+        require_once $obj_HNF->get("footer"); 
     ?>
 </body>
 </html>

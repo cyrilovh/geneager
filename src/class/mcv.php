@@ -37,40 +37,20 @@ namespace class;
         protected static function loadFiles(string $url){ // CHECK IF FILE EXIST AND INCLUDE IT
             global $include_MVC;
             $include_MVC = array();
-            $folder = array("model","controller"); // the view MUST BE include in controller (here we load model firstly then controller)
-            foreach($folder as $k => $v){
-                $file = MVC.$v."/".$url.".php"; // example: ../src/view/accueil.php
-                if(file_exists($file)){
-                    mcv::addModelController($file,$v); // add controller or model in the header
+            $file = MVC."controller/".$url.".php"; // example: ../src/view/accueil.php
+            if(file_exists($file)){
+                mcv::addModelController($file,"controller"); // add controller in the header
+            }else{
+                $view = MVC."view/".$url.".php";
+                if(file_exists($view)){
+                    mcv::addView($url); // if controller don't exist: i add view in main
                 }else{
-                    if($v=="controller"){ // if controller don't exist we try to load the view
-                        $view = MVC."view/".$url.".php";
-                        if(file_exists($view)){
-                            mcv::addView($url); // if controller don't exist: i add view in main
-                        }else{
-                            mcv::addView("404"); // controller and view are missing or doesn't exist: add view 404 in main
-                        }
-                    }
+                    mcv::addView("404"); // controller and view are missing or doesn't exist: add view 404 in main
                 }
             }
             return $include_MVC;
         }
 
-        // Function for filter if it's controller or model
-        /*
-
-        doesn't works !!!
-
-        public static function filterFileMC($type){
-            foreach(\gng\mcv::load() as $f){
-                $explode = explode(":", $f);
-                if($explode[0]==$type){ // first i load the model
-                    //echo "load $explode[1]";
-                    include_once $explode[1];
-                }
-            }
-        }
-        */
         // Function for add view file in main
         public static function addView(string $page):void{ // $page must contain filename only without file extensions
             global $include_MVC;

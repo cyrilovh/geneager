@@ -1,13 +1,22 @@
 <?php
 namespace model;
 class parameter{
+
+    public function __construct()
+    {
+        $this->data = parameter::getDataFromDB();
+    }
+
+    public function get(string $str):mixed{
+        return $this->data[$str];
+    }
     /**
      * Get parameters form database
      *
      * @param [type] $param
      * @return mixed
      */
-    public static function get(string $param = NULL) :mixed{
+    private static function getDataFromDB(string $param = NULL) :mixed{
         global $db;
 
         if($param!==NULL){ // if the parameter is specified i return the value
