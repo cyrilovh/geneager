@@ -7,6 +7,6 @@
         </label>
         <i class="fas fa-moon"></i>
     </div>
-    <p class="title">Geneager</p>
-    <p class="italic">Le CMS de généalogie gratuit !</p>
+    <p class="title"><?=$gng_paramList->get("websiteName");?></p>
+    <p class="italic"><?=$gng_paramList->get("defaultDescription");?></p>
 </header>

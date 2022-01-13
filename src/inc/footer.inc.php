@@ -27,7 +27,7 @@
 				A propos de
 			</p>
             <p>
-				<?=$gng_paramList->get("defaultDescription"); ?>
+				<?=$gng_paramList->get("aboutText"); ?>
             </p>
             <p>
                 <?=\model\socialLink::get();?>

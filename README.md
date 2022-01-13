@@ -37,6 +37,8 @@ model: manages the site data
 
 controller: logic program
 
+The classes and models are called automatically (autoload)
+
 ### Requirement
 Apache2:
 - RewriteEngine required
