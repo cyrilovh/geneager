@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : jeu. 13 jan. 2022 à 21:40
+-- Généré le : jeu. 13 jan. 2022 à 22:24
 -- Version du serveur :  10.4.19-MariaDB
 -- Version de PHP : 8.0.6
 
@@ -72,6 +72,39 @@ CREATE TABLE `archive` (
   `sourceLink` text DEFAULT NULL,
   `ancestorTag` varchar(255) NOT NULL COMMENT 'id of ancestor for the current doc. ex: 1,4,8'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `city`
+--
+
+CREATE TABLE `city` (
+  `id` int(11) NOT NULL,
+  `stateDepartement` bigint(20) NOT NULL,
+  `city` varchar(150) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `country`
+--
+
+CREATE TABLE `country` (
+  `id` int(11) NOT NULL,
+  `country` varchar(150) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `country`
+--
+
+INSERT INTO `country` (`id`, `country`) VALUES
+(4, 'allemagne'),
+(2, 'belgique'),
+(1, 'france'),
+(3, 'pologne');
 
 -- --------------------------------------------------------
 
@@ -154,6 +187,18 @@ CREATE TABLE `role` (
 INSERT INTO `role` (`id`, `name`, `description`) VALUES
 (1, 'admin', 'Administrateur syst&egrave;me: poss&egrave;de tous les privill&egrave;ges.'),
 (2, 'user', 'Fonctions basiques (commentaires, favoris, ...)');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `statedepartement`
+--
+
+CREATE TABLE `statedepartement` (
+  `id` bigint(20) NOT NULL,
+  `country` varchar(150) NOT NULL,
+  `stateDepartement` varchar(150) NOT NULL COMMENT 'Etat ou département'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -243,6 +288,20 @@ ALTER TABLE `archive`
   ADD KEY `auhor` (`author`);
 
 --
+-- Index pour la table `city`
+--
+ALTER TABLE `city`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idStateDepartement` (`stateDepartement`);
+
+--
+-- Index pour la table `country`
+--
+ALTER TABLE `country`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `country` (`country`);
+
+--
 -- Index pour la table `parameter`
 --
 ALTER TABLE `parameter`
@@ -268,6 +327,13 @@ ALTER TABLE `picturetag`
 ALTER TABLE `role`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `name` (`name`);
+
+--
+-- Index pour la table `statedepartement`
+--
+ALTER TABLE `statedepartement`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `country` (`country`);
 
 --
 -- Index pour la table `transitpoint`
@@ -314,6 +380,18 @@ ALTER TABLE `archive`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT pour la table `city`
+--
+ALTER TABLE `city`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `country`
+--
+ALTER TABLE `country`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT pour la table `parameter`
 --
 ALTER TABLE `parameter`
@@ -336,6 +414,12 @@ ALTER TABLE `picturetag`
 --
 ALTER TABLE `role`
   MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT pour la table `statedepartement`
+--
+ALTER TABLE `statedepartement`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `transitpoint`
@@ -378,11 +462,23 @@ ALTER TABLE `archive`
   ADD CONSTRAINT `auhor` FOREIGN KEY (`author`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Contraintes pour la table `city`
+--
+ALTER TABLE `city`
+  ADD CONSTRAINT `idStateDepartement` FOREIGN KEY (`stateDepartement`) REFERENCES `statedepartement` (`id`);
+
+--
 -- Contraintes pour la table `picturetag`
 --
 ALTER TABLE `picturetag`
   ADD CONSTRAINT `ancestorID` FOREIGN KEY (`ancestor`) REFERENCES `ancestor` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `pictureID` FOREIGN KEY (`picture`) REFERENCES `picture` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `statedepartement`
+--
+ALTER TABLE `statedepartement`
+  ADD CONSTRAINT `country` FOREIGN KEY (`country`) REFERENCES `country` (`country`);
 
 --
 -- Contraintes pour la table `transitpoint`
