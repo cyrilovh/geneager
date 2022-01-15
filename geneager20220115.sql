@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : ven. 14 jan. 2022 à 16:17
+-- Généré le : sam. 15 jan. 2022 à 13:22
 -- Version du serveur :  10.4.19-MariaDB
 -- Version de PHP : 8.0.6
 
@@ -135,6 +135,18 @@ CREATE TABLE `jobname` (
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `jobname_ancestor`
+--
+
+CREATE TABLE `jobname_ancestor` (
+  `idRelation` bigint(20) NOT NULL,
+  `idJob` bigint(20) NOT NULL,
+  `idAncestor` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `parameter`
 --
 
@@ -181,6 +193,44 @@ CREATE TABLE `picture` (
   `sourceText` varchar(100) NOT NULL,
   `sourceLink` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `relationancestor`
+--
+
+CREATE TABLE `relationancestor` (
+  `id` bigint(20) NOT NULL,
+  `unionType` varchar(60) NOT NULL,
+  `ancestor1` bigint(20) NOT NULL,
+  `ancestor2` bigint(20) NOT NULL,
+  `descript` varchar(255) NOT NULL,
+  `dateevt` int(8) NOT NULL,
+  `location` bigint(20) NOT NULL,
+  `accuracyLocation` varchar(255) DEFAULT NULL,
+  `sourceText` varchar(100) NOT NULL,
+  `sourceLink` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `relationtype`
+--
+
+CREATE TABLE `relationtype` (
+  `id` int(2) NOT NULL,
+  `name` varchar(60) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `relationtype`
+--
+
+INSERT INTO `relationtype` (`id`, `name`) VALUES
+(1, 'mariage'),
+(2, 'pacse');
 
 -- --------------------------------------------------------
 
@@ -249,44 +299,6 @@ CREATE TABLE `transittype` (
   `fontAwesome` varchar(50) NOT NULL,
   `title` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `unionancestor`
---
-
-CREATE TABLE `unionancestor` (
-  `id` bigint(20) NOT NULL,
-  `unionType` varchar(60) NOT NULL,
-  `ancestor1` bigint(20) NOT NULL,
-  `ancestor2` bigint(20) NOT NULL,
-  `descript` varchar(255) NOT NULL,
-  `dateevt` int(8) NOT NULL,
-  `location` bigint(20) NOT NULL,
-  `accuracyLocation` varchar(255) DEFAULT NULL,
-  `sourceText` varchar(100) NOT NULL,
-  `sourceLink` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `uniontype`
---
-
-CREATE TABLE `uniontype` (
-  `id` int(2) NOT NULL,
-  `name` varchar(60) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Déchargement des données de la table `uniontype`
---
-
-INSERT INTO `uniontype` (`id`, `name`) VALUES
-(1, 'mariage'),
-(2, 'pacse');
 
 -- --------------------------------------------------------
 
@@ -392,6 +404,14 @@ ALTER TABLE `jobname`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Index pour la table `jobname_ancestor`
+--
+ALTER TABLE `jobname_ancestor`
+  ADD PRIMARY KEY (`idRelation`),
+  ADD KEY `idjobFK` (`idJob`),
+  ADD KEY `idancestorFK` (`idAncestor`);
+
+--
 -- Index pour la table `parameter`
 --
 ALTER TABLE `parameter`
@@ -403,6 +423,23 @@ ALTER TABLE `parameter`
 ALTER TABLE `picture`
   ADD PRIMARY KEY (`id`),
   ADD KEY `cityFKpicture` (`location`);
+
+--
+-- Index pour la table `relationancestor`
+--
+ALTER TABLE `relationancestor`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `ancestor1` (`ancestor1`),
+  ADD KEY `ancestor2` (`ancestor2`),
+  ADD KEY `uniontypeFK` (`location`),
+  ADD KEY `unionFKtype` (`unionType`);
+
+--
+-- Index pour la table `relationtype`
+--
+ALTER TABLE `relationtype`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
 
 --
 -- Index pour la table `role`
@@ -433,23 +470,6 @@ ALTER TABLE `transitpoint`
 ALTER TABLE `transittype`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `title` (`title`);
-
---
--- Index pour la table `unionancestor`
---
-ALTER TABLE `unionancestor`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `ancestor1` (`ancestor1`),
-  ADD KEY `ancestor2` (`ancestor2`),
-  ADD KEY `uniontypeFK` (`location`),
-  ADD KEY `unionFKtype` (`unionType`);
-
---
--- Index pour la table `uniontype`
---
-ALTER TABLE `uniontype`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `name` (`name`);
 
 --
 -- Index pour la table `user`
@@ -509,6 +529,12 @@ ALTER TABLE `jobname`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT pour la table `jobname_ancestor`
+--
+ALTER TABLE `jobname_ancestor`
+  MODIFY `idRelation` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT pour la table `parameter`
 --
 ALTER TABLE `parameter`
@@ -519,6 +545,18 @@ ALTER TABLE `parameter`
 --
 ALTER TABLE `picture`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `relationancestor`
+--
+ALTER TABLE `relationancestor`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `relationtype`
+--
+ALTER TABLE `relationtype`
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pour la table `role`
@@ -543,18 +581,6 @@ ALTER TABLE `transitpoint`
 --
 ALTER TABLE `transittype`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT pour la table `unionancestor`
---
-ALTER TABLE `unionancestor`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT pour la table `uniontype`
---
-ALTER TABLE `uniontype`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pour la table `user`
@@ -601,10 +627,26 @@ ALTER TABLE `city`
   ADD CONSTRAINT `idStateDepartement` FOREIGN KEY (`stateDepartement`) REFERENCES `statedepartement` (`id`);
 
 --
+-- Contraintes pour la table `jobname_ancestor`
+--
+ALTER TABLE `jobname_ancestor`
+  ADD CONSTRAINT `idancestorFK` FOREIGN KEY (`idAncestor`) REFERENCES `ancestor` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `idjobFK` FOREIGN KEY (`idJob`) REFERENCES `jobname` (`id`);
+
+--
 -- Contraintes pour la table `picture`
 --
 ALTER TABLE `picture`
   ADD CONSTRAINT `cityFKpicture` FOREIGN KEY (`location`) REFERENCES `city` (`id`);
+
+--
+-- Contraintes pour la table `relationancestor`
+--
+ALTER TABLE `relationancestor`
+  ADD CONSTRAINT `ancestor1` FOREIGN KEY (`ancestor1`) REFERENCES `ancestor` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `ancestor2` FOREIGN KEY (`ancestor2`) REFERENCES `ancestor` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `locationFKunion` FOREIGN KEY (`location`) REFERENCES `city` (`id`),
+  ADD CONSTRAINT `unionFKtype` FOREIGN KEY (`unionType`) REFERENCES `relationtype` (`name`);
 
 --
 -- Contraintes pour la table `statedepartement`
@@ -619,15 +661,6 @@ ALTER TABLE `transitpoint`
   ADD CONSTRAINT `ancestor` FOREIGN KEY (`ancestor`) REFERENCES `ancestor` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `city` FOREIGN KEY (`city`) REFERENCES `city` (`id`),
   ADD CONSTRAINT `transitType` FOREIGN KEY (`transitType`) REFERENCES `transittype` (`title`);
-
---
--- Contraintes pour la table `unionancestor`
---
-ALTER TABLE `unionancestor`
-  ADD CONSTRAINT `ancestor1` FOREIGN KEY (`ancestor1`) REFERENCES `ancestor` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `ancestor2` FOREIGN KEY (`ancestor2`) REFERENCES `ancestor` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `locationFKunion` FOREIGN KEY (`location`) REFERENCES `city` (`id`),
-  ADD CONSTRAINT `unionFKtype` FOREIGN KEY (`unionType`) REFERENCES `uniontype` (`name`);
 
 --
 -- Contraintes pour la table `user`
