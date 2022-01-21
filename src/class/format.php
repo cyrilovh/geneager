@@ -34,7 +34,7 @@ class format{
      * @param string $str
      * @return string
      */
-    public static function normalize(string $str):string{
+    public static function normalize(string|null $str):string{
         return preg_replace('/\s+/', ' ', strtolower(trim($str)));
     }
     /**

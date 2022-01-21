@@ -1,6 +1,5 @@
 <?php
     namespace class;
-    var_dump($ancestor->get()); 
 ?>
 <aside>
     <!-- IDENTITY, GENDER, SUMMARY -->

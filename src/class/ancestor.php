@@ -16,11 +16,11 @@
 
         // return full identity
         // $html = true ----> for return value as HTML format
-        public function getFullIdentity(bool $html = false):string{
+        public function getFullIdentity($html = false):string{
             $ancestor = $this->get();
                 $allNames = (format::normalize($ancestor["maidenName"])!="") ? " ".format::htmlToUpperFirst($ancestor["firstNameList"], $html)." ".format::htmlToUpper($ancestor["lastName"], $html)." (".format::htmlToUpper($ancestor["maidenName"], $html).")" : " ".format::htmlToUpperFirst($ancestor["firstNameList"], $html)." ".format::htmlToUpper($ancestor["lastName"], $html);
                 $allNames .= (format::normalize($ancestor["birthNameList"])!="") ? " (".format::normalize($ancestor["birthNameList"]).")" : "";
-            return $allNames;
+            return trim($allNames);
         }
     }
 ?>

@@ -1,4 +1,11 @@
 /* Labels people (on home page, identityList, ...) */
+div.ancestorList{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+}
 div.ancestorLabel{
     text-align:left;
 }
