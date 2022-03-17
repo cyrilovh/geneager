@@ -3,9 +3,9 @@
     use model\{userInfo,parameter};
     metaTitle::setTitle("Connexion"); // i set the title page + separator + website name
     $meta_robots = "noindex,nofollow";
-    $include_header = "none";
-    $include_navbar = "none";
-    $include_footer = "none";
+    $include_header = "none"; // bug quand none: page login
+    $include_navbar = "none"; // bug quand none: page login
+    $include_footer = "none"; // bug quand none: page login
     additionnalJsCss::set("login.css");
     additionnalJsCss::set("login.js");
 
@@ -20,8 +20,8 @@
         "placeholder" => "Nom d&apos;utilisateur", // i set a placeholder
         "name" => "username", // i give a className
         "required" => "required", // i add the attr required
-        "minlength" => parameter::get("usernameMinLength"), // i add the attr minlength
-        "maxlength" => parameter::get("usernameMaxLength"), // i add the attr maxlength
+        "minlength" => $gng_paramList->get("usernameMinLength"), // i add the attr minlength
+        "maxlength" => $gng_paramList->get("usernameMaxLength"), // i add the attr maxlength
         "data-gngLabel" => "Utilisateur",
         "class" => "form-control"
     ));
@@ -30,8 +30,8 @@
         "type" => "password",
         "placeholder" => "Mot de passe",
         "name" => "password",
-        "minlength" => parameter::get("passwordMinLength"),
-        "maxlength" => parameter::get("passwordMaxLength"),
+        "minlength" => $gng_paramList->get("passwordMinLength"),
+        "maxlength" => $gng_paramList->get("passwordMaxLength"),
         "data-gngLabel" => "Mot de passe",
         "class" => "form-control"
     ));

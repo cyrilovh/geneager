@@ -1,7 +1,8 @@
 RewriteEngine on
 
 # REWRITE ASSETS
-RewriteCond %{REQUEST_URI} ^/assets
+RewriteCond %{REQUEST_URI} ^/assets [OR]
+RewriteCond %{REQUEST_URI} ^/ressources
 RewriteRule ^(.*)$ /public/$1 [NC,L]
 
 # PHOTOS PROTECTED ACCESS

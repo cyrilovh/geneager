@@ -13,7 +13,8 @@
             global $db;
             $query = $db->prepare("SELECT * FROM ancestor WHERE id=:id");
             $query->execute(['id' => $id]);
-            return $query->fetch(\PDO::FETCH_ASSOC); // string
+            $result = $query->fetch(\PDO::FETCH_ASSOC);
+            return (!is_array($result) ? array(): $result); // string
             $query->closeCursor();
         }
         /**

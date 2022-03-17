@@ -52,4 +52,4 @@ PHP mods:
 https://geneager.cyril.ovh
 
 ## PHP
-Dev with PHP 8.0.6
+Dev with PHP 8.1.2

@@ -35,7 +35,7 @@ class format{
      * @return string
      */
     public static function normalize(string|null $str):string{
-        return preg_replace('/\s+/', ' ', strtolower(trim($str)));
+        return (!is_null($str)) ? preg_replace('/\s+/', ' ', strtolower(trim($str))) : "";
     }
     /**
      * clean values (remove whites spaces except between the words) then remove duplicated values

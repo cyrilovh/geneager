@@ -4,7 +4,7 @@
 <aside>
     <!-- IDENTITY, GENDER, SUMMARY -->
     <div class="ancestorBio">
-        <img class="picture" src="/assets/img/unknownAncestor.webp" alt="" title="">
+        <img class="picture" src="<?=($ancestor->get()["photo"]) ? "/ressources/ancestorProfilePicture/".$ancestor->get()["photo"]: "/assets/img/unknownAncestor.webp" ;?>" onerror="this.src='/assets/img/unknownAncestor.webp'" alt="" title="">
         <h1><?=$ancestor->getFullIdentity(true); ?></h1>
         <p class="txt-disabled"><i class="fas fa-venus-mars"></i> <?=($ancestor->get()["gender"]==1) ? "Homme" : "Femme"; ?></p>
         <h2>Biographie:</h2>
