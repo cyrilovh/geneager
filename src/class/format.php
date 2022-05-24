@@ -1,5 +1,8 @@
 <?php
 namespace class;
+/**
+ * Class contain basic methods for format strings
+ */
 class format{
     /**
      * return phone number (Ten character) pair per pair with a dot between
@@ -56,7 +59,7 @@ class format{
         return $cleanArr;
     }
     /**
-     * Returns the entire all first letters in uppercase from string
+     * Returns the entire all first letters of all words in uppercase from string
      *
      * @param string $str
      * @param boolean $html
@@ -88,6 +91,26 @@ class format{
             $str = htmlentities($str, ENT_QUOTES, "UTF-8");
         }
         return $str;
+    }
+
+    /**
+     * Convert the first the letter of the string (only) to uppercase
+     *
+     * @param string $str
+     * @param boolean $html
+     * @return string
+     */
+    public static function htmlToUcfirst(string $str, bool $html = false):string{
+        $str = ucfirst(html_entity_decode($str, ENT_QUOTES, "UTF-8"));
+        if($html==true){
+            $str = htmlentities($str, ENT_QUOTES, "UTF-8");
+        }
+        return $str;
+    }
+
+    public static function date(string $datetime, string $format="d/m/Y"):string{
+        $date = new \DateTime($datetime);
+        return $date->format($format);
     }
 
 }

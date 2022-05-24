@@ -11,6 +11,7 @@
         <p class="biography"><?=(strlen(format::normalize($ancestor->get()["biography"]))>0) ? $ancestor->get()["biography"]: "Aucune biographie pour cet individu."; ?></p>
     </div>
     <!-- Timeline -->
+    <!-- créer class getTimeline() -->
     <div class="ancestorTimeline">
         <p><i class="fas fa-baby-carriage"></i> 01/01/1900 &mdash; Paris, France</p>
         <ul class="timeline">

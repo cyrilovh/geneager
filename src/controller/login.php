@@ -1,5 +1,6 @@
 <?php
     namespace class;
+
     use model\{userInfo,parameter};
     metaTitle::setTitle("Connexion"); // i set the title page + separator + website name
     $meta_robots = "noindex,nofollow";
@@ -48,7 +49,7 @@
 
     if(isset($_POST["submit"])){ // check if form is submit
         if(isset($_POST["username"]) && isset($_POST["password"])){ // check if the both input are submit
-            if(strlen(trim($_POST["username"]))>=$parametersFromDB["usernameMinLength"] && strlen(trim($_POST["password"]))>=$parametersFromDB["passwordMinLength"]){ // we check the min length of the password and username
+            if(strlen(trim($_POST["username"]))>=$gng_paramList->get("usernameMinLength") && strlen(trim($_POST["password"]))>=$gng_paramList->get("passwordMinLength")){ // we check the min length of the password and username
                 $username = $_POST["username"];
 
                 $userInfo = userInfo::get($username, array("id","username","password","role")); // i interrogates the database
