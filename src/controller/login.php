@@ -23,9 +23,14 @@
         "required" => "required", // i add the attr required
         "minlength" => $gng_paramList->get("usernameMinLength"), // i add the attr minlength
         "maxlength" => $gng_paramList->get("usernameMaxLength"), // i add the attr maxlength
-        "data-gngLabel" => "Utilisateur",
         "class" => "form-control"
-    ));
+        ),
+        // add content after or before the element
+        // array( 
+        //     "before" => "before",
+        //     "after" => "after"
+        // )
+    );
 
     $formLogin->setElement("input", array(
         "type" => "password",
@@ -33,7 +38,6 @@
         "name" => "password",
         "minlength" => $gng_paramList->get("passwordMinLength"),
         "maxlength" => $gng_paramList->get("passwordMaxLength"),
-        "data-gngLabel" => "Mot de passe",
         "class" => "form-control"
     ));
 

@@ -31,7 +31,7 @@ class form{
      *
      * @param string $tag
      * @param array $attribut
-     * @param array $html
+     * @param array $html (can contain the key "before" and "after" for add HTML or text before or after the element)
      * @return void
      */
     public function setElement(string $tag, array $attribut, array $html=array()):void{
@@ -59,55 +59,65 @@ class form{
  
         $return = "<form action='{$this->action}' method='{$this->method}' class='{$this->class}'>"; // start of the string
 
-        foreach($this->element as $k => $attributList){
-            if(array_key_exists('tag', $attributList)){
-                if(array_key_exists('attributList', $attributList)){
-                    if(array_key_exists('name', $attributList["attributList"])){
+        foreach($this->element as $k => $arrayElement){
+            if(array_key_exists('tag', $arrayElement)){
+                if(array_key_exists('attributList', $arrayElement)){
+                    if(array_key_exists('name', $arrayElement["attributList"])){
 
                         // add HTML after or before an element
-                        if(array_key_exists('html', $attributList)){
-                            $htmlBefore = (array_key_exists('before', $attributList["html"])) ? $attributList["html"]["before"] : "";
-                            $htmlAfter = (array_key_exists('after', $attributList["html"])) ? $attributList["html"]["after"] : "";
+                        if(gettype($arrayElement["html"])=="array"){
+                            $htmlBefore = (array_key_exists('before', $arrayElement["html"])) ? $arrayElement["html"]["before"] : "";
+                            $htmlAfter = (array_key_exists('after', $arrayElement["html"])) ? $arrayElement["html"]["after"] : "";
+                        }else{
+                            if(PROD==true){
+                                trigger_error("<p class='dev_critical txt-center'>The third element in the method setElement must be an array. This array can contain the keys 'before' and 'after'.</p>", E_USER_ERROR);
+                            }
                         }
 
-                        $tag = format::normalize($attributList["tag"]);
+                        $tag = format::normalize($arrayElement["tag"]);
                         $attr = "";
                         if($tag=="input"){
-                            foreach($attributList["attributList"] as $attribute => $attrValue){
-                                $attr .= " $attribute='$attrValue'";
+                            foreach($arrayElement["attributList"] as $attribute => $attrValue){
+                                if($attribute!="html"){
+                                    $attr .= " {$attribute}='{$attrValue}'";
+                                }
                             }
                             $return .= "$htmlBefore<$tag $attr />$htmlAfter";
                         }elseif($tag=="textara" || $tag=="button"){
-                            foreach($attributList as $attribute => $attrValue){
+                            foreach($arrayElement as $attribute => $attrValue){
                                 if(trim(strtolower($attribute))!="value"){
-                                    $attr .= " $attribute='$attrValue'";
+                                    if($attribute!="html"){
+                                        $attr .= " {$attribute}='{$attrValue}'";
+                                    }
                                 }
                             }
-                            $value = array_key_exists('value', $attributList) ? $attributList["value"]: "";
+                            $value = array_key_exists('value', $arrayElement) ? $arrayElement["value"]: "";
                             $return .= "$htmlBefore<$tag $attr >$value</textarea>$htmlAfter"; 
                         }elseif($tag=="select"){
                             // multiple select debug (1/2)
-                            if(in_array(format::normalize("multiple"), $attributList["attributList"])){
-                                if(!in_array(format::normalize("required"), $attributList["attributList"])){
-                                    $attributList["attributList"]["required"] = NULL;
+                            if(in_array(format::normalize("multiple"), $arrayElement["attributList"])){
+                                if(!in_array(format::normalize("required"), $arrayElement["attributList"])){
+                                    $arrayElement["attributList"]["required"] = NULL;
                                 }
                             }
 
                             // i continue (multiple or single)
-                            foreach($attributList["attributList"] as $attribute => $attrValue){
+                            foreach($arrayElement["attributList"] as $attribute => $attrValue){
                                 if(trim(strtolower($attribute))!="option"){
-                                    $attr .= " $attribute='$attrValue'";
+                                    if($attribute!="html"){
+                                        $attr .= " {$attribute}='{$attrValue}'";
+                                    }
                                 }
                             }
                             $optionList = "";
-                            if(array_key_exists('option', $attributList["attributList"])){
-                                if(gettype($attributList["attributList"]["option"])=="array"){
+                            if(array_key_exists('option', $arrayElement["attributList"])){
+                                if(gettype($arrayElement["attributList"]["option"])=="array"){
                                     // multiple select debug (1/2)
-                                    if(in_array(format::normalize("multiple"), $attributList["attributList"])){
-                                        $attributList["attributList"]["option"][NULL]="";
+                                    if(in_array(format::normalize("multiple"), $arrayElement["attributList"])){
+                                        $arrayElement["attributList"]["option"][NULL]="";
                                     }
 
-                                    foreach($attributList["attributList"]["option"] as $kOption => $vOption){
+                                    foreach($arrayElement["attributList"]["option"] as $kOption => $vOption){
                                         $optionList .= "<option value='$kOption'>$vOption</option>";
                                     }
                                 }else{
@@ -190,8 +200,8 @@ class form{
 
                 // FIRST ARRAY
                 $elementListNameFromObj = array(); // i create a new array for add the name of all elements form object 
-                foreach($this->element as $k => $attributList){ // for each element
-                    $elementListNameFromObj[] = $attributList["attributList"]["name"]; // i add in array the name of all elements from object
+                foreach($this->element as $k => $arrayElement){ // for each element
+                    $elementListNameFromObj[] = $arrayElement["attributList"]["name"]; // i add in array the name of all elements from object
                 }
 
                 // SECOND ARRAY
@@ -203,13 +213,13 @@ class form{
                 // COMPARE ARRAYS
                 if(sort($elementListNameFromObj) == sort($elementListNameFromSubmit)){ // all names of the form aren't wrong (all input field names from form are expected)
                     $errorList[] = "OK";
-                    foreach($this->element as $k => $attributList){
-                        $tag = format::normalize($attributList["tag"]);
+                    foreach($this->element as $k => $arrayElement){
+                        $tag = format::normalize($arrayElement["tag"]);
                         if($tag == "textarea" || $tag == "input" || $tag == "select"){
                             // CHECK IF FIELD IS REQUIRED
                             $bypassCheckLength = false;
-                            if(array_key_exists('required', $attributList["attributList"])){ // i check if there the attr required in object
-                                if(security::cleanStr($dataSubmit[$attributList["attributList"]["name"]])==""){
+                            if(array_key_exists('required', $arrayElement["attributList"])){ // i check if there the attr required in object
+                                if(security::cleanStr($dataSubmit[$arrayElement["attributList"]["name"]])==""){
                                     $errorList[] = $err["require"];
                                     $bypassCheckLength = true;
                                     if(PROD==false){
@@ -223,15 +233,15 @@ class form{
                                 $minORmaxLength = array("minlength", "maxlength");
                                 foreach($minORmaxLength as $vMinMax){
                                     
-                                    if(array_key_exists($vMinMax, $attributList["attributList"])){
-                                        if(is_numeric(format::normalize($attributList["attributList"][$vMinMax]))){ // check if it's an integer
+                                    if(array_key_exists($vMinMax, $arrayElement["attributList"])){
+                                        if(is_numeric(format::normalize($arrayElement["attributList"][$vMinMax]))){ // check if it's an integer
                                             
                                                 if($vMinMax=="minlength"){
-                                                    if(strlen(format::normalize($dataSubmit[$attributList["attributList"]["name"]])) < $attributList["attributList"][$vMinMax]){ // if data form form > maxlength
+                                                    if(strlen(format::normalize($dataSubmit[$arrayElement["attributList"]["name"]])) < $arrayElement["attributList"][$vMinMax]){ // if data form form > maxlength
                                                         $errorList[] = $err["minlength"];
                                                     }
                                                 }else{
-                                                    if(strlen(format::normalize($dataSubmit[$attributList["attributList"]["name"]])) > $attributList["attributList"][$vMinMax]){ // if data form form > maxlength
+                                                    if(strlen(format::normalize($dataSubmit[$arrayElement["attributList"]["name"]])) > $arrayElement["attributList"][$vMinMax]){ // if data form form > maxlength
                                                         $errorList[] = $err["maxlength"];
                                                     }
                                                 }
@@ -247,20 +257,20 @@ class form{
 
                             // CHECK OUT IF INPUT TYPE IS NOT WRONG
                             if($tag == "input"){
-                                if(array_key_exists('type', $attributList["attributList"])){
-                                    if($attributList["attributList"]["type"]=="email"){
-                                        if (!filter_var($dataSubmit[$attributList["attributList"]["name"]], FILTER_VALIDATE_EMAIL)) {
+                                if(array_key_exists('type', $arrayElement["attributList"])){
+                                    if($arrayElement["attributList"]["type"]=="email"){
+                                        if (!filter_var($dataSubmit[$arrayElement["attributList"]["name"]], FILTER_VALIDATE_EMAIL)) {
                                             $errorList[] = $err["email"];
                                         }
-                                    }elseif($attributList["attributList"]["type"]=="number" || $attributList["attributList"]["type"]=="range"){
-                                        if(!is_numeric($dataSubmit[$attributList["attributList"]["name"]])){
+                                    }elseif($arrayElement["attributList"]["type"]=="number" || $arrayElement["attributList"]["type"]=="range"){
+                                        if(!is_numeric($dataSubmit[$arrayElement["attributList"]["name"]])){
                                             $errorList[] = $err["number"];
                                         }else{
                                             // IF IS THE VALUE IS NUMERIC
                                             // attr: min
-                                            if(array_key_exists("min", $attributList["attributList"])){ // if the attribute "min" is init in object
-                                                if(is_numeric($attributList["attributList"]["min"])){
-                                                    if(intval($dataSubmit[$attributList["attributList"]["name"]]) < intval($attributList["attributList"]["min"])){
+                                            if(array_key_exists("min", $arrayElement["attributList"])){ // if the attribute "min" is init in object
+                                                if(is_numeric($arrayElement["attributList"]["min"])){
+                                                    if(intval($dataSubmit[$arrayElement["attributList"]["name"]]) < intval($arrayElement["attributList"]["min"])){
                                                         $errorList[] = $err["min"];
                                                     }
                                                 }else{
@@ -271,9 +281,9 @@ class form{
                                                 }
                                             }
                                             // attr: max
-                                            if(array_key_exists("max", $attributList["attributList"])){ // if the attribute "min" is init in object
-                                                if(is_numeric($attributList["attributList"]["max"])){
-                                                    if(intval($dataSubmit[$attributList["attributList"]["name"]]) > intval($attributList["attributList"]["max"])){
+                                            if(array_key_exists("max", $arrayElement["attributList"])){ // if the attribute "min" is init in object
+                                                if(is_numeric($arrayElement["attributList"]["max"])){
+                                                    if(intval($dataSubmit[$arrayElement["attributList"]["name"]]) > intval($arrayElement["attributList"]["max"])){
                                                         $errorList[] = $err["max"];
                                                     }
                                                 }else{
@@ -284,8 +294,8 @@ class form{
                                                 }
                                             }     
                                         }
-                                    }elseif($attributList["attributList"]["type"]=="color"){
-                                        if(!preg_match('/^#[a-f0-9]{6}$/i', $dataSubmit[$attributList["attributList"]["name"]])){
+                                    }elseif($arrayElement["attributList"]["type"]=="color"){
+                                        if(!preg_match('/^#[a-f0-9]{6}$/i', $dataSubmit[$arrayElement["attributList"]["name"]])){
                                             $errorList[] = $err["hex"];
                                             if(PROD==false){
                                                 trigger_error("<p class='dev_critical'>One ore more attribute(s) &quot; type &quot; missing in the tag &quot; input &quot;.</p>", E_USER_ERROR);
@@ -302,15 +312,15 @@ class form{
 
                             // IF SELECT
                             if($tag=="select"){
-                                if(array_key_exists('option', $attributList["attributList"])){
-                                    if(gettype($attributList["attributList"]["option"])=="array"){ // i check if the option value provided is of type "array"
-                                        if(array_key_exists("multiple", $attributList["attributList"])){ // IF SELECT MULTIPLE EXPECTED
+                                if(array_key_exists('option', $arrayElement["attributList"])){
+                                    if(gettype($arrayElement["attributList"]["option"])=="array"){ // i check if the option value provided is of type "array"
+                                        if(array_key_exists("multiple", $arrayElement["attributList"])){ // IF SELECT MULTIPLE EXPECTED
                                             // MULTIPLE VALUES RETURNED
-                                            if(gettype($dataSubmit[$attributList["attributList"]["name"]])=="array"){
-                                                $cleanArr = format::cleanArr($dataSubmit[$attributList["attributList"]["name"]]);
+                                            if(gettype($dataSubmit[$arrayElement["attributList"]["name"]])=="array"){
+                                                $cleanArr = format::cleanArr($dataSubmit[$arrayElement["attributList"]["name"]]);
                                                 if(count($cleanArr)>0){
                                                     foreach($cleanArr as $value){
-                                                        if(!array_key_exists($value, $attributList["attributList"]["option"])){
+                                                        if(!array_key_exists($value, $arrayElement["attributList"]["option"])){
                                                             $errorList[] = $err["unexpectedVal"];
                                                             if(PROD==false){
                                                                 trigger_error("<p class='dev_critical'>Security: the value sended form &quot; select &quot; dont't feel be in the object.</p>", E_USER_ERROR);
@@ -322,8 +332,8 @@ class form{
                                                 }
                                             }else{
                                                 // IF ALONE VALUE RETURNED
-                                                if(!array_key_exists($dataSubmit[$attributList["attributList"]["name"]], $attributList["attributList"]["option"])){ // i check if the value sended is in array (object)
-                                                    if(array_key_exists("required", $attributList["attributList"])){
+                                                if(!array_key_exists($dataSubmit[$arrayElement["attributList"]["name"]], $arrayElement["attributList"]["option"])){ // i check if the value sended is in array (object)
+                                                    if(array_key_exists("required", $arrayElement["attributList"])){
                                                         $errorList[] = $err["unexpectedVal"];
                                                         if(PROD==false){
                                                             trigger_error("<p class='dev_critical'>Security: the value sended form &quot; select &quot; dont't feel be in the object.</p>", E_USER_ERROR);
@@ -333,8 +343,8 @@ class form{
                                             }
                                         }else{
                                             // IF ALONE VALUE EXPECTED
-                                            if(gettype($dataSubmit[$attributList["attributList"]["name"]])=="string"){
-                                                if(!array_key_exists($dataSubmit[$attributList["attributList"]["name"]], $attributList["attributList"]["option"])){ // i check if the value sended is in array (object)
+                                            if(gettype($dataSubmit[$arrayElement["attributList"]["name"]])=="string"){
+                                                if(!array_key_exists($dataSubmit[$arrayElement["attributList"]["name"]], $arrayElement["attributList"]["option"])){ // i check if the value sended is in array (object)
                                                     $errorList[] = $err["unexpectedVal"];
                                                     if(PROD==false){
                                                         trigger_error("<p class='dev_critical'>Security: the value sended form &quot; select &quot; dont't feel be in the object.</p>", E_USER_ERROR);
