@@ -4,7 +4,7 @@
     $meta_description = "Découvrez la liste entière des mes ancêtres !";
     additionnalJsCss::set("ancestorLabel.css");
     additionnalJsCss::set("identityList.css");
-    additionnalJsCss::set("identityList.js");
+    additionnalJsCss::set("filter.js");
     mcv::addView("identityList");
 
     $page = 1;

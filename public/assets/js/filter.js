@@ -1,5 +1,11 @@
-// Definitions of the elements
-let orderBy = document.querySelector('[name=orderBy]');
+/**
+ * Javascript for auto redirecting the page with URL parameters updated
+ * example: if user changes the filter "sort by", the page will be redirected with the new URL.
+ * /identityList/?page=1 -> /identityList/?page=1&sort=create
+ * Call this file
+ * Add the class name "filter" to the filter fields
+ * Then set an attribute name to the filter fields
+ */
 
 // URL Parameters
 let urlString = window.location.href; // current url
@@ -18,7 +24,8 @@ document.querySelectorAll('.filter').forEach(item => {
     // Update URL Parameters
     item.addEventListener('change', function() {
         let newParameters = []; // Array (will) contain original parameters
-        let newUrl = '?'; // String (will) contain new URL
+        let newURL = window.location.pathname; // String (will) contain new URL
+        newURL += (newURL.charAt(newURL.length - 1) !== '/') ? "/?" : "?"; // Remove last slash
 
         // i update value of the parameters in array if the key exists
         for (let pair of queryString.entries()) {
@@ -36,13 +43,13 @@ document.querySelectorAll('.filter').forEach(item => {
 
         // Create new URL
         for (let i = 0; i < newParameters.length; i++) {
-            newUrl += newParameters[i];
+            newURL += newParameters[i];
             if (i < newParameters.length - 1) {
-                newUrl += '&';
+                newURL += '&';
             }
         }
 
         // Redirect to new URL
-        window.location.href = newUrl;
+        window.location.href = newURL;
     });
 });
