@@ -30,8 +30,9 @@ document.querySelectorAll('.filter').forEach(item => {
         }
 
         // i add key and value to the array if the key is not in URL parameters
-        if (!newParameters.hasOwnProperty(this.name)) {
+        if (queryString.entries().hasOwnProperty(this.name)) {
             newParameters.push(this.name + '=' + this.value);
+            alert("add" + this.name);
         }
 
         // Create new URL
