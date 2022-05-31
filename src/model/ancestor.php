@@ -20,11 +20,12 @@
         /**
          * Return the list of ancestor
          *
-         * @param array $filter
-         * @param [type] $limit
+         * @param array $filter name of the mySQL column
+         * @param integer $start start of the result list (offset) - ignored if $limit is null or not an integer
+         * @param integer $limit number of results (limit)
          * @return array
          */
-        static public function getList(array $filter = array("*"), int $limit=NULL, array $order = array("lastUpdate", "ASC") ,):array{
+        static public function getList(array $filter = array("*"), int $start=0 ,int $limit=NULL, array $order = array("lastUpdate", "ASC") ,):array{
             global $db;
             $filter = implode(",", $filter);
 
@@ -40,8 +41,23 @@
                 $order = "lastUpdate DESC";
             }
 
-            $limit = ($limit==NULL) ? "" : ((is_int($limit)) ? "LIMIT ".\class\security::cleanStr($limit) : "");
-            $query = $db->prepare("SELECT $filter FROM ancestor ORDER BY $order $limit");
+            //$limit = ($limit==NULL) ? "" : ((is_int($limit)) ? "LIMIT ".\class\security::cleanStr($limit) : "");
+
+            if($limit == NULL){ // if limit null
+                $limitSQL = "";
+            }else{ // if limit is not null
+                if(is_int($limit)){ // if limit is an integer
+                    $limitSQL = "LIMIT ".\class\security::cleanStr($limit);
+                    if($start != NULL){ // if start is not null
+                        if(is_int($start)){ // if start is an integer
+                            $limitSQL = "LIMIT ".\class\security::cleanStr($start).", ".\class\security::cleanStr($limit); 
+                        }
+                    }
+                }else{
+                    $limitSQL = "";
+                }
+            }
+            $query = $db->prepare("SELECT $filter FROM ancestor ORDER BY $order $limitSQL");
             $query->execute();
             return $query->fetchAll(\PDO::FETCH_ASSOC); // string
             $query->closeCursor(); 

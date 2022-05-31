@@ -1,15 +1,26 @@
 /* div contain page numbers */
-div.paging{
-    padding:10px;
-    margin:0px;
-    width:100%;
+
+div.paging {
+    padding: 10px;
+    margin: 0px;
+    width: 100%;
     background-color: var(--primary);
-    color:#fff;
-    text-align:center;
+    color: #fff;
+    text-align: center;
 }
-div.paging span + span{
+
+div.paging a,
+div.paging a:hover,
+div.paging a:visited {
+    color: #fff;
+    text-decoration: none;
+}
+
+div.paging a+a {
     margin-left: 10px;
 }
-div.paging span.active{
-    font-size:1.5em;
+
+div.paging a.active {
+    font-size: 1.2em;
+    font-weight: bold;
 }
