@@ -22,7 +22,6 @@ document.querySelectorAll('.filter').forEach(item => {
 
         // i update value of the parameters in array if the key exists
         for (let pair of queryString.entries()) {
-            alert(`${pair[0]}, ${pair[1]}`);
             if (pair[0] != this.name) {
                 newParameters.push(pair[0] + '=' + pair[1]);
             } else {
@@ -33,7 +32,6 @@ document.querySelectorAll('.filter').forEach(item => {
         // i add key and value to the array if the key is not in URL parameters
         if (newParameters[this.name] === undefined) {
             newParameters.push(this.name + '=' + this.value);
-            alert("add:" + this.name);
         }
 
         // Create new URL
