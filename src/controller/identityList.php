@@ -7,7 +7,7 @@
     additionnalJsCss::set("identityList.js");
     mcv::addView("identityList");
 
-
+    $page = 1;
     if(isset($_GET["page"])){
         if(is_numeric($_GET["page"])){
             $page = \class\security::cleanStr($_GET["page"]);

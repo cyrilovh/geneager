@@ -22,17 +22,18 @@ document.querySelectorAll('.filter').forEach(item => {
 
         // i update value of the parameters in array if the key exists
         for (let pair of queryString.entries()) {
+            alert(`${pair[0]}, ${pair[1]}`);
             if (pair[0] != this.name) {
                 newParameters.push(pair[0] + '=' + pair[1]);
             } else {
-                newParameters.push(pair[0] + '=' + this.value);
+                pair[0] = this.value;
             }
         }
 
         // i add key and value to the array if the key is not in URL parameters
-        if (queryString.entries().hasOwnProperty(this.name)) {
+        if (newParameters[this.name] === undefined) {
             newParameters.push(this.name + '=' + this.value);
-            alert("add" + this.name);
+            alert("add:" + this.name);
         }
 
         // Create new URL
