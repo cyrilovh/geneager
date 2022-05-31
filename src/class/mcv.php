@@ -23,7 +23,7 @@ namespace class;
             $parts = explode('/', FULLPATH); // parse url
             $url = $parts[1];  // first word after slash
             if($url!=""){ // if not blank
-                if (ctype_alnum($url) && $url!="router"){ // if path is alphanumeric string. example: https://abc.xyz/abc -> abc IS GOOD
+                if (ctype_alnum($url) && !in_array($url, DENIEDVIEWS)){ // if path is alphanumeric string. example: https://abc.xyz/abc -> abc IS GOOD
                     return mcv::loadFiles($url); // i call the good files
                 }else{ // else we return 404 page
                     return mcv::loadFiles("404");

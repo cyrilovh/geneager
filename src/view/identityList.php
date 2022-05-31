@@ -38,7 +38,7 @@
     <?php
         for($i=1; $i<=$pageCount; $i++){
             $active = ($i==$page) ? "active" : "";
-            echo "<a href='?page=$i' class='$active'>".$i."</a>";
+            echo "<a href='/identityList/?page=$i' class='$active'>".$i."</a>";
         }
     ?>
 </div>

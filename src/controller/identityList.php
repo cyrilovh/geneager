@@ -5,7 +5,7 @@
     additionnalJsCss::set("ancestorLabel.css");
     additionnalJsCss::set("identityList.css");
     additionnalJsCss::set("filter.js");
-    mcv::addView("identityList");
+    
 
     $page = 1;
     if(isset($_GET["page"])){
@@ -20,8 +20,13 @@
     $ancestorCount = count(\model\ancestor::getList(array("id"))); // number of ancestor in DB
     $pageCount = ceil($ancestorCount/$resultPerPage); // number of page
 
-    $ancestorList = \model\ancestor::getList(array("id", "firstNameList", "lastName", "photo",  "maidenName", "gender", "birthDay"), $start, $resultPerPage);
-   
+    if($ancestorCount > 0 && $page <= $pageCount){
+        mcv::addView("identityList");
+        $ancestorList = \model\ancestor::getList(array("id", "firstNameList", "lastName", "photo",  "maidenName", "gender", "birthDay"), $start, $resultPerPage);
+    }else{ // if any identity card or any result with the filters
+        header("HTTP/1.1 204 NO CONTENT");
+        mcv::addView("noContent");
+    }
 
 
 ?>

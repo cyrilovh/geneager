@@ -44,6 +44,9 @@
     /* default values */
     $meta_robots = ""; // empty, "nofollow", "noindex" or "noindex, nofollow"
 
+    /* list of pages (views) not directly accessible via a query */
+    const DENIEDVIEWS = array('router', '404', 'noContent'); // list of views not accessibles from URL bar or query
+
     /* PROD/DEV */
     if(PROD==true){
         ini_set('display_errors', 0);
