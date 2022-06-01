@@ -3,8 +3,11 @@
     <div>
         Trier par 
         <select name="orderBy" class="filter">
-            <option value="update">Date de mise à jour</option>
-            <option value="create">Date de création</option>
+            <?php
+                foreach(enumList\OrderBy::array() as $key => $value){
+                    echo "<option value='$key'>$value</option>";
+                }
+            ?>
         </select> (du plus récent au moins récent)
     </div>
 

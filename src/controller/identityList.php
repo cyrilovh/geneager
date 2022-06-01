@@ -28,5 +28,4 @@
         mcv::addView("noContent");
     }
 
-
 ?>
