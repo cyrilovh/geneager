@@ -25,7 +25,7 @@ document.querySelectorAll('.filter').forEach(item => {
     item.addEventListener('change', function() {
         let newParameters = []; // Array (will) contain original parameters
         let newURL = window.location.pathname; // String (will) contain new URL
-        newURL += (newURL.charAt(newURL.length - 1) !== '/') ? "/?" : "?"; // Remove last slash
+        newURL += (newURL.charAt(newURL.length - 1) !== '/') ? "/?" : "?"; // Add slash if necessary
 
         // i update value of the parameters in array if the key exists
         for (let pair of queryString.entries()) {
