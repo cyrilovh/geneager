@@ -32,5 +32,6 @@ enum OrderBy: string
 
 }
 
-print_r(OrderBy::array());
+print_r(OrderBy::names());
+echo ( in_array('lastUpdate', OrderBy::names()) ) ? 'true' : 'false';
 ?>

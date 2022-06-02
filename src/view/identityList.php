@@ -4,11 +4,19 @@
         Trier par 
         <select name="orderBy" class="filter">
             <?php
-                foreach(enumList\OrderBy::array() as $key => $value){
+                foreach(enumList\orderBy::array() as $key => $value){
                     echo "<option value='$key'>$value</option>";
                 }
             ?>
-        </select> (du plus récent au moins récent)
+        </select>
+        Ordre        
+        <select name="sortBy" class="filter">
+            <?php
+                foreach(enumList\sortBy::array() as $key => $value){
+                    echo "<option value='$key'>$value</option>";
+                }
+            ?>
+        </select>
     </div>
 
     <div class="ancestorList">

@@ -1,7 +1,7 @@
 <?php
   namespace enumList;
 
-  trait getOrder
+  trait getSortBy
   {
 
     public static function names(): array
@@ -21,10 +21,10 @@
 
   }
 
-  enum order: string
+  enum sortBy: string
   {
 
-    use getOrder;
+    use getSortBy;
 
     case ASC = 'Croissant';
     case DESC = 'Décroissant';

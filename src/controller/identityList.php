@@ -21,8 +21,29 @@
     $pageCount = ceil($ancestorCount/$resultPerPage); // number of page
 
     if($ancestorCount > 0 && $page <= $pageCount){
+        
+        /* SORT BY */
+        if(isset($_GET["orderBy"])){ // if orderBy is set
+            
+            $orderBy = "lastUpdate";
+            if(in_array($_GET["orderBy"], \enumList\orderBy::names())){ // i check if the row for orderBy is in the enumList
+                $orderBy = $_GET["orderBy"];
+            }
+
+            $sortBy = "ASC";
+            if(isset($_GET["sortBy"])){ // if orderBy is set
+                if(in_array($_GET["sortBy"], \enumList\sortBy::names())){ // i check if VALUE is in the enumList
+                    $sortBy = $_GET["sortBy"];
+                } 
+            }
+        }else{ // if orderBy is not set
+            $orderBy = "lastUpdate";
+            $sortBy = "ASC";
+        }
+
+
+        $ancestorList = \model\ancestor::getList(array("id", "firstNameList", "lastName", "photo",  "maidenName", "gender", "birthDay"), $start, $resultPerPage, array($orderBy, $sortBy));
         mcv::addView("identityList");
-        $ancestorList = \model\ancestor::getList(array("id", "firstNameList", "lastName", "photo",  "maidenName", "gender", "birthDay"), $start, $resultPerPage);
     }else{ // if any identity card or any result with the filters
         header("HTTP/1.1 204 NO CONTENT");
         mcv::addView("noContent");
