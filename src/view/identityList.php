@@ -21,9 +21,10 @@
     <div class="filterList">
         Filtrer genre:
         <select name="gender" class="filter">
+            <option value=''></option>
             <?php
                 foreach(enumList\gender::array() as $key => $value){
-                    echo "<option value='$key'>$value</option>";
+                    echo "<option value='$key'>".class\format::htmlToUpperFirst($value)."</option>";
                 }
             ?>
         </select>
