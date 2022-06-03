@@ -1,7 +1,7 @@
 <?php
   namespace enumList;
 
-  trait getOrderBy
+  trait getAncestorOrderBy
   {
 
     public static function names(): array
@@ -21,13 +21,15 @@
 
   }
 
-  enum orderBy: string
+  enum ancestorOrderBy: string
   {
 
-    use getOrderBy;
+    use getAncestorOrderBy;
 
     case lastUpdate = 'Date de mise à jour';
     case createDate = 'Date de creation';
+    case birthDay = 'Date de naissance';
+    case deathDate = 'Date de décès';
 
   }
 

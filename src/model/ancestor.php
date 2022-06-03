@@ -25,7 +25,7 @@
          * @param integer $limit number of results (limit)
          * @return array
          */
-        static public function getList(array $filter = array("*"), int $start=0 ,int $limit=NULL, array $order = array("lastUpdate", "ASC") ,):array{
+        static public function getList(array $filter = array("*"), int $start=0 ,int $limit=NULL, array $order = array("lastUpdate", "ASC") , array $where = array()):array{
             global $db;
             $filter = implode(",", $filter);
 
@@ -57,7 +57,20 @@
                     $limitSQL = "";
                 }
             }
-            $query = $db->prepare("SELECT $filter FROM ancestor ORDER BY $order $limitSQL");
+            
+            $whereSQL = "";
+            if(count($where)>0){
+                $whereSQL = "WHERE ";
+                $i = 0;
+                foreach($where as $key => $value){
+                    if($i>0){
+                        $whereSQL .= "AND ";
+                    }
+                    $whereSQL .= \class\security::cleanStr($key)." = '".\class\security::cleanStr($value)."' ";
+                    $i++;
+                }
+            }
+            $query = $db->prepare("SELECT $filter FROM ancestor $whereSQL ORDER BY $order $limitSQL");
             $query->execute();
             return $query->fetchAll(\PDO::FETCH_ASSOC); // string
             $query->closeCursor(); 

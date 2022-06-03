@@ -5,24 +5,16 @@ namespace class;
  * Advanced formatting methods (project related)
  */
 class display{
-    public static function gender(bool|null $n):string{
+    public static function gender(int $n):string{
+        $gender = "???";
         if(!is_null($n)){
-            switch($n){
-                case 1:
-                    return "Homme";
-                    break;
-                case 0:
-                    return "Femme";
-                    break;
-                default:
-                    (PROD!==false) ? trigger_error("<p class='dev_critical txt-center'>Internal error: The parameter \$n must me an integer boolean (0 or 1)</p>", E_USER_ERROR) : "";
-                    return "???";
-                    break;
+            foreach(\enumList\gender::array() as $int => $genderTxt){
+                if($int == $n){
+                    $gender = $genderTxt; 
+                }
             }
-        }else{
-            return "???";
         }
-
+        return $gender;
     }
 
     /**

@@ -1,10 +1,10 @@
 <aside>
     <h2>Liste des fiches d'identités:</h2>
-    <div>
+    <div class="filterList">
         Trier par 
-        <select name="orderBy" class="filter">
+        <select name="AncestorOrderBy" class="filter">
             <?php
-                foreach(enumList\orderBy::array() as $key => $value){
+                foreach(enumList\ancestorOrderBy::array() as $key => $value){
                     echo "<option value='$key'>$value</option>";
                 }
             ?>
@@ -13,6 +13,16 @@
         <select name="sortBy" class="filter">
             <?php
                 foreach(enumList\sortBy::array() as $key => $value){
+                    echo "<option value='$key'>$value</option>";
+                }
+            ?>
+        </select>
+    </div>
+    <div class="filterList">
+        Filtrer genre:
+        <select name="gender" class="filter">
+            <?php
+                foreach(enumList\gender::array() as $key => $value){
                     echo "<option value='$key'>$value</option>";
                 }
             ?>

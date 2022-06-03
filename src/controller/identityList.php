@@ -23,26 +23,35 @@
     if($ancestorCount > 0 && $page <= $pageCount){
         
         /* SORT BY */
-        if(isset($_GET["orderBy"])){ // if orderBy is set
+        if(isset($_GET["ancestorOrderBy"])){ // if ancestorOrderBy is set
             
-            $orderBy = "lastUpdate";
-            if(in_array($_GET["orderBy"], \enumList\orderBy::names())){ // i check if the row for orderBy is in the enumList
-                $orderBy = $_GET["orderBy"];
+            $ancestorOrderBy = "lastUpdate";
+            if(in_array($_GET["ancestorOrderBy"], \enumList\ancestorOrderBy::names())){ // i check if the row for ancestorOrderBy is in the enumList
+                $ancestorOrderBy = $_GET["ancestorOrderBy"];
             }
 
             $sortBy = "ASC";
-            if(isset($_GET["sortBy"])){ // if orderBy is set
+            if(isset($_GET["sortBy"])){ // if ancestorOrderBy is set
                 if(in_array($_GET["sortBy"], \enumList\sortBy::names())){ // i check if VALUE is in the enumList
                     $sortBy = $_GET["sortBy"];
                 } 
             }
-        }else{ // if orderBy is not set
-            $orderBy = "lastUpdate";
+        }else{ // if ancestorOrderBy is not set
+            $ancestorOrderBy = "lastUpdate";
             $sortBy = "ASC";
         }
 
 
-        $ancestorList = \model\ancestor::getList(array("id", "firstNameList", "lastName", "photo",  "maidenName", "gender", "birthDay"), $start, $resultPerPage, array($orderBy, $sortBy));
+        /* FILTER */
+        $filter = array();
+
+        if(isset($_GET["gender"])){ // if gender i check if value is in enumList
+            if(in_array($_GET["gender"], \enumList\gender::values())){
+                $filter["gender"] = $_GET["gender"];
+            }
+        }
+
+        $ancestorList = \model\ancestor::getList(array("id", "firstNameList", "lastName", "photo",  "maidenName", "gender", "birthDay"), $start, $resultPerPage, array($ancestorOrderBy, $sortBy), $filter);
         mcv::addView("identityList");
     }else{ // if any identity card or any result with the filters
         header("HTTP/1.1 204 NO CONTENT");
