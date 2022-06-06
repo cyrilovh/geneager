@@ -14,7 +14,18 @@ let queryString = new URLSearchParams(paramString);
 
 
 document.querySelectorAll('.filter').forEach(item => {
-    // update elements values
+
+    // Blank option
+    if (item.classList.contains("removable")) {
+        var optEmpty = document.createElement("option");
+        optEmpty.value = "";
+        optEmpty.text = "";
+        optEmpty.selected = true;
+        item.add(optEmpty, 0);
+    }
+
+
+    // update elements values on load
     for (let pair of queryString.entries()) {
         if (item.name === pair[0]) {
             item.value = pair[1];

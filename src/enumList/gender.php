@@ -28,7 +28,6 @@
     case inconnu = 2;
     case femme = 0;
     case homme = 1;
-
   }
 
 ?>
