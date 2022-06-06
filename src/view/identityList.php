@@ -2,7 +2,7 @@
     <h2>Liste des fiches d'identités:</h2>
     <div class="filterList">
         Trier par 
-        <select name="AncestorOrderBy" class="filter">
+        <select name="ancestorOrderBy" class="filter">
             <?php
                 foreach(enumList\ancestorOrderBy::array() as $key => $value){
                     echo "<option value='$key'>$value</option>";
