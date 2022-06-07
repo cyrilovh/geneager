@@ -9,7 +9,7 @@
          * @param integer $id
          * @return array
          */
-        static public function get(int $id):array{
+        public static function get(int $id):array{
             global $db;
             $query = $db->prepare("SELECT * FROM ancestor WHERE id=:id");
             $query->execute(['id' => $id]);
@@ -25,7 +25,7 @@
          * @param integer $limit number of results (limit)
          * @return array
          */
-        static public function getList(array $filter = array("*"), int $start=0 ,int $limit=NULL, array $order = array("lastUpdate", "ASC") , array $where = array()):array{
+        public static function getList(array $filter = array("*"), int $start=0 ,int $limit=NULL, array $order = array("lastUpdate", "ASC") , array $where = array()):array{
             global $db;
             $filter = implode(",", $filter);
 

@@ -1,5 +1,5 @@
 <aside>
-    <p><?=$gng_paramList->get("homeSummary"); ?> <span class="btn btn-outline-info btn-sm"><i class="fa-solid fa-pen"></i> &Eacute;diter</span></p>
+    <p><?=$gng_paramList->get("homeSummary"); ?> <span class="btn btn-outline-info btn-sm"><i class="fa-solid fa-pen"></i></span></p>
     <h2>Dernières fiches mises à jour:</h2>
     <div class="ancestorList">
         <?php
