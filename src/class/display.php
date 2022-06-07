@@ -26,12 +26,6 @@ class display{
      * @param string $maidenName
      * @return void
      */
-    // A CONTINUER
-    // A CONTINUER
-    // A CONTINUER
-    // A CONTINUER
-    // A CONTINUER
-    // CONCACT A AMELIORER
     public static function truncateIdentity(string|null $firstNameList, string|null $lastName, string|null $maidenName){ // A CONTINUER
         $return = "";
 
@@ -59,6 +53,21 @@ class display{
         }
         
         return $return;
+    }
+
+    public static function truncateText(string $string, int $length = 30, bool $dots = true){
+        $string = strip_tags($string);
+        $string = str_replace("\n", " ", $string);
+        $string = str_replace("\r", " ", $string);
+        $string = str_replace("\t", " ", $string);
+        $string = str_replace("  ", " ", $string);
+        $string = trim($string);
+        $string = substr($string, 0, $length);
+        $string = substr($string, 0, strrpos($string, " "));
+        if($dots){
+            $string .= "...";
+        }
+        return $string;
     }
 }
 ?>

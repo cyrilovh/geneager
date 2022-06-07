@@ -2,6 +2,24 @@
     <h2>Photos de famille:</h2>
     <p><?=$gng_paramList->get("pictureListSummary"); ?> <span class="btn btn-outline-info btn-sm"><i class="fa-solid fa-pen"></i></span></p>
     <!-- START LIST -->
+    <div class="filterList">
+        Trier par 
+        <select name="albumOrderBy" class="filter">
+            <?php
+                foreach(enumList\albumOrderBy::array() as $key => $value){
+                    echo "<option value='$key'>$value</option>";
+                }
+            ?>
+        </select>
+        Ordre        
+        <select name="sortBy" class="filter">
+            <?php
+                foreach(enumList\sortBy::array() as $key => $value){
+                    echo "<option value='$key'>$value</option>";
+                }
+            ?>
+        </select>
+    </div>
     <div class="pictureList">
     <?php
 
@@ -13,9 +31,9 @@
         <div class="label">
             <div class="cover"></div>
             <div class="subLabel detail">
-                <a class="title" href="/displayArchive/?id=35"><?=$album["title"]; ?></a>
-                <p><?=(strlen($album["descript"])>0) ? $album["descript"] : "Aucune description."; ?></p>
-                <p class="author"><i class="fa fa-user" aria-hidden="true"></i> geneager</p>
+                <a class="title" href="/displayAlbum/?id=<?=$album["id"]; ?>"><?=$album["title"]; ?></a>
+                <p><?=(strlen($album["descript"])>0) ? display::truncateText($album["descript"], 75) : "Aucune description."; ?></p>
+                <p class="author"><i class="fa fa-user" aria-hidden="true"></i> <?=$album["author"]; ?></p>
                 <p class="bar"><span class="btn btn-outline-info btn-sm"><i class="fa-solid fa-pen"></i></span></p>
             </div>
         </div>
