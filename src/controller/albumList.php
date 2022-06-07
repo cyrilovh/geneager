@@ -8,6 +8,13 @@
     additionnalJsCss::set("filter.js");
     additionnalJsCss::set("albumList.js");
 
+    $page = 1;
+    if(isset($_GET["page"])){
+        if(is_numeric($_GET["page"])){
+            $page = \class\security::cleanStr($_GET["page"]);
+        }
+    }
+
     /* SORT BY */
     if(isset($_GET["albumOrderBy"])){ // if albumOrderBy is set
     
@@ -27,7 +34,23 @@
         $sortBy = "ASC";
     }
 
-    $albumList = \model\album::getList(array("*"), 0, 15, array($albumOrderBy, $sortBy), array());
+    /* FILTER */
+    $filter = array();
 
-    mcv::addView("albumList");
+    $resultPerPage = 10; // number max of result per page
+    $start = ($page-1)*$resultPerPage;
+
+    $albumCount = count(\model\album::getList(array("id"), 0, NULL, array($albumOrderBy, $sortBy), $filter)); // number of album in DB
+    $pageCount = ceil($albumCount/$resultPerPage); // number of page
+
+
+    if($albumCount > 0 && $page <= $pageCount){
+        $albumList = \model\album::getList(array("*"), 0, 15, array($albumOrderBy, $sortBy), array());
+        mcv::addView("albumList");
+    }else{ // if any identity card or any result with the filters
+        header("HTTP/1.1 404 NOT FOUND");
+        mcv::addView("noContent");
+    }
+
+    
 ?>

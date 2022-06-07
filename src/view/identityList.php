@@ -54,13 +54,6 @@
         ?>
     </div>
 </aside>
-<div class="paging">
-    Pages:
-    <?php
-        for($i=1; $i<=$pageCount; $i++){
-            $active = ($i==$page) ? "active" : "";
-            $cleanParameters = class\url::removeParam($_SERVER["REQUEST_URI"], "page");
-            echo "<a href='{$cleanParameters}&page=$i' class='$active'>".$i."</a>";
-        }
-    ?>
-</div>
+<?php
+    echo class\paging::gen($pageCount, $page);
+?>

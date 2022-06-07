@@ -54,7 +54,7 @@
         $ancestorList = \model\ancestor::getList(array("id", "firstNameList", "lastName", "photo",  "maidenName", "gender", "birthDay"), $start, $resultPerPage, array($ancestorOrderBy, $sortBy), $filter);
         mcv::addView("identityList");
     }else{ // if any identity card or any result with the filters
-        header("HTTP/1.1 204 NO CONTENT");
+        header("HTTP/1.1 404 NOT FOUND");
         mcv::addView("noContent");
     }
 
