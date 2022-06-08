@@ -62,7 +62,7 @@
                     if(password::match($userInfo[0]["password"],$_POST["password"])){ // if the passwords match
                         $_SESSION["username"] = $userInfo[0]["username"];
                         $_SESSION["userid"] = $userInfo[0]["id"];
-                        $userInfo[0]["role"] = $userInfo[0]["role"];
+                        $_SESSION["role"] = $userInfo[0]["role"];
                         header('Location: /');
                         exit();
                     }else{ // if password x username mismatch

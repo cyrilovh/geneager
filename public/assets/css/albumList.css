@@ -1,6 +1,6 @@
 /* CARDS */
 
-div.pictureList div.label {
+div.albumList div.label {
     vertical-align: top;
     margin: 10px 20px;
     display: inline-block;
@@ -16,7 +16,7 @@ div.label div.subLabel {
     vertical-align: top;
 }
 
-div.pictureList div.cover {
+div.albumList div.cover {
     background-color: #000;
     background-image: url("/assets/img/defaultPicture_480.webp");
     border-bottom: 1px solid silver;
@@ -39,17 +39,17 @@ div.label div.subLabel.detail {
     padding: 3px;
 }
 
-div.pictureList div.label a.title {
+div.albumList div.label a.title {
     font-family: CaviarMedium;
     font-size: 18px;
 }
 
-div.pictureList p.author {
+div.albumList p.author {
     margin-top: 10px;
     font-size: 0.9em;
     font-style: italic;
 }
 
-div.pictureList p.bar {
+div.albumList p.bar {
     margin-top: 10px;
 }

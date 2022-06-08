@@ -1445,7 +1445,7 @@ aside p+h5 {
 /* Filters */
 
 div.filterList {
-    background-color: #f5f5f5;
+    background-color: var(--bg-footer);
     padding: 10px 0px;
 }
 

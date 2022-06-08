@@ -4,7 +4,6 @@
     $meta_description = "Retrouvez les photographies de ma famille sur mon site personnel.";
 
     additionnalJsCss::set("albumList.css");
-    additionnalJsCss::set("filter.css");
     additionnalJsCss::set("filter.js");
 
     $page = 1;
@@ -36,6 +35,7 @@
     /* FILTER */
     $filter = array();
 
+
     $resultPerPage = 10; // number max of result per page
     $start = ($page-1)*$resultPerPage;
 
@@ -50,6 +50,4 @@
         header("HTTP/1.1 404 NOT FOUND");
         mcv::addView("noContent");
     }
-
-    
 ?>
