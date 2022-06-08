@@ -1,3 +1,4 @@
+<?php use class\display, class\format, class\UserInfo; ?>
 <aside>
     <h2>Liste des fiches d'identités:</h2>
     <div class="filterList">
@@ -23,7 +24,7 @@
         <select name="gender" class="filter removable">
             <?php
                 foreach(enumList\gender::array() as $key => $value){
-                    echo "<option value='$key'>".class\format::htmlToUpperFirst($value)."</option>";
+                    echo "<option value='$key'>".format::htmlToUpperFirst($value)."</option>";
                 }
             ?>
         </select>
@@ -32,7 +33,7 @@
     <div class="ancestorList">
         <?php
 
-        use class\display;
+        
 
         foreach($ancestorList as $ancestor){ 
         
@@ -44,8 +45,9 @@
                 </div>
                 <div class="details">
                     <p class='identite'><a href='/ancestor/?id=<?=($ancestor["id"]); ?>'><?=display::truncateIdentity($ancestor["firstNameList"], $ancestor["lastName"], $ancestor["maidenName"]); ?><span class='capitale'></span> <span class='uppercase'></span></a></p>
-                   <?=(!is_null($ancestor["birthDay"]) ? ' <p class="dates">Né(e) en '.class\format::date($ancestor["birthDay"],"Y").'</p>' : ""); ?>
+                   <?=(!is_null($ancestor["birthDay"]) ? ' <p class="dates">Né(e) en '.format::date($ancestor["birthDay"],"Y").'</p>' : ""); ?>
                     <p class='genre'>Genre: <?=display::gender($ancestor["gender"]); ?></p>
+                    <p><?= (userInfo::isAuthor($ancestor["author"])  || class\userInfo::isAdmin() ) ? "<p class='bar'><span class='btn btn-outline-info btn-sm'><i class='fa-solid fa-pen'></i></span></p>" : ""; ?></p>
                 </div>
             </div>
             <!-- end label -->

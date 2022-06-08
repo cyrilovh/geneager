@@ -3,5 +3,5 @@
     mcv::addView("home");
     additionnalJsCss::set("ancestorLabel.css");
 
-    $ancestorList = \model\ancestor::getList(array("id", "firstNameList", "lastName", "photo",  "maidenName", "gender", "birthDay"), 0, 6);
+    $ancestorList = \model\ancestor::getList(array("id", "firstNameList", "lastName", "photo",  "maidenName", "gender", "birthDay", "author"), 0, 6);
 ?>
