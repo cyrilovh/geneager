@@ -6,7 +6,6 @@
     additionnalJsCss::set("albumList.css");
     additionnalJsCss::set("filter.css");
     additionnalJsCss::set("filter.js");
-    additionnalJsCss::set("albumList.js");
 
     $page = 1;
     if(isset($_GET["page"])){
