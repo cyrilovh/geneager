@@ -1,0 +1,115 @@
+<?php
+namespace class;
+$meta_title = "Nouvelle photo ".$meta_separator.$meta_title;
+mcv::addView("userNewPicture");
+
+$formNewAlbum = new form(array( // i declare my new object
+    "method" => "post", // i give the method attr
+    "action" => "", // i give action attr
+    "class"=>"", // i give className ou className list (not required)
+));
+
+$formNewAlbum->setElement("input", array(
+    "type" => "text", // i give the type of input
+    "placeholder" => "Titre de la photo", // i set a placeholder
+    "name" => "title", // i give a className
+    "required" => "required", // i add the attr required
+    "minlength" => 2,  // i add the attr minlength
+    "maxlength" => 100, // i add the attr maxlength
+    "class" => "form-control w100"),
+    // add content after or before the element
+    array(
+        "before" => "<p>Titre de l'image:</p>",
+    )
+);
+
+
+// BUG ICI
+$formNewAlbum->setElement("textarea", array(
+    "placeholder" => "Description de la photo", // i set a placeholder
+    "name" => "descript", // i give a className
+    "required" => "required", // i add the attr required
+    "minlength" => 0,  // i add the attr minlength
+    "maxlength" => 300, // i add the attr maxlength
+    "class" => "form-control w100"
+    ),
+    // add content after or before the element
+    array(
+        "before" => "<p class='bold'>Description de l album:</p>",
+    )
+);
+// BUG ICI
+
+$formNewAlbum->setElement("input", array(
+    "type" => "file",
+    "title" => "Ajouter une photo",
+    "name" => "picture",
+    "class" => "form-control w100" // i add a class to the element
+    ),
+    // add content after or before the element
+    array(
+        "before" => "<p class='bold'>Ajouter une photo:</p>",
+    )
+);
+
+$formNewAlbum->setElement("select", array(
+    "name" => "location",
+    "class" => "form-control w100", // i add a class to the element
+    "option" => array(
+            "0" => "AAAAA",
+            "1" => "BBBBB"
+        ),
+    ),
+    // add content after or before the element
+    array(
+        "before" => "<p class='bold'>Lieu:</p>"
+    )
+);
+
+$formNewAlbum->setElement("input", array(
+    "type" => "text", // i give the type of input
+    "placeholder" => "Texte", // i set a placeholder
+    "name" => "sourceTxt", // i give a className
+    "minlength" => 2,  // i add the attr minlength
+    "maxlength" => 50, // i add the attr maxlength
+    "class" => "form-control w100"),
+    // add content after or before the element
+    array(
+        "before" => "<p class='bold'>Source de l'image:</p>",
+    )
+);
+
+$formNewAlbum->setElement("input", array(
+    "type" => "text", // i give the type of input
+    "placeholder" => "Texte", // i set a placeholder
+    "name" => "sourceUrl", // i give a className
+    "minlength" => 13,  // i add the attr minlength
+    "maxlength" => 2048, // i add the attr maxlength
+    "class" => "form-control w100"),
+    // add content after or before the element
+    array(
+        "before" => "<p class='bold'>URL d'origine:</p>",
+    )
+);
+
+$formNewAlbum->setElement("select", array(
+    "name" => "album",
+    "class" => "form-control w100", // i add a class to the element
+    "option" => array(
+            "0" => "AAAAA",
+            "1" => "BBBBB"
+        ),
+    ),
+    // add content after or before the element
+    array(
+        "before" => "<p class='bold'>Album:</p>"
+    )
+);
+
+$formNewAlbum->setElement("input", array(
+    "type" => "submit",
+    "value" => "Ajouter",
+    "name" => "submit",
+    "class" => "btn btn-primary form-control" // i add a class to the element
+));
+?>

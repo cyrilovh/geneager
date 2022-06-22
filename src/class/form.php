@@ -83,8 +83,8 @@ class form{
                                 }
                             }
                             $return .= "$htmlBefore<$tag $attr />$htmlAfter";
-                        }elseif($tag=="textara" || $tag=="button"){
-                            foreach($arrayElement as $attribute => $attrValue){
+                        }elseif($tag=="textarea" || $tag=="button"){
+                            foreach($arrayElement["attributList"] as $attribute => $attrValue){
                                 if(trim(strtolower($attribute))!="value"){
                                     if($attribute!="html"){
                                         $attr .= " {$attribute}='{$attrValue}'";

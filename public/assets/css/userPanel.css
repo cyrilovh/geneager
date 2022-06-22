@@ -1,0 +1,25 @@
+.userPanel {
+    display: block;
+    margin-bottom: 20px;
+}
+
+.userPanel div.persoBtn {
+    padding: 2px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -o-border-radius: 4px;
+    -moz-border-radius: 4px;
+    vertical-align: top;
+    text-align: center;
+    display: inline-block;
+    width: 80px;
+    min-height: 80px;
+}
+
+.userPanel div.persoBtn:hover {
+    background-color: rgb(216, 216, 216);
+}
+
+.userPanel div.persoBtn+div.persoBtn {
+    margin-left: 15px;
+}

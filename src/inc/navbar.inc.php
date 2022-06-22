@@ -13,7 +13,7 @@
                 <button class="dropbtn"><i class="far fa-user"></i> Mon compte</button>
                 <div class="dropdown-content">
                     <?php if(isset($_SESSION["username"])){ ?>
-                    <a href="/userSettings">Paramètres</a>
+                    <a href="/userPanel">Administration</a>
                     <a href="/logout">Déconnexion</a>
                     <?php }else{ ?>
                         <a href="/login">Connexion</a>

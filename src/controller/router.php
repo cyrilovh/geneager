@@ -1,23 +1,25 @@
 <?php
     namespace class;
+    if(str_starts_with(security::cleanStr($_SERVER["REQUEST_URI"]), '/admin') || str_starts_with(security::cleanStr($_SERVER["REQUEST_URI"]), '/user')){ // if URL start with "/admin"
+        if(isset($_SESSION["role"])){ // if logged
+            if($_SESSION["role"]!="admin"){
+                http_response_code(403);
+                die("<h1>Vous n'avez pas des droits suffisants pour accéder à cette page.</h1>");
+            }
+
+            if(!isset($_SESSION["role"])){ // if logged
+                die("<h1>Vous n'avez pas des droits suffisants pour accéder à cette page.</h1>");
+            }
+        }else{ // if not logged
+            header("location: /login");
+            exit();
+        }
+    }
+
 
     use model\parameter;
 
 
-    /*
-
-    doesn't works !!!
-
-    \gng\mcv::filterFileMC("model"); // i load firstly my model (about URL)
-    \gng\mcv::filterFileMC("controller"); // then my controller (about URL)
-    
-    */
-
-    /*
-    
-        but here it's works !
-
-    */
     /* DEFAULT META TAGS */
     $gng_paramList = new parameter();
     $meta_separator = " ".$gng_paramList->get("separator")." "; // default title
@@ -27,12 +29,10 @@
     $meta_favicon = $gng_paramList->get("favicon"); // favicon PNG (without extension) - Keep blank for the default favicon
     $meta_author = ""; // default author
         
-    // here i load only the "model" about URL 
+    // here i load only the sub-controller about URL 
     foreach(mcv::load() as $f){
         $explode = explode(":", $f);
-        // if($explode[0]=="model"){ // first i load the model
-        //     include $explode[1];
-        // }
+
         if($explode[0]=="controller"){ // then i load the controller
             include $explode[1];
         }

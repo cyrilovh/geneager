@@ -1,29 +1,43 @@
 <?php
     namespace model;
 
-    class ancestor{
-        /* return ancestor informations */
+    class picture{
         /**
-         * Return all data of an ancestor from ID
+         * Return all informations of a picture
          *
          * @param integer $id
+         * @param array $filter
          * @return array
          */
-        public static function get(int $id):array{
+        static function get(int $id, array $filter = array("*")):array{
             global $db;
-            $query = $db->prepare("SELECT * FROM ancestor WHERE id=:id");
+            $filter_str = implode(",", $filter);
+            $query = $db->prepare("SELECT $filter_str FROM picture WHERE id=:id");
             $query->execute(['id' => $id]);
-            $result = $query->fetch(\PDO::FETCH_ASSOC);
-            return (!is_array($result) ? array(): $result); // string
+            return $query->fetch(\PDO::FETCH_ASSOC); // string
             $query->closeCursor();
         }
-        /**
-         * Return the list of ancestor
+
+ /**
+         * Return the list of pictures
          *
          * @param array $filter name of the mySQL column
          * @param integer $start start of the result list (offset) - ignored if $limit is null or not an integer
          * @param integer $limit number of results (limit)
          * @return array
+         */
+
+
+         /*
+
+
+        FAIRE UNION SUR LA TABLE PICTUREFOLDER.
+        FAIRE UNION SUR LA TABLE PICTUREFOLDER.
+        FAIRE UNION SUR LA TABLE PICTUREFOLDER.
+        FAIRE UNION SUR LA TABLE PICTUREFOLDER.
+        FAIRE UNION SUR LA TABLE PICTUREFOLDER.
+
+
          */
         public static function getList(array $filter = array("*"), int $start=0 ,int $limit=NULL, array $order = array("lastUpdate", "ASC") , array $where = array()):array{
             global $db;
@@ -68,7 +82,7 @@
                     $i++;
                 }
             }
-            $query = $db->prepare("SELECT $filter FROM ancestor $whereSQL ORDER BY $order $limitSQL");
+            $query = $db->prepare("SELECT $filter FROM picture $whereSQL ORDER BY $order $limitSQL");
             $query->execute();
             return $query->fetchAll(\PDO::FETCH_ASSOC); // string
             $query->closeCursor(); 

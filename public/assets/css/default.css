@@ -1428,8 +1428,8 @@ nav input[type="search"]::placeholder {
 */
 
 aside a,
-aside a:hover,
-aside a:visited {
+aside a:not(.btn):hover,
+aside a:not(.btn):visited {
     color: var(--primary);
 }
 
@@ -1447,6 +1447,36 @@ aside p+h5 {
 div.filterList {
     background-color: var(--bg-footer);
     padding: 10px 0px;
+}
+
+
+/* Table */
+
+aside table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+aside table td,
+table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+aside table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+aside table tr:hover {
+    background-color: #ddd;
+}
+
+aside table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #04AA6D;
+    color: white;
 }
 
 
@@ -1487,13 +1517,13 @@ footer a,
 footer a:hover,
 footer a:visited {
     color: var(--link-footer);
-    border-bottom: 0!important;
+    border-bottom: 0 !important;
     transition: all 300ms ease-in-out;
     text-decoration: none;
 }
 
 footer a:hover {
-    color: var(--primary)!important;
+    color: var(--primary) !important;
 }
 
 footer .rows,
