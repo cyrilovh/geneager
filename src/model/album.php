@@ -2,7 +2,8 @@
 
 namespace model;
 
-class album{
+class 
+album{
     public static function getList(array $filter = array("*"), int $start=0 ,int $limit=NULL, array $order = array("lastUpdate", "ASC") , array $where = array()){
         global $db;
         $filter = implode(",", $filter);
@@ -52,5 +53,31 @@ class album{
         $query->execute();
         return $query->fetchAll(\PDO::FETCH_ASSOC); // string
         $query->closeCursor(); 
+    }
+
+    public static function get(int $id){
+        global $db;
+        $query = $db->prepare("SELECT * FROM picturefolder WHERE id = :id");
+        $query->execute(array(
+            ":id" => \class\security::cleanStr($id)
+        ));
+        return $query->fetch(\PDO::FETCH_ASSOC);
+        $query->closeCursor();
+    }
+
+    public static function set(string $title, string $descript):int{
+        global $db;
+        $query = $db->prepare("INSERT INTO picturefolder (id, title, descript, author, cover, lastUpdate, createDate) VALUES (:id ,:title, :descript, :author, :cover, :lastUpdate, :lastUpdate)");
+        $query->execute(array(
+            ":id" => NULL,
+            ":title" => \class\security::cleanStr($title),
+            ":descript" => \class\security::cleanStr($descript),
+            ":author" => $_SESSION["username"],
+            ":cover" => NULL,
+            ":lastUpdate" => date("Y-m-d H:i:s"),
+            ":creationDate" => date("Y-m-d H:i:s")
+        ));
+        return $db->lastInsertId();
+        $query->closeCursor();
     }
 }

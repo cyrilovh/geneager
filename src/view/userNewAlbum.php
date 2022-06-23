@@ -1,5 +1,9 @@
 <aside>
     <h2>Nouvel album</h2>
-    <p>L'image de couverture est automatiquement sélectionnée.</p>
+    <!-- messages -->
+    <?=(isset($errorList)) ? "<div class='alert alert-danger'>$errorList</div>" : ""; ?>
+    <?=(isset($successMessage)) ? "<div class='alert alert-success'>$successMessage</div>" : ""; ?>
+    <div class='alert alert-info'>L'image de couverture est automatiquement sélectionnée.</div>
+    <!-- form -->
     <?=$formNewAlbum->display(); ?>
 </aside>

@@ -1,7 +1,6 @@
 <?php
     namespace class;
     $meta_title = "Albums photos ".$meta_separator.$meta_title;
-    mcv::addView("userNewAlbum");
 
     $formNewAlbum = new form(array( // i declare my new object
         "method" => "post", // i give the method attr
@@ -19,14 +18,12 @@
         "class" => "form-control w100"),
         // add content after or before the element
         array(
-            "before" => "<p class='bold'>Titre de l'album:</p>",
+            "before" => "<p class='bold'>Titre de l&apos;album:</p>",
         )
     );
 
-
-    // BUG ICI
     $formNewAlbum->setElement("textarea", array(
-        "placeholder" => "Description de l'album", // i set a placeholder
+        "placeholder" => "Description de l&apos;album", // i set a placeholder
         "name" => "albumDescript", // i give a className
         "required" => "required", // i add the attr required
         "minlength" => 0,  // i add the attr minlength
@@ -45,4 +42,22 @@
         "name" => "submit",
         "class" => "btn btn-primary form-control" // i add a class to the element
     ));
+
+    if(isset($_POST["submit"])){
+        if($formNewAlbum->check()){
+            $albumTitle = security::cleanStr($_POST["albumName"]);
+            $albumDescript = security::cleanStr($_POST["albumDescript"]);
+            try {
+                $sql = \model\album::set($albumTitle, $albumDescript);
+            } catch (\Exception $e) {
+                echo 'Erreur interne: : ',  $e->getMessage(), "\n";
+            } finally {
+                $successMessage = "Album ajouté avec succès.";
+            }
+        }else{
+            $errorList = implode("<br>", $formNewAlbum->check(false));
+        }
+    }
+
+    mcv::addView("userNewAlbum");
 ?>

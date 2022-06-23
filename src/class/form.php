@@ -174,8 +174,10 @@ class form{
      * Check if all fields of the form are corrects
      *
      * @return array
+     * @return $returnBool If the option is on "true": Return if the form is correct or not (return true if the form is correct else false). If the option is off "false": Return an array of the errors.  
+     * 
      */
-    public function check():array{
+    public function check(bool $returnBool = true):array|bool{
         $err =  array(
             "ie" => "Internal error.",
             "require" => "Tous les champs sont requis ne sont pas complétés.",
@@ -212,7 +214,6 @@ class form{
 
                 // COMPARE ARRAYS
                 if(sort($elementListNameFromObj) == sort($elementListNameFromSubmit)){ // all names of the form aren't wrong (all input field names from form are expected)
-                    $errorList[] = "OK";
                     foreach($this->element as $k => $arrayElement){
                         $tag = format::normalize($arrayElement["tag"]);
                         if($tag == "textarea" || $tag == "input" || $tag == "select"){
@@ -395,7 +396,18 @@ class form{
         }else{
             $errorList[] = $err["nodata"]; 
         }
-        return $errorList;
+
+        // return data
+        if($returnBool == true){
+            if(count($errorList) == 0){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return $errorList;
+        }
+        
     }
 }
 
