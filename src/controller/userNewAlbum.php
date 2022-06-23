@@ -14,7 +14,7 @@
         "name" => "albumName", // i give a className
         "required" => "required", // i add the attr required
         "minlength" => 2,  // i add the attr minlength
-        "maxlength" => 100, // i add the attr maxlength
+        "maxlength" => 30, // i add the attr maxlength
         "class" => "form-control w100"),
         // add content after or before the element
         array(

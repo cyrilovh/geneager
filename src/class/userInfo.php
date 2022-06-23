@@ -30,6 +30,10 @@ class userInfo{
         return (isset($_SESSION["role"]) && $_SESSION["role"]=="user") ? true : false;
     }
 
+    public static function isConnected():bool{
+        return (isset($_SESSION["role"])) ? true : false;
+    }
+
     /**
      * Return if user is the owner
      *

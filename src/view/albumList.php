@@ -4,7 +4,7 @@
         <?=$gng_paramList->get("albumListSummary"); ?> 
         <?= (class\userInfo::isAdmin()) ? "<span class='btn btn-outline-info btn-sm'><i class='fa-solid fa-pen'></i></span>" : "" ?>
     </p>
-    <!-- START LIST -->
+    <!-- START FILTERS-->
     <div class="filterList">
         Trier par 
         <select name="albumOrderBy" class="filter">
@@ -23,6 +23,15 @@
             ?>
         </select>
     </div>
+    <!-- END FILTERS-->
+
+    <!-- START BUTTONS-->
+    <p class="bar">
+        <?= (class\userInfo::isConnected()) ? "<a class='btn btn-outline-success btn-sm' href='/userNewAlbum'><i class='fa-solid fa-pen'></i> Nouvel album</a>" : "" ?>
+    </p>
+    <!-- END BUTTONS-->
+
+    <!-- START LIST -->
     <div class="albumList">
     <?php
         foreach($albumList as $album){ 
@@ -42,4 +51,14 @@
     ?>
     </div>
     <!-- END LIST -->
+<!--
+ _____        _____ _____ _   _  _____ 
+ |  __ \ /\   / ____|_   _| \ | |/ ____|
+ | |__) /  \ | |  __  | | |  \| | |  __ 
+ |  ___/ /\ \| | |_ | | | | . ` | | |_ |
+ | |  / ____ \ |__| |_| |_| |\  | |__| |
+ |_| /_/    \_\_____|_____|_| \_|\_____|
+                                                                          
+-->
+    
 </aside>
