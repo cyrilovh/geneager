@@ -191,7 +191,7 @@ class form{
             "hex" => "Un ou plusieur(s) champ(s) couleur HEX invalides.",
             "unexpectedVal" => "Erreur: valeur(s) non-attendu(s) d'un ou plusieurs menu déroulants.",
             "unexpectedVal2" => "Erreur: une seule valeur attendue pour un ou plusieurs menu déroulant.",
-            "misElmt" => "Element(s) de formulaire en trop ou manquant"
+            "misElmt" => "Element(s) de formulaire en trop ou manquant."
         );
         $errorList = array();
         $methodUsed = (format::normalize($this->method)=="post") ? "POST" : "GET";

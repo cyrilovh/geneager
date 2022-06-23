@@ -45,8 +45,8 @@
 
     if(isset($_POST["submit"])){
         if($formNewAlbum->check()){
-            $albumTitle = security::cleanStr($_POST["albumName"]);
-            $albumDescript = security::cleanStr($_POST["albumDescript"]);
+            $albumTitle = $_POST["albumName"];
+            $albumDescript = $_POST["albumDescript"];
             try {
                 $sql = \model\album::set($albumTitle, $albumDescript);
             } catch (\Exception $e) {
