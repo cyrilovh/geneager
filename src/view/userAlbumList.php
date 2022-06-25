@@ -4,12 +4,15 @@
     </div>
     
     <div>
-        <h2>Liste de mes photos:</h2>
+        <h2>Liste de mes albums:</h2>
         <!-- START FILTERS-->
         <div class="filterList">
             Trier par 
             <select name="albumOrderBy" class="filter">
                 <?php
+
+use class\userInfo;
+
                     foreach(enumList\albumOrderBy::array() as $key => $value){
                         echo "<option value='$key'>$value</option>";
                     }
@@ -25,19 +28,24 @@
             </select>
         </div>
         <!-- END FILTERS-->
+        ajouter system prive public
         <table id="customers">
             <tr>
-                <th>Image</th>
-                <th>Dossier</th>
+                <th>Album</th>
+                <th>Mise à jour (AMJ)</th>
                 <th>Actions</th>
             </tr>
             <?php
                 foreach($albumList as $album){
             ?>
             <tr>
-                <td>Alfreds Futterkiste</td>
-                <td>Maria Anders</td>
-                <td><a class="btn btn-outline-info btn-sm" href="/userEditAlbum/?id=<?=$album["id"];?>"><i class="fa-solid fa-pen"></i></a> <a class="btn btn-outline-danger btn-sm" href="/userDeleteAlbum/?id=<?=$album["id"];?>"><i class="fa-solid fa-trash"></i></a></td>
+                <td>
+                    <p class="bold"><?=$album["title"];?></p>
+                    <p class="txt-disabled"><?=$album["descript"];?></p>
+                     <?=(userInfo::isAdmin()) ? "<p class='txt-disabled italic mt10'><i class='fas fa-user'></i> ".$album["author"] : "";?></p>
+                </td>
+                <td><?=$album["lastUpdate"];?></td>
+                <td><a class="btn btn-outline-info btn-sm" href="/userEditAlbum/?id=<?=$album["id"];?>"><i class="fa-solid fa-pen"></i></a> <a class="btn btn-outline-danger btn-sm" href="/userDeleteAlbum/?id=<?=$album["id"];?>"><i class="fa-solid fa-trash"></i></a> <a href="/displayAlbum.php?id=<?=$album["id"];?>" class="btn btn-outline-primary btn-sm"><i class="fas fa-eye"></i></a></td>
             </tr>
             <?php 
                 }
@@ -45,13 +53,5 @@
         </table>
     </div>
 
-<!--
- _____        _____ _____ _   _  _____ 
- |  __ \ /\   / ____|_   _| \ | |/ ____|
- | |__) /  \ | |  __  | | |  \| | |  __ 
- |  ___/ /\ \| | |_ | | | | . ` | | |_ |
- | |  / ____ \ |__| |_| |_| |\  | |__| |
- |_| /_/    \_\_____|_____|_| \_|\_____|
-                                                                          
---
+    <?=class\paging::gen($pageCount, $page); ?>
 </aside>

@@ -1,4 +1,7 @@
 <aside>
+<div class="bar">
+        <a href='/userAlbumList' class="btn btn-info"><i class="fas fa-images"></i> Albums</a>
+    </div>
     <h2>Nouvel album</h2>
     <!-- messages -->
     <?=(isset($errorList)) ? "<div class='alert alert-danger'>$errorList</div>" : ""; ?>

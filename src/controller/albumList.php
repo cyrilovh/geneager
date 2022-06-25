@@ -5,6 +5,7 @@
 
     additionnalJsCss::set("albumList.css");
     additionnalJsCss::set("filter.js");
+    additionnalJsCss::set("paging.css");
 
     $page = 1;
     if(isset($_GET["page"])){
@@ -44,7 +45,7 @@
 
 
     if($albumCount > 0 && $page <= $pageCount){
-        $albumList = \model\album::getList(array("*"), 0, 15, array($albumOrderBy, $sortBy), array());
+        $albumList = \model\album::getList(array("*"), $start, $resultPerPage, array($albumOrderBy, $sortBy), array());
         mcv::addView("albumList");
     }else{ // if any identity card or any result with the filters
         header("HTTP/1.1 404 NOT FOUND");

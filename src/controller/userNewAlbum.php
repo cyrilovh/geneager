@@ -40,7 +40,7 @@
         "type" => "submit",
         "value" => "Ajouter",
         "name" => "submit",
-        "class" => "btn btn-primary form-control" // i add a class to the element
+        "class" => "btn btn-success form-control" // i add a class to the element
     ));
 
     if(isset($_POST["submit"])){

@@ -3,7 +3,7 @@
     $meta_title = "Liste des fiches d'identités ".$meta_separator.$meta_title;
     $meta_description = "Découvrez la liste entière des mes ancêtres !";
     additionnalJsCss::set("ancestorLabel.css");
-    additionnalJsCss::set("identityList.css");
+    additionnalJsCss::set("paging.css");
     additionnalJsCss::set("filter.js");
     
 

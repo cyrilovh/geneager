@@ -43,4 +43,8 @@ class userInfo{
     public static function isAuthor(string $user):bool{
         return (isset($_SESSION["username"]) && $_SESSION["username"]==$user) ? true : false;
     }
+
+    public static function getUsername(){
+        return (isset($_SESSION["username"])) ? $_SESSION["username"] : "";
+    }
 }
