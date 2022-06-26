@@ -4,7 +4,17 @@ namespace model;
 
 class 
 album{
-    public static function getList(array $filter = array("*"), int $start=0 ,int $limit=NULL, array $order = array("lastUpdate", "ASC") , array $where = array()){
+    /**
+     * Return an album list
+     *
+     * @param array $filter
+     * @param integer $start
+     * @param int $limit
+     * @param array $order
+     * @param array $where
+     * @return array
+     */
+    public static function getList(array $filter = array("*"), int $start=0 ,int $limit=NULL, array $order = array("lastUpdate", "ASC") , array $where = array()):array{
         global $db;
         $filter = implode(",", $filter);
 
@@ -51,11 +61,15 @@ album{
         }
         $query = $db->prepare("SELECT $filter FROM picturefolder $whereSQL ORDER BY $order $limitSQL");
         $query->execute();
-        return $query->fetchAll(\PDO::FETCH_ASSOC); // string
+        return $query->fetchAll(\PDO::FETCH_ASSOC); // array
         $query->closeCursor(); 
     }
 
-    public static function get(int $id){
+    /*
+     * Get the album data
+     * @return array
+     */
+    public static function get(int $id):array{
         global $db;
         $query = $db->prepare("SELECT * FROM picturefolder WHERE id = :id");
         $query->execute(array(
@@ -65,19 +79,43 @@ album{
         $query->closeCursor();
     }
 
-    public static function set(string $title, string $descript):int{
+    /**
+     * Create a new album
+     * @param string $title Album title
+     * @param string $descript Description of the album
+     * @param string $visibility -> checkout enum list for more informations
+     * @return boolean
+     */
+    public static function set(string $title, string $descript, $visibility):bool{
         global $db;
-        $query = $db->prepare("INSERT INTO picturefolder (id, title, descript, author, cover, lastUpdate, createDate) VALUES (:id ,:title, :descript, :author, :cover, :lastUpdate, :lastUpdate)");
-        $query->execute(array(
-            ":id" => NULL,
-            ":title" => \class\security::cleanStr($title),
-            ":descript" => \class\security::cleanStr($descript),
-            ":author" => $_SESSION["username"],
-            ":cover" => NULL,
-            ":lastUpdate" => date("Y-m-d H:i:s"),
-            ":creationDate" => date("Y-m-d H:i:s")
-        ));
-        return $db->lastInsertId();
-        $query->closeCursor();
+
+        if(in_array($visibility, \enumList\visibility::values())){ // i check if the value is in the array (enum list)
+            $albumRightAccess = $visibility;
+        }
+        else{
+            $albumRightAccess = \enumList\visibility::values()[0];
+        }
+
+        $query = $db->prepare("INSERT INTO picturefolder (id, title, descript, author, cover, lastUpdate, createDate, visibility) VALUES (:id ,:title, :descript, :author, :cover, :lastUpdate, :lastUpdate, :visibility)");
+        try {
+            $query->execute(array(
+                ":id" => NULL,
+                ":title" => \class\security::cleanStr($title),
+                ":descript" => \class\security::cleanStr($descript),
+                ":author" => $_SESSION["username"],
+                ":cover" => NULL,
+                ":lastUpdate" => date("Y-m-d H:i:s"),
+                ":creationDate" => date("Y-m-d H:i:s"),
+                ":visibility" => $albumRightAccess
+            ));
+            $query->closeCursor();
+        } catch (\PDOException $e) {
+            if(PROD == false){
+                echo $e->getMessage();
+            }
+            return false;
+        }
+        return true;
+
     }
 }

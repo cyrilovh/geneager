@@ -1,7 +1,7 @@
 <?php
   namespace enumList;
 
-  trait getPictureOrderBy
+  trait getVisibility
   {
 
     public static function names(): array
@@ -16,19 +16,17 @@
 
     public static function array(): array
     {
-      return array_combine(self::names(), self::values());
+      return array_combine(self::values(), self::names());
     }
 
   }
 
-  enum pictureOrderBy: string
+  enum visibility: int
   {
 
-    use getPictureOrderBy;
-
-    case lastUpdate = 'Date de mise à jour';
-    case createDate = 'Date de creation';
-    case albumName = 'Nom de d\'albmum';
+    use getVisibility;
+    case public = 0;
+    case privé = 1;
   }
 
 ?>

@@ -1,7 +1,7 @@
 <?php
   namespace enumList;
 
-  trait getAlbumOrderBy
+  trait getPictureOrderBy
   {
 
     public static function names(): array
@@ -21,16 +21,13 @@
 
   }
 
-  enum albumOrderBy: string
+  enum pictureOrderBy: string
   {
 
-    use getAlbumOrderBy;
+    use getPictureOrderBy;
 
     case lastUpdate = 'Date de mise à jour';
     case createDate = 'Date de creation';
-    case title = 'Nom de d\'album';
   }
 
 ?>
-
-

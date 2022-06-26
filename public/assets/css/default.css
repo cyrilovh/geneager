@@ -28,6 +28,7 @@ body {
     /* background-color of header, main and footer*/
     --disabled: #3c3c3c;
     --font-size: 16px;
+    --font-size-small: 12px;
 }
 
 body.dark {
@@ -116,7 +117,8 @@ a:active:not(.button) {
 }
 
 main input,
-main textarea {
+main textarea,
+main select {
     padding: 5px;
 }
 
@@ -127,8 +129,8 @@ aside {
 select {
     cursor: pointer;
     outline: none;
-    border: 0px;
-    border-bottom: 1px solid #2b2d2d;
+    border-radius: 3px;
+    border: 1px solid #2b2d2d;
 }
 
 select.filter {
@@ -251,6 +253,12 @@ img.e40x {
 
 .txt-disabled {
     color: var(--disabled);
+}
+
+.txt-description {
+    font-size: var(--font-size-small);
+    color: var(--disabled);
+    padding-bottom: 8px;
 }
 
 .float-left {

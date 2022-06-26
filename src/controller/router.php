@@ -1,17 +1,18 @@
 <?php
     namespace class;
-    if(str_starts_with(security::cleanStr($_SERVER["REQUEST_URI"]), '/admin')){ // if URL start with "/admin"
-        if(!userInfo::isAdmin()){ // if logged
-            http_response_code(403);
-            die("<h1>Vous n'avez pas des droits suffisants pour accéder à cette page.</h1>");
-        }
+
+    if(str_starts_with(security::cleanStr($_SERVER["REQUEST_URI"]), '/admin') && !userInfo::isAdmin()){ // if URL start with "/admin" but the user is not admin
+        die("<h1>Vous n'avez pas des droits suffisants pour accéder à cette page.</h1>");
+        http_response_code(403);
+    }
+    
+
+
+    if(str_starts_with(security::cleanStr($_SERVER["REQUEST_URI"]), '/user') && !userInfo::isConnected()){ // if URL start with "/user" but the user is not connected
+        die("<h1>Vous n'avez pas des droits suffisants pour accéder à cette page.</h1>");
+        http_response_code(403);
     }
 
-    if(str_starts_with(security::cleanStr($_SERVER["REQUEST_URI"]), '/user')){
-        if(!userInfo::isConnected()){ // if logged
-            die("<h1>Vous n'avez pas des droits suffisants pour accéder à cette page.</h1>");
-        }
-    }
 
 
     use model\parameter;
