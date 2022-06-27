@@ -1,8 +1,7 @@
 <aside>
     <h2>Photos de famille:</h2>
     <p>
-        <?=$gng_paramList->get("albumListSummary"); ?> 
-        <?= (class\userInfo::isAdmin()) ? "<span class='btn btn-outline-info btn-sm'><i class='fa-solid fa-pen'></i></span>" : "" ?>
+        <?=$gng_paramList->get("albumListSummary", true); ?> 
     </p>
     <!-- START FILTERS-->
     <div class="filterList">
