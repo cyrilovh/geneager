@@ -28,7 +28,6 @@ use class\userInfo;
             </select>
         </div>
         <!-- END FILTERS-->
-        ajouter system prive public
         <table id="customers">
             <tr>
                 <th>Album</th>

@@ -69,7 +69,7 @@ album{
      * Get the album data
      * @return array
      */
-    public static function get(int $id):array{
+    public static function get(int $id):array|bool{
         global $db;
         $query = $db->prepare("SELECT * FROM picturefolder WHERE id = :id");
         $query->execute(array(

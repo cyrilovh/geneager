@@ -277,6 +277,10 @@ img.e40x {
     text-transform: capitalize;
 }
 
+.red {
+    color: #f15346;
+}
+
 .mt10 {
     margin-top: 5px;
 }
