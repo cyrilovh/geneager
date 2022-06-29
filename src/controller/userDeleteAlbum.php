@@ -14,7 +14,7 @@
 
             if($album){
 
-                if($album["author"] == $_SESSION["username"] || userInfo::isAdmin()){
+                if(userInfo::isAuthorOrAdmin($album["author"])){
                     $formDeleteAlbum = new form(array( // i declare my new object
                         "method" => "post", // i give the method attr
                         "action" => "", // i give action attr

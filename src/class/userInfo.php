@@ -44,7 +44,20 @@ class userInfo{
         return (isset($_SESSION["username"]) && $_SESSION["username"]==$user) ? true : false;
     }
 
-    public static function getUsername(){
+    /**
+     * Return if user can edit/delete (check if admin or author)
+     *
+     * @param string $user username (nickname)
+     * @return int
+     */
+    public static function isAuthorOrAdmin(string $user):bool{
+        return (isset($_SESSION["username"])) ? ((userinfo::isAuthor($user) || userinfo::isAdmin() ) ? true : false) : false;
+    }
+
+    /**
+     * Return username if the visitor is connected
+     */
+    public static function getUsername():string{
         return (isset($_SESSION["username"])) ? $_SESSION["username"] : "";
     }
 }

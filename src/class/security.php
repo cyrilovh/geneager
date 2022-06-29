@@ -9,9 +9,9 @@ class security{
      *
      * @param string $str
      * @param string $password
-     * @return void
+     * @return string
      */
-    public static function encrypt(string $str, string $password){
+    public static function encrypt(string $str, string $password):string{
         $ivlen = openssl_cipher_iv_length($cipher="AES-128-CBC");
         $iv = openssl_random_pseudo_bytes($ivlen);
         $ciphertext_raw = openssl_encrypt($str, $cipher, $password, $options=OPENSSL_RAW_DATA, $iv);
@@ -23,9 +23,9 @@ class security{
      *
      * @param string $str
      * @param string $password
-     * @return void
+     * @return string
      */
-    public static function decrypt(string $str, string $password){
+    public static function decrypt(string $str, string $password):string{
         $c = base64_decode($str);
         $ivlen = openssl_cipher_iv_length($cipher="AES-128-CBC");
         $iv = substr($c, 0, $ivlen);
@@ -37,6 +37,7 @@ class security{
         {
             return $original_plaintext."\n";
         }
+        return "";
     }
     /**
      * Clean sting: htmlentities + trim and remove double spaces
