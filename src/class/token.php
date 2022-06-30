@@ -26,13 +26,4 @@
             return false;
         }
     }
-
-
-    // $lifetimeSecond = TOKEN_LIFE_TIME * 60;
-    // echo $lifetimeSecond."<br>";
-    // $timeFirst  = strtotime('2011-05-12 18:20:20');
-    // $timeSecond = strtotime('2011-05-12 18:30:21');
-    // $differenceInSeconds = $timeSecond - $timeFirst;
-    // echo $differenceInSeconds;
-    // echo ($differenceInSeconds > $lifetimeSecond) ? "<br>expired" : "<br>true";
 ?>
