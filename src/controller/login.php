@@ -52,33 +52,29 @@
     //print_r($formLogin->check());
 
     if(isset($_POST["submit"])){ // check if form is submit
-        if(isset($_POST["username"]) && isset($_POST["password"])){ // check if the both input are submit
-            if(strlen(trim($_POST["username"]))>=$gng_paramList->get("usernameMinLength") && strlen(trim($_POST["password"]))>=$gng_paramList->get("passwordMinLength")){ // we check the min length of the password and username
-                $username = $_POST["username"];
+        if($formLogin->check()){ // check if the both input are submit
+    
+            $username = $_POST["username"];
 
-                $userInfo = userInfo::get($username, array("id","username","password","role")); // i interrogates the database
+            $userInfo = userInfo::get($username, array("id","username","password","role")); // i interrogates the database
 
-                if(count($userInfo)==1){ // if i 1 user matching
-                    if(password::match($userInfo[0]["password"],$_POST["password"])){ // if the passwords match
-                        $_SESSION["username"] = $userInfo[0]["username"];
-                        $_SESSION["userid"] = $userInfo[0]["id"];
-                        $_SESSION["role"] = $userInfo[0]["role"];
-                        header('Location: /');
-                        exit();
-                    }else{ // if password x username mismatch
-                        $msg_mismatch = "Identifiant ou mot de passe incorrect."; 
-                        mcv::addView("login"); 
-                    }
-                }else{ // if any or multiple users
+            if(count($userInfo)==1){ // if i 1 user matching
+                if(password::match($userInfo[0]["password"],$_POST["password"])){ // if the passwords match
+                    $_SESSION["username"] = $userInfo[0]["username"];
+                    $_SESSION["userid"] = $userInfo[0]["id"];
+                    $_SESSION["role"] = $userInfo[0]["role"];
+                    header('Location: /');
+                    exit();
+                }else{ // if password x username mismatch
                     $msg_mismatch = "Identifiant ou mot de passe incorrect."; 
-                    mcv::addView("login");
+                    mcv::addView("login"); 
                 }
-            }else{ // the min length (parameters from DB) of the password or username is false
+            }else{ // if any or multiple users
                 $msg_mismatch = "Identifiant ou mot de passe incorrect."; 
                 mcv::addView("login");
             }
         }else{ // password input or username input missing
-            $msg_mismatch = "Identifiant ou mot de passe incorrect."; 
+            $msg_mismatch = "Veuillez remplir correctement le formulaire."; 
             mcv::addView("login");
         }
     }else{ // if form is not submit
