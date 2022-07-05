@@ -13,13 +13,15 @@ namespace class;
 class form{
     public $attr;
     public $element;
-    /*
-        object = <form ...></form>
-        $attr => array. MUST contain the attr "method" and "action". Can contain the attribute class.
-        $element => array (in array) with the input, select, textarea 
+    /**
+     * Constructor
+     * object = <form ...>...</form>
+     *
+     * @param array $attr MUST contain the attr "method" and "action". Can contain the attribute class.
+     * @param array $element Elements of the form (input, texarea, ...).
+     * @param boolean $token CRSF token
+     */
 
-        var_dump(obj): return HTML code   
-    */
     public function __construct(array $attr, array $element = array(), bool $token = true){
         $this->method = (array_key_exists('method', $attr)) ? $attr["method"] : "";
         $this->action = (array_key_exists('action', $attr)) ? $attr["action"] : "";
