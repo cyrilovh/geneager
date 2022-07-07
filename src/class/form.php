@@ -26,6 +26,7 @@ class form{
         $this->method = (array_key_exists('method', $attr)) ? $attr["method"] : "";
         $this->action = (array_key_exists('action', $attr)) ? $attr["action"] : "";
         $this->class = (array_key_exists('class', $attr)) ? $attr["class"] : "";
+        $this->enctype = (array_key_exists('enctype', $attr)) ? $attr["enctype"] : "";
 
         $this->element = $element;
 
@@ -73,7 +74,7 @@ class form{
      */
     public function display():string{
  
-        $return = "<form action='{$this->action}' method='{$this->method}' class='{$this->class}'>"; // start of the string
+        $return = "<form action='{$this->action}' method='{$this->method}' class='{$this->class}' enctype='{$this->enctype}'>"; // start of the string
 
         foreach($this->element as $k => $arrayElement){
             if(array_key_exists('tag', $arrayElement)){
@@ -214,8 +215,8 @@ class form{
         $methodUsed = (format::normalize($this->method)=="post") ? "POST" : "GET";
         $dataSubmit = (format::normalize($this->method)=="post") ? $_POST : $_GET;
         if(count($dataSubmit)>0){ // i check if i have data (if the form is submit)
-
-            if(count($dataSubmit)==count($this->element)){ // check if number of parameters get/post
+            $countAllDataSubmit = count($dataSubmit) + count($_FILES);
+            if($countAllDataSubmit==count($this->element)){ // check if number of parameters get/post
 
                 // TOKEN CHECK
                 if($this->token){

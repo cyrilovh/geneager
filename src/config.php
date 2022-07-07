@@ -7,10 +7,18 @@
 
     /* GENERAL CONFIG */
     define('ENCODE', "UTF-8"); // encode
-    define('SALT_PASSWORD', "qs--ZU=FxG8eCYCesQ"); // STATIC SALT FOR ENCRYPT PASSWORD IN DATABASE
-    define('KEY_EMAIL', "V-J8#JDyz5Ja#!=V"); // STATIC SALT FOR ENCRYPT PASSWORD IN DATABASE
+    define('ROOT_DIR',  $_SERVER['DOCUMENT_ROOT']."/");
+    define('UPLOAD_DIR', ROOT_DIR."private/upload/"); // upload directory
+    define('MAX_FILE_SIZE', 2097152); // max file size in bytes (FR: octets) 2097152 = 2Mo (2 * 1024 * 1024)
+
 
     /* SECURTY */
+
+    /* encrypt data */
+    define('SALT_PASSWORD', "qs--ZU=FxG8eCYCesQ"); // STATIC SALT FOR ENCRYPT PASSWORD IN DATABASE
+    // define('KEY_EMAIL', "V-J8#JDyz5Ja#!=V"); // STATIC SALT FOR ENCRYPT EMAIL IN DATABASE
+
+    /* crsf */
     define('PASSWORD_TOKEN', 'CHANGE-YOUR-TOK3N'); // TOKEN FOR FORMS (ANTI-CSRF)
     define('TOKEN_LIFETIME', '10');   // TOKEN LIFE TIME MINUTES
 
