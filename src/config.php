@@ -8,7 +8,8 @@
     /* GENERAL CONFIG */
     define('ENCODE', "UTF-8"); // encode
     define('ROOT_DIR',  $_SERVER['DOCUMENT_ROOT']."/");
-    define('UPLOAD_DIR', ROOT_DIR."private/upload/"); // upload directory
+    define('UPLOAD_DIR', "private/upload/"); // upload directory
+    define('UPLOAD_DIR_FULLPATH', ROOT_DIR.UPLOAD_DIR); // upload directory
     define('MAX_FILE_SIZE', 2097152); // max file size in bytes (FR: octets) 2097152 = 2Mo (2 * 1024 * 1024)
 
 

@@ -24,8 +24,9 @@
                 "pdf" => array("application/pdf"),
             ); // array of file types
             $return = []; // array of the data returned
+            $return["error"] = []; // array of errors
 
-            $targetFullPath = UPLOAD_DIR.$target; // we add the target to the upload directory
+            $targetFullPath = UPLOAD_DIR_FULLPATH.$target; // we add the target to the upload directory
         
             $fileAllowedList = []; // array of allowed file types (MIME)
 
@@ -39,55 +40,46 @@
                     }
                 }
             }
-            echo "L42<br>";
-            var_dump($file);
-            echo "<br><br>";
             if(file::isWritable($targetFullPath)){ // i check if the target folder is writable
-                echo "L46<br>";
                 if(!empty($file)){
-                    echo "L48<br>";
                     if(!empty($file["name"])){
-                        echo "L50<br>";
                         if(!empty($file["size"])){
-                            echo "L52<br>";
                             if($file["size"]<$maxSizeAllowed){
-                                echo "L54<br>";
                                 if(array_key_exists("error", $file)){
-                                    echo "L56<br>";
                                     if(in_array($file["type"], $fileAllowedList)){ // in check in array of allowed file if the type is autorised
-                                        echo "L58<br>";
-                                        echo $targetFullPath.$file["name"];
-                                        if(move_uploaded_file($file["tmp_name"], $targetFullPath.$file["name"])){ // i move the file
+                                        $fileExtension = pathinfo($file["name"], PATHINFO_EXTENSION);
+                                        $fileNewName = random::uuidv4().date('_Ymd_his').".".$fileExtension; // i set a random name for the file (security reasons)
+                                        if(move_uploaded_file($file["tmp_name"], $targetFullPath.$fileNewName)){ // i move the file
                                             $return["file"] = array(
-                                                "name" => $file["name"],
-                                                "newName" => random::uuidv4(), // a continuer car format incorrect
+                                                "originalName" => $file["name"],
+                                                "newName" => $fileNewName, // a continuer car format incorrect
                                                 "size" => $file["size"],
                                                 "type" => $file["type"],
-                                                "path" => $targetFullPath.$file["name"]
+                                                "path" => UPLOAD_DIR.$target
                                             );
                                         }else{
-                                            $error[] = "Erreur interne lors du transfert du fichier.";
+                                            $return["error"][] = "Erreur interne lors du transfert du fichier.";
                                         }
                                     }else{
-                                        $error[] = "Le type de fichier (MIME) n'est pas autorisé.";
+                                        $return["error"][] = "Le type de fichier (MIME) n'est pas autorisé.";
                                     }
                                 }else{
-                                    $error[] = "Error while uploading the file";
+                                    $return["error"][] = "Error while uploading the file";
                                 }
                             }else{
-                                $error[] = "File is too big";
+                                $return["error"][] = "File is too big";
                             }
                         }else{
-                            $error[] = "Pas de fichier à envoyé ou fichier vide.";
+                            $return["error"][] = "Pas de fichier à envoyé ou fichier vide.";
                         }
                     }else{
-                        $error[] = "Pas de fichier envoyé.";
+                        $return["error"][] = "Pas de fichier envoyé.";
                     }
                 }else{
-                    $error[] = "Pas de fichier envoyé.";
+                    $return["error"][] = "Pas de fichier envoyé.";
                 }
             }else{
-                $error[] = "Erreur interne: Le dossier de destination n'est pas accessible en écriture";
+                $return["error"][] = "Erreur interne: Le dossier de destination n'est pas accessible en écriture";
             }
 
             return $return; // CONTAIN ARRAY WITH ERRORS AND NEW FILE NAME, ...
