@@ -4,9 +4,9 @@
     use model\{userInfo,parameter};
     metaTitle::setTitle("Connexion"); // i set the title page + separator + website name
     $meta_robots = "noindex,nofollow";
-    $include_header = "none"; // bug quand none: page login
-    $include_navbar = "none"; // bug quand none: page login
-    $include_footer = "none"; // bug quand none: page login
+    $include_header = "none";
+    $include_navbar = "none";
+    $include_footer = "none";
     additionnalJsCss::set("login.css");
     additionnalJsCss::set("login.js");
 

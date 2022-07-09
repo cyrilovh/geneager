@@ -44,8 +44,13 @@
     );
 
     if($form->check()){
+        if(!isset($_FILES['fichier'])){
+            trigger_error("\$_FILES is not set");
+        }
         $theFile = $_FILES["fichier"];
-        var_dump(file::upload($theFile, array("picture")));
+        var_dump(file::upload($theFile, array("picture", "document")));
+    }else{
+        $errorList = $form->check(false);
     }
 
 

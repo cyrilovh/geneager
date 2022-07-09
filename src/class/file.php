@@ -8,7 +8,7 @@
          *
          * @param [type] $file
          * @param string $target (folder or subfolder in /private/uploads/)
-         * @param array $fileAllowed Types of file to upload (ex: picture, video, pdf, audio, ...)
+         * @param array $fileAllowed Types of file to upload (ex: picture, video, document, audio, ...)
          * @param int $maxSize Maximum size of the file to upload (EN: in bytes) (FR: en octets)
          * @param boolean $override force override file if it already exists
          * 
@@ -21,7 +21,7 @@
                 "picture" => array("image/png", "image/jpeg", "image/gif"),
                 "video" => array("video/mp4", "video/ogg", "video/webm"),
                 "audio" => array("audio/mp3", "audio/ogg", "audio/webm"),
-                "pdf" => array("application/pdf"),
+                "document" => array("application/pdf"),
             ); // array of file types
             $return = []; // array of the data returned
             $return["error"] = []; // array of errors
@@ -29,11 +29,17 @@
             $targetFullPath = UPLOAD_DIR_FULLPATH.$target; // we add the target to the upload directory
         
             $fileAllowedList = []; // array of allowed file types (MIME)
+            $extensionAllowedList = []; // array of allowed file extensions
 
             /* i add into $fileAllowedList the mime allowed */
             foreach($fileCategoryAllowed as $key => $value){ // we loop through the array of allowed file types
                 if(array_key_exists($value, $fileType)){ // if the category of document exist
                     $fileAllowedList = array_merge($fileAllowedList, $fileType[$value]); // we add the category of document to the array of allowed file types
+
+                    // i this next loop, i add into $extensionAllowedList the extension allowed for the category of document
+                    foreach($fileType[$value] as $key => $value){ // we loop through the array of allowed file types
+                        $extensionAllowedList[] = explode("/", $value)[1]; // we get the extension of the file type
+                    }
                 }else{
                     if(PROD == false){
                         trigger_error("The file type ".$value." is not allowed", E_USER_WARNING);
@@ -46,22 +52,31 @@
                         if(!empty($file["size"])){
                             if($file["size"]<$maxSizeAllowed){
                                 if(array_key_exists("error", $file)){
-                                    if(in_array($file["type"], $fileAllowedList)){ // in check in array of allowed file if the type is autorised
-                                        $fileExtension = pathinfo($file["name"], PATHINFO_EXTENSION);
+                                    $fileExtension = pathinfo($file["name"], PATHINFO_EXTENSION);
+                                    if(in_array($file["type"], $fileAllowedList) || in_array($fileExtension, $fileAllowedList)){ // in check in array of allowed file if the type is autorised
                                         $fileNewName = random::uuidv4().date('_Ymd_his').".".$fileExtension; // i set a random name for the file (security reasons)
-                                        if(move_uploaded_file($file["tmp_name"], $targetFullPath.$fileNewName)){ // i move the file
-                                            $return["file"] = array(
-                                                "originalName" => $file["name"],
-                                                "newName" => $fileNewName, // a continuer car format incorrect
-                                                "size" => $file["size"],
-                                                "type" => $file["type"],
-                                                "path" => UPLOAD_DIR.$target
-                                            );
-                                        }else{
-                                            $return["error"][] = "Erreur interne lors du transfert du fichier.";
+                                        
+                                        if(in_array("image/".$fileExtension, $fileType["picture"])){ // i check if it's an image enumerated in the array of allowed file types
+                                            if(!exif_imagetype($file["tmp_name"])) {
+                                                $return["error"][] = "Image invalide.";
+                                            }
+                                        }
+                                        
+                                        if(count($return["error"]) == 0){ // if there is no error
+                                            if(move_uploaded_file($file["tmp_name"], $targetFullPath.$fileNewName)){ // i move the file
+                                                $return["file"] = array(
+                                                    "originalName" => $file["name"],
+                                                    "newName" => $fileNewName, // a continuer car format incorrect
+                                                    "size" => $file["size"],
+                                                    "type" => $file["type"],
+                                                    "path" => UPLOAD_DIR.$target
+                                                );
+                                            }else{
+                                                $return["error"][] = "Erreur interne lors du transfert du fichier.";
+                                            }
                                         }
                                     }else{
-                                        $return["error"][] = "Le type de fichier (MIME) n'est pas autorisé.";
+                                        $return["error"][] = "Le type de fichier non-autorisé (type MIME ou extension non autorisé).";
                                     }
                                 }else{
                                     $return["error"][] = "Error while uploading the file";

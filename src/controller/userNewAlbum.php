@@ -68,7 +68,7 @@
                 $errorMessage = "L&apos;album n&apos;a pas pu été créé.";
             }
         }else{
-            $errorList = implode("<br>", $formNewAlbum->check(false));
+            $errorList = $formNewAlbum->check(false);
         }
     }
 
