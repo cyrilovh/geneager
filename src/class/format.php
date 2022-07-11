@@ -94,6 +94,21 @@ class format{
     }
 
     /**
+     * Returns the whole string in lower case
+     *
+     * @param string $str
+     * @param boolean $html
+     * @return string
+     */
+    public static function htmlToLower(string $str, bool $html = false):string{
+        $str = strtolower(html_entity_decode($str, ENT_QUOTES, "UTF-8"));
+        if($html==true){
+            $str = htmlentities($str, ENT_QUOTES, "UTF-8");
+        }
+        return $str;
+    }
+
+    /**
      * Convert the first the letter of the string (only) to uppercase
      *
      * @param string $str

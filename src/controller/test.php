@@ -7,7 +7,7 @@
     $meta_keyword = "test, test, test";
     $meta_author = "Paul testeur";
     
-    //$include_header = "header3";
+    $include_footer = "none";
 
 
     mcv::addView("test");
@@ -48,7 +48,14 @@
             trigger_error("\$_FILES is not set");
         }
         $theFile = $_FILES["fichier"];
-        var_dump(file::upload($theFile, array("picture", "document")));
+        $return = file::upload($theFile, array("picture", "document"));
+
+        if(count($return["error"]) == 0){
+            echo "File uploaded";
+        }else{
+            $errorList = implode("<br>", $return["error"]);
+
+        }
     }else{
         $errorList = $form->check(false);
     }

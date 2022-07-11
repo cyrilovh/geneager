@@ -5,6 +5,16 @@
 
         /**
          * Upload a file
+         * 
+         * This method permits to upload a file.
+         * This method check:
+         * - If the file type is allowed
+         * - If the file size is allowed
+         * - If the file is not too big
+         * - If the file is not empty
+         * - If the file feel be valid
+         * - If it's a valid image when it's an image
+         * - if the pdf feel be valid
          *
          * @param [type] $file
          * @param string $target (folder or subfolder in /private/uploads/)
@@ -18,9 +28,9 @@
 
             $error = []; // array of errors
             $fileType = array(
-                "picture" => array("image/png", "image/jpeg", "image/gif"),
+                "picture" => array("image/png", "image/jpeg", "image/gif", "image/webp"),
                 "video" => array("video/mp4", "video/ogg", "video/webm"),
-                "audio" => array("audio/mp3", "audio/ogg", "audio/webm"),
+                "audio" => array("audio/mp3", "audio/ogg", "audio/weba"),
                 "document" => array("application/pdf"),
             ); // array of file types
             $return = []; // array of the data returned
@@ -52,16 +62,36 @@
                         if(!empty($file["size"])){
                             if($file["size"]<$maxSizeAllowed){
                                 if(array_key_exists("error", $file)){
-                                    $fileExtension = pathinfo($file["name"], PATHINFO_EXTENSION);
+                                    $fileExtension = format::htmlToLower(pathinfo($file["name"], PATHINFO_EXTENSION));
                                     if(in_array($file["type"], $fileAllowedList) || in_array($fileExtension, $fileAllowedList)){ // in check in array of allowed file if the type is autorised
                                         $fileNewName = random::uuidv4().date('_Ymd_his').".".$fileExtension; // i set a random name for the file (security reasons)
                                         
+                                        // CHECK IF IMAGE IS VALID
                                         if(in_array("image/".$fileExtension, $fileType["picture"])){ // i check if it's an image enumerated in the array of allowed file types
                                             if(!exif_imagetype($file["tmp_name"])) {
                                                 $return["error"][] = "Image invalide.";
                                             }
                                         }
+
+                                        // CHECK IF PDF FEEL BE VALID
+                                        if(in_array("application/".$fileExtension, $fileType["document"])){ // i check if it's a document enumerated in the array of allowed file types
+                                            if($fileExtension == "pdf") {
+                                                if(file::readFileContent($file["tmp_name"])){
+                                                    $returnValue = substr(file::readFileContent($file["tmp_name"]), 0, 7);
+                                                    if($returnValue){
+                                                        if($returnValue == "%PDF-1."){
+                                                            $returnValue = "pdf";
+                                                        }else{
+                                                            $return["error"][] = "Le fichier PDF semble être invalide.";
+                                                        }
+                                                    }
+                                                }else{
+                                                    $return["error"][] = "Lecture impossible du fichier PDF.";
+                                                }
+                                            }
+                                        }
                                         
+                                        // I CONTINUE PROCESS IF NO ERROR
                                         if(count($return["error"]) == 0){ // if there is no error
                                             if(move_uploaded_file($file["tmp_name"], $targetFullPath.$fileNewName)){ // i move the file
                                                 $return["file"] = array(
@@ -98,6 +128,29 @@
             }
 
             return $return; // CONTAIN ARRAY WITH ERRORS AND NEW FILE NAME, ...
+        }
+
+
+        /**
+         * Read the file as text
+         * Return false if the file doesn't exist or if the file is not readable
+         * Else return data of the file
+         *
+         * @param string $filename
+         * @return string|boolean
+         */
+        public static function readFileContent(string $filename):string|bool{
+            $file = fopen( $filename, "r" );
+            
+            if( $file == false ) {
+               return false;
+            }
+            
+            $filesize = filesize( $filename );
+            $filetext = fread( $file, $filesize);
+            fclose($file);
+            
+            return $filetext;
         }
 
         /**
