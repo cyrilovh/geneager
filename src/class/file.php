@@ -27,12 +27,7 @@
         public static function upload($file, array $fileCategoryAllowed, string $target="", bool $rename = true, int $maxSizeAllowed = MAX_FILE_SIZE, bool $override = true):array{
 
             $error = []; // array of errors
-            $fileType = array(
-                "picture" => array("image/png", "image/jpeg", "image/gif", "image/webp"),
-                "video" => array("video/mp4", "video/ogg", "video/webm"),
-                "audio" => array("audio/mp3", "audio/ogg", "audio/weba"),
-                "document" => array("application/pdf"),
-            ); // array of file types
+            $fileType = UPLOAD_FILETYPE_ALLOWED; // array of allowed file type
             $return = []; // array of the data returned
             $return["error"] = []; // array of errors
 
@@ -203,7 +198,6 @@
                         }
                     }
                 }
-                echo $fullPath;
                 return false;
             }
         }

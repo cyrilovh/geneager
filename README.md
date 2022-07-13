@@ -53,3 +53,7 @@ https://geneager.cyril.ovh
 
 ## PHP
 Dev with PHP 8.1.2
+
+## New features implemented or improvements in the next versions:
+- Multiple upload
+- Advanced algorithms

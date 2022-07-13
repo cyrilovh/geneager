@@ -7,10 +7,21 @@
 
     /* GENERAL CONFIG */
     define('ENCODE', "UTF-8"); // encode
+
     define('ROOT_DIR',  $_SERVER['DOCUMENT_ROOT']."/");
     define('UPLOAD_DIR', "private/upload/"); // upload directory
     define('UPLOAD_DIR_FULLPATH', ROOT_DIR.UPLOAD_DIR); // upload directory
     define('MAX_FILE_SIZE', 5242880); // max file size in bytes (FR: octets) 2097152 = 2Mo (2 * 1024 * 1024)
+    define('UPLOAD_FILETYPE_ALLOWED', array(
+        "picture" => array("image/png", "image/jpeg", "image/gif", "image/webp"),
+        "video" => array("video/mp4", "video/ogg", "video/webm"),
+        "audio" => array("audio/mp3", "audio/ogg", "audio/weba"),
+        "document" => array("application/pdf"),
+    )); // array of file types allowed to upload
+
+    // THIS FOLLOWING LINES IN COMMENT ARE NOT YET USED (they will be used in the future versions)
+    // define('UPLOAD_MAX_FILES', 10); // max files allowed to upload per request
+    // define('UPLOAD_MAX_FILESIZE_TOTAL', 5242880); // max file size in bytes (FR: octets) 2097152 = 2Mo (2 * 1024 * 1024) for all files per request
 
 
     /* SECURTY */

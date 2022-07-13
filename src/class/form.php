@@ -213,10 +213,10 @@ class form{
         );
         $errorList = array();
         $methodUsed = (format::normalize($this->method)=="post") ? "POST" : "GET";
-        $dataSubmit = (format::normalize($this->method)=="post") ? $_POST : $_GET;
+        $dataSubmit = (format::normalize($this->method)=="post") ? array_merge($_POST, $_FILES) : array_merge($_GET, $_FILES);
+
         if(count($dataSubmit)>0){ // i check if i have data (if the form is submit)
-            $countAllDataSubmit = count($dataSubmit) + count($_FILES);
-            if($countAllDataSubmit==count($this->element)){ // check if number of parameters get/post
+            if(count($dataSubmit)==count($this->element)){ // check if number of parameters get/post
 
                 // TOKEN CHECK
                 if($this->token){
@@ -255,7 +255,14 @@ class form{
                                 // CHECK IF FIELD IS REQUIRED
                                 $bypassCheckLength = false;
                                 if(array_key_exists('required', $arrayElement["attributList"])){ // i check if there the attr required in object
-                                    if(security::cleanStr($dataSubmit[$arrayElement["attributList"]["name"]])==""){
+                                    //  IN THIS FOLLOWING CONDITION WILL CHECK IF I'VE A VALUE IN THE FIELD OR NOT (of my required field)
+                                    if(gettype($dataSubmit[$arrayElement["attributList"]["name"]]) == "array"){ // for file input 
+                                        $valueField = security::cleanStr($dataSubmit[$arrayElement["attributList"]["name"]]["name"]);
+                                    }else{ // for all fields except file input
+                                        $valueField = security::cleanStr($dataSubmit[$arrayElement["attributList"]["name"]]);
+                                    }
+
+                                    if($valueField==""){
                                         $errorList[] = $err["require"];
                                         $bypassCheckLength = true;
                                         if(PROD==false){

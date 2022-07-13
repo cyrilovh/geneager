@@ -1,6 +1,6 @@
 <?php
     namespace class;
-    $meta_title = "Liste des fiches d'identités ".$meta_separator.$meta_title;
+    metaTitle::setTitle("Liste des fiches d'identité");
     $meta_description = "Découvrez la liste entière des mes ancêtres !";
     additionnalJsCss::set("ancestorLabel.css");
     additionnalJsCss::set("paging.css");
