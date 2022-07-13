@@ -20,11 +20,11 @@
          * @param string $target (folder or subfolder in /private/uploads/)
          * @param array $fileAllowed Types of file to upload (ex: picture, video, document, audio, ...)
          * @param int $maxSize Maximum size of the file to upload (EN: in bytes) (FR: en octets)
-         * @param boolean $override force override file if it already exists
+         * @param boolean $optimize Optimize the image (if it's an image) => convert to webp format
          * 
          * @return array
          */
-        public static function upload($file, array $fileCategoryAllowed, string $target="", bool $rename = true, int $maxSizeAllowed = MAX_FILE_SIZE, bool $override = true):array{
+        public static function upload($file, array $fileCategoryAllowed, string $target="", bool $rename = true, int $maxSizeAllowed = MAX_FILE_SIZE, bool $optimize = true):array{
 
             $error = []; // array of errors
             $fileType = UPLOAD_FILETYPE_ALLOWED; // array of allowed file type
@@ -151,22 +151,84 @@
         /**
          * Convert a file (jpeg, jpg, png) to webp
          *
-         * @param string $source
-         * @param string $destination
+         * @param string $source (full path + filename (with extesnsion))
          * @param integer $quality (0-100)
-         * @return mixed Check again the type of value returned
+         * @param $removeOriginal (boolean) if true, the original file will be deleted after the conversion
+         * @return boolean
          */
-        public static function ConvertToWebP(string $source, string $destination, int $quality=80):mixed{
-            $extension = strtolower(pathinfo($source, PATHINFO_EXTENSION));
+        public static function ConvertToWebP(string $source, int $quality=QUALITY_FILE_CONVERSION, $removeOriginal = true):array{
+
+            $return = array(
+                "error" => array(),
+                "file" => array()
+            );
+
+            // extract the file name and extension
+            $path_parts = pathinfo($source);
+            $destination = $path_parts["dirname"]."/".$path_parts["filename"].".webp";
+            $extension = $path_parts['extension'];
+
+            // conversioon
             if ($extension == 'jpeg' || $extension == 'jpg'){
                 $image = imagecreatefromjpeg($source);
             }elseif ($extension == 'png') {
                 $image = imagecreatefrompng($source);
+            }elseif ($extension == 'bmp') {
+                $image = imagecreatefrombmp($source);
+            }else{
+                $return["error"][] = "Le fichier ne peux pas être converti en webp.";
             }
-            imagepalettetotruecolor($image);
-            imagealphablending($image, true);
-            imagesavealpha($image, true);
-            return imagewebp($image, $destination, $quality);
+
+            // if any error i continue the process
+            if(count($return["error"])==0){
+
+                imagepalettetotruecolor($image);
+                imagealphablending($image, true);
+                imagesavealpha($image, true);
+
+                // save as webp
+                if(imagewebp($image, $destination, $quality)){
+                    $return["file"]["fullpath"] = $destination;
+                    $return["file"]["name"] = $path_parts["filename"].".webp";
+
+                    $reduce = (filesize($destination) * 100) / filesize($source);
+
+                    if($reduce<100){
+                        // if the webp is smaller than the original, we delete the original
+
+                        $reduce_percent = 100 - round($reduce, 2);
+                        $return["file"]["message"] = "L'image à été réduite de ".$reduce_percent."%";
+
+                        // remove the original file if the user want
+                        if($removeOriginal){
+                            if(!is_writable($source)){
+                                unlink($source);
+                                if(file_exists($source)){
+                                    $return["error"][] = "Le fichier original n'a pas pu être supprimé.";
+                                }            
+                            }else{
+                                $return["error"][] = "Le fichier original n'a pas pu être supprimé.";
+                            }
+
+                        }
+                    }else{
+                        // if the webp is bigger than the original, we delete the webp
+                        if(!is_writable($destination)){
+                            unlink($destination);
+                            if(file_exists($destination)){
+                                $return["error"][] = "Le fichier webp n'a pas pu être supprimé.";
+                            }            
+                        }else{
+                            $return["error"][] = "Le fichier webp n'a pas pu être supprimé.";
+                        }
+                    }
+    
+                }else{
+                    $return["error"][] = "Erreur lors de la conversion en webp. Fichier original non supprimé.";
+                }
+            }
+
+            return $return;
         }
 
         /**

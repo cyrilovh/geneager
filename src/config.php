@@ -18,6 +18,7 @@
         "audio" => array("audio/mp3", "audio/ogg", "audio/weba"),
         "document" => array("application/pdf"),
     )); // array of file types allowed to upload
+    define('QUALITY_FILE_CONVERSION', 80); // quality of file conversion (100 = max quality). This is used for image conversion jpg to webp for example. 
 
     // THIS FOLLOWING LINES IN COMMENT ARE NOT YET USED (they will be used in the future versions)
     // define('UPLOAD_MAX_FILES', 10); // max files allowed to upload per request
