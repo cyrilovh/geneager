@@ -26,7 +26,6 @@
          */
         public static function upload($file, array $fileCategoryAllowed, string $target="", bool $rename = true, int $maxSizeAllowed = MAX_FILE_SIZE, bool $optimize = true):array{
 
-            $error = []; // array of errors
             $fileType = UPLOAD_FILETYPE_ALLOWED; // array of allowed file type
             $return = []; // array of the data returned
             $return["error"] = []; // array of errors
@@ -89,13 +88,28 @@
                                         // I CONTINUE PROCESS IF NO ERROR
                                         if(count($return["error"]) == 0){ // if there is no error
                                             if(move_uploaded_file($file["tmp_name"], $targetFullPath.$fileNewName)){ // i move the file
+
+                                                $convertToWebp = file::ConvertToWebP($targetFullPath.$fileNewName);
+
+                                                // if i can convert the image to webp format: i give the new name of the file converted to webp format
+                                                if(in_array("name", $convertToWebp["file"])){
+                                                    $newFileName = $convertToWebp["file"]["name"];
+                                                }
+
+
+                                                // if file converted to another format
+                                                $finalFileName = (isset($newFileName)) ? $newFileName : $fileNewName;
+
                                                 $return["file"] = array(
                                                     "originalName" => $file["name"],
-                                                    "newName" => $fileNewName, // a continuer car format incorrect
+                                                    "newName" => $finalFileName, // a continuer car format incorrect
                                                     "size" => $file["size"],
                                                     "type" => $file["type"],
-                                                    "path" => UPLOAD_DIR.$target
+                                                    "path" => UPLOAD_DIR.$target,
+                                                    "messageList" => (isset($convertToWebp["file"]["message"])) ? $convertToWebp["file"]["message"] : ""
                                                 );
+
+                                                // $return["error"] = array_merge($return["error"], $convertToWebp["error"]); // i merge the error array with the error array of the convertToWebp method
                                             }else{
                                                 $return["error"][] = "Erreur interne lors du transfert du fichier.";
                                             }
@@ -154,13 +168,14 @@
          * @param string $source (full path + filename (with extesnsion))
          * @param integer $quality (0-100)
          * @param $removeOriginal (boolean) if true, the original file will be deleted after the conversion
-         * @return boolean
+         * @return array
          */
         public static function ConvertToWebP(string $source, int $quality=QUALITY_FILE_CONVERSION, $removeOriginal = true):array{
 
             $return = array(
                 "error" => array(),
-                "file" => array()
+                "file" => array(),
+                "message" => array(),
             );
 
             // extract the file name and extension
@@ -176,11 +191,11 @@
             }elseif ($extension == 'bmp') {
                 $image = imagecreatefrombmp($source);
             }else{
-                $return["error"][] = "Le fichier ne peux pas être converti en webp.";
+                $return["unsupported"] = 1;
             }
 
             // if any error i continue the process
-            if(count($return["error"])==0){
+            if(count($return["error"])==0 && !isset($return["unsupported"])){
 
                 imagepalettetotruecolor($image);
                 imagealphablending($image, true);
@@ -212,13 +227,17 @@
 
                         }
                     }else{
+                        $return["file"]["message"] = "L'image webp est plus lourde que l'image originale.";
                         // if the webp is bigger than the original, we delete the webp
                         if(!is_writable($destination)){
                             unlink($destination);
                             if(file_exists($destination)){
                                 $return["error"][] = "Le fichier webp n'a pas pu être supprimé.";
+                            }else{
+                                $return["file"]["name"] = $path_parts["filename"].".".$extension;
                             }            
                         }else{
+                            $return["file"]["name"] = $path_parts["filename"].".".$extension;
                             $return["error"][] = "Le fichier webp n'a pas pu être supprimé.";
                         }
                     }

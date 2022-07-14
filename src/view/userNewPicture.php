@@ -2,6 +2,7 @@
     <h2>Mettre en ligne une photo</h2>
     <?=(isset($errorList)) ? "<div class='alert alert-danger'>$errorList</div>" : ""; ?> <!-- form errors -->
     <?=(isset($successMsg)) ? "<div class='alert alert-success'>$successMsg</div>" : ""; ?> <!-- form errors -->
+    <?=(isset($infoMsg)) ? "<div class='alert alert-info'>$infoMsg</div>" : ""; ?> <!-- form errors -->
     <?php
         echo $form->display();
     ?>

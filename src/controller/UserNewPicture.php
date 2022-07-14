@@ -42,8 +42,9 @@
             $return = file::upload($theFile, array("picture"), "picture/");
     
             if(count($return["error"]) == 0){
-                $successMsg = "Fichier envoyé a bien été envoyé !";
-
+                $successMsg = "Fichier a bien été envoyé !<br>".$return["file"]["newName"];
+                $errorList = implode("<br>", $return["error"]);
+                $infoMsg= $return["file"]["messageList"];
                 // NEXT STEP: save the file name in the DB
             }else{
                 $errorList = implode("<br>", $return["error"]);
