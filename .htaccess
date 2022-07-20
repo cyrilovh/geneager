@@ -15,10 +15,17 @@ RewriteRule ^(.*)$ /public/index.php?page=404 [NC,L]
 
 
 #ROUTER
+# /toto -> index.php?page=toto
 RewriteCond %{REQUEST_URI} !^/public/
 RewriteCond %{REQUEST_URI} !^/robots.txt
 RewriteCond %{REQUEST_URI} !^/tests/
-RewriteRule ^(.*)$ /public/index.php?page=$1&%{QUERY_STRING} [NC,L]
+RewriteRule ^(.*)$ /public/index.php?page=$1&%{QUERY_STRING} [NC]
+
+# /toto/1 -> index.php?page=toto&id=1
+RewriteCond %{REQUEST_URI} !^/public/
+RewriteCond %{REQUEST_URI} !^/robots.txt
+RewriteCond %{REQUEST_URI} !^/tests/
+RewriteRule ^(.*)/(.*)$ /public/index.php?page=$1&id=$2&%{QUERY_STRING} [NC]
 
 <Files .htaccess>
     order allow,deny

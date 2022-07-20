@@ -9,8 +9,8 @@
 </aside>
 
 <?php
-    if(isset($_POST["id"])){
-        $id=$_POST["id"];
+    if(isset($_GET["id"])){
+        $id=$_GET["id"];
         echo "<b>$id</b>";
     }else{
         echo "nothing";
