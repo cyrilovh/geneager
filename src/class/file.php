@@ -106,10 +106,9 @@
                                                     "size" => $file["size"],
                                                     "type" => $file["type"],
                                                     "path" => UPLOAD_DIR.$target,
-                                                    "messageList" => (isset($convertToWebp["file"]["message"])) ? $convertToWebp["file"]["message"] : ""
+                                                    "messageList" => (isset($convertToWebp["file"]["message"])) ? $convertToWebp["file"]["message"] : array(),
+                                                    "warningList" => (isset($convertToWebp["file"]["warningList"])) ? $convertToWebp["file"]["warningList"] : array()
                                                 );
-
-                                                // $return["error"] = array_merge($return["error"], $convertToWebp["error"]); // i merge the error array with the error array of the convertToWebp method
                                             }else{
                                                 $return["error"][] = "Erreur interne lors du transfert du fichier.";
                                             }
@@ -173,9 +172,10 @@
         public static function ConvertToWebP(string $source, int $quality=QUALITY_FILE_CONVERSION, $removeOriginal = true):array{
 
             $return = array(
-                "error" => array(),
                 "file" => array(),
                 "message" => array(),
+                "warningList" => array(),
+                "infoList" => array()
             );
 
             // extract the file name and extension
@@ -195,7 +195,7 @@
             }
 
             // if any error i continue the process
-            if(count($return["error"])==0 && !isset($return["unsupported"])){
+            if(!isset($return["unsupported"])){
 
                 imagepalettetotruecolor($image);
                 imagealphablending($image, true);
@@ -219,34 +219,33 @@
                             if(!is_writable($source)){
                                 unlink($source);
                                 if(file_exists($source)){
-                                    $return["error"][] = "Le fichier original n'a pas pu être supprimé.";
+                                    $return["file"]["warningList"][] = "Le fichier original n'a pas pu être supprimé.";
                                 }            
                             }else{
-                                $return["error"][] = "Le fichier original n'a pas pu être supprimé.";
+                                $return["file"]["warningList"][] = "Le fichier original n'a pas pu être supprimé.";
                             }
 
                         }
                     }else{
-                        $return["file"]["message"] = "L'image webp est plus lourde que l'image originale.";
+                        $return["file"]["infoList"][] = "L'image webp est plus lourde que l'image originale.";
                         // if the webp is bigger than the original, we delete the webp
                         if(!is_writable($destination)){
                             unlink($destination);
                             if(file_exists($destination)){
-                                $return["error"][] = "Le fichier webp n'a pas pu être supprimé.";
+                                $return["file"]["warningList"][] = "Le fichier webp n'a pas pu être supprimé.";
                             }else{
                                 $return["file"]["name"] = $path_parts["filename"].".".$extension;
                             }            
                         }else{
                             $return["file"]["name"] = $path_parts["filename"].".".$extension;
-                            $return["error"][] = "Le fichier webp n'a pas pu être supprimé.";
+                            $return["file"]["warningList"][] = "Le fichier webp n'a pas pu être supprimé.";
                         }
                     }
     
                 }else{
-                    $return["error"][] = "Erreur lors de la conversion en webp. Fichier original non supprimé.";
+                    $return["file"]["warningList"][] = "Erreur lors de la conversion en webp. Fichier original non supprimé.";
                 }
             }
-
             return $return;
         }
 
@@ -264,7 +263,7 @@
             } else {
                 if(file_exists($fullPath)){ // IF FILE OR FOLDER EXIST
                     if($makeItWritable){ // if $makeItWritable is true, change chmod to 777 and check again
-                        chmod($fullPath, 0777);
+                        @chmod($fullPath, 0777);
                         if (is_writable($fullPath)) {
                             return true;
                         }

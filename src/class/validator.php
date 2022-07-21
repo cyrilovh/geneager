@@ -18,6 +18,18 @@
             $d = \DateTime::createFromFormat($format, $date);
             return $d && $d->format($format) == $date;
         }
+
+        /**
+         * Check if ID is isset and valid.
+         * @return boolean
+         */
+        public static function isId():bool
+        {
+            if(isset($_GET["id"])){
+                return is_numeric($_GET["id"]);
+            }
+            return false;
+        }
     }
 
 ?>

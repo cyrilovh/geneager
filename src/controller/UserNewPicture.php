@@ -43,8 +43,10 @@
     
             if(count($return["error"]) == 0){
                 $successMsg = "Fichier a bien été envoyé !<br>".$return["file"]["newName"];
-                $errorList = implode("<br>", $return["error"]);
-                $infoMsg= $return["file"]["messageList"];
+                $infoMsg = $return["file"]["messageList"];
+                if(count($return["file"]["warningList"])>0){
+                    $warningList = implode("<br>", $return["file"]["warningList"]);
+                }
                 // NEXT STEP: save the file name in the DB
             }else{
                 $errorList = implode("<br>", $return["error"]);
