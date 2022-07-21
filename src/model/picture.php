@@ -87,5 +87,34 @@
             return $query->fetchAll(\PDO::FETCH_ASSOC); // string
             $query->closeCursor(); 
         }
+
+
+        /**
+         * Insert a new picture in the database after uploading it
+         *
+         * @param array $data
+         * @return boolean
+         */
+        public static function insert(array $data):bool{
+            global $db;
+            $query = $db->prepare("INSERT INTO picture (id, filename, folder, createDate) VALUES (NULL, :filename, :folder, :createDate)");
+            $query->execute($data);
+            return $query->fetch(\PDO::FETCH_ASSOC); // string
+            $query->closeCursor();
+        }
+
+        /**
+         * Return data of a picture from a file name
+         *
+         * @param array $data
+         * @return boolean
+         */
+        public static function getByFilename(string $filename):array|bool{
+            global $db;
+            $query = $db->prepare("SELECT * FROM picture WHERE filename=:filename");
+            $query->execute(['filename' => $filename]);
+            return $query->fetch(\PDO::FETCH_ASSOC); // string
+            $query->closeCursor();
+        }
     }
 ?>

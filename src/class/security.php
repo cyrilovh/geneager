@@ -48,5 +48,24 @@ class security{
     public static function cleanStr(string $str):string{
         return htmlentities(trim(preg_replace('/\s+/', ' ', $str)), ENT_QUOTES, "UTF-8");
     }
+
+    /**
+     * Clean array: htmlentities + trim and remove double spaces + remove duplicated values
+     *
+     * @param array $arr
+     * @return array
+     */
+    public static function cleanArr(array $arr):array{
+        $cleanArr = [];
+
+        // first i clean all values and insert into new array
+        foreach($arr as $key => $value){
+            $cleanValue = security::cleanStr($value);
+            $cleanArr[] = $cleanValue;
+        }
+        // i remove duplicate values
+        array_unique($cleanArr);
+        return $cleanArr;
+    }
 }
 ?>

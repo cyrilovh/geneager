@@ -92,8 +92,10 @@
                                                 $convertToWebp = file::ConvertToWebP($targetFullPath.$fileNewName);
 
                                                 // if i can convert the image to webp format: i give the new name of the file converted to webp format
-                                                if(in_array("name", $convertToWebp["file"])){
+                                                if(array_key_exists("name", $convertToWebp["file"])){
                                                     $newFileName = $convertToWebp["file"]["name"];
+                                                }else{
+                                                    var_dump($convertToWebp["file"]);
                                                 }
 
 
@@ -106,7 +108,7 @@
                                                     "size" => $file["size"],
                                                     "type" => $file["type"],
                                                     "path" => UPLOAD_DIR.$target,
-                                                    "messageList" => (isset($convertToWebp["file"]["message"])) ? $convertToWebp["file"]["message"] : array(),
+                                                    "messageList" => (isset($convertToWebp["file"]["messageList"])) ? $convertToWebp["file"]["messageList"] : array(),
                                                     "warningList" => (isset($convertToWebp["file"]["warningList"])) ? $convertToWebp["file"]["warningList"] : array()
                                                 );
                                             }else{
@@ -173,7 +175,7 @@
 
             $return = array(
                 "file" => array(),
-                "message" => array(),
+                "messageList" => array(),
                 "warningList" => array(),
                 "infoList" => array()
             );
@@ -212,7 +214,7 @@
                         // if the webp is smaller than the original, we delete the original
 
                         $reduce_percent = 100 - round($reduce, 2);
-                        $return["file"]["message"] = "L'image à été réduite de ".$reduce_percent."%";
+                        $return["file"]["messageList"][] = "L'image à été réduite de ".$reduce_percent."%";
 
                         // remove the original file if the user want
                         if($removeOriginal){
