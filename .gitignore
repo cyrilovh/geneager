@@ -5,3 +5,8 @@
 /.VSCodeCounter/
 src/view/testEnum.php
 src/config.php
+private/picture/*.png
+private/picture/*.webp
+private/picture/*.jpg
+private/picture/*.jpeg
+private/picture/*.bmp

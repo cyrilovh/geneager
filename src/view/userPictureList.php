@@ -1,7 +1,6 @@
 <aside>
     <div class="bar">
-        <a href='/userAlbmumList' class="btn btn-info"><i class="fas fa-images"></i> Albums</a>
-        <a href='/userNewPicture' class="btn btn-success"><i class="fas fa-circle-plus"></i> Nouvelle(s) photo(s)</a>
+        <a href='/userAlbumList' class="btn btn-info"><i class="fas fa-images"></i> Albums</a>
     </div>
     
     <div>

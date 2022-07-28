@@ -11,11 +11,11 @@
 /* show/hide if small screen */
 const navbar = document.querySelector("nav");
 if (typeof(navbar) != 'undefined' && navbar != null) {
-    document.querySelector("nav .fa-bars").addEventListener("click",function(){
+    document.querySelector("nav .fa-bars").addEventListener("click", function() {
         if (navbar.className == "topnav") {
             navbar.className += " responsive";
             document.body.style.overflow = 'hidden';
-        }else{
+        } else {
             navbar.className = "topnav";
             document.body.style.overflow = 'auto';
         }
@@ -25,39 +25,10 @@ if (typeof(navbar) != 'undefined' && navbar != null) {
 /* CLOSE BTN SIDE NAVBAR */
 const btnCircle = document.querySelector("nav .fa-times-circle");
 if (typeof(btnCircle) != 'undefined' && btnCircle != null) {
-    btnCircle.addEventListener("click",function(){
+    btnCircle.addEventListener("click", function() {
         navbar.className = "topnav";
     });
 }
-
-/* FIX NAVBAR ON TOP ON SCROLL */
-window.addEventListener("scroll", function(event) {
-    var top = this.scrollY,
-        left = this.scrollX;
-
-        var space = document.querySelector("header").offsetTop + document.querySelector("header").clientHeight; // space between top of menu2 and the top of the DOM
-        //console.log(space+"/"+top);
-        var menu2 = document.querySelector("nav");
-        if(top>=space){ // fixe navbar on top
-            navbar.className = "topnav";
-            menu2.style.position="fixed";
-            menu2.style.top="0px";
-            menu2.style.left="0px";
-            menu2.style.width="100%";
-            menu2.style.zIndex="98";
-        }else{
-            menu2.style.position="";
-            menu2.style.top="";
-            menu2.style.left="";
-            menu2.style.width="";
-        }
-        document.querySelectorAll("nav .dropdownMenu").forEach(function(element){
-            if(!element.parentElement.parentElement.parentElement.classList.contains("responsive")){ // if dropdown is in navbar responsive
-                let dropdownName = element.getAttribute("data-dropdown"); // a retrieve the name of dropdown to open
-                let dropdownMenu = document.querySelector(`div.dropdownList[data-dropdown=${dropdownName}]`).classList.remove("open");
-            }
-        });
-}, false);
 
 /*
   _____          _____  _  ____  __  ____  _____  ______ 
@@ -78,8 +49,8 @@ if (typeof(commut) != 'undefined' && commut != null) {
         });
     }
     /* ONLOAD */
-    if(localStorage.getItem("darktheme")){
-        if(localStorage.getItem("darktheme")=="1"){
+    if (localStorage.getItem("darktheme")) {
+        if (localStorage.getItem("darktheme") == "1") {
             document.querySelector("body").className = "dark";
             commut.checked = true;
         }
@@ -100,15 +71,15 @@ USE attribure "data-target" with the value "blank" for open the link in new tab
 */
 (function() {
     var links = document.querySelectorAll("[data-href]");
-    links.forEach(function(link){
-        link.onclick = function(){
-            if(this.hasAttribute("data-target")==true){
-                if(this.getAttribute("data-target")=="blank"){
-                    window.open( this.getAttribute("data-href"), '_blank');
-                }else{
+    links.forEach(function(link) {
+        link.onclick = function() {
+            if (this.hasAttribute("data-target") == true) {
+                if (this.getAttribute("data-target") == "blank") {
+                    window.open(this.getAttribute("data-href"), '_blank');
+                } else {
                     window.location.href = this.getAttribute("data-href");
                 }
-            }else{
+            } else {
                 window.location.href = this.getAttribute("data-href");
             }
         }
