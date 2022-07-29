@@ -12,9 +12,10 @@ album{
      * @param int $limit
      * @param array $order
      * @param array $where
+     * @param bool $outputSelect If true an array with KEY associated to the ID and VALUE associed to the album name
      * @return array
      */
-    public static function getList(array $filter = array("*"), int $start=0 ,int $limit=NULL, array $order = array("lastUpdate", "ASC") , array $where = array()):array{
+    public static function getList(array $filter = array("*"), int $start=0 ,int $limit=NULL, array $order = array("lastUpdate", "ASC") , array $where = array(), bool $outputSelect = false):array{
         global $db;
         $filter = implode(",", $filter);
 
@@ -61,21 +62,54 @@ album{
         }
         $query = $db->prepare("SELECT $filter FROM picturefolder $whereSQL ORDER BY $order $limitSQL");
         $query->execute();
-        return $query->fetchAll(\PDO::FETCH_ASSOC); // array
+
+        if($outputSelect){
+            $output = array();
+            while($data = $query->fetch()){
+                $output[$data["id"]] = $data["title"];
+            }
+            return $output;
+        }else{
+            return $query->fetchAll(\PDO::FETCH_ASSOC); // array
+        }
         $query->closeCursor(); 
     }
 
     /*
      * Get the album data
+     * @pamar integer $id The album ID
      * @return array
      */
-    public static function get(int $id):array|bool{
+    public static function getByID(int $id):array|bool{
         global $db;
         $query = $db->prepare("SELECT * FROM picturefolder WHERE id = :id");
         $query->execute(array(
             ":id" => \class\security::cleanStr($id)
         ));
         return $query->fetch(\PDO::FETCH_ASSOC);
+        $query->closeCursor();
+    }
+
+    /*
+    * Get the album data
+    * @param bool $outputSelect (optional) IF TRUE: return data as a specific array: KEY => Album ID, $VALUE => Album name
+    * @return array
+    */
+    public static function getListByAuthor(bool $outputSelect = false):array|bool{
+        global $db;
+        $query = $db->prepare("SELECT * FROM picturefolder WHERE author = :author ORDER BY title DESC");
+        $query->execute(array(
+            ":author" => \class\security::cleanStr($_SESSION["username"])
+        ));
+        if($outputSelect){
+            $albums = array();
+            foreach($query->fetchAll(\PDO::FETCH_ASSOC) as $album){
+                $albums[$album["id"]] = $album["title"];
+            }
+            return $albums;
+        }else{
+            return $query->fetchAll(\PDO::FETCH_ASSOC);
+        }
         $query->closeCursor();
     }
 

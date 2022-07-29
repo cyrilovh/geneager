@@ -15,7 +15,7 @@ let queryString = new URLSearchParams(paramString);
 
 document.querySelectorAll('.filter').forEach(item => {
 
-    // Blank option
+    // Blank option (if contain the class "removable")
     if (item.classList.contains("removable")) {
         var optEmpty = document.createElement("option");
         optEmpty.value = "";

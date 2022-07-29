@@ -10,7 +10,7 @@
         if(is_numeric($_GET['id'])){
             $id = $_GET['id'];
 
-            $album = album::get($id);
+            $album = album::getByID($id);
 
             if($album){
 

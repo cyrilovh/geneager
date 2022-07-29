@@ -119,7 +119,7 @@ a:active:not(.button) {
 main input,
 main textarea,
 main select {
-    padding: 5px;
+    padding: 5px 0px;
 }
 
 aside {
@@ -1468,7 +1468,7 @@ aside p+h5 {
 
 /* Filters */
 
-div.filterList {
+.filterList {
     background-color: var(--bg-footer);
     padding: 10px 0px;
 }

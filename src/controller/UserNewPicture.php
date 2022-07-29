@@ -8,7 +8,7 @@
 
     if(validator::isId()){ // i check if the id is valid and set
 
-        $albumData = \model\album::get($_GET["id"]);
+        $albumData = \model\album::getByID($_GET["id"]);
 
         if(userinfo::isAuthorOrAdmin($albumData["author"])){ // i check if the user is the owner or admin
             if($albumData){

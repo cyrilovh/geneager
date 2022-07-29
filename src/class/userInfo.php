@@ -60,4 +60,20 @@ class userInfo{
     public static function getUsername():string{
         return (isset($_SESSION["username"])) ? $_SESSION["username"] : "";
     }
+
+    /**
+     * Return is the admin is connected AND if he have enable admin mode ("filter" for hidde/display shorter or longer list of the albums)
+     */
+    public static function adminMode(){
+        if(userinfo::isAdmin()){
+            if(isset($_GET["adminMode"])){
+                if($_GET["adminMode"]=="1"){
+                    return true;
+                }
+                return false;
+            }
+            return false;
+        }
+        return false;
+    }
 }

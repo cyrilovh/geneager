@@ -188,6 +188,25 @@ class form{
     }    
 
     /**
+     * Return the number of elements expected in the form (all except with the HTML attribute "disabled")
+     * @param array $array
+     * @return string
+     */
+    private function trueCount(array $elementList):int{
+        $count = count($elementList);
+        foreach($elementList as $element){
+            if(array_key_exists("attributList", $element)){
+                if(array_key_exists("disabled", $element["attributList"])){
+                    if($element["attributList"]["disabled"]=="disabled" || $element["attributList"]["disabled"]=="true"){
+                        $count--;
+                    }
+                }
+            }
+        }
+        return $count;
+    }
+
+    /**
      * Check if all fields of the form are corrects
      *
      * @return array
@@ -215,8 +234,10 @@ class form{
         $methodUsed = (format::normalize($this->method)=="post") ? "POST" : "GET";
         $dataSubmit = (format::normalize($this->method)=="post") ? array_merge($_POST, $_FILES) : array_merge($_GET, $_FILES);
 
+        //var_dump($this->element);
+
         if(count($dataSubmit)>0){ // i check if i have data (if the form is submit)
-            if(count($dataSubmit)==count($this->element)){ // check if number of parameters get/post
+            if(count($dataSubmit)==form::trueCount($this->element)){ // check if number of parameters get/post
 
                 // TOKEN CHECK
                 if($this->token){
@@ -232,6 +253,8 @@ class form{
                         $errorList[] = $err["misElmt"];
                     }
 
+                }else{
+                    $tokenIsValid = true; // if token is disabled for the form
                 }
 
                 if($tokenIsValid){
@@ -430,9 +453,8 @@ class form{
             }else{
                 $errorList[] = $err["misElmt"];
                 if(PROD==false){
-                    var_dump(count($dataSubmit));
-                    var_dump(count($this->element));
-                    trigger_error("<p class='dev_critical'>Check that all the elements of the form have an attribute &laquo; name &raquo;</p>", E_USER_ERROR);
+                    echo "<p>Send:".count($dataSubmit)." elements. Expected: ".form::trueCount($this->element)." elements</p>";
+                    trigger_error("<p class='dev_critical'>Check if each all elements of the form have an attribute &laquo; name &raquo;</p>", E_USER_ERROR);
                 }
             }
         }else{
