@@ -123,6 +123,9 @@ class format{
         return $str;
     }
 
+    /**
+     * Convert timestamp (ms) to date
+     */
     public static function date(string $datetime, string $format="d/m/Y"):string{
         $date = new \DateTime($datetime);
         return $date->format($format);

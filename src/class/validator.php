@@ -20,6 +20,22 @@
         }
 
         /**
+         * Check if date exist
+         * @param string $date FORMAT: YYYY-MM-DD
+         * example: 2018-06-31 returns false (there 30 days in June)
+         * @return boolean
+         */
+        public static function dateExist(string $date):bool{
+            $date = explode("-", $date);
+            if(count($date) == 3){
+                if(checkdate($date[1], $date[2], $date[0])){
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /**
          * Check if ID is isset and valid.
          * @return boolean
          */

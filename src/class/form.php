@@ -215,6 +215,7 @@ class form{
      */
     public function check(bool $returnBool = true):string|bool{
         $err =  array(
+            "date" => "Format de la date incorrect",
             "ie" => "Internal error.",
             "require" => "Tous les champs sont requis ne sont pas complétés.",
             "nodata" => "Pas de données envoyées.",
@@ -228,7 +229,8 @@ class form{
             "unexpectedVal" => "Erreur: valeur(s) non-attendu(s) d'un ou plusieurs menu déroulants.",
             "unexpectedVal2" => "Erreur: une seule valeur attendue pour un ou plusieurs menu déroulant.",
             "misElmt" => "Element(s) de formulaire en trop ou manquant.",
-            "token" => "Token invalide ou expiré."
+            "token" => "Token invalide ou expiré.",
+            "url" => "Format d'URL invalide."
         );
         $errorList = array();
         $methodUsed = (format::normalize($this->method)=="post") ? "POST" : "GET";
@@ -324,11 +326,39 @@ class form{
                                 // CHECK OUT IF INPUT TYPE IS NOT WRONG
                                 if($tag == "input"){
                                     if(array_key_exists('type', $arrayElement["attributList"])){
-                                        if($arrayElement["attributList"]["type"]=="email"){
+                                        if(format::normalize($arrayElement["attributList"]["type"])=="email"){
                                             if (!filter_var($dataSubmit[$arrayElement["attributList"]["name"]], FILTER_VALIDATE_EMAIL)) {
                                                 $errorList[] = $err["email"];
                                             }
-                                        }elseif($arrayElement["attributList"]["type"]=="number" || $arrayElement["attributList"]["type"]=="range"){
+                                        }else if(format::normalize($arrayElement["attributList"]["type"])=="url"){
+                                            if(array_key_exists("required", $arrayElement["attributList"])){ // IF URL IS REQUIRED
+                                                if (!filter_var($dataSubmit[$arrayElement["attributList"]["name"]], FILTER_VALIDATE_URL)) {
+                                                    $errorList[] = $err["url"];
+                                                }
+                                            }else{
+                                                if(strlen(format::normalize($dataSubmit[$arrayElement["attributList"]["name"]]))>0){
+                                                    if (!filter_var($dataSubmit[$arrayElement["attributList"]["name"]], FILTER_VALIDATE_URL)) { // if url is not required BUT provided by user
+                                                        $errorList[] = $err["url"];
+                                                    }
+                                                }
+                                            }
+                                        }else if(format::normalize($arrayElement["attributList"]["type"])=="date"){
+                                            if(array_key_exists("required", $arrayElement["attributList"])){ // IF DATE IS REQUIRED
+                                                if (!validator::dateTime($dataSubmit[$arrayElement["attributList"]["name"]], "Y-m-d")) {
+                                                    $errorList[] = $err["date"];
+                                                }
+                                            }else{
+                                                if(strlen(format::normalize($dataSubmit[$arrayElement["attributList"]["name"]]))>0){ // if not required BUT provided by user
+                                                    if (!validator::dateTime($dataSubmit[$arrayElement["attributList"]["name"]], "Y-m-d")) { // check format date
+                                                        $errorList[] = $err["date"];
+                                                    }else{
+                                                        if(!validator::dateExist($dataSubmit[$arrayElement["attributList"]["name"]])){ // check if date exist
+                                                            $errorList[] = $err["date"];
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }elseif(format::normalize($arrayElement["attributList"]["type"])=="number" || format::normalize($arrayElement["attributList"]["type"])=="range"){
                                             if(!is_numeric($dataSubmit[$arrayElement["attributList"]["name"]])){
                                                 $errorList[] = $err["number"];
                                             }else{
@@ -469,7 +499,7 @@ class form{
                 return false;
             }
         }else{
-            return implode(" ",$errorList);
+            return implode("<br>",$errorList);
         }
         
     }

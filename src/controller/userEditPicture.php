@@ -182,11 +182,14 @@
 
 
             // CHECK FORM SUBMIT
-            if($form->check(true)){
-                echo "FORM OK";
-            }else{
-                var_dump($form->check(false));
+            if(isset($_POST["submit"])){
+                if($form->check(true)){
+                    echo "FORM OK";
+                }else{
+                    $msgError = $form->check(false);
+                }
             }
+
         }else{
             $msgError = "Cette photo n'existe pas ou plus.";
             mcv::addView("noContent");
