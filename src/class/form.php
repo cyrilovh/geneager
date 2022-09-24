@@ -108,7 +108,7 @@ class form{
                                     }
                                 }
                             }
-                            $value = array_key_exists('value', $arrayElement) ? $arrayElement["value"]: "";
+                            $value = array_key_exists('value', $arrayElement["attributList"]) ? $arrayElement["attributList"]["value"]: "nothing...";
                             $return .= "$htmlBefore<$tag $attr >$value</textarea>$htmlAfter"; 
                         }elseif($tag=="select"){
                             // multiple select debug (1/2)
