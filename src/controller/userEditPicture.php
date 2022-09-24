@@ -114,7 +114,7 @@
                 array(
                     "type" => "date",
                     "name" => "dateEvent",
-                    "value" => (is_null($pictureData["dateEvent"])) ? "" : format::date($pictureData["dateEvent"], "d/m/Y à H:i"),
+                    "value" => (is_null($pictureData["dateEvent"])) ? "" : format::date($pictureData["dateEvent"], "Y-m-d"),
                     "class" => "form-control w100",
                     "maxlength" => "10"
                 ),
@@ -125,7 +125,8 @@
             $form->setElement("select", array(
                 "name" => "location",
                 "class" => "form-control w100",
-                "option" => location::cityAsKeyValue()
+                "option" => location::cityAsKeyValue(),
+                "value" => $pictureData["location"],
             ),
             array(
                 "before" => "<p class='bold'>Ville:</p>",

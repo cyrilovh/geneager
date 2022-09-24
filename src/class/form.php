@@ -135,7 +135,8 @@ class form{
                                     }
 
                                     foreach($arrayElement["attributList"]["option"] as $kOption => $vOption){
-                                        $optionList .= "<option value='$kOption'>$vOption</option>";
+                                        $selected = (array_key_exists("value", $arrayElement["attributList"])) ? (($kOption == $arrayElement["attributList"]["value"]) ? "selected" : "") : "" ;
+                                        $optionList .= "<option value='$kOption' $selected>$vOption</option>";
                                     }
                                 }else{
                                     http_response_code(500);
