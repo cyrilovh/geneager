@@ -4,6 +4,8 @@
     metaTitle::setTitle("Editer une photo");
     $include_footer = "none";
 
+    echo (db::columnListExist("ancestor", array("id", "lastName")) ? "good" : "bad");
+
     if(userinfo::isAdmin()){
         additionnalJsCss::set("filter.js");
         $adminForm = new form(array("class"=>"filterList"));
@@ -71,7 +73,8 @@
                 "name" => "folder",
                 "class" => "form-control w100",
                 "required" => "required",
-                "option" => ((userInfo::adminMode()) ? \model\album::getList(array("id", "title"), 0, NULL, array("title", "ASC"), array(), true) : \model\album::getListByAuthor(true))
+                "option" => ((userInfo::adminMode()) ? \model\album::getList(array("id", "title"), 0, NULL, array("title", "ASC"), array(), true) : \model\album::getListByAuthor(true)),
+                "value" => $pictureData["folder"]
             ),
             array(
                 "before" => "<p class='bold'>Album:</p>",
@@ -185,6 +188,11 @@
             // CHECK FORM SUBMIT
             if(isset($_POST["submit"])){
                 if($form->check(true)){
+
+                    // VERIFS DROITS AVANT UPDATE !!!!!!!
+                    // VERIFS DROITS AVANT UPDATE !!!!!!!
+                    // VERIFS DROITS AVANT UPDATE !!!!!!!
+                    // VERIFS DROITS AVANT UPDATE !!!!!!!
                     echo "FORM OK";
                 }else{
                     $msgError = $form->check(false);
