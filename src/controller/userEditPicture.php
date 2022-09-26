@@ -4,7 +4,7 @@
     metaTitle::setTitle("Editer une photo");
     $include_footer = "none";
 
-    echo (db::columnListExist("ancestor", array("id", "lastName")) ? "good" : "bad");
+    echo (db::columnListExist("ancestor", array("id", "lastName"), true) ? "good" : "bad");
 
     if(userinfo::isAdmin()){
         additionnalJsCss::set("filter.js");
