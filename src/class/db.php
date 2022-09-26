@@ -126,12 +126,65 @@ class db
                     // ENUM CHECK IF IN LIST
                     // ENUM CHECK IF IN LIST
 
+                    // CHECK AUTO INCREMENT
+                    // CHECK AUTO INCREMENT
+                    // CHECK AUTO INCREMENT
+
                     // 3 - IF THE LENGHT IS GOOD I CHECK THE TYPE
                     switch ($type) {
+                        case "tinyint":
+                            if (!is_int($value)) {
+                                $query->closeCursor();
+                                return false;
+                            }else{
+                                if(strlen($value) > 4){
+                                    $query->closeCursor();
+                                    return false;
+                                }
+                            }
+                            break;
+                        case "smallint":
+                            if (!is_int($value)) {
+                                $query->closeCursor();
+                                return false;
+                            }else{
+                                if(strlen($value) > 6){
+                                    $query->closeCursor();
+                                    return false;
+                                }
+                            }
+                            break;
+                        case "mediumint":
+                            if (!is_int($value)) {
+                                $query->closeCursor();
+                                return false;
+                            }else{
+                                if(strlen($value) > 9){
+                                    $query->closeCursor();
+                                    return false;
+                                }
+                            }
+                            break;
                         case "int":
                             if (!is_int($value)) {
                                 $query->closeCursor();
                                 return false;
+                            }else{
+                                if(strlen($value) > 11){
+                                    $query->closeCursor();
+                                    return false;
+                                }
+                            }
+                            break;
+                        case "bigint":
+                            if (!is_int($value)) {
+                                $query->closeCursor();
+                                return false;
+                            }else{
+                                if(strlen($value) > 20){
+                                    $query->closeCursor();
+                                    return false;
+                                }
                             }
                             break;
                         case "varchar":
@@ -160,12 +213,6 @@ class db
                             break;
                         case "time":
                             if (!is_string($value)) {
-                                $query->closeCursor();
-                                return false;
-                            }
-                            break;
-                        case "tinyint":
-                            if (!is_int($value)) {
                                 $query->closeCursor();
                                 return false;
                             }
