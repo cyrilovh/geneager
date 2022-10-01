@@ -53,27 +53,29 @@ class db
     public static function columnListExist(string $table, array $columns): bool
     {
         global $db;
-        $table = \class\security::cleanStr($table);
-        $query = $db->prepare("SHOW COLUMNS FROM $table");
-        $query->execute();
+        if(db::tableExist($table)){ // Check if table exist before
+            $table = \class\security::cleanStr($table);
+            $query = $db->prepare("SHOW COLUMNS FROM $table");
+            $query->execute();
+            
+            $columnListTable = array(); // i will store all columns names from DB in this array
 
-
-        foreach ($columns as $column) {
-            $column = \class\security::cleanStr($column);
-            $exist = false;
             foreach ($query as $row) {
-                if ($row['Field'] == $column) {
-                    $exist = true;
-                    break;
+                array_push($columnsListTable, $row['Field']); // i store all columns names from DB in this array  
+            }
+
+            foreach ($columns as $column) { // i read all columns names from array provided in parameter of this method
+                $column = \class\security::cleanStr($column);
+
+                if(!in_array($column, $columnListTable)){ // if i don't find the column name provided in the array of the parameter of this method in in the table, i return false
+                    return false;
                 }
             }
-            if (!$exist) {
-                $query->closeCursor();
-                return false;
-            }
+            $query->closeCursor();
+            return true; // return true if all columns exist
         }
-        $query->closeCursor();
-        return true;
+        return false; // return false if table doesn't exist
+        
     }
 
     /**
@@ -131,6 +133,25 @@ class db
                     // CHECK AUTO INCREMENT
 
                     // 3 - IF THE LENGHT IS GOOD I CHECK THE TYPE
+                    $typeOf = array(
+                        "tinyint" => array("is_int", 4),
+                        "smallint" => array("is_int", 6),
+                        "mediumint" => array("is_int", 9),
+                        "int" => array("is_int", 11),
+                        "bigint" => array("is_int", 20),
+                        "varchar" => array("is_string", 65535),
+                        "tinytext" => array("string", 255),
+                        "text" => array("is_string", 65535),
+                        "mediumtext" => array("is_string", 16777215),
+                        "longtext" => array("is_string", 4294967295),
+                        "enum" => array("is_string", 65535), // TO CHECK AGAIN TYPE
+                        "date" => array("class\\validator::isDate", 10),
+                        "datetime" => array("class\\validator::isDateTime", 19),
+                        "timestamp" => array("is_int", 19),
+                        "time" => array("class\\validator::isTime", 8), // TO CREATE THE METHOD
+
+                    );
+
                     switch ($type) {
                         case "tinyint":
                             if (!is_int($value)) {
@@ -200,7 +221,7 @@ class db
                             }
                             break;
                         case "datetime":
-                            if (!validator::dateTime($value)) {
+                            if (!validator::isDateTime($value)) {
                                 $query->closeCursor();
                                 return false;
                             }
@@ -303,22 +324,26 @@ class db
             "message" => ""
         );
 
-        if (db::tableExist($table)) { // I CHECK IF TABLE EXIST
-            $columns = array_keys($data); // i get all columns name
-            if (db::columnListExist($table, $columns)) { // I CHECK IF COLUMNS EXISTS
-                // CONTINUE HERE
-                // CONTINUE HERE
-            }
-            $return["message"] = "Un des colonnes n'existent pas dans la base de données.";
-            return $return;
-        } else {
-            $return["message"] = "Erreur: la table n'existe pas";
-            return $return;
+        $columns = array_keys($data); // i get all columns name
+        if (db::columnListExist($table, $columns)) { // I CHECK IF COLUMNS EXISTS
+            // CONTINUE HERE
+            // CONTINUE HERE
         }
+        $return["message"] = "Erreur: une ou des colonnes n'existent pas dans la base de données ou la table n'existe pas.";
+        return $return;
+
 
         /* +3 - CHECK TYPE FEEL BE GOOD
         /* -4 - UPDATE DATA */
         /* +5 - RETURN ARRAY */
-        return $return;
     }
+
+    public static function insertData(){
+
+    }
+
+    public static function deleteData(){
+
+    }
+
 }

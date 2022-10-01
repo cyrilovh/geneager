@@ -345,15 +345,15 @@ class form{
                                             }
                                         }else if(format::normalize($arrayElement["attributList"]["type"])=="date"){
                                             if(array_key_exists("required", $arrayElement["attributList"])){ // IF DATE IS REQUIRED
-                                                if (!validator::dateTime($dataSubmit[$arrayElement["attributList"]["name"]], "Y-m-d")) {
+                                                if (!validator::isDateTime($dataSubmit[$arrayElement["attributList"]["name"]], "Y-m-d")) {
                                                     $errorList[] = $err["date"];
                                                 }
                                             }else{
                                                 if(strlen(format::normalize($dataSubmit[$arrayElement["attributList"]["name"]]))>0){ // if not required BUT provided by user
-                                                    if (!validator::dateTime($dataSubmit[$arrayElement["attributList"]["name"]], "Y-m-d")) { // check format date
+                                                    if (!validator::isDateTime($dataSubmit[$arrayElement["attributList"]["name"]], "Y-m-d")) { // check format date
                                                         $errorList[] = $err["date"];
                                                     }else{
-                                                        if(!validator::dateExist($dataSubmit[$arrayElement["attributList"]["name"]])){ // check if date exist
+                                                        if(!validator::isDate($dataSubmit[$arrayElement["attributList"]["name"]])){ // check if date exist
                                                             $errorList[] = $err["date"];
                                                         }
                                                     }
