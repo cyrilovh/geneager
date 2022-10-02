@@ -47,7 +47,7 @@ class db
     /**
      * Return if all columns exist in table
      * @param string $table Table to check
-     * @param array $columns Columns to check
+     * @param array $columns Columns name only (as value) to check
      * @return boolean true if all columns exist, else false.
      */
     public static function columnListExist(string $table, array $columns): bool
@@ -61,12 +61,11 @@ class db
             $columnListTable = array(); // i will store all columns names from DB in this array
 
             foreach ($query as $row) {
-                array_push($columnsListTable, $row['Field']); // i store all columns names from DB in this array  
+                $columnListTable[] = $row['Field']; // i store all columns names from DB in this array
             }
 
             foreach ($columns as $column) { // i read all columns names from array provided in parameter of this method
                 $column = \class\security::cleanStr($column);
-
                 if(!in_array($column, $columnListTable)){ // if i don't find the column name provided in the array of the parameter of this method in in the table, i return false
                     return false;
                 }
@@ -83,9 +82,17 @@ class db
      * @param string $table Table to check
      * @param array $columns Columns to check columnName => Data
      */
-    public static function checkType(string $table, array $data):bool
+    private static function checkType(string $table, array $data):array
     {
         global $db;
+
+        $return = array(
+            "fatal" => false, // if fatal is true, it means that there is a important problem with the data type
+            "columnListNotInDB" => array(), // list of columns not in database (not fatal, just a warning)
+            "columnListNullOrOversize" => array(), // column list without data where as it's required or data is too long
+            "success" => array() // list of the columns with the correct data
+        );
+
         $table = \class\security::cleanStr($table);
         $query = $db->prepare("SHOW COLUMNS FROM $table");
         $query->execute();
@@ -97,11 +104,8 @@ class db
                 // 1 - I CHECK IF THE COLUMN COME FORM FORM EXIST AND IF CAN'T BE NULL
                 if(in_array($columnName, $row['Field'])){ // if column exist
                     if($row['Null'] == 'NO' && $value == null){ // if column can't be null and value is null
-                        $query->closeCursor();
-                        return false;
+                        $return["columnListNullOrOversize"][] = $columnName;
                     }
-                }else{
-                    return false;
                 }
 
 
@@ -112,27 +116,12 @@ class db
                     $length = explode(")", explode("(", $row['Type'])[1])[0]; // get the length of the type
                     $length = (strlen($length) == 0) ? 0 : $length;
 
-                     // 2 - IF THE LENGTH IS TOO LONG
+                     // 2 - IF THE LENGTH IS TOO LONG (BIGGER THAN THE LENGTH OF THE COLUMN IN THE DB)
                     if(strlen($value) > $length){
-                        $query->closeCursor();
-                        return false;
+                        $return["columnListNullOrOversize"][] = $columnName;
                     }
 
-
-                    // VERIFIER LONGEUR EN FONCTION DU TYPE
-                    // VERIFIER LONGEUR EN FONCTION DU TYPE
-                    // VERIFIER LONGEUR EN FONCTION DU TYPE
-                    // VERIFIER LONGEUR EN FONCTION DU TYPE
-
-                    // ENUM CHECK IF IN LIST
-                    // ENUM CHECK IF IN LIST
-                    // ENUM CHECK IF IN LIST
-
-                    // CHECK AUTO INCREMENT
-                    // CHECK AUTO INCREMENT
-                    // CHECK AUTO INCREMENT
-
-                    // 3 - IF THE LENGHT IS GOOD I CHECK THE TYPE
+                    // 3 - IF THE LENGHT IS GOOD (maxlenght allowed per type) I CHECK THE TYPE
                     $typeOf = array(
                         "tinyint" => array("is_int", 4),
                         "smallint" => array("is_int", 6),
@@ -152,160 +141,14 @@ class db
 
                     );
 
-                    switch ($type) {
-                        case "tinyint":
-                            if (!is_int($value)) {
-                                $query->closeCursor();
-                                return false;
-                            }else{
-                                if(strlen($value) > 4){
-                                    $query->closeCursor();
-                                    return false;
-                                }
-                            }
-                            break;
-                        case "smallint":
-                            if (!is_int($value)) {
-                                $query->closeCursor();
-                                return false;
-                            }else{
-                                if(strlen($value) > 6){
-                                    $query->closeCursor();
-                                    return false;
-                                }
-                            }
-                            break;
-                        case "mediumint":
-                            if (!is_int($value)) {
-                                $query->closeCursor();
-                                return false;
-                            }else{
-                                if(strlen($value) > 9){
-                                    $query->closeCursor();
-                                    return false;
-                                }
-                            }
-                            break;
-                        case "int":
-                            if (!is_int($value)) {
-                                $query->closeCursor();
-                                return false;
-                            }else{
-                                if(strlen($value) > 11){
-                                    $query->closeCursor();
-                                    return false;
-                                }
-                            }
-                            break;
-                        case "bigint":
-                            if (!is_int($value)) {
-                                $query->closeCursor();
-                                return false;
-                            }else{
-                                if(strlen($value) > 20){
-                                    $query->closeCursor();
-                                    return false;
-                                }
-                            }
-                            break;
-                        case "varchar":
-                            if (!is_string($value)) {
-                                $query->closeCursor();
-                                return false;
-                            }
-                            break;
-                        case "text":
-                            if (!is_string($value)) {
-                                $query->closeCursor();
-                                return false;
-                            }
-                            break;
-                        case "datetime":
-                            if (!validator::isDateTime($value)) {
-                                $query->closeCursor();
-                                return false;
-                            }
-                            break;
-                        case "date":
-                            if (!is_string($value)) {
-                                $query->closeCursor();
-                                return false;
-                            }
-                            break;
-                        case "time":
-                            if (!is_string($value)) {
-                                $query->closeCursor();
-                                return false;
-                            }
-                            break;
-                        case "float":
-                            if (!is_float($value)) {
-                                $query->closeCursor();
-                                return false;
-                            }
-                            break;
-                        case "double":
-                            if (!is_float($value)) {
-                                $query->closeCursor();
-                                return false;
-                            }
-                            break;
-                        case "decimal":
-                            if (!is_float($value)) {
-                                $query->closeCursor();
-                                return false;
-                            }
-                            break;
-                        case "char":
-                            if (!is_string($value)) {
-                                $query->closeCursor();
-                                return false;
-                            }
-                            break;
-                        case "blob":
-                            if (!is_string($value)) {
-                                $query->closeCursor();
-                                return false;
-                            }
-                            break;
-                        case "mediumblob":
-                            if (!is_string($value)) {
-                                $query->closeCursor();
-                                return false;
-                            }
-                            break;
-                        case "longblob":
-                            if (!is_string($value)) {
-                                $query->closeCursor();
-                                return false;
-                            }
-                            break;
-                        case "enum":
-                            if (!is_string($value)) {
-                                $query->closeCursor();
-                                return false;
-                            }
-                            break;
-                        case "set":
-                            if (!is_string($value)) {
-                                $query->closeCursor();
-                                return false;
-                            }
-                            break;
-                        case "year":
-                            if (!is_string($value)) {
-                                $query->closeCursor();
-                                return false;
-                            }
-                            break;
-                        default:
-                            $existOrGoodType = true;
-                    }
+                    // verifier que les colonnes qui ne sont pas dans les tableaux columnListNullOrOversize et columnListNotInDB
+
                 }
             }
         }
 
         $query->closeCursor();
+        return $return;
     }
 
 
@@ -325,17 +168,14 @@ class db
         );
 
         $columns = array_keys($data); // i get all columns name
-        if (db::columnListExist($table, $columns)) { // I CHECK IF COLUMNS EXISTS
-            // CONTINUE HERE
-            // CONTINUE HERE
+        if (db::columnListExist($table, $columns)) { // I CHECK IF COLUMNS EXISTS (and table too)
+            /* 3 - CHECK TYPE FEEL BE GOOD */
+            // db::checkType($table, $data);
+            /* -4 - UPDATE DATA */
+            /* +5 - RETURN ARRAY */
         }
         $return["message"] = "Erreur: une ou des colonnes n'existent pas dans la base de données ou la table n'existe pas.";
         return $return;
-
-
-        /* +3 - CHECK TYPE FEEL BE GOOD
-        /* -4 - UPDATE DATA */
-        /* +5 - RETURN ARRAY */
     }
 
     public static function insertData(){
