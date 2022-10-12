@@ -128,7 +128,40 @@ class db
                         "mediumint" => array("is_int", 9),
                         "int" => array("is_int", 11),
                         "bigint" => array("is_int", 20),
+                        /**
+                         * DECIMAL
+                         * FLOAT
+                         * DOUBLE
+                         * REAL
+                         * 
+                         * BIT
+                         * BOLLEAN
+                         * SERIAL
+                         * 
+                         * BINARY
+                         * VARBINARY
+                         * 
+                         * TINYBLOB
+                         * BLOB
+                         * MEDIUMBLOB
+                         * LONGBLOB
+                         * 
+                         * ENUM
+                         * SET
+                         * 
+                         * GEOMETRY
+                         * POINT
+                         * LINESTRING
+                         * POLYGON
+                         * MULTIPOINT
+                         * MULTILINESTRING
+                         * MULTIPOLYGON
+                         * GEOMETRYCOLLECTION
+                         * 
+                         * JSON
+                         */
                         "varchar" => array("is_string", 65535),
+                        "char" => array("is_string", 255),
                         "tinytext" => array("string", 255),
                         "text" => array("is_string", 65535),
                         "mediumtext" => array("is_string", 16777215),
@@ -137,7 +170,8 @@ class db
                         "date" => array("class\\validator::isDate", 10),
                         "datetime" => array("class\\validator::isDateTime", 19),
                         "timestamp" => array("is_int", 19),
-                        "time" => array("class\\validator::isTime", 8), // TO CREATE THE METHOD
+                        "time" => array("class\\validator::isTime", 8),
+                        "year" => array("class\\validator::isYear", 4),
 
                     );
 

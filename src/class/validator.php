@@ -42,7 +42,7 @@
          * example: 25:00:00 returns false (there is no 25 hours in a day)
          * @return boolean
          */
-        public function isTime(string $time):bool{
+        public static function isTime(string $time):bool{
             $time = explode(":", $time);
             if(count($time) == 3){
                 if($time[0] >= 0 && $time[0] <= 23){
@@ -51,6 +51,28 @@
                             return true;
                         }
                     }
+                }
+            }
+            return false;
+        }
+
+        /**
+         * Check if the year (MySQL) is valid.
+         * example: 2018 returns true
+         * example: 50 (2050) returns true
+         * example: 70 (1970) returns true
+         * @param string $year FORMAT: YYYY
+         * @return boolean
+         */
+        public static function isMySQLYear(string $date):bool{
+            $date = explode("-", $date);
+            if(count($date) == 3){
+                if($date[0] >= 1000 && $date[0] <= 9999){
+                    return true;
+                }
+            }else{
+                if($date[0] >= 0 && $date[0] <= 99){
+                    return true;
                 }
             }
             return false;
