@@ -80,9 +80,11 @@ album{
      * @pamar integer $id The album ID
      * @return array
      */
-    public static function getByID(int $id):array|bool{
+    public static function getByID(int $id, array $filter = array("*")):array|bool{
         global $db;
-        $query = $db->prepare("SELECT * FROM picturefolder WHERE id = :id");
+        $filter = implode(",", $filter);
+
+        $query = $db->prepare("SELECT $filter FROM picturefolder WHERE id = :id");
         $query->execute(array(
             ":id" => \class\security::cleanStr($id)
         ));

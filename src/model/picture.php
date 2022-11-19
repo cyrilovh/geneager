@@ -1,6 +1,5 @@
 <?php
     namespace model;
-
     class picture{
         /**
          * Return all informations of a picture
@@ -107,14 +106,33 @@
          * Return data of a picture from a file name
          *
          * @param array $data
+         * @param array $filter name of the mySQL column
          * @return boolean
          */
-        public static function getByFilename(string $filename):array|bool{
+        public static function getByFilename(string $filename, array $filter=array("*")):array|bool{
             global $db;
-            $query = $db->prepare("SELECT * FROM picture WHERE filename=:filename");
+            $filter = implode(",", $filter);
+
+            $query = $db->prepare("SELECT $filter FROM picture WHERE filename=:filename");
             $query->execute(['filename' => $filename]);
-            return $query->fetch(\PDO::FETCH_ASSOC); // string
+            return $query->fetch(\PDO::FETCH_ASSOC);
             $query->closeCursor();
+        }
+
+        /**
+         * Check if user have write access to a picture
+         */
+        public static function authorOrAdmin(string $filename, string $username){
+            $getByFilename = picture::getByFilename($filename, array("folder")); // return id album in array if file exist in database
+            if($getByFilename){
+                $idAlbum = $getByFilename['folder'];
+
+                $result = \model\album::getByID($idAlbum, array("author")); // return author of the album
+
+                return \class\userInfo::isAuthorOrAdmin($result['author']);
+            }else{
+                return false;
+            }
         }
     }
 ?>

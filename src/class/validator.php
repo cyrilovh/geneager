@@ -55,6 +55,20 @@
             }
             return false;
         }
+        /**
+         * Check if ID is isset and valid.
+         * @return boolean
+         */
+        public static function isId():bool
+        {
+            if(isset($_GET["id"])){
+                return is_numeric($_GET["id"]);
+            }
+            return false;
+        }
+
+
+        /* Currently unused */
 
         /**
          * Check if the year (MySQL) is valid.
@@ -79,13 +93,41 @@
         }
 
         /**
-         * Check if ID is isset and valid.
+         * Check if it's the string is a MySQL bit string valid.
+         * example: 1600 return false
+         * example: 0000 return true
+         * 
+         * @param string $bit MySQL bit string
          * @return boolean
          */
-        public static function isId():bool
-        {
-            if(isset($_GET["id"])){
-                return is_numeric($_GET["id"]);
+        public static function isMySQLBit(string $bit):bool{
+            if(strlen($bit) >= 1 && strlen($bit) <= 64){
+                $chars = str_split($bit);
+                foreach($chars as $char){
+                    if($char != "0" && $char != "1"){
+                        return false;
+                    }
+                }
+                return true;
+            }
+            return false;
+        }
+
+        /**
+         * Check if it's the string is a MySQL bit string valid.
+         *
+         * @param string $serial
+         * @return boolean
+         */
+        public static function isMySQLSerial(string $serial):bool{
+            if(strlen($serial) >= 1 && strlen($serial) <= 20){
+                $chars = str_split($serial);
+                foreach($chars as $char){
+                    if(!is_int($char)){
+                        return false;
+                    }
+                }
+                return true;
             }
             return false;
         }
