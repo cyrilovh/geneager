@@ -19,7 +19,7 @@ namespace class;
     class mcv{
         
         /* 1 - FIRST CHECK AND PARSE URL */
-        public static function load(){ // FUNCTION mcv
+        public static function load():array{ // FUNCTION mcv
             $parts = explode('/', FULLPATH); // parse url
             $url = $parts[1];  // first word after slash
             if($url!=""){ // if not blank
@@ -34,7 +34,7 @@ namespace class;
         }
 
         /* 2 - INCLUDE THE GOOD FILES MCV IN TEMPLATE (BODY) */
-        protected static function loadFiles(string $url){ // CHECK IF FILE EXIST AND INCLUDE IT
+        protected static function loadFiles(string $url):array{ // CHECK IF FILE EXIST AND INCLUDE IT
             global $include_MVC;
             $include_MVC = array();
             $file = MVC."controller/".$url.".php"; // example: ../src/view/accueil.php

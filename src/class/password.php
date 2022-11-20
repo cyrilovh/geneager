@@ -42,7 +42,7 @@ class password extends security{
      *
      * @return void
      */
-    public static function gen(){
+    public static function gen():string{
         $length = rand(8,10); // password length
         
         $data = '123456789ABCDEFGHIJKLMNPQRSTUVWXYZabcefghjkmnpqrstuvwxyz'; // 0oO are excludes
