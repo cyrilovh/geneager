@@ -122,14 +122,21 @@
         /**
          * Check if user have write access to a picture
          */
-        public static function authorOrAdmin(string $filename, string $username){
+        public static function authorOrAdmin(string $filename){
             $getByFilename = picture::getByFilename($filename, array("folder")); // return id album in array if file exist in database
             if($getByFilename){
                 $idAlbum = $getByFilename['folder'];
 
                 $result = \model\album::getByID($idAlbum, array("author")); // return author of the album
 
-                return \class\userInfo::isAuthorOrAdmin($result['author']);
+                if($result){
+                    return \class\userInfo::isAuthorOrAdmin($result['author']);
+                }else{
+                    if(PROD==false){
+                        throw new \Exception("Album non trouvé");
+                    }
+                    return false;
+                }
             }else{
                 return false;
             }

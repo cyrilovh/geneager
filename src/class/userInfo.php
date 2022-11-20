@@ -64,7 +64,7 @@ class userInfo{
     /**
      * Return is the admin is connected AND if he have enable admin mode ("filter" for hidde/display shorter or longer list of the albums)
      */
-    public static function adminMode(){
+    public static function adminMode():bool{
         if(userinfo::isAdmin()){
             if(isset($_GET["adminMode"])){
                 if($_GET["adminMode"]=="1"){
@@ -75,5 +75,12 @@ class userInfo{
             return false;
         }
         return false;
+    }
+
+    /**
+     * Return if adminMode is missing or invalid
+     */
+    public static function adminModeMissing():bool{
+        return (!isset($_GET["adminMode"]) || (isset($_GET["adminMode"]) && !in_array($_GET["adminMode"], array("0", "1")))) ? true : false;
     }
 }

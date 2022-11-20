@@ -78,6 +78,9 @@
             mcv::addView("login");
         }
     }else{ // if form is not submit
+        if (isset($_GET["logout"]) && url::isSameOrigin()){ // if logout is set
+            $msg_success = "<i class='fa-solid fa-circle-check'></i> Vous avez été déconnecté."; 
+        }
         mcv::addView("login");
     }
 ?>

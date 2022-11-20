@@ -1,4 +1,5 @@
 <?=(isset($msg_mismatch)? "<div class='alert alert-danger bold txt-center'>$msg_mismatch</div>" : ""); ?>
+<?=(isset($msg_success)? "<div class='alert alert-success bold txt-center'>$msg_success</div>" : ""); ?>
 
 <div class="login">
     <div class="modal">

@@ -4,7 +4,7 @@
     metaTitle::setTitle("Editer une photo");
     $include_footer = "none";
 
-
+    
     if(userinfo::isAdmin()){
         additionnalJsCss::set("filter.js");
         $adminForm = new form(array("class"=>"filterList"));
@@ -13,20 +13,29 @@
                 "name" => "adminMode",
                 "class" => "filter",
                 "option" => array(
-                    "0" => "en tant que simple utilisateur",
-                    "1" => "en tant qu'Administrateur")
+                    "1" => "en tant qu'Administrateur",
+                    "0" => "en tant que simple utilisateur"
+                ),
+                "value" => "1"
                 ),
             array(
                 "before" => "Editer en tant "
             )
         );
+
+        // check if adminMode is provided: else it's enabled by default
+        if(userInfo::adminModeMissing()){
+            $redirect = url::addParam(url::current(), "adminMode", "1", false);
+            header("Location: $redirect");
+            exit();
+        }
     }
 
     if(isset($_GET["filename"])){
         $filename = security::cleanStr($_GET["filename"]);
         $pictureData = \model\picture::getByFilename($filename);
         if($pictureData){
-            if(\model\picture::authorOrAdmin($filename, userinfo::getUsername())){
+            if(\model\picture::authorOrAdmin($filename)){
                 // VIEW
                 mcv::addView("userEditPicture");
 
