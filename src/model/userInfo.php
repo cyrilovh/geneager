@@ -2,33 +2,46 @@
 namespace model;
 class userInfo{
     /**
-     * Get all user informations
+     * Get all users informations (ONLY ADMIN CAN USE THIS METHOD)
      *
      * @param string $username
      * @param array $filter
      * @return array
      */
-    public static function get(string $username, array $filter=array("*")) :array{ // username: username/nickname; filter: columns to filter (default: all) exemple: array("id", "username","password").
+    public static function getUserList(string $username, array $filter=array("*")) :array|bool{ // username: username/nickname; filter: columns to filter (default: all) exemple: array("id", "username","password").
+        
+        if(!\class\userInfo::isAdmin()){
+            trigger_error("Erreur interne: Accès à la methode suivante refusée: model\userInfo::get().", E_USER_ERROR);
+            exit();
+        }
+
+        // if method called by admin, we can get all users
+        global $db;
+        $filter_str = implode(",", $filter);
+        $username = \class\security::cleanStr($username);
+        if(strlen($username)>0){
+            $query = $db->prepare("SELECT $filter_str FROM user WHERE username=:username");
+            $query->execute(['username' => $username]);
+        }else{
+            $query = $db->prepare("SELECT $filter_str FROM user");
+            $query->execute();
+        }
+        return $query->fetch(\PDO::FETCH_ASSOC);
+        $query->closeCursor();
+    }
+
+    /**
+     * Get all user informations form username (ANY VISITOR CAN USE THIS METHOD)
+     * 
+     * @param string $username username to check
+     * @param array $filter columns to filter (default: all) exemple: array("id", "username","password").
+     */
+    public static function getByUsername(string $username, array $filter=array("*")):array|bool{
         global $db;
         $filter_str = implode(",", $filter);
         $query = $db->prepare("SELECT $filter_str FROM user WHERE username=:username");
         $query->execute(['username' => \class\security::cleanStr($username)]);
-        if($query->rowCount()>0){
-            if(count($filter)==0){ // if i've any result
-                if(PROD==false){
-                    trigger_error("The array filter can't be empty: try to keep blank the parameter filter or add values inside.", E_USER_ERROR);
-                }
-                return NULL;
-            }else{ // if there 1 column or more i return the value(s) as a string or as an array
-                if(count($filter)>1 || $filter[0]=="*"){ // if all columns => i return the data as an array
-                    return $query->fetchAll(\PDO::FETCH_ASSOC);
-                }else{ // if have 1 column i return the value as string
-                    return $query->fetch(\PDO::FETCH_ASSOC)[$filter[0]];  
-                }
-            }
-        }else{
-            return array();
-        }
+        return $query->fetch(\PDO::FETCH_ASSOC);
         $query->closeCursor();
     }
 }

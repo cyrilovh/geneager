@@ -56,13 +56,13 @@
     
             $username = $_POST["username"];
 
-            $userInfo = userInfo::get($username, array("id","username","password","role")); // i interrogates the database
+            $userInfo = userInfo::getByUsername($username, array("id","username","password","role")); // i interrogates the database
 
-            if(count($userInfo)==1){ // if i 1 user matching
-                if(password::match($userInfo[0]["password"],$_POST["password"])){ // if the passwords match
-                    $_SESSION["username"] = $userInfo[0]["username"];
-                    $_SESSION["userid"] = $userInfo[0]["id"];
-                    $_SESSION["role"] = $userInfo[0]["role"];
+            if($userInfo){ // if i 1 user matching
+                if(password::match($userInfo["password"],$_POST["password"])){ // if the passwords match
+                    $_SESSION["username"] = $userInfo["username"];
+                    $_SESSION["userid"] = $userInfo["id"];
+                    $_SESSION["role"] = $userInfo["role"];
                     header('Location: /');
                     exit();
                 }else{ // if password x username mismatch
