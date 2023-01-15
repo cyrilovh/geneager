@@ -76,6 +76,47 @@ class db
             return true; // return true if all columns exist
         }
         return false; // return false if table doesn't exist
-        
+    }
+
+    /**
+    * EXPERIMENTAL METHOD 1
+    * Update data in database
+    * @param string $table Table to update
+    * @param array $columns Columns name only (as value) to update
+    * @param array $values Values to update
+    * @param string $where Where clause (optional)
+    * @return void
+    */
+
+    public static function updateData(string $table, array $columns, array $values, string $where = null)
+    {
+        global $db;
+
+        if(db::columnListExist($table, $columns)){ // Check if all columns exist before
+            $table = \class\security::cleanStr($table);
+            $query = "UPDATE $table SET ";
+            $i = 0;
+            foreach ($columns as $column) {
+                $column = \class\security::cleanStr($column);
+                $query .= "$column = :$column";
+                if($i < count($columns) - 1){
+                    $query .= ", ";
+                }
+                $i++;
+            }
+            if(!is_null($where)){
+                $query .= " WHERE $where";
+            }
+            $query = $db->prepare($query);
+            $i = 0;
+            foreach ($columns as $column) {
+                $column = \class\security::cleanStr($column);
+                $query->bindValue(":$column", $values[$i]);
+                $i++;
+            }
+            $query->execute();
+            $query->closeCursor();
+        }
+
     }
 }

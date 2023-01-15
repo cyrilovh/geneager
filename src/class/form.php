@@ -504,6 +504,37 @@ class form{
         }
         
     }
+
+    /**
+     * EXPERIMENTAL METHOD 1 - FOR GETTING ALL FIELDS OF THE FORM (used into updateData from class db)
+     * GET ALL FIELDS NAMES OF THE FORM EXCEPT THE HIDDEN FIELDS AND DISABLED FIELDS
+     * @param string $methodUsed
+     * @return array
+     */
+    public function getFieldList():array{
+        $fields = array();
+        foreach($this->element as $element){
+            $fields[] = $element["attributList"]["name"]; // REMOVE THE HIDDEN FIELDS AND DISABLED FIELDS
+        }
+        return $fields;
+    }
+
+    /**
+     * EXPERIMENTAL METHOD 1 - FOR GETTING ALL FIELDS DATA (used into updateData from class db)
+     * @return array Return array: fieldname => value
+     */
+    public function getData():array{
+        $method = (\strtoupper($this->method) == "POST") ? $_POST : $_GET);
+        $fieldList = $this->getFieldList();
+
+        $output = array();
+        
+        foreach($fieldList as $fieldName){
+            $ouput[$fieldName] = $method[$fieldName];
+        }
+
+        return $output;
+    }
 }
 
 ?>
