@@ -514,7 +514,22 @@ class form{
     public function getFieldList():array{
         $fields = array();
         foreach($this->element as $element){
-            $fields[] = $element["attributList"]["name"]; // REMOVE THE HIDDEN FIELDS AND DISABLED FIELDS
+            if(!array_key_exists("disabled", $element["attributList"])){ // IF THE FIELD IS DISABLED
+
+                if($element["tag"]=="input"){
+                    if(array_key_exists("type", $element["attributList"])){ // IF THE FIELD IS HIDDEN
+                        if($element["attributList"]["type"] != "hidden" && $element["attributList"]["type"] != "submit"  && $element["attributList"]["type"] != "button"){
+                            $fields[] = $element["attributList"]["name"];
+                        }
+                    }
+                }else if($element["tag"] || $element["tag"]){
+                    $fields[] = $element["attributList"]["name"];
+                }
+
+                
+
+
+            }
         }
         return $fields;
     }
@@ -524,15 +539,16 @@ class form{
      * @return array Return array: fieldname => value
      */
     public function getData():array{
-        $method = (\strtoupper($this->method) == "POST") ? $_POST : $_GET);
+        $method = (\strtoupper($this->method) == "POST") ? $_POST : $_GET;
         $fieldList = $this->getFieldList();
 
         $output = array();
-        
+        echo "<br>count: ".count($fieldList)." fields<br>";
         foreach($fieldList as $fieldName){
             $ouput[$fieldName] = $method[$fieldName];
+            echo $fieldName." => ".$method[$fieldName]."<br>";
         }
-
+        echo count($output);
         return $output;
     }
 }

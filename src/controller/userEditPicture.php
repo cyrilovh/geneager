@@ -199,6 +199,9 @@
                         $writeRights = false;
 
                         echo "FORM OK";
+
+                        //var_dump($form->getFieldList());
+                        var_dump($form->getData());
                     }else{
                         $msgError = $form->check(false);
                     }
