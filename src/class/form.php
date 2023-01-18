@@ -9,6 +9,7 @@
                                     
                                     
 */
+
 namespace class;
 class form{
     public $attr;
@@ -511,7 +512,7 @@ class form{
      * @param string $methodUsed
      * @return array
      */
-    public function getFieldList():array{
+    private function getFieldList():array{
         $fields = array();
         foreach($this->element as $element){
             if(!array_key_exists("disabled", $element["attributList"])){ // IF THE FIELD IS DISABLED
@@ -536,19 +537,24 @@ class form{
 
     /**
      * EXPERIMENTAL METHOD 1 - FOR GETTING ALL FIELDS DATA (used into updateData from class db)
+     * @param $ignoreEmpty bool If true, the empty fields will be ignored
      * @return array Return array: fieldname => value
      */
-    public function getData():array{
-        $method = (\strtoupper($this->method) == "POST") ? $_POST : $_GET;
-        $fieldList = $this->getFieldList();
+    public function getData($ignoreEmpty = false):array{
+        $method = (\strtoupper($this->method) == "POST") ? $_POST : $_GET; // check if the method used is POST or GET
+        $fieldList = $this->getFieldList(); // get all fields name of the form
 
-        $output = array();
-        echo "<br>count: ".count($fieldList)." fields<br>";
-        foreach($fieldList as $fieldName){
-            $ouput[$fieldName] = $method[$fieldName];
-            echo $fieldName." => ".$method[$fieldName]."<br>";
+        $output = array(); // output array
+        foreach($fieldList as $fieldName){ // for each field name
+            if($ignoreEmpty == true){ // if ignore empty is true
+                if(!empty(security::cleanStr($method[$fieldName]))){
+                    $output += array($fieldName => $method[$fieldName]);
+                }
+            }else{  // if ignore empty is false
+                $output += array($fieldName => $method[$fieldName]);
+            }
         }
-        echo count($output);
+
         return $output;
     }
 }
