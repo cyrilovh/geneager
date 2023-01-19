@@ -91,8 +91,8 @@ class db
 
         if(count($where) > 0){ // i check if there is only one condition in the where array
             /* ingnored currently */
-            if($checkLastUpdate){
             $changeLastUpdate = false;
+            if($checkLastUpdate){
                 if(db::columnListExist($tableName, array("lastUpdate"))){
                     $changeLastUpdate = true;
                 }
@@ -113,6 +113,13 @@ class db
                 }
             }
 
+            if(!array_key_exists("lastUpdate", $data) && $changeLastUpdate){
+                if($i > 0){
+                    $sql .= ", ";
+                }
+                $sql .= "lastUpdate = :lastUpdate";
+            }
+
             $sql .= " WHERE filename='5e1af318-5a81-410c-ad7d-925662dfc8cb_20220721_060200.webp'";
 
             $query = $db->prepare($sql);
@@ -122,6 +129,12 @@ class db
                 if(!in_array($key, $ignoreFields)){
                     $query->bindValue(":$key", $value);
                 }
+            }
+
+            echo "<br><br>".$sql."<br><br>";
+
+            if(!array_key_exists("lastUpdate", $data) && $changeLastUpdate){
+                $query->bindValue(":lastUpdate", date("Y-m-d H:i:s"));
             }
 
             // THIRD I EXECUTE THE QUERY
