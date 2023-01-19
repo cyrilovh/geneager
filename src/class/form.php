@@ -509,13 +509,13 @@ class form{
     /**
      * EXPERIMENTAL METHOD 1 - FOR GETTING ALL FIELDS OF THE FORM (used into updateData from class db)
      * GET ALL FIELDS NAMES OF THE FORM EXCEPT THE HIDDEN FIELDS AND DISABLED FIELDS
-     * @param string $methodUsed
+     * @param bool $includeDisabled - if true, the disabled fields are allowed
      * @return array
      */
-    private function getFieldList():array{
+    private function getFieldList(bool $includeDisabled = false):array{
         $fields = array();
         foreach($this->element as $element){
-            if(!array_key_exists("disabled", $element["attributList"])){ // IF THE FIELD IS DISABLED
+            if(!array_key_exists("disabled", $element["attributList"]) || $includeDisabled === true){ // IF THE FIELD IS DISABLED
 
                 if($element["tag"]=="input"){
                     if(array_key_exists("type", $element["attributList"])){ // IF THE FIELD IS HIDDEN
@@ -538,17 +538,18 @@ class form{
     /**
      * EXPERIMENTAL METHOD 1 - FOR GETTING ALL FIELDS DATA (used into updateData from class db)
      * @param $ignoreEmpty bool If true, the empty fields will be ignored
+     * @param $includeDisabledFields bool If true, the disabled fields will be included
      * @return array Return array: fieldname => value
      */
-    public function getData($ignoreEmpty = false):array{
+    public function getData($ignoreEmpty = false, bool $includeDisabledFields = false):array{
         $method = (\strtoupper($this->method) == "POST") ? $_POST : $_GET; // check if the method used is POST or GET
-        $fieldList = $this->getFieldList(); // get all fields name of the form
+        $fieldList = $this->getFieldList($includeDisabledFields); // get all fields name of the form
 
         $output = array(); // output array
         foreach($fieldList as $fieldName){ // for each field name
             if($ignoreEmpty == true){ // if ignore empty is true
                 if(!empty(security::cleanStr($method[$fieldName]))){
-                    $output += array($fieldName => $method[$fieldName]);
+                    $output[$fieldName] = $output[$fieldName];
                 }
             }else{  // if ignore empty is false
                 $output += array($fieldName => $method[$fieldName]);

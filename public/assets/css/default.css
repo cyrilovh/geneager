@@ -304,7 +304,8 @@ img.e40x {
     width: 100%;
 }
 
-.field {
+.field,
+.field-disabled {
     display: block;
     padding: .375rem .75rem;
     font-size: 1rem;
@@ -316,6 +317,11 @@ img.e40x {
     border-radius: .25rem;
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     outline: none;
+}
+
+.field-disabled {
+    pointer-events: none;
+    background-color: #f4f4f4 !important;
 }
 
 .bar {

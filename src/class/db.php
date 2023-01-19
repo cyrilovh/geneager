@@ -78,44 +78,54 @@ class db
         return false; // return false if table doesn't exist
     }
 
-    /**
-    * EXPERIMENTAL METHOD 1
-    * Update data in database
-    * @param string $table Table to update
-    * @param array $columns Columns name only (as value) to update
-    * @param array $values Values to update
-    * @param string $where Where clause (optional)
-    * @return void
-    */
+    /** 
+     * Update database from Form for example
+     * @param array $data Data to update (key = column name, value = value to update)
+     * @param string $tableName Table name to update
+     * @param array $where Where condition (key = column name, value = value to check)
+     * @param array $ignoreFields Fields to ignore in the update (value = column name)
+     */
 
-    public static function updateData(string $table, array $columns, array $values, string $where = null)
-    {
+    public static function update(array $data, string $tableName, array $where, array $ignoreFields,bool $checkLastUpdate = false):void{
         global $db;
 
-        if(db::columnListExist($table, $columns)){ // Check if all columns exist before
-            $table = \class\security::cleanStr($table);
-            $query = "UPDATE $table SET ";
-            $i = 0;
-            foreach ($columns as $column) {
-                $column = \class\security::cleanStr($column);
-                $query .= "$column = :$column";
-                if($i < count($columns) - 1){
-                    $query .= ", ";
+        if(count($where) > 0){ // i check if there is only one condition in the where array
+            /* ingnored currently */
+            if($checkLastUpdate){
+            $changeLastUpdate = false;
+                if(db::columnListExist($tableName, array("lastUpdate"))){
+                    $changeLastUpdate = true;
                 }
-                $i++;
             }
-            if(!is_null($where)){
-                $query .= " WHERE $where";
-            }
-            $query = $db->prepare($query);
+
+            // FIRST I CREATE THE QUERY STRING WITH THE PARAMETERS
+            $sql = "UPDATE $tableName SET ";
             $i = 0;
-            foreach ($columns as $column) {
-                $column = \class\security::cleanStr($column);
-                $query->bindValue(":$column", $values[$i]);
-                $i++;
+            foreach ($data as $key => $value) {
+                $key = \class\security::cleanStr($key);
+                $value = \class\security::cleanStr($value);
+                if(!in_array($key, $ignoreFields)){
+                    if($i > 0){
+                        $sql .= ", ";
+                    }
+                    $sql .= "$key = :$key";
+                    $i++;
+                }
             }
+
+            $sql .= " WHERE filename='5e1af318-5a81-410c-ad7d-925662dfc8cb_20220721_060200.webp'";
+
+            $query = $db->prepare($sql);
+
+            // SECOND I BIND THE PARAMETERS
+            foreach($data as $key => $value){
+                if(!in_array($key, $ignoreFields)){
+                    $query->bindValue(":$key", $value);
+                }
+            }
+
+            // THIRD I EXECUTE THE QUERY
             $query->execute();
-            $query->closeCursor();
         }
 
     }

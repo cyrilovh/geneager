@@ -54,8 +54,7 @@
                         "type" => "text",
                         "name" => "filename",
                         "value" => $filename,
-                        "disabled" => "disabled",
-                        "class" => "form-control w100",
+                        "class" => "form-control w100 field-disabled",
                     ),
                     array(
                         "before" => "<p class='bold'>Fichier:</p>",
@@ -67,8 +66,7 @@
                         "type" => "text",
                         "name" => "create",
                         "value" => format::date($pictureData["createDate"], "d/m/Y à H:i"),
-                        "disabled" => "disabled",
-                        "class" => "form-control w100",
+                        "class" => "form-control w100 field-disabled ",
                     ),
                     array(
                         "before" => "<p class='bold'>Date de mise en ligne:</p>",
@@ -196,12 +194,7 @@
                 // CHECK FORM SUBMIT
                 if(isset($_POST["submit"])){
                     if($form->check(true)){
-                        $writeRights = false;
-
-                        echo "FORM OK";
-
-                        //var_dump($form->getFieldList());
-                        var_dump($form->getData());
+                        db::update($form->getData(false, true), "picture", array("filename" => $form->getData(false, true)["filename"]), array("filename", "create"), true);
                     }else{
                         $msgError = $form->check(false);
                     }
