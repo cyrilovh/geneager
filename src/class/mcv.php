@@ -24,12 +24,12 @@ namespace class;
             $url = $parts[1];  // first word after slash
             if($url!=""){ // if not blank
                 if (ctype_alnum($url) && !in_array($url, DENIEDVIEWS)){ // if path is alphanumeric string. example: https://abc.xyz/abc -> abc IS GOOD
-                    return mcv::loadFiles($url); // i call the good files
+                    return static::loadFiles($url); // i call the good files
                 }else{ // else we return 404 page
-                    return mcv::loadFiles("404");
+                    return static::loadFiles("404");
                 }
             }else{ // if $url is blank or empty
-                return mcv::loadFiles("home"); // if "/" or "/router"
+                return static::loadFiles("home"); // if "/" or "/router"
             }
         }
 
@@ -39,13 +39,13 @@ namespace class;
             $include_MVC = array();
             $file = MVC."controller/".$url.".php"; // example: ../src/view/accueil.php
             if(file_exists($file)){
-                mcv::addModelController($file,"controller"); // add controller in the header
+                static::addModelController($file,"controller"); // add controller in the header
             }else{
                 $view = MVC."view/".$url.".php";
                 if(file_exists($view)){
-                    mcv::addView($url); // if controller don't exist: i add view in main
+                    static::addView($url); // if controller don't exist: i add view in main
                 }else{
-                    mcv::addView("404"); // controller and view are missing or doesn't exist: add view 404 in main
+                    static::addView("404"); // controller and view are missing or doesn't exist: add view 404 in main
                 }
             }
             return $include_MVC;

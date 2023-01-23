@@ -55,7 +55,7 @@ class db
     public static function columnListExist(string $table, array $columns): bool
     {
         global $db;
-        if(db::tableExist($table)){ // Check if table exist before
+        if(static::tableExist($table)){ // Check if table exist before
             $table = \class\security::cleanStr($table);
             $query = $db->prepare("SHOW COLUMNS FROM $table");
             $query->execute();
@@ -86,14 +86,16 @@ class db
      * @param array $ignoreFields Fields to ignore in the update (value = column name)
      */
 
-    public static function update(array $data, string $tableName, array $where, array $ignoreFields,bool $checkLastUpdate = false):void{
+    public static function update(array $data, string $tableName, array $where, array $ignoreFields,bool $checkLastUpdate = false):bool{
         global $db;
 
-        if(count($where) > 0){ // i check if there is only one condition in the where array
+        $tableName = \class\security::cleanStr($tableName);
+
+        if(count($where) > 0 && static::columnListExist($tableName, array_keys($where))){ // i check if there is only one condition in the where array and if all columns exist in the table
             /* ingnored currently */
             $changeLastUpdate = false;
             if($checkLastUpdate){
-                if(db::columnListExist($tableName, array("lastUpdate"))){
+                if(static::columnListExist($tableName, array("lastUpdate"))){
                     $changeLastUpdate = true;
                 }
             }
@@ -120,7 +122,17 @@ class db
                 $sql .= "lastUpdate = :lastUpdate";
             }
 
-            $sql .= " WHERE filename='5e1af318-5a81-410c-ad7d-925662dfc8cb_20220721_060200.webp'";
+            $whereStr = "";
+            foreach($where as $key => $value){
+                if($whereStr != ""){
+                    $whereStr .= " AND ";
+                }
+                $key = \class\security::cleanStr($key);
+                $value = \class\security::cleanStr($value);
+                $whereStr .= "$key ='$value'";
+            }
+
+            $sql .= " WHERE ".$whereStr;
 
             $query = $db->prepare($sql);
 
@@ -131,14 +143,16 @@ class db
                 }
             }
 
-            echo "<br><br>".$sql."<br><br>";
-
             if(!array_key_exists("lastUpdate", $data) && $changeLastUpdate){
                 $query->bindValue(":lastUpdate", date("Y-m-d H:i:s"));
             }
 
             // THIRD I EXECUTE THE QUERY
             $query->execute();
+
+            return true;
+        }else{
+            return false;
         }
 
     }

@@ -60,7 +60,7 @@ class security{
 
         // first i clean all values and insert into new array
         foreach($arr as $key => $value){
-            $cleanValue = security::cleanStr($value);
+            $cleanValue = static::cleanStr($value);
             $cleanArr[] = $cleanValue;
         }
         // i remove duplicate values

@@ -194,7 +194,7 @@
                 // CHECK FORM SUBMIT
                 if(isset($_POST["submit"])){
                     if($form->check(true)){ // if the form is not falsified and all the fields are valid
-                        db::update($form->getData(false, false), "picture", array("filename" => $form->getData(false, false)["filename"]), array("filename", "create"), true);
+                        db::update($form->getData(), "picture", array("filename" => $form->getData()["filename"]), array("filename", "create"), true);
                     }else{
                         $msgError = $form->check(false);
                     }

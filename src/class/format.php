@@ -51,7 +51,7 @@ class format{
 
         // first i clean all values and insert into new array
         foreach($arr as $key => $value){
-            $cleanValue = format::normalize($value);
+            $cleanValue = static::normalize($value);
             $cleanArr[] = $cleanValue;
         }
         // i remove duplicate values

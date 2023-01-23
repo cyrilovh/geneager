@@ -241,7 +241,7 @@ class form{
         //var_dump($this->element);
 
         if(count($dataSubmit)>0){ // i check if i have data (if the form is submit)
-            if(count($dataSubmit)==form::trueCount($this->element)){ // check if number of parameters get/post
+            if(count($dataSubmit)==static::trueCount($this->element)){ // check if number of parameters get/post
 
                 // TOKEN CHECK
                 if($this->token){
@@ -485,7 +485,7 @@ class form{
             }else{
                 $errorList[] = $err["misElmt"];
                 if(PROD==false){
-                    echo "<p>Send:".count($dataSubmit)." elements. Expected: ".form::trueCount($this->element)." elements</p>";
+                    echo "<p>Send:".count($dataSubmit)." elements. Expected: ".static::trueCount($this->element)." elements</p>";
                     trigger_error("<p class='dev_critical'>Check if each all elements of the form have an attribute &laquo; name &raquo;</p>", E_USER_ERROR);
                 }
             }
