@@ -44,7 +44,7 @@ use class\userInfo;
                      <?=(userInfo::isAdmin()) ? "<p class='txt-disabled italic mt10'><i class='fas fa-user'></i> ".$album["author"] : "";?></p>
                 </td>
                 <td><?=$album["lastUpdate"];?></td>
-                <td><a class="btn btn-outline-info btn-sm" href="/userEditAlbum/<?=$album["id"];?>"><i class="fa-solid fa-pen" title="Editer l'album"></i></a> <a class="btn btn-outline-danger btn-sm" href="/userDeleteAlbum/<?=$album["id"];?>"><i title="Supprimer l'album" class="fa-solid fa-trash"></i></a> <a href="/displayAlbum/<?=$album["id"];?>" class="btn btn-outline-primary btn-sm"><i title="Voir l'album" class="fas fa-eye"></i></a> <a href="/userNewPicture/<?=$album["id"];?>" class="btn btn-outline-success btn-sm"><i class="fas fa-plus" title="Ajouter une photo"></i></a></td>
+                <td><a class="btn btn-outline-info btn-sm" href="/userEditAlbum/<?=$album["id"];?>"><i class="fa-solid fa-pen" title="Editer l'album"></i></a> <a class="btn btn-outline-danger btn-sm" href="/userDeleteAlbum/<?=$album["id"];?>"><i title="Supprimer l'album" class="fa-solid fa-trash"></i></a> <a href="/userPictureList/<?=$album["id"];?>" class="btn btn-outline-primary btn-sm"><i title="Voir le détail de l'album" class="fas fa-eye"></i></a> <a href="/userNewPicture/<?=$album["id"];?>" class="btn btn-outline-success btn-sm"><i class="fas fa-plus" title="Ajouter une photo"></i></a></td>
             </tr>
             <?php 
                 }

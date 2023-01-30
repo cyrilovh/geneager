@@ -82,5 +82,7 @@
         error_reporting(E_ALL);
     }
 
-    $include_JsCss = array()
+    $include_JsCss = array(); // array of js and css files to include in the header
+
+    define("DEFAULTPICTURE", "assets/img/defaultPicture_480.webp"); // default picture to display if no picture is found
 ?>

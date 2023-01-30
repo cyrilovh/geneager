@@ -38,7 +38,7 @@
 
 
          */
-        public static function getList(array $filter = array("*"), int $start=0 ,int $limit=NULL, array $order = array("lastUpdate", "ASC") , array $where = array()):array{
+        public static function getList(array $where = array(), array $filter = array("*"), int $start=0 ,int $limit=NULL, array $order = array("lastUpdate", "ASC")):array{
             global $db;
             $filter = implode(",", $filter);
 
@@ -117,6 +117,18 @@
             $query->execute(['filename' => $filename]);
             return $query->fetch(\PDO::FETCH_ASSOC);
             $query->closeCursor();
+        }
+
+        /**
+         * Check if a picture exist in the database
+         */
+        public static function fileExistInDatabase(string $filename):bool{
+            $result = self::getByFilename($filename);
+            if($result){
+                return true;
+            }else{
+                return false;
+            }
         }
 
         /**

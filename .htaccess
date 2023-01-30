@@ -5,14 +5,9 @@ RewriteCond %{REQUEST_URI} ^/assets [OR]
 RewriteCond %{REQUEST_URI} ^/ressources
 RewriteRule ^(.*)$ /public/$1 [NC,L]
 
-# PHOTOS PROTECTED ACCESS
-RewriteCond %{REQUEST_URI} ^/photo/
-RewriteRule ^(.*)/(.*)/(.*)$ /public/photo.php?name=$3&%{QUERY_STRING} [NC,L]
-
 # ACCESS TO /page IS INCORRECT
 RewriteCond %{REQUEST_URI} ^/page
 RewriteRule ^(.*)$ /public/index.php?page=404 [NC,L]
-
 
 #ROUTER
 # /toto -> index.php?page=toto
@@ -26,6 +21,10 @@ RewriteCond %{REQUEST_URI} !^/public/
 RewriteCond %{REQUEST_URI} !^/robots.txt
 RewriteCond %{REQUEST_URI} !^/tests/
 RewriteRule ^(.*)/(.*)$ /public/index.php?page=$1&id=$2&%{QUERY_STRING} [NC]
+
+# PHOTOS PROTECTED ACCESS
+RewriteCond %{REQUEST_URI} ^/photo/
+RewriteRule ^(.*)/(.*)/(.*)$ /public/photo.php?name=$3&%{QUERY_STRING} [NC,L]
 
 <Files .htaccess>
     order allow,deny

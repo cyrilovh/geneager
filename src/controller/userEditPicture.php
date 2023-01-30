@@ -33,7 +33,7 @@
 
     if(isset($_GET["filename"])){
         $filename = security::cleanStr($_GET["filename"]);
-        $pictureData = \model\picture::getByFilename($filename);
+        $pictureData = \model\picture::getByFilename($filename, array("*"), false);
         if($pictureData){
             if(\model\picture::authorOrAdmin($filename)){
                 // VIEW
