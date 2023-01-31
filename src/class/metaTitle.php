@@ -45,5 +45,32 @@
             global $meta_title;
             $meta_title = $title.$meta_separator.$meta_title;
         }
+
+        /**
+         * Set description page for search engines
+         *
+         * @param string $description
+         * @return void
+         */
+        public static function setDescription(string $description):void{
+            global $meta_description;
+            $meta_description = $description;
+        }
+
+        public static function setRobot(array $flags):void{
+            global $meta_robot;
+            $meta_robot = implode(", ", $flags);
+        }
+
+        /**
+         * Set meta "author" for search engines
+         * 
+         * @param string $author Author name
+         * @return void
+         */
+        public static function setAuthor(string $author):void{
+            global $meta_author;
+            $meta_author = $author;
+        }
     }
 ?>

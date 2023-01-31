@@ -1,6 +1,11 @@
-<?php
-    $src = \class\picture::pictureToBase64($filename);
+<aside>
+    <?php
+        echo $titleHTML.$descriptionHTML;
+    ?>
+    <p><i class="fa-solid fa-location-dot"></i> </p>
+    <p><i class="fa-solid fa-calendar-days"></i> </p>
+    
 
-    // Echo out a sample image
-    echo '<img src="'.$src.'">';
-?>
+
+    <img src="/photo/<?=$filename;?>" >
+</aside>

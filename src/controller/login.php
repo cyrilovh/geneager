@@ -3,7 +3,7 @@
 
     use model\{userInfo,parameter};
     metaTitle::setTitle("Connexion"); // i set the title page + separator + website name
-    $meta_robots = "noindex,nofollow";
+    metaTitle::setRobot(array("noindex","nofollow"));
     $include_header = "none";
     $include_navbar = "none";
     $include_footer = "none";

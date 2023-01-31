@@ -4,7 +4,8 @@
         
 
         metaTitle::setTitle("Déconnexion");
-        $meta_robots = "noindex,nofollow";
+        metaTitle::setRobot(array("noindex","nofollow"));
+
         $include_footer = "none";
         session_destroy();
         header("Location: /login/?logout", true, 302);

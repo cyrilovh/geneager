@@ -1,7 +1,7 @@
 <?php
     namespace class;
     metaTitle::setTitle("Liste des photos"); // i set the title page + separator + website name
-    $meta_description = "Retrouvez les photographies de ma famille sur mon site personnel.";
+    metaTitle::setDescription("Retrouvez les photographies de ma famille sur mon site personnel.");
 
     additionnalJsCss::set("albumList.css");
     additionnalJsCss::set("filter.js");

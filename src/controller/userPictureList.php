@@ -27,7 +27,7 @@
     foreach($data as $line){
         $template_tmp = $template;
         foreach($line as $key => $value){
-            $template_tmp = str_replace("{".$key."}", (is_null($value) ? "undefined" : $value), $template_tmp);
+            $template_tmp = str_replace("{".$key."}", (is_null($value) ? "Aucune information." : $value), $template_tmp);
         }
         $output .= $template_tmp;
     }
