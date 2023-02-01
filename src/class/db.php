@@ -86,7 +86,7 @@ class db
      * @param array $ignoreFields Fields to ignore in the update (value = column name)
      */
 
-    public static function update(array $data, string $tableName, array $where, array $ignoreFields,bool $checkLastUpdate = false):bool{
+    public static function update(array $data, string $tableName, array $where,bool $checkLastUpdate = false):bool{
         global $db;
 
         $tableName = \class\security::cleanStr($tableName);
@@ -106,13 +106,11 @@ class db
             foreach ($data as $key => $value) {
                 $key = \class\security::cleanStr($key);
                 $value = \class\security::cleanStr($value);
-                if(!in_array($key, $ignoreFields)){
-                    if($i > 0){
-                        $sql .= ", ";
-                    }
-                    $sql .= "$key = :$key";
-                    $i++;
+                if($i > 0){
+                    $sql .= ", ";
                 }
+                $sql .= "$key = :$key";
+                $i++;
             }
 
             if(!array_key_exists("lastUpdate", $data) && $changeLastUpdate){
@@ -138,9 +136,7 @@ class db
 
             // SECOND I BIND THE PARAMETERS
             foreach($data as $key => $value){
-                if(!in_array($key, $ignoreFields)){
-                    $query->bindValue(":$key", $value);
-                }
+                $query->bindValue(":$key", $value);
             }
 
             if(!array_key_exists("lastUpdate", $data) && $changeLastUpdate){

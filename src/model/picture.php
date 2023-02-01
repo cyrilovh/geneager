@@ -26,18 +26,6 @@
          * @return array
          */
 
-
-         /*
-
-
-        FAIRE UNION SUR LA TABLE PICTUREFOLDER.
-        FAIRE UNION SUR LA TABLE PICTUREFOLDER.
-        FAIRE UNION SUR LA TABLE PICTUREFOLDER.
-        FAIRE UNION SUR LA TABLE PICTUREFOLDER.
-        FAIRE UNION SUR LA TABLE PICTUREFOLDER.
-
-
-         */
         public static function getList(array $where = array(), array $filter = array("*"), int $start=0 ,int $limit=NULL, array $order = array("lastUpdate", "ASC")):array{
             global $db;
             $filter = implode(",", $filter);

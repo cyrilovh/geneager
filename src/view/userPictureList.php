@@ -1,6 +1,7 @@
 <aside>
     <div class="bar">
         <a href='/userAlbumList' class="btn btn-info"><i class="fas fa-images"></i> Albums</a>
+        <?=isset($btnNewPicture) ? $btnNewPicture : ""; ?>
     </div>
     
     <div>

@@ -54,7 +54,8 @@
                         "type" => "text",
                         "name" => "filename",
                         "value" => $filename,
-                        "class" => "form-control w100 field-disabled",
+                        "class" => "form-control w100",
+                        "disabled" => "disabled"
                     ),
                     array(
                         "before" => "<p class='bold'>Fichier:</p>",
@@ -66,7 +67,8 @@
                         "type" => "text",
                         "name" => "create",
                         "value" => format::date($pictureData["createDate"], "d/m/Y à H:i"),
-                        "class" => "form-control w100 field-disabled ",
+                        "class" => "form-control w100 ",
+                        "disabled" => "disabled"
                     ),
                     array(
                         "before" => "<p class='bold'>Date de mise en ligne:</p>",
@@ -106,10 +108,8 @@
                 $form->setElement("textarea",
                     array(
                         "name" => "descript",
-                        "minlength" => "3",
                         "maxlength" => "300",
                         "class" => "form-control w100",
-                        "required" => "required",
                         "rows" => "5",
                         "value" => $pictureData["descript"],
                         "placeholder" => "3 à 300 caractères",
@@ -194,7 +194,7 @@
                 // CHECK FORM SUBMIT
                 if(isset($_POST["submit"])){
                     if($form->check(true)){ // if the form is not falsified and all the fields are valid
-                        db::update($form->getData(), "picture", array("filename" => $form->getData()["filename"]), array("filename", "create"), true);
+                        db::update($form->getData(), "picture", array("filename" => $_GET["filename"]), true);
                     }else{
                         $msgError = $form->check(false);
                     }

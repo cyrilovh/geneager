@@ -4,7 +4,9 @@
     mcv::addView("userPictureList");
 
     if(validator::isId()){ // i check if ID is provided
-        $data = \model\picture::getList(array("picture.folder" => $_GET["id"]));
+        $id = format::normalize($_GET["id"]);
+        $btnNewPicture = "<a href='/userNewPicture/?id=$id' class='btn btn-success'><i class='fas fa-plus'></i> Ajouter une photo</a>";
+        $data = \model\picture::getList(array("picture.folder" => $id));
     }else{
         $data = \model\picture::getList();
     }
