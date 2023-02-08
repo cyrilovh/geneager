@@ -92,61 +92,68 @@ class db
         $tableName = \class\security::cleanStr($tableName);
 
         if(count($where) > 0 && static::columnListExist($tableName, array_keys($where))){ // i check if there is only one condition in the where array and if all columns exist in the table
-            /* ingnored currently */
-            $changeLastUpdate = false;
-            if($checkLastUpdate){
-                if(static::columnListExist($tableName, array("lastUpdate"))){
-                    $changeLastUpdate = true;
+            try{
+                /* ingnored currently */
+                $changeLastUpdate = false;
+                if($checkLastUpdate){
+                    if(static::columnListExist($tableName, array("lastUpdate"))){
+                        $changeLastUpdate = true;
+                    }
                 }
-            }
 
-            // FIRST I CREATE THE QUERY STRING WITH THE PARAMETERS
-            $sql = "UPDATE $tableName SET ";
-            $i = 0;
-            foreach ($data as $key => $value) {
-                $key = \class\security::cleanStr($key);
-                $value = \class\security::cleanStr($value);
-                if($i > 0){
-                    $sql .= ", ";
+                // FIRST I CREATE THE QUERY STRING WITH THE PARAMETERS
+                $sql = "UPDATE $tableName SET ";
+                $i = 0;
+                foreach ($data as $key => $value) {
+                    $key = \class\security::cleanStr($key);
+                    $value = \class\security::cleanStr($value);
+                    if($i > 0){
+                        $sql .= ", ";
+                    }
+                    $sql .= "$key = :$key";
+                    $i++;
                 }
-                $sql .= "$key = :$key";
-                $i++;
-            }
 
-            if(!array_key_exists("lastUpdate", $data) && $changeLastUpdate){
-                if($i > 0){
-                    $sql .= ", ";
+                if(!array_key_exists("lastUpdate", $data) && $changeLastUpdate){
+                    if($i > 0){
+                        $sql .= ", ";
+                    }
+                    $sql .= "lastUpdate = :lastUpdate";
                 }
-                $sql .= "lastUpdate = :lastUpdate";
-            }
 
-            $whereStr = "";
-            foreach($where as $key => $value){
-                if($whereStr != ""){
-                    $whereStr .= " AND ";
+                $whereStr = "";
+                foreach($where as $key => $value){
+                    if($whereStr != ""){
+                        $whereStr .= " AND ";
+                    }
+                    $key = \class\security::cleanStr($key);
+                    $value = \class\security::cleanStr($value);
+                    $whereStr .= "$key ='$value'";
                 }
-                $key = \class\security::cleanStr($key);
-                $value = \class\security::cleanStr($value);
-                $whereStr .= "$key ='$value'";
+
+                $sql .= " WHERE ".$whereStr;
+
+                $query = $db->prepare($sql);
+
+                // SECOND I BIND THE PARAMETERS
+                foreach($data as $key => $value){
+                    $query->bindValue(":$key", (validator::isNullOrEmpty($value) ? NULL : $value));
+                }
+
+                if(!array_key_exists("lastUpdate", $data) && $changeLastUpdate){
+                    $query->bindValue(":lastUpdate", date("Y-m-d H:i:s"));
+                }
+
+                // THIRD I EXECUTE THE QUERY
+                $query->execute();
+
+                return true;
+            }catch (\PDOException $e) {
+                if(PROD==false){
+                    echo $e->getMessage();
+                }
+                return false;
             }
-
-            $sql .= " WHERE ".$whereStr;
-
-            $query = $db->prepare($sql);
-
-            // SECOND I BIND THE PARAMETERS
-            foreach($data as $key => $value){
-                $query->bindValue(":$key", $value);
-            }
-
-            if(!array_key_exists("lastUpdate", $data) && $changeLastUpdate){
-                $query->bindValue(":lastUpdate", date("Y-m-d H:i:s"));
-            }
-
-            // THIRD I EXECUTE THE QUERY
-            $query->execute();
-
-            return true;
         }else{
             return false;
         }

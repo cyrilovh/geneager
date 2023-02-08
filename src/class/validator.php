@@ -55,6 +55,49 @@
             }
             return false;
         }
+
+        /**
+         * Check if the string (YMD) can be a true date
+         * 4 characters: year
+         * 6 characters: year + month
+         * 8 characters: year + month + day
+         * Warning: this metthod use too the method sleft::isTime() to check if the day is valid
+         * for example: 20230229 returns false cause 2023 is not a leap year (28 days in February month of 2023)
+         */
+        public static function isStrDate(string|null $strDate):bool{
+            if(is_numeric($strDate)){                
+                if(strlen($strDate) == 4){
+                    if($strDate >= 1000 && $strDate <= 9999){
+                        return true;
+                    }
+                }elseif(strlen($strDate) == 6){
+                    $year = substr($strDate, 0, 4);
+                    $month = substr($strDate, 4, 2);
+                    if($year >= 1000 && $year <= 9999){
+                        if($month >= 1 && $month <= 12){
+                            return true;
+                        }
+                    }
+                }elseif(strlen($strDate) == 8){
+                    $year = substr($strDate, 0, 4);
+                    $month = substr($strDate, 4, 2);
+                    $day = substr($strDate, 6, 2);
+                    if($year >= 1000 && $year <= 9999){
+                        if($month >= 1 && $month <= 12){
+                            if($day >= 1 && $day <= 31){
+                                if(self::isTime("$year-$month-$day")){
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                }
+                return false;
+            }
+            return false;
+        }
+
+
         /**
          * Check if ID is isset and valid.
          * @return boolean
@@ -127,6 +170,19 @@
                         return false;
                     }
                 }
+                return true;
+            }
+            return false;
+        }
+
+        /**
+         * Check if it's the string is empty or null.
+         *
+         * @param string $serial
+         * @return boolean
+         */
+        public static function isNullOrEmpty(string|null $str):bool{
+            if(is_null($str) || $str == ""){
                 return true;
             }
             return false;

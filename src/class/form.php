@@ -74,7 +74,6 @@ class form{
      * @return string
      */
     public function display():string{
- 
         $return = "<form action='{$this->action}' method='{$this->method}' class='{$this->class}' enctype='{$this->enctype}'>"; // start of the string
 
         foreach($this->element as $k => $arrayElement){
@@ -137,6 +136,7 @@ class form{
 
                                     foreach($arrayElement["attributList"]["option"] as $kOption => $vOption){
                                         $selected = (array_key_exists("value", $arrayElement["attributList"])) ? (($kOption == $arrayElement["attributList"]["value"]) ? "selected" : "") : "" ;
+                                        $kOption = (empty($kOption)) ? "" : $kOption;
                                         $optionList .= "<option value='$kOption' $selected>$vOption</option>";
                                     }
                                 }else{
@@ -385,8 +385,16 @@ class form{
                                                     }
                                                 }
                                             }elseif(format::normalize($arrayElement["attributList"]["type"])=="number" || format::normalize($arrayElement["attributList"]["type"])=="range"){
-                                                if(!is_numeric($dataSubmit[$arrayElement["attributList"]["name"]])){
-                                                    $errorList[] = $err["number"];
+                                                if(!is_numeric($dataSubmit[$arrayElement["attributList"]["name"]])){ // if the value is not numeric
+                                                    if(strlen($dataSubmit[$arrayElement["attributList"]["name"]])==0){ // if the value is empty
+                                                        if(array_key_exists("required", $arrayElement["attributList"])){ // if the field is required
+                                                            $errorList[] = $err["number"];
+                                                        }else{
+                                                            if(strlen($dataSubmit[$arrayElement["attributList"]["name"]])>0){ // if the field is not required BUT provided by user
+                                                                $errorList[] = $err["number"];
+                                                            }
+                                                        }
+                                                    }
                                                 }else{
                                                     // IF IS THE VALUE IS NUMERIC
                                                     // attr: min
@@ -465,12 +473,22 @@ class form{
                                                     }
                                                 }else{
                                                     // IF ALONE VALUE EXPECTED
-                                                    if(gettype($dataSubmit[$arrayElement["attributList"]["name"]])=="string"){
+                                                    if(gettype($dataSubmit[$arrayElement["attributList"]["name"]])=="string"){ // if it's not an object
                                                         if(!array_key_exists($dataSubmit[$arrayElement["attributList"]["name"]], $arrayElement["attributList"]["option"])){ // i check if the value sended is in array (object)
-                                                            $errorList[] = $err["unexpectedVal"];
-                                                            if(PROD==false){
-                                                                trigger_error("<p class='dev_critical'>Security: the value sended form &quot; select &quot; dont't feel be in the object.</p>", E_USER_ERROR);
-                                                            }   
+
+                                                            if(in_array(format::normalize("required"), $arrayElement["attributList"])){ // if field is required
+                                                                $errorList[] = $err["unexpectedVal"];
+                                                                if(PROD==false){
+                                                                    trigger_error("<p class='dev_critical'>Security: the value sended form &quot; select &quot; dont't feel be in the object.</p>", E_USER_ERROR);
+                                                                }   
+                                                            }else{
+                                                                if(!validator::isNullOrEmpty($dataSubmit[$arrayElement["attributList"]["name"]])){
+                                                                    $errorList[] = $err["unexpectedVal"];
+                                                                    if(PROD==false){
+                                                                        trigger_error("<p class='dev_critical'>Value not required but is not in object.</p>", E_USER_ERROR);
+                                                                    }   
+                                                                }
+                                                            }
                                                         }
                                                     }else{
                                                         $errorList[] = $err["unexpectedVal2"];
@@ -531,7 +549,8 @@ class form{
                 return false;
             }
         }else{
-            return implode("<br>",$errorList);
+            $errorList = array_unique($errorList);
+            return implode("<br>", $errorList);
         }
         
     }

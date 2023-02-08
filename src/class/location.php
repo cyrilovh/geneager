@@ -6,7 +6,7 @@
             $list = \model\location::getLocationList();
             $output = array();
             if($addNull){
-                $output[] = "--- Sélectionnez dans la liste ---";
+                $output[NULL] = "--- Sélectionnez dans la liste ---";
             }
             foreach($list as $item){
                 $city = (!is_null($item["name"])) ? format::htmlToUcfirst($item["name"]).", ": ""; // i check if the city is null or not (can be null if the city can't be determined by user)

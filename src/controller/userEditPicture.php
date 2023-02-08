@@ -93,12 +93,11 @@
                     array(
                         "type" => "text",
                         "name" => "title",
-                        "minlength" => "3",
                         "maxlength" => "45",
                         "class" => "form-control w100",
                         "required" => "required",
                         "value" => $pictureData["title"],
-                        "placeholder" => "3 à 45 caractères",
+                        "placeholder" => "45 caractères maximum.",
                     ),
                     array(
                         "before" => "<hr><p class='bold'>Titre:</p>",
@@ -112,25 +111,68 @@
                         "class" => "form-control w100",
                         "rows" => "5",
                         "value" => $pictureData["descript"],
-                        "placeholder" => "3 à 300 caractères",
+                        "placeholder" => "300 caractères maximum.",
                     ),
                     array(
                         "before" => "<p class='bold'>Description:</p>",
                     )
                 );
 
+                // $form->setElement("input",
+                //     array(
+                //         "type" => "date",
+                //         "name" => "dateEvent",
+                //         "value" => (is_null($pictureData["dateEvent"])) ? "" : format::date($pictureData["dateEvent"], "Y-m-d"),
+                //         "class" => "form-control w100",
+                //         "maxlength" => "10"
+                //     ),
+                //     array(
+                //         "before" => "<hr><p class='bold'>Date de l'événement:</p>",
+                //     )
+                // );
+
                 $form->setElement("input",
                     array(
-                        "type" => "date",
-                        "name" => "dateEvent",
-                        "value" => (is_null($pictureData["dateEvent"])) ? "" : format::date($pictureData["dateEvent"], "Y-m-d"),
-                        "class" => "form-control w100",
-                        "maxlength" => "10"
+                        "type" => "number",
+                        "name" => "dayEvent",
+                        "maxlength" => "2",
+                        "min" => "1",
+                        "max"=> "31",
+                        "value" => (is_null($pictureData["dayEvent"]) || $pictureData["dayEvent"]=="0") ? "" : $pictureData["dayEvent"],
+                        "placeholder" => "JJ", 
+                        "class" => "form-control",
                     ),
                     array(
                         "before" => "<hr><p class='bold'>Date de l'événement:</p>",
                     )
                 );
+
+                $form->setElement("input",
+                    array(
+                        "type" => "number",
+                        "name" => "monthEvent",
+                        "maxlength" => "2",
+                        "min" => "1",
+                        "max"=> "12",
+                        "value" => (is_null($pictureData["monthEvent"]) || $pictureData["monthEvent"]=="0") ? "" : $pictureData["monthEvent"], "d/m/Y",
+                        "placeholder" => "MM",
+                        "class" => "form-control",
+                    ),
+                );
+
+                $form->setElement("input",
+                    array(
+                        "type" => "number",
+                        "name" => "yearEvent",
+                        "maxlength" => "4",
+                        "min" => "1000",
+                        "max"=> date("Y"),
+                        "value" => (is_null($pictureData["yearEvent"]) || $pictureData["yearEvent"]=="0") ? "" : $pictureData["yearEvent"],
+                        "placeholder" => "AAAA",
+                        "class" => "form-control",
+                    ),
+                );
+
                 $form->setElement("select", array(
                     "name" => "location",
                     "class" => "form-control w100",
@@ -194,7 +236,11 @@
                 // CHECK FORM SUBMIT
                 if(isset($_POST["submit"])){
                     if($form->check(true)){ // if the form is not falsified and all the fields are valid
-                        db::update($form->getData(), "picture", array("filename" => $_GET["filename"]), true);
+                        if(db::update($form->getData(), "picture", array("filename" => $_GET["filename"]), true)){ // update the data in the database
+                            $msgSuccess = "Les données ont été mises à jour.";
+                        }else{
+                            $msgError = "Une erreur est survenue lors de la mise à jour des données.";
+                        }
                     }else{
                         $msgError = $form->check(false);
                     }

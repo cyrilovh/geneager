@@ -131,5 +131,56 @@ class format{
         return $date->format($format);
     }
 
+    /**
+     * Convert a string YMD format (form DB for example) to date (format: d/m/Y for example) if the string contains 4, 6 or 8 characters
+     * 4 characters: year
+     * 6 characters: year + month
+     * 8 characters: year + month + day
+     * 
+     * 20221201 => 01 décembre2022
+     */
+    public static function strToDate(string|null $strDate):string{
+        $monthArr = array(
+            "01" => "janvier",
+            "02" => "février",
+            "03" => "mars",
+            "04" => "avril",
+            "05" => "mai",
+            "06" => "juin",
+            "07" => "juillet",
+            "08" => "août",
+            "09" => "septembre",
+            "10" => "octobre",
+            "11" => "novembre",
+            "12" => "décembre"
+        );
+
+        if(validator::isStrDate($strDate)){
+            if(strlen($strDate)==4){
+                return $strDate;
+            }elseif(strlen($strDate)==6){
+                $year = substr($strDate, 0, 4);
+                $month = substr($strDate, 4, 2);
+                return $monthArr[$month]." ".$year;
+            }elseif(strlen($strDate)==8){
+                $year = substr($strDate, 0, 4);
+                $month = substr($strDate, 4, 2);
+                $day = substr($strDate, 6, 2);
+                return $day." ".$monthArr[$month]." ".$year;
+            }
+        }else{
+            return "--/--/----";
+        }
+    }
+
+    public static function dateToStr(string $date):string{
+        if(validator::isDate($date)){
+            $date = new \DateTime($date);
+            return $date->format("Ymd");
+        }else{
+            return "";
+        }
+    }
+
 }
 ?>
