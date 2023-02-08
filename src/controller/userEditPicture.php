@@ -237,7 +237,9 @@
                 if(isset($_POST["submit"])){
                     if($form->check(true)){ // if the form is not falsified and all the fields are valid
                         if(db::update($form->getData(), "picture", array("filename" => $_GET["filename"]), true)){ // update the data in the database
-                            $msgSuccess = "Les données ont été mises à jour.";
+                            $currentURL = \class\url::current();
+                            $msgSuccess = "<p class='mt10 bold uppercase'>Les données ont été mises à jour.<p>";
+                            $msgSuccess .= "<p><a class='btn btn-success mt10' href='$currentURL'>&#129152; Retour au formulaire.</a></p>";
                         }else{
                             $msgError = "Une erreur est survenue lors de la mise à jour des données.";
                         }

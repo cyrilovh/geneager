@@ -6,7 +6,7 @@
     
     <div>
         <h2>Liste des photos:</h2>
-        <table id="customers">
+        <table id="customers" class="tr3">
             <tr>
                 <th>Image</th>
                 <th>Détails</th>

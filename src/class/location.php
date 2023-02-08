@@ -1,6 +1,9 @@
 <?php
     namespace class;
 
+    /**
+     * Location class = birthplace, event place, ...
+     */
     class location{
         public static function cityAsKeyValue(bool $addNull = true):array{
             $list = \model\location::getLocationList();

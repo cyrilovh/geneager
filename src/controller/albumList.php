@@ -46,6 +46,34 @@
 
     if($albumCount > 0 && $page <= $pageCount){
         $albumList = \model\album::getList(array("*"), $start, $resultPerPage, array($albumOrderBy, $sortBy), array());
+
+
+        $template = '
+            <div class="label">
+                <div class="cover"></div>
+                <div class="subLabel detail">
+                    <a class="title" href="/userPictureList/{id}"> {title}</a>
+                    <p> {descript}</p>
+                    <p class="author"><i class="fa fa-user" aria-hidden="true"></i> {author}</p>
+                    {editBtn}
+                </div>
+            </div>
+        ';
+
+        $output = "";
+        foreach($albumList as $album){ 
+            $template_tmp = $template;
+            foreach($album as $key => $value){
+                $template_tmp = str_replace("{".$key."}", (is_null($value) ? "Aucune information." : ($key == "descript" ? display::truncateText($value): $value)), $template_tmp);
+                if(userInfo::isConnected()){
+                    if($key=="author"){
+                        $template_tmp = str_replace("{editBtn}", (userInfo::isAuthorOrAdmin($value) ? "<a class='btn btn-outline-primary btn-sm mt10' href='/userEditAlbum/".$album["id"]."'><i class='fa-solid fa-edit'></i> Modifier</a>" : "") , $template_tmp);
+                    }
+                }
+            }
+            $output .= $template_tmp;
+        }
+
         mcv::addView("albumList");
     }else{ // if any identity card or any result with the filters
         header("HTTP/1.1 404 NOT FOUND");

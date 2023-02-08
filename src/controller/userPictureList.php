@@ -2,6 +2,7 @@
     namespace class;
     $meta_title = "Liste des photos ".$meta_separator.$meta_title;
     mcv::addView("userPictureList");
+    additionnalJsCss::set("table.css");
 
     if(validator::isId()){ // i check if ID is provided
         $id = format::normalize($_GET["id"]);

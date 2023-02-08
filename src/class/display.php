@@ -62,10 +62,12 @@ class display{
         $string = str_replace("\t", " ", $string);
         $string = str_replace("  ", " ", $string);
         $string = trim($string);
-        $string = substr($string, 0, $length);
-        $string = substr($string, 0, strrpos($string, " "));
-        if($dots){
-            $string .= "...";
+        if(strlen($string) > $length){
+            $string = substr($string, 0, $length);
+            $string = substr($string, 0, strrpos($string, " "));
+            if($dots && strlen($string) > 0){
+                $string .= "...";
+            }
         }
         return $string;
     }

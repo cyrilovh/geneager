@@ -25,29 +25,12 @@
     <!-- END FILTERS-->
 
     <!-- START BUTTONS-->
-    <p class="bar">
-        <?= (class\userInfo::isConnected()) ? "<a class='btn btn-outline-success btn-sm' href='/userNewAlbum'><i class='fa-solid fa-plus'></i> Nouvel album</a>" : "" ?>
-    </p>
+        <?= (class\userInfo::isConnected()) ? "<p class='bar'><a class='btn btn-outline-success btn-sm' href='/userNewAlbum'><i class='fa-solid fa-plus'></i> Nouvel album</a></p>" : "" ?>
     <!-- END BUTTONS-->
 
     <!-- START LIST -->
     <div class="albumList">
-    <?php
-        foreach($albumList as $album){ 
-
-    ?>
-        <div class="label">
-            <div class="cover"></div>
-            <div class="subLabel detail">
-                <a class="title" href="/displayAlbum/?id=<?=$album["id"]; ?>"><?=$album["title"]; ?></a>
-                <p><?=(strlen($album["descript"])>0) ? class\display::truncateText($album["descript"], 75) : "Aucune description."; ?></p>
-                <p class="author"><i class="fa fa-user" aria-hidden="true"></i> <?=$album["author"]; ?></p>
-                <?= (class\userInfo::isAuthor($album["author"]) || class\userInfo::isAdmin()) ? "<p class='bar'><span class='btn btn-outline-info btn-sm'><i class='fa-solid fa-pen'></i></span></p>" : ""; ?>
-            </div>
-        </div>
-    <?php
-        }
-    ?>
+    <?=$output;?>
     </div>
     <!-- END LIST -->
 </aside>

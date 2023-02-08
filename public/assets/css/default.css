@@ -304,6 +304,10 @@ img.e40x {
     width: 100%;
 }
 
+.w50 {
+    width: 50%;
+}
+
 .field,
 .field-disabled {
     display: block;
