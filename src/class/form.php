@@ -108,7 +108,7 @@ class form{
                                     }
                                 }
                             }
-                            $value = array_key_exists('value', $arrayElement["attributList"]) ? $arrayElement["attributList"]["value"]: "nothing...";
+                            $value = array_key_exists('value', $arrayElement["attributList"]) ? $arrayElement["attributList"]["value"]: "";
                             $return .= "$htmlBefore<$tag $attr >$value</textarea>$htmlAfter"; 
                         }elseif($tag=="select"){
                             // multiple select debug (1/2)
@@ -136,7 +136,7 @@ class form{
 
                                     foreach($arrayElement["attributList"]["option"] as $kOption => $vOption){
                                         $selected = (array_key_exists("value", $arrayElement["attributList"])) ? (($kOption == $arrayElement["attributList"]["value"]) ? "selected" : "") : "" ;
-                                        $kOption = (empty($kOption)) ? "" : $kOption;
+                                        $kOption = ($kOption=="") ? "" : $kOption;
                                         $optionList .= "<option value='$kOption' $selected>$vOption</option>";
                                     }
                                 }else{
@@ -332,7 +332,9 @@ class form{
                                                     
                                                         if($vMinMax=="minlength"){
                                                             if(strlen(format::normalize($dataSubmit[$arrayElement["attributList"]["name"]])) < $arrayElement["attributList"][$vMinMax]){ // if data form form > maxlength
-                                                                $errorList[] = $err["minlength"];
+                                                                if(array_key_exists("required", $arrayElement["attributList"]) && $dataSubmit[$arrayElement["attributList"]["name"]]==""){ // if the field contain too short string whereas it's required   
+                                                                    $errorList[] = $err["minlength"];
+                                                                }
                                                             }
                                                         }else{
                                                             if(strlen(format::normalize($dataSubmit[$arrayElement["attributList"]["name"]])) > $arrayElement["attributList"][$vMinMax]){ // if data form form > maxlength

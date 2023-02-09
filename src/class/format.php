@@ -58,6 +58,7 @@ class format{
         array_unique($cleanArr);
         return $cleanArr;
     }
+
     /**
      * Returns the entire all first letters of all words in uppercase from string
      *

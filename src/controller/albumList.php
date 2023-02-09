@@ -34,7 +34,12 @@
     }
 
     /* FILTER */
-    $filter = array();
+    if(userInfo::isConnected()){
+        $filter = array();
+    }else{
+        $filter = array("public" => 1);
+    }
+
 
 
     $resultPerPage = 10; // number max of result per page
@@ -45,7 +50,7 @@
 
 
     if($albumCount > 0 && $page <= $pageCount){
-        $albumList = \model\album::getList(array("*"), $start, $resultPerPage, array($albumOrderBy, $sortBy), array());
+        $albumList = \model\album::getList(array("*"), $start, $resultPerPage, array($albumOrderBy, $sortBy), $filter);
 
 
         $template = '
@@ -69,6 +74,8 @@
                     if($key=="author"){
                         $template_tmp = str_replace("{editBtn}", (userInfo::isAuthorOrAdmin($value) ? "<a class='btn btn-outline-primary btn-sm mt10' href='/userEditAlbum/".$album["id"]."'><i class='fa-solid fa-edit'></i> Modifier</a>" : "") , $template_tmp);
                     }
+                }else{
+                    $template_tmp = str_replace("{editBtn}", "", $template_tmp);
                 }
             }
             $output .= $template_tmp;

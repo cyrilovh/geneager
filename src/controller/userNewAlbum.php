@@ -10,7 +10,7 @@
 
     $formNewAlbum->setElement("input", array(
         "type" => "text", // i give the type of input
-        "placeholder" => "Nom de l&apos;album", // i set a placeholder
+        "placeholder" => "Champs requis (2 à 30 caractères)", // i set a placeholder
         "name" => "albumName", // i give a className
         "required" => "required", // i add the attr required
         "minlength" => 2,  // i add the attr minlength
@@ -23,10 +23,9 @@
     );
 
     $formNewAlbum->setElement("textarea", array(
-        "placeholder" => "Description de l&apos;album", // i set a placeholder
+        "placeholder" => "Facultatif (3 à 300 caractères)", // i set a placeholder
         "name" => "albumDescript", // i give a className
-        "required" => "required", // i add the attr required
-        "minlength" => 0,  // i add the attr minlength
+        "minlength" => 3,  // i add the attr minlength
         "maxlength" => 300, // i add the attr maxlength
         "class" => "form-control w100"
         ),

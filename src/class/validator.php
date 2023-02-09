@@ -182,7 +182,7 @@
          * @return boolean
          */
         public static function isNullOrEmpty(string|null $str):bool{
-            if(is_null($str) || $str == ""){
+            if(is_null($str) || $str == "" || empty($str)){
                 return true;
             }
             return false;

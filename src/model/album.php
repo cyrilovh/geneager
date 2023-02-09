@@ -2,6 +2,8 @@
 
 namespace model;
 
+use class\validator;
+
 class 
 album{
     /**
@@ -132,17 +134,17 @@ album{
             $albumRightAccess = \enumList\visibility::values()[0];
         }
 
-        $query = $db->prepare("INSERT INTO picturefolder (id, title, descript, author, cover, lastUpdate, createDate, visibility) VALUES (:id ,:title, :descript, :author, :cover, :lastUpdate, :lastUpdate, :visibility)");
+        $query = $db->prepare("INSERT INTO picturefolder (id, title, descript, author, cover, lastUpdate, createDate, public) VALUES (:id , :title, :descript, :author, :cover, :lastUpdate, :lastUpdate, :public)");
         try {
             $query->execute(array(
                 ":id" => NULL,
                 ":title" => \class\security::cleanStr($title),
                 ":descript" => \class\security::cleanStr($descript),
-                ":author" => $_SESSION["username"],
+                ":author" => \class\userInfo::getUsername(),
                 ":cover" => NULL,
                 ":lastUpdate" => date("Y-m-d H:i:s"),
                 ":creationDate" => date("Y-m-d H:i:s"),
-                ":visibility" => $albumRightAccess
+                ":public" => (validator::isNullOrEmpty($albumRightAccess) ? 0 : $albumRightAccess)
             ));
             $query->closeCursor();
         } catch (\PDOException $e) {
@@ -152,6 +154,5 @@ album{
             return false;
         }
         return true;
-
     }
 }

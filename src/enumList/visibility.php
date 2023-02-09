@@ -21,12 +21,12 @@
 
   }
 
-  enum visibility: int
+  enum visibility:string
   {
 
     use getVisibility;
-    case public = 0;
-    case privé = 1;
+    case public = "1";
+    case privé = '0';
   }
 
 ?>

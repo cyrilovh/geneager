@@ -157,6 +157,57 @@ class db
         }else{
             return false;
         }
+        return false;
+    }
 
+
+    public static function insert(array $data, string $tableName){
+        global $db;
+
+        $tableName = \class\security::cleanStr($tableName);
+
+        if(static::columnListExist($tableName, array_keys($data))){ // if all columns exist in the table
+
+            try{
+                $sql = "INSERT INTO $tableName (";
+                $i = 0;
+                foreach ($data as $key => $value) {
+                    $key = \class\security::cleanStr($key);
+                    if($i > 0){
+                        $sql .= ", ";
+                    }
+                    $sql .= "$key";
+                    $i++;
+                }
+                $sql .= ") VALUES (";
+                $i = 0;
+                foreach ($data as $key => $value) {
+                    $key = \class\security::cleanStr($key);
+                    if($i > 0){
+                        $sql .= ", ";
+                    }
+                    $sql .= ":$key";
+                    $i++;
+                }
+                $sql .= ")";
+
+                $query = $db->prepare($sql);
+
+                foreach($data as $key => $value){
+                    $query->bindValue(":$key", (validator::isNullOrEmpty($value) ? NULL : $value));
+                }
+
+                $query->execute();
+
+                return true;
+            }catch (\PDOException $e) {
+                if(PROD==false){
+                    echo $e->getMessage();
+                }
+                return false;
+            }
+
+        return false;
+        }
     }
 }
