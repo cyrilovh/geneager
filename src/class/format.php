@@ -174,6 +174,11 @@ class format{
         }
     }
 
+    /**
+     * Convert a date to string YMD format
+     * @param string $date
+     * @return string
+     */
     public static function dateToStr(string $date):string{
         if(validator::isDate($date)){
             $date = new \DateTime($date);
@@ -181,6 +186,24 @@ class format{
         }else{
             return "";
         }
+    }
+
+    /**
+     * Convert a string date Y,M,D to a valid string
+     * 1999,0,0 => 1999
+     * 1999,12,0 => 199912
+     * 1999,12,31 => 19991231
+     *
+     * @param string|integer|null $year
+     * @param string|integer|null $month
+     * @param string|integer|null $day
+     * @return string
+     */
+    public static function YMDtoStr(string|int|null $year, string|int|null $month, string|int|null $day):string{
+        $year = (!validator::isNullOrEmpty($year) ? str_pad($year, 4, "0", STR_PAD_LEFT) : "");
+        $month = (!validator::isNullOrEmpty($month) ? str_pad($month, 2, "0", STR_PAD_LEFT) : "");
+        $day = (!validator::isNullOrEmpty($day) ? str_pad($day, 2, "0", STR_PAD_LEFT) : "");
+        return $year.$month.$day;
     }
 
 }

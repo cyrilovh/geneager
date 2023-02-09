@@ -7,14 +7,16 @@
             $data = \model\picture::getByFilename($filename);
 
             if($data){ // if exist in DB 
+
                 $title = (is_null($data["title"])) ? "Sans titre" : $data["title"];
                 $titleHTML = "<h1><i class='fa-solid fa-heading'></i> $title</h1>";
 
-                $description = (is_null($data["descript"])) ? "Aucune description" : $data["descript"];
+                $description = (validator::isNullOrEmpty($data["descript"])) ? "Aucune description" : $data["descript"];
                 $descriptionHTML = "<p class='txt-disabled'><i class='fa-solid fa-align-left'></i> $description</p>";
 
                 metaTitle::setTitle($title." — Photo");
                 metaTitle::setDescription($description);
+                
                 mcv::addView("pictureDetail");
             }else{
                 $msgError = "Le fichier existe sur le serveur mais pas dans la base de données.";
@@ -22,6 +24,7 @@
             }
 
         }else{
+            $msgError = "Le fichier n'existe pas sur le serveur.";
             mcv::addView("noContent");
         }
     }else{
