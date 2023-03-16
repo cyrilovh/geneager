@@ -53,33 +53,9 @@
         $albumList = \model\album::getList(array("*"), $start, $resultPerPage, array($albumOrderBy, $sortBy), $filter);
 
 
-        $template = '
-            <div class="label">
-                <div class="cover"></div>
-                <div class="subLabel detail">
-                    <a class="title" href="/userPictureList/{id}"> {title}</a>
-                    <p> {descript}</p>
-                    <p class="author"><i class="fa fa-user" aria-hidden="true"></i> {author}</p>
-                    {editBtn}
-                </div>
-            </div>
-        ';
+        $template = template::get("albumCard");
 
-        $output = "";
-        foreach($albumList as $album){ 
-            $template_tmp = $template;
-            foreach($album as $key => $value){
-                $template_tmp = str_replace("{".$key."}", (is_null($value) ? "Aucune information." : ($key == "descript" ? display::truncateText($value): $value)), $template_tmp);
-                if(userInfo::isConnected()){
-                    if($key=="author"){
-                        $template_tmp = str_replace("{editBtn}", (userInfo::isAuthorOrAdmin($value) ? "<a class='btn btn-outline-info btn-sm mt10' href='/userEditAlbum/".$album["id"]."'><i class='fa-solid fa-edit'></i></a> <a class='btn btn-outline-danger btn-sm mt10' href='/userDeleteAlbum/".$album["id"]."'><i class='fa-solid fa-trash'></i></a> <a class='btn btn-outline-success btn-sm mt10' href='/userNewPicture/".$album["id"]."'><i class='fa-solid fa-plus'></i></a>" : "") , $template_tmp);
-                    }
-                }else{
-                    $template_tmp = str_replace("{editBtn}", "", $template_tmp);
-                }
-            }
-            $output .= $template_tmp;
-        }
+        $output = template::autoReplace($template, $albumList, true, "Album");
 
         mcv::addView("albumList");
     }else{ // if any identity card or any result with the filters
