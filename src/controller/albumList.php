@@ -52,10 +52,7 @@
     if($albumCount > 0 && $page <= $pageCount){
         $albumList = \model\album::getList(array("*"), $start, $resultPerPage, array($albumOrderBy, $sortBy), $filter);
 
-
-        $template = template::get("albumCard");
-
-        $output = template::autoReplace($template, $albumList, true, "Album");
+        $output = template::autoReplace(template::get("albumCard"), $albumList, true, "Album");
 
         mcv::addView("albumList");
     }else{ // if any identity card or any result with the filters
