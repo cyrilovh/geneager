@@ -3,7 +3,7 @@
     <div class="links">
         <i class="far fa-times-circle"></i>
         <div class="links2">
-            <a href="/identityList"><i class="far fa-id-card"></i><span class="txt"> Carte d'identité</span></a>
+            <a href="/ancestorList"><i class="far fa-id-card"></i><span class="txt"> Carte d'identité</span></a>
             <a href="/albumList"><i class="fas fa-camera"></i><span class="txt"> Photos</span></a>
             <a href="/archivesList"><i class="fas fa-landmark"></i><span class="txt"> Archives</span></a>
             <a href="/videoList"><i class="fas fa-film"></i><span class="txt"> Vidéos</span></a>

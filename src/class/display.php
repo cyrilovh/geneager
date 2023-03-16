@@ -24,9 +24,9 @@ class display{
      * @param string $firstNameList
      * @param string $lastName
      * @param string $maidenName
-     * @return void
+     * @return string
      */
-    public static function truncateIdentity(string|null $firstNameList, string|null $lastName, string|null $maidenName){ // A CONTINUER
+    public static function truncateIdentity(string|null $firstNameList, string|null $lastName, string|null $maidenName):string{ // A CONTINUER
         $return = "";
 
         // first names for start

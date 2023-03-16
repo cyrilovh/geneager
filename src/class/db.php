@@ -27,8 +27,6 @@ class db
         }
     }
 
-    /* Currently unused */
-
     /**
      * Check if the table exist in database
      *

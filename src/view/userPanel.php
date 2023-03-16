@@ -1,7 +1,7 @@
 <aside>
     <h2>Gestion de contenu</h2>
     <div class="userPanel">
-            <div class="persoBtn" data-href="/userIdentityList">
+            <div class="persoBtn" data-href="/ancestorList">
                 <div>
                     <i class="far fa-id-card"></i>
                 </div>
@@ -10,7 +10,7 @@
                 </div>
             </div>
 
-            <div class="persoBtn" data-href="/userAlbumList">
+            <div class="persoBtn" data-href="/albumList">
                 <div>
                     <i class="fas fa-images"></i>
                 </div>
@@ -47,9 +47,9 @@
             </div>
 
     </div><!-- End of div.userPanel -->
-    <h2>Paramètres du compte</h2>
+    <h2>Paramètres</h2>
     <div class="userPanel">
-        <div class="persoBtn" data-href="/userIdentityList">
+        <div class="persoBtn" data-href="/userEdit">
             <div>
                 <i class="far fa-user"></i>
             </div>
@@ -57,5 +57,27 @@
                 Mon profil
             </div>
         </div>
+        <?php
+            if(\class\userInfo::isAdmin()){
+        ?>
+            <div class="persoBtn" data-href="/adminUserList">
+                <div>
+                    <i class="fas fa-users"></i>
+                </div>
+                <div>
+                    Liste des utilisateurs
+                </div>
+            </div>
+            <div class="persoBtn" data-href="/adminUserList" title="Paramètres du site">
+                <div>
+                    <i class="fas fa-gear"></i>
+                </div>
+                <div>
+                    Paramètres
+                </div>
+            </div>
+        <?php
+            }
+        ?>
     </div>
 </aside>

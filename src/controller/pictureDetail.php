@@ -14,6 +14,18 @@
                 $description = (validator::isNullOrEmpty($data["descript"])) ? "Aucune description" : $data["descript"];
                 $descriptionHTML = "<p class='txt-disabled'><i class='fa-solid fa-align-left'></i> $description</p>";
 
+                if(!validator::isNullOrEmpty($data["location"])){ // if location is not null
+                    $dataLocation = \model\location::getByID($data["location"]); // get location data
+                    if(is_array($dataLocation)){ // if location exist
+                        $city = format::htmlToUpperFirst($dataLocation["cityName"]);
+                        $stateDepartement = format::htmlToUpperFirst($dataLocation["stateDepartement"]);
+                        $country = format::htmlToUpper($dataLocation["country"]);
+                        $location = "$city, $stateDepartement, $country";
+                        $locationHTML = "<p><i class='fa-solid fa-location-dot'></i> $location</p>";
+                    }
+                }
+                $locationHTML = (isset($locationHTML)) ? $locationHTML : ""; // if location is null
+
                 metaTitle::setTitle($title." — Photo");
                 metaTitle::setDescription($description);
                 
