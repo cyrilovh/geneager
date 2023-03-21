@@ -1,6 +1,3 @@
-<!--
-    THIS FILE THE BASE OF THE VIEWS ("TEMPLATE")
--->
 <html>
 <head>
     <meta charset="<?=ENCODE; ?>">

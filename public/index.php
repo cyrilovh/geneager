@@ -1,4 +1,4 @@
-<!DOCTYPE html><!-- for all files -->
+<!DOCTYPE html>
 <?php
     require "../src/inc/root.php";
 

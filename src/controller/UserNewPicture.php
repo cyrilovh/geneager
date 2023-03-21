@@ -3,6 +3,7 @@
     namespace class;
     /* TEST METAS */
     metaTitle::setTitle("Ajouter une photo");
+    metaTitle::setRobot(array("noindex", "nofollow"));
     
     $include_footer = "none";
 
@@ -27,7 +28,8 @@
                         "type" => "file",
                         "name" => "fichier",
                         "class" => "form-control",
-                        "required" => "required"
+                        "required" => "required",
+                        "accept" => implode(",", UPLOAD_FILETYPE_ALLOWED["picture"])
                     )
                 );
         

@@ -21,7 +21,7 @@
 
   }
 
-  enum gender: int
+  enum gender:int
   {
 
     use getGender;

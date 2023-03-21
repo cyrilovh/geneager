@@ -1,7 +1,7 @@
 <?php
     namespace class;
-    $meta_title = "Liste des photos ".$meta_separator.$meta_title;
-    mcv::addView("userPictureList");
+    metaTitle::setTitle("Liste des photos ");
+
     additionnalJsCss::set("table.css");
 
     if(validator::isId()){ // i check if ID is provided
@@ -12,5 +12,11 @@
         $data = \model\picture::getList();
     }
 
-    $output = template::autoReplace(template::get("userPictureList"), $data, true, "Picture");
+    if(count($data) > 0){
+        $output = template::autoReplace(template::get("userPictureList"), $data, true, "Picture");
+        mcv::addView("userPictureList");
+    }else{
+        $msgError = "Aucune photo n'a été trouvée pour cet album.";
+        mcv::addView("noContent");
+    }
 ?>
