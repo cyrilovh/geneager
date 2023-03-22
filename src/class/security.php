@@ -67,5 +67,18 @@ class security{
         array_unique($cleanArr);
         return $cleanArr;
     }
+
+    /**
+     * Clean filename: remove all special chars and replace by underscore
+     *
+     * @param string $filename filename to clean with extension
+     * @return string
+     */
+    public static function cleanFilename(string $filename):string{
+        $fileParts = pathinfo($filename);
+        $filenameOnly = preg_replace( '/[^a-z0-9_-]+/', '_', strtolower($fileParts["filename"]) );
+        $extension = preg_replace( '/[^a-z0-9]+/', '_', strtolower($fileParts["extension"]) );
+        return $filenameOnly.".".$extension;
+    }
 }
 ?>

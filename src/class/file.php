@@ -17,14 +17,16 @@
          * - if the pdf feel be valid
          *
          * @param [type] $file
+         * @param array $fileCategoryAllowed Types of file to upload (ex: picture, video, document, audio, ...) => Checkout the constant UPLOAD_FILETYPE_ALLOWED in the file config.php
          * @param string $target (folder or subfolder in /private/uploads/)
-         * @param array $fileAllowed Types of file to upload (ex: picture, video, document, audio, ...)
+         * @param boolean $rename Rename the file with a random name
+         * @param string $newName New name of the file (if $rename is true): if is blank the file will be renamed with a random name
          * @param int $maxSize Maximum size of the file to upload (EN: in bytes) (FR: en octets)
          * @param boolean $optimize Optimize the image (if it's an image) => convert to webp format
          * 
          * @return array
          */
-        public static function upload($file, array $fileCategoryAllowed, string $target="", bool $rename = true, int $maxSizeAllowed = MAX_FILE_SIZE, bool $optimize = true):array{
+        public static function upload($file, array $fileCategoryAllowed, string $target="", bool $rename = true, string $newName="" ,int $maxSizeAllowed = MAX_FILE_SIZE, bool $optimize = true):array{
 
             $fileType = UPLOAD_FILETYPE_ALLOWED; // array of allowed file type
             $return = []; // array of the data returned
@@ -58,7 +60,26 @@
                                 if(array_key_exists("error", $file)){
                                     $fileExtension = format::htmlToLower(pathinfo($file["name"], PATHINFO_EXTENSION));
                                     if(in_array($file["type"], $fileAllowedList) || in_array($fileExtension, $fileAllowedList)){ // in check in array of allowed file if the type is autorised
-                                        $fileNewName = random::uuidv4().date('_Ymd_his').".".$fileExtension; // i set a random name for the file (security reasons)
+                                        
+                                        if($rename == true){
+                                            if(validator::isNullOrEmpty($newName) ){ // if new name is empty
+                                                // i rename the file with a random name
+                                                $fileNewName = random::uuidv4().date('_Ymd_his').".".$fileExtension; // i set a random name for the file (security reasons)
+                                            }else{
+                                                // manual rename the file
+                                                if(validator::isNullOrEmpty($newName) || $newName == ".".$fileExtension){ // if filename with extension is empty or if the filename and the extension are not the same
+                                                    $return["error"][] = "Le nom du fichier est vide.";
+                                                }else{
+                                                    $fileNewName = security::cleanFilename($newName);
+                                                }
+                                            }
+                                        }else{
+                                            if(validator::isNullOrEmpty($file["name"]) || $file["name"] == ".".$fileExtension){ // if filename with extension is empty or if the filename and the extension are not the same
+                                                $return["error"][] = "Le nom du fichier est vide.";
+                                            }else{
+                                                $fileNewName = $file["name"];
+                                            }
+                                        }
                                         
                                         // CHECK IF IMAGE IS VALID
                                         if(in_array("image/".$fileExtension, $fileType["picture"])){ // i check if it's an image enumerated in the array of allowed file types
@@ -89,15 +110,14 @@
                                         if(count($return["error"]) == 0){ // if there is no error
                                             if(move_uploaded_file($file["tmp_name"], $targetFullPath.$fileNewName)){ // i move the file
 
-                                                $convertToWebp = file::ConvertToWebP($targetFullPath.$fileNewName);
+                                                if($optimize == true){
+                                                    $convertToWebp = file::ConvertToWebP($targetFullPath.$fileNewName);
 
-                                                // if i can convert the image to webp format: i give the new name of the file converted to webp format
-                                                if(array_key_exists("name", $convertToWebp["file"])){
-                                                    $newFileName = $convertToWebp["file"]["name"];
-                                                }else{
-                                                    var_dump($convertToWebp["file"]);
+                                                    // if i can convert the image to webp format: i give the new name of the file converted to webp format
+                                                    if(array_key_exists("name", $convertToWebp["file"])){
+                                                        $newFileName = $convertToWebp["file"]["name"];
+                                                    }
                                                 }
-
 
                                                 // if file converted to another format
                                                 $finalFileName = (isset($newFileName)) ? $newFileName : $fileNewName;

@@ -246,8 +246,9 @@
     
             if(count($return["error"]) == 0){
 
+            }else{
+                $errorList = $return["error"];
             }
-
         }else{
             $errorList = $ancestorForm->check(false);
         }

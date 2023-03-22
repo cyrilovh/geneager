@@ -72,8 +72,8 @@
                             }catch(\Exception $e){
                                 $errorList = "Erreur lors de l'enregistrement de la photo dans la base de données";
                             }
-
-                            $btnContinue = "<a href='/userEditPicture/".$_GET["id"]."' class='btn btn-primary'><i class='fa-solid fa-plus' title='Envoyer un nouveau fichier'></i> Ajouter une autre photo</a>";
+                            $currentLocation = url::current(true);
+                            $btnContinue = "<a href='".$currentLocation."' class='btn btn-primary'><i class='fa-solid fa-plus' title='Envoyer un nouveau fichier'></i> Ajouter une autre photo</a>";
                             $btnContinue .= " <a href='/userEditPicture/?filename=".$return["file"]["newName"]."' class='btn btn-success'><i class='fa-solid fa-pen' title='Editer'></i> Editer les informations de la photo</a>";
                         }else{
                             $errorList = implode("<br>", $return["error"]);
