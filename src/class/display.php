@@ -23,10 +23,10 @@ class display{
      * return: Joe Z. DOE
      * @param string $firstNameList
      * @param string $lastName
-     * @param string $maidenName
+     * @param string $maidenNameList
      * @return string
      */
-    public static function truncateIdentity(string|null $firstNameList, string|null $lastName, string|null $maidenName):string{ // A CONTINUER
+    public static function truncateIdentity(string|null $firstNameList, string|null $lastName, string|null $maidenNameList):string{ // A CONTINUER
         $return = "";
 
         // first names for start
@@ -46,10 +46,10 @@ class display{
             $return = format::htmlToUcfirst($firstNameList, true);
         }
 
-        if(strlen(format::normalize($maidenName))==0){
+        if(strlen(format::normalize($maidenNameList))==0){
             $return .= " ".format::htmlToUpper($lastName);
         }else{
-            $return .= format::htmlToUpper(" ".$lastName." (".$maidenName.")");
+            $return .= format::htmlToUpper(" ".$lastName." (".$maidenNameList.")");
         }
         
         return $return;

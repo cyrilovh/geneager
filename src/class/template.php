@@ -53,7 +53,7 @@ class template
 
                 $template_tmp = str_replace("{birthdayY}", (!is_null($ancestor["birthdayY"]) ? '<p class="dates">Né(e) en '.$ancestor["birthdayY"].'</p>' : ""), $template_tmp);
 
-                $template_tmp = str_replace("{identity}", display::truncateIdentity($ancestor["firstNameList"], $ancestor["lastName"], $ancestor["maidenName"]), $template_tmp);
+                $template_tmp = str_replace("{identity}", display::truncateIdentity($ancestor["firstNameList"], $ancestor["lastName"], $ancestor["maidenNameList"]), $template_tmp);
 
                 $template_tmp = str_replace("{photo}", ($ancestor["photo"]) ? "/ressources/ancestorProfilePicture/".$ancestor["photo"]: "/assets/img/unknownAncestor.webp", $template_tmp);
 

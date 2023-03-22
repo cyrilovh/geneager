@@ -245,9 +245,9 @@
             $return = file::upload($theFile, array("picture"), "picture/ancestor/");
     
             if(count($return["error"]) == 0){
-
+                $successMsg = "<b>Fichier a bien été envoyé !</b>";
             }else{
-                $errorList = $return["error"];
+                $errorList = implode("<br>", $return["error"]);
             }
         }else{
             $errorList = $ancestorForm->check(false);
