@@ -6,7 +6,7 @@
 
     if(validator::isId()){ // i check if ID is provided
         $id = format::normalize($_GET["id"]);
-        $btnNewPicture = "<a href='/userNewPicture/?id=$id' class='btn btn-success'><i class='fas fa-plus'></i> Ajouter une photo</a>";
+        $btnNewPicture = "<a href='/userNewPicture/$id' class='btn btn-success'><i class='fas fa-plus'></i> Ajouter une photo</a>";
         $data = \model\picture::getList(array("picture.folder" => $id));
     }else{
         $data = \model\picture::getList();
@@ -17,7 +17,7 @@
         mcv::addView("userPictureList");
     }else{
         $msgError = "Aucune photo n'a été trouvée pour cet album.";
-        $msgError .= (userInfo::isConnected() ? "<br><a href='/userNewPicture/?id=$id' class='btn btn-success'><i class='fas fa-plus'></i> Ajouter une photo</a>" : "");
+        $msgError .= (userInfo::isConnected() ? "<br><a href='/userNewPicture/$id' class='btn btn-success'><i class='fas fa-plus'></i> Ajouter une photo</a>" : "");
         mcv::addView("noContent");
     }
 ?>

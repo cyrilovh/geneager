@@ -9,12 +9,34 @@
 <body>
     <aside class="p-3" style="min-height:80vh;">
         <h1>Installation de Geneager CMS !</h1>
-        <p class='font-weight-bold'><b>Le site n'est pas encore configuré.</b><br>Renommez le fichier &laquo; config.sample.php &raquo; en &laquo; config.php &raquo; et éditez les informations.</p>
+        <p class='font-weight-bold'><b>Le site n'est pas encore configuré.</b></p>
+        <h2>&Eacute;tape 1 &mdash; Base de données</h2>
+        <p>Pour commencer importer la base de données MySQL via PHPMyAdmin par exemple</p>
+        <h2>&Eacute;tape 2 &mdash; Fichier de configuration</h2>
+        <p>Renommez le fichier &laquo; config.sample.php &raquo; en &laquo; config.php &raquo; et éditez les informations.</p>
         <div class='alert alert-danger'>
             <p style="font-size:30px;"><i class="bi bi-exclamation-octagon-fill"></i> AVERTISSEMENT:</p>
             <p>Pensez à modifier les valeurs des superglobales <b>SALT_PASSWORD</b> et <b>PASSWORD_TOKEN</b> dans le fichier de configuration.</p>
-            <p>Il s'agit d'un mot de passe ou chiffrer (&laquo; crypter &raquo;) les données envoyées ou stockées dans la base de données.</p>
+            <p>Il s'agit d'un mot de passe pour chiffrer (&laquo; crypter &raquo;) les données envoyées ou stockées dans la base de données.</p>
             <p>Mettez une valeur complexe impossible à deviner.<br>Exemple: vBspPq5*q6zzPma!-s9</p>
+            <p>&Eacute;vitez les mots de passe contitués uniquement de chiffres et de lettres.<br>Il n'est pas nécessaire de le mémoriser.</p>
+        </div>
+        <div class='alert alert-primary'>
+            <p style="font-size:30px;"><i class="bi bi-info-circle"></i> INFORMATIONS COMPLEMENTAIRES:</p>
+            <p>Configurez la base de données en éditant les variables suivantes dans le fichier de configuration:</p>
+            <ul>
+                <li>$db_name: nom de la base de données)</li>
+                <li>$db_host: adresse IP ou nom d'hôte de la base de données (généralement &laquo; 127.0.0.1 &raquo; ou &laquo; localhost &raquo;)</li>
+                <li>$db_user: nom d'utilisateur de la base de données</li>
+                <li>$db_password: mot de passe</li>
+            </ul>
+        </div>
+        <div class='alert alert-primary'>
+            <p style="font-size:30px;"><i class="bi bi-info-circle"></i> INFORMATION COMPLEMENTAIRE:</p>
+            <p>Pensez à vérifier que la superglobale PROD dans le fichiers de configuration soit sur TRUE si ne vous faites pas du développement ou déboguage.</p>
+        </div>
+        <div class="alert alert-secondary">
+            <p><i class="bi bi-brush"></i> La personnalisation des autres éléments est configurable via la page &laquo; paramètres &raquo; dans la partie administration du site (via un compte admin).</p>
         </div>
     </aside>
     <footer class=" bg-light text-center text-white ">
@@ -40,7 +62,7 @@
         <!-- Copyright -->
         <div class="text-center p-3 " style="background-color: rgba(0, 0, 0, 0.2); ">
             Geneager CMS by:
-            <a class="text-white " href="https://cyril.ovh/ ">@cyrilovh</a>
+            <a class="text-white " href="https://cyril.ovh/">@cyrilovh</a>
         </div>
         <!-- Copyright -->
     </footer>

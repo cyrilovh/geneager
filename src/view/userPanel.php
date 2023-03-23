@@ -73,7 +73,16 @@
                     <i class="fas fa-gear"></i>
                 </div>
                 <div>
-                    Paramètres
+                    Paramètres généraux
+                </div>
+            </div>
+
+            <div class="persoBtn" data-href="/adminHealth" title="Sécurité et santé du site">
+                <div>
+                    <i class="fas fa-heart-pulse"></i>
+                </div>
+                <div>
+                    Sécurité &amp; Santé
                 </div>
             </div>
         <?php
