@@ -59,7 +59,7 @@
     }else{ // if any identity card or any result with the filters
         header("HTTP/1.1 404 NOT FOUND");
         $msgError ="Pas de fiches d'identité pour le moment !";
-        $msgError .= (userInfo::isConnected() ? "<br><a class='btn btn-success' href='/userNewAncestor'><span class='fa fa-plus'></span> Créer une fiche</a><br>" : "");
+        $msgError .= (userInfo::isConnected() ? "<br><a class='btn btn-success' href='/userEditAncestor'><span class='fa fa-plus'></span> Créer une fiche</a><br>" : "");
         mcv::addView("noContent");
     }
 

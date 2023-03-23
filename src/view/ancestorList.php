@@ -32,7 +32,7 @@ use class\display, class\format, class\UserInfo; ?>
         </select>
     </div>
     <p class="bar">
-        <a class="btn btn-outline-success btn-sm" href="/userNewAncestor"><i class="fa-solid fa-plus"></i> Nouvel ancêtre</a>
+        <a class="btn btn-outline-success btn-sm" href="/userEditAncestor"><i class="fa-solid fa-plus"></i> Nouvel ancêtre</a>
     </p>
     <div class="ancestorList">
         <?= $output; ?>

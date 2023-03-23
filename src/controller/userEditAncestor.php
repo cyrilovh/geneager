@@ -4,7 +4,16 @@
     metaTitle::setTitle("Ajout un nouveau ancêtre"); // i set the title page + separator + website name
     metaTitle::setRobot(array("noindex", "nofollow"));
 
-    mcv::addView("userNewAncestor");
+    mcv::addView("userEditAncestor");
+
+    $update = false;
+    if(isset($_GET["id"]) && !validator::isNullOrEmpty($_GET["id"])) { // i check if id is set and not null or empty
+        if(is_numeric($_GET["id"])){ // i check if id is an integer
+            $id = $_GET["id"];
+            $SQLdata = \model\ancestor::get($id); // i get the ancestor informations
+        }
+        $update = true;
+    }
 
     $ancestorForm = new form(
         array(
@@ -36,7 +45,8 @@
         "name" => "firstNameList",
         "minlength" => 1,
         "maxlength" => 200,
-        "class" => "form-control w100"),
+        "class" => "form-control w100",
+        "value" => (isset($SQLdata["firstNameList"]) ? $SQLdata["firstNameList"] : "")),
         array(
             "before" => "<h2>&Eacute;tat civil:</h2><p class='bold'>Prénom(s) de l'ancêtre:</p>",
         )
@@ -48,7 +58,8 @@
         "name" => "lastName",
         "minlength" => 1,
         "maxlength" => 200,
-        "class" => "form-control w100"),
+        "class" => "form-control w100",
+        "value" => (isset($SQLdata["lastName"]) ? $SQLdata["lastName"] : "")),
         array(
             "before" => "<p class='bold'>Nom de famille/Nom de jeune fille:</p>",
         )
@@ -60,7 +71,8 @@
         "name" => "maidenNameList",
         "minlength" => 1,
         "maxlength" => 200,
-        "class" => "form-control w100"),
+        "class" => "form-control w100",
+        "value" => (isset($SQLdata["maidenNameList"]) ? $SQLdata["maidenNameList"] : "")),
         array(
             "before" => "<p class='bold'>Nom(s) marital(s):</p>",
         )
@@ -72,7 +84,8 @@
         "name" => "nickNameList",
         "minlength" => 1,
         "maxlength" => 200,
-        "class" => "form-control w100"),
+        "class" => "form-control w100",
+        "value" => (isset($SQLdata["nickNameList"]) ? $SQLdata["nickNameList"] : "")),
         array(
             "before" => "<p class='bold'>Surnoms, pseudonymes:</p>",
         )
@@ -105,7 +118,8 @@
         "maxlength" => 2,
         "min" => "1",
         "max" => "31",
-        "placeholder" => "JJ"),
+        "placeholder" => "JJ",
+        "value" => (isset($SQLdata["birthdayD"]) ? $SQLdata["birthdayD"] : "")),
         array(
             "before" => "<hr><h2>Naissance:</h2><p class='bold'>Date de naissance:</p>",
         )
@@ -118,7 +132,8 @@
         "maxlength" => 2,
         "min" => "1",
         "max" => "12",
-        "placeholder" => "MM"),
+        "placeholder" => "MM",
+        "value" => (isset($SQLdata["birthdayM"]) ? $SQLdata["birthdayM"] : ""))
     );
 
     $ancestorForm->setElement("input", array(
@@ -128,7 +143,8 @@
         "maxlength" => 4,
         "min" => "1000",
         "max" => date("Y"),
-        "placeholder" => "AAAA"),
+        "placeholder" => "AAAA",
+        "value" => (isset($SQLdata["birthdayY"]) ? $SQLdata["birthdayY"] : ""))
     );
 
 
@@ -136,7 +152,7 @@
         "name" => "birthCity",
         "class" => "form-control w100",
         "option" => location::cityAsKeyValue(),
-        "value" => "",
+        "value" => (isset($SQLdata["birthCity"]) ? $SQLdata["birthCity"] : ""),
     ),
     array(
         "before" => "<p class='bold'>Lieu de naissance:</p>",
@@ -149,6 +165,7 @@
             "class" => "form-control w100",
             "rows" => 5,
             "placeholder" => "200 caractères maximum",
+            "value" => (isset($SQLdata["birthAccuracyLocation"]) ? $SQLdata["birthAccuracyLocation"] : "")
         ),
         array(
             "before" => "<p class='bold'>Précision sur le lieu de naissance:</p>",
@@ -162,7 +179,8 @@
         "maxlength" => 2,
         "min" => "1",
         "max" => "31",
-        "placeholder" => "JJ"),
+        "placeholder" => "JJ",
+        "value" => (isset($SQLdata["deathdateD"]) ? $SQLdata["deathdateD"] : "")),
         array(
             "before" => "<hr><h2>Décés:</h2><p class='bold'>Date de décès:</p>",
         )
@@ -175,7 +193,8 @@
         "maxlength" => 2,
         "min" => "1",
         "max" => "12",
-        "placeholder" => "MM"),
+        "placeholder" => "MM",
+        "value" => (isset($SQLdata["deathdateM"]) ? $SQLdata["deathdateM"] : "")),
     );
 
     $ancestorForm->setElement("input", array(
@@ -185,14 +204,15 @@
         "maxlength" => 4,
         "min" => "1000",
         "max" => date("Y"),
-        "placeholder" => "AAAA"),
+        "placeholder" => "AAAA",
+        "value" => (isset($SQLdata["deathdateY"]) ? $SQLdata["deathdateY"] : "")),
     );
 
     $ancestorForm->setElement("select", array(
         "name" => "deathCity",
         "class" => "form-control w100",
         "option" => location::cityAsKeyValue(),
-        "value" => "",
+        "value" => (isset($SQLdata["deathCity"]) ? $SQLdata["deathCity"] : ""),
     ),
     array(
         "before" => "<p class='bold'>Lieu de naissance:</p>",
@@ -205,6 +225,7 @@
             "class" => "form-control w100",
             "rows" => 5,
             "placeholder" => "200 caractères maximum",
+            "value" => (isset($SQLdata["deathAccuracyLocation"]) ? $SQLdata["deathAccuracyLocation"] : "")
         ),
         array(
             "before" => "<p class='bold'>Précision sur le lieu de décès:</p>",
@@ -215,7 +236,7 @@
         "name" => "cemeteryCity",
         "class" => "form-control w100",
         "option" => location::cityAsKeyValue(),
-        "value" => "",
+        "value" => (isset($SQLdata["cemeteryCity"]) ? $SQLdata["cemeteryCity"] : ""),
     ),
     array(
         "before" => "<hr><h2>Lieu du défunt:</h2><p class='bold'>Ville:</p>",
@@ -228,6 +249,7 @@
             "class" => "form-control w100",
             "rows" => 5,
             "placeholder" => "200 caractères maximum",
+            "value" => (isset($SQLdata["cemeteryAccuracyLocation"]) ? $SQLdata["cemeteryAccuracyLocation"] : "")
         ),
         array(
             "before" => "<p class='bold'>Précision sur le lieu où repose le défunt:</p>",
@@ -241,6 +263,7 @@
             "class" => "form-control w100",
             "rows" => 5,
             "placeholder" => "5000 caractères maximum",
+            "value" => (isset($SQLdata["biography"]) ? $SQLdata["biography"] : "")
         ),
         array(
             "before" => "<hr><h2>Biographie:</h2>",
@@ -279,11 +302,24 @@
                 }
             }
 
-            if(db::insert($data, "ancestor")){
-                (!isset($successMsg)) ? $successMsg = "" : $successMsg = $successMsg;
-                $successMsg .= "<p>Ancêtre ajouté avec succès !</p>";
+            if(!$update){
+                if(db::insert($data, "ancestor")){
+                    (!isset($successMsg)) ? $successMsg = "" : $successMsg = $successMsg;
+                    $successMsg .= "<p>Ancêtre ajouté avec succès !</p>";
+                }else{
+                    (!isset($errorList)) ? $errorList = "" : $errorList = $errorList;
+                    $errorList .= "<p><b>Erreur lors de l'ajout de l'ancêtre !</b></p>";
+                }
             }else{
-                $errorList .= "<p><b>Erreur lors de l'ajout de l'ancêtre !</b></p>";
+                if(db::update($data, "ancestor", array("id" => $id), true)){
+                    (!isset($successMsg)) ? $successMsg = "" : $successMsg = $successMsg;
+                    $currentURL = \class\url::current();
+                    $successMsg = "<p class='mt10 bold uppercase'>Les données ont été mises à jour.<p>";
+                    $successMsg .= "<p><a class='btn btn-success mt10' href='$currentURL'>&#129152; Retour au formulaire.</a></p>";
+                }else{
+                    (!isset($errorList)) ? $errorList = "" : $errorList = $errorList;
+                    $errorList .= "<p><b>Erreur lors de la modification de l'ancêtre !</b></p>";
+                }
             }
         }else{
             $errorList = $ancestorForm->check(false);
