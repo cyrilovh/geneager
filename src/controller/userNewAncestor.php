@@ -6,12 +6,16 @@
 
     mcv::addView("userNewAncestor");
 
-    $ancestorForm = new form(array(
-        "action" => "",
-        "method" => "post",
-        "class" => "form",
-        "enctype" => "multipart/form-data" // for add file (picture profile)
-    ));
+    $ancestorForm = new form(
+        array(
+            "action" => "",
+            "method" => "post",
+            "class" => "form",
+            "enctype" => "multipart/form-data" // for add file (picture profile)
+        ),
+        array(),
+        false
+    );
 
     $ancestorForm->setElement("input",
         array(
@@ -41,21 +45,21 @@
     $ancestorForm->setElement("input", array(
         "type" => "text",
         "placeholder" => "200 caractères maximum",
-        "name" => "birthNameList",
+        "name" => "lastName",
         "minlength" => 1,
         "maxlength" => 200,
         "class" => "form-control w100"),
         array(
-            "before" => "<p class='bold'>Nom(s) de famille de l'ancêtre:</p>",
+            "before" => "<p class='bold'>Nom de famille/Nom de jeune fille:</p>",
         )
     );
 
     $ancestorForm->setElement("input", array(
         "type" => "text",
-        "placeholder" => "80 caractères maximum",
-        "name" => "maidenName",
+        "placeholder" => "200 caractères maximum",
+        "name" => "maidenNameList",
         "minlength" => 1,
-        "maxlength" => 80,
+        "maxlength" => 200,
         "class" => "form-control w100"),
         array(
             "before" => "<p class='bold'>Nom(s) marital(s):</p>",
@@ -74,6 +78,17 @@
         )
     );
 
+    $ancestorForm->setElement("input", array(
+        "type" => "text",
+        "placeholder" => "200 caractères maximum",
+        "name" => "birthNameList",
+        "minlength" => 1,
+        "maxlength" => 200,
+        "class" => "form-control w100"),
+        array(
+            "before" => "<p class='bold'>Autres nom(s) de famille de l'ancêtre (exemple si né sous un autre nom avant d'avoir été reconnu par le père):</p>",
+        )
+    );
     $ancestorForm->setElement("select", array(
         "name" => "gender",
         "class" => "form-control w100",
@@ -129,7 +144,7 @@
 
     $ancestorForm->setElement("textarea",
         array(
-            "name" => "bithAccuracyLocation",
+            "name" => "birthAccuracyLocation",
             "maxlength" => 200,
             "class" => "form-control w100",
             "rows" => 5,
@@ -142,7 +157,7 @@
 
     $ancestorForm->setElement("input", array(
         "type" => "number",
-        "name" => "deaththdayD",
+        "name" => "deathdateD",
         "class" => "form-control",
         "maxlength" => 2,
         "min" => "1",
@@ -155,7 +170,7 @@
 
     $ancestorForm->setElement("input", array(
         "type" => "number",
-        "name" => "deathdayM",
+        "name" => "deathdateM",
         "class" => "form-control",
         "maxlength" => 2,
         "min" => "1",
@@ -165,7 +180,7 @@
 
     $ancestorForm->setElement("input", array(
         "type" => "number",
-        "name" => "deathdayY",
+        "name" => "deathdateY",
         "class" => "form-control",
         "maxlength" => 4,
         "min" => "1000",
@@ -240,14 +255,35 @@
     ));
 
     if(isset($_POST["submit"])) {
-        if($ancestorForm->check()){
-            $theFile = $_FILES["fichier"];
-            $return = file::upload($theFile, array("picture"), "picture/ancestor/");
-    
-            if(count($return["error"]) == 0){
-                $successMsg = "<b>Fichier a bien été envoyé !</b>";
-            }else{
+        if($ancestorForm->check()){ // if form is valid
+            $theFile = $_FILES["photo"];
+            $return = file::upload($theFile, array("picture"), "picture/ancestor/", true, NULL, MAX_FILE_SIZE, true, true);
+            if(count($return["error"]) > 0){ // upload success
                 $errorList = implode("<br>", $return["error"]);
+            }
+
+            if(key_exists("file", $return)){
+                if(key_exists("warningList", $return["file"])){
+                    if(count($return["file"]["warningList"])>0){
+                        $warningList = implode("<br>", $return["file"]["warningList"]);
+                    }
+                }
+            }
+
+            $data = $ancestorForm->getData();
+            $data["author"] = userInfo::getUsername();
+            if(count($return["error"])==0){
+                if(key_exists("file", $return)){
+                    $data["photo"] = $return["file"]["newName"];
+                    $successMsg = "<p>La photo a été envoyée avec succès !</p>";
+                }
+            }
+
+            if(db::insert($data, "ancestor")){
+                (!isset($successMsg)) ? $successMsg = "" : $successMsg = $successMsg;
+                $successMsg .= "<p>Ancêtre ajouté avec succès !</p>";
+            }else{
+                $errorList .= "<p><b>Erreur lors de l'ajout de l'ancêtre !</b></p>";
             }
         }else{
             $errorList = $ancestorForm->check(false);

@@ -118,19 +118,6 @@
                     )
                 );
 
-                // $form->setElement("input",
-                //     array(
-                //         "type" => "date",
-                //         "name" => "dateEvent",
-                //         "value" => (is_null($pictureData["dateEvent"])) ? "" : format::date($pictureData["dateEvent"], "Y-m-d"),
-                //         "class" => "form-control w100",
-                //         "maxlength" => "10"
-                //     ),
-                //     array(
-                //         "before" => "<hr><p class='bold'>Date de l'événement:</p>",
-                //     )
-                // );
-
                 $form->setElement("input",
                     array(
                         "type" => "number",

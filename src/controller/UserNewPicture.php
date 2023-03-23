@@ -47,7 +47,7 @@
                 if($form->check()){
                     if(isset($_POST["submit"])){
                         $theFile = $_FILES["fichier"];
-                        $return = file::upload($theFile, array("picture"), "picture/");
+                        $return = file::upload($theFile, array("picture"), "picture/family/");
                 
                         if(count($return["error"]) == 0){
         
@@ -57,8 +57,10 @@
                                 $successMsg .= "<br>".implode("<br>", $return["file"]["messageList"]);
                             }
 
-                            if(count($return["file"]["warningList"])>0){
-                                $warningList = implode("<br>", $return["file"]["warningList"]);
+                            if(key_exists("warningList", $return["error"])){
+                                if(count($return["file"]["warningList"])>0){
+                                    $warningList = implode("<br>", $return["file"]["warningList"]);
+                                }
                             }
                             // NEXT STEP: save the file name in the DB
                             try{

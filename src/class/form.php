@@ -606,7 +606,9 @@ class form{
                     $output[$fieldName] = $output[$fieldName];
                 }
             }else{  // if ignore empty is false
-                $output += array($fieldName => $method[$fieldName]);
+                if(key_exists($fieldName, $method)){ // prevent to error message where there is an file field.
+                    $output += array($fieldName => $method[$fieldName]);
+                }
             }
         }
 

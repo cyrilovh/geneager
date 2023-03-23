@@ -20,13 +20,13 @@
          * @param array $fileCategoryAllowed Types of file to upload (ex: picture, video, document, audio, ...) => Checkout the constant UPLOAD_FILETYPE_ALLOWED in the file config.php
          * @param string $target (folder or subfolder in /private/uploads/)
          * @param boolean $rename Rename the file with a random name
-         * @param string $newName New name of the file (if $rename is true): if is blank the file will be renamed with a random name
+         * @param string|null $newName New name of the file (if $rename is true): if is blank or null the file will be renamed with a random name
          * @param int $maxSize Maximum size of the file to upload (EN: in bytes) (FR: en octets)
          * @param boolean $optimize Optimize the image (if it's an image) => convert to webp format
-         * 
+         * @param bool $ignoreMissingFileError Don't return the error "missing file" if is true
          * @return array
          */
-        public static function upload($file, array $fileCategoryAllowed, string $target="", bool $rename = true, string $newName="" ,int $maxSizeAllowed = MAX_FILE_SIZE, bool $optimize = true):array{
+        public static function upload($file, array $fileCategoryAllowed, string $target="", bool $rename = true, string|null $newName="" ,int $maxSizeAllowed = MAX_FILE_SIZE, bool $optimize = true, bool $ignoreMissingFileError = false):array{
 
             $fileType = UPLOAD_FILETYPE_ALLOWED; // array of allowed file type
             $return = []; // array of the data returned
@@ -148,10 +148,14 @@
                             $return["error"][] = "Pas de fichier à envoyé ou fichier vide.";
                         }
                     }else{
-                        $return["error"][] = "Pas de fichier envoyé.";
+                        if($ignoreMissingFileError == false){
+                            $return["error"][] = "Pas de fichier envoyé.";
+                        }
                     }
                 }else{
-                    $return["error"][] = "Pas de fichier envoyé.";
+                    if($ignoreMissingFileError == false){
+                        $return["error"][] = "Pas de fichier envoyé.";
+                    }
                 }
             }else{
                 $return["error"][] = "Erreur interne: Le dossier de destination n'est pas accessible en écriture";

@@ -53,5 +53,15 @@
             $current = parse_url(url::current());
             return ($domainOrigin == $current["host"]) ? true : false;
         }
+
+        /*
+            * Return the path of the current URL except after the last one slash
+            * @return string
+        */
+        public static function pathFolderStr():string{
+            $path = parse_url(url::current())["path"];
+            $path = substr($path, 0, strrpos($path, "/"))."/";
+            return $path;
+        }
     }
 ?>

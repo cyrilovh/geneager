@@ -17,6 +17,7 @@
         mcv::addView("userPictureList");
     }else{
         $msgError = "Aucune photo n'a été trouvée pour cet album.";
+        $msgError .= (userInfo::isConnected() ? "<br><a href='/userNewPicture/?id=$id' class='btn btn-success'><i class='fas fa-plus'></i> Ajouter une photo</a>" : "");
         mcv::addView("noContent");
     }
 ?>

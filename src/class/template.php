@@ -55,7 +55,7 @@ class template
 
                 $template_tmp = str_replace("{identity}", display::truncateIdentity($ancestor["firstNameList"], $ancestor["lastName"], $ancestor["maidenNameList"]), $template_tmp);
 
-                $template_tmp = str_replace("{photo}", ($ancestor["photo"]) ? "/ressources/ancestorProfilePicture/".$ancestor["photo"]: "/assets/img/unknownAncestor.webp", $template_tmp);
+                $template_tmp = str_replace("{photo}", ($ancestor["photo"]) ? "/picture/ancestor/".$ancestor["photo"]: "/assets/img/unknownAncestor.webp", $template_tmp);
 
                 $template_tmp = str_replace("{".$key."}", (is_null($value) ? "" : $value), $template_tmp); // i put this line at the end because i need to check if the value is null before i put it in the template   
 

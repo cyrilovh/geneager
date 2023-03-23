@@ -4,11 +4,11 @@
 
     $ancestorList = \model\ancestor::getList(array("id", "firstNameList", "lastName", "photo",  "maidenNameList", "gender", "birthdayY", "author"), 0, 6);
 
-    if($ancestorList > 0){
+    if(count($ancestorList) > 0){
         mcv::addView("home");
         $output = template::ancestorReplace(template::get("ancestorCard"), $ancestorList);
     }else{
-        $msgError ="Pas de fiches d'identité pour le moment !";
-        $output = mcv::addView("noContent");
+        mcv::addView("home");
+        $output = (userInfo::isConnected() ? "<p>Pas de fiches d'identité pour le moment. </p> <p><a class='btn btn-sm btn-success' href='/userNewAncestor'><span class='fa fa-plus'></span> Ajouter une fiche d'identité</a></p>" : "Pas encore de fiches d'identité pour le moment.");
     }
 ?>

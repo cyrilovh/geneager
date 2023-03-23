@@ -23,7 +23,7 @@ RewriteCond %{REQUEST_URI} !^/tests/
 RewriteRule ^(.*)/(.*)$ /public/index.php?page=$1&id=$2&%{QUERY_STRING} [NC]
 
 # PHOTOS PROTECTED ACCESS
-RewriteCond %{REQUEST_URI} ^/photo/
+RewriteCond %{REQUEST_URI} ^/picture/
 RewriteRule ^(.*)/(.*)/(.*)$ /public/photo.php?name=$3&%{QUERY_STRING} [NC,L]
 
 <Files .htaccess>

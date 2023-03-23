@@ -82,11 +82,14 @@ class format{
     /**
      * Returns the whole string in upper case
      *
-     * @param string $str
+     * @param string|null $str
      * @param boolean $html
      * @return string
      */
-    public static function htmlToUpper(string $str, bool $html = false):string{
+    public static function htmlToUpper(string|null $str, bool $html = false):string{
+        if(validator::isNullOrEmpty($str)){
+            return "";
+        }
         $str = mb_strtoupper(html_entity_decode($str, ENT_QUOTES, "UTF-8"));
         if($html==true){
             $str = htmlentities($str, ENT_QUOTES, "UTF-8");
@@ -97,11 +100,14 @@ class format{
     /**
      * Returns the whole string in lower case
      *
-     * @param string $str
+     * @param string|null $str
      * @param boolean $html
      * @return string
      */
-    public static function htmlToLower(string $str, bool $html = false):string{
+    public static function htmlToLower(string|null $str, bool $html = false):string{
+        if(validator::isNullOrEmpty($str)){
+            return "";
+        }
         $str = strtolower(html_entity_decode($str, ENT_QUOTES, "UTF-8"));
         if($html==true){
             $str = htmlentities($str, ENT_QUOTES, "UTF-8");
