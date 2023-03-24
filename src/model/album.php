@@ -155,4 +155,21 @@ album{
         }
         return true;
     }
+
+    static function delete(int $id):bool{
+        global $db;
+        $query = $db->prepare("DELETE FROM picturefolder WHERE id = :id");
+        try {
+            $query->execute(array(
+                ":id" => \class\security::cleanStr($id)
+            ));
+            $query->closeCursor();
+        } catch (\PDOException $e) {
+            if(PROD == false){
+                echo $e->getMessage();
+            }
+            return false;
+        }
+        return true;
+    }
 }

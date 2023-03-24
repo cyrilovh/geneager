@@ -242,7 +242,7 @@
 
                         // remove the original file if the user want
                         if($removeOriginal){
-                            if(!is_writable($source)){
+                            if(is_writable($source)){
                                 unlink($source);
                                 if(file_exists($source)){
                                     $return["file"]["warningList"][] = "Le fichier original n'a pas pu être supprimé.";

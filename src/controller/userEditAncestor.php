@@ -1,19 +1,29 @@
 <?php
     namespace class;
 
-    metaTitle::setTitle("Ajout un nouveau ancêtre"); // i set the title page + separator + website name
-    metaTitle::setRobot(array("noindex", "nofollow"));
-
+    additionnalJsCss::set("form.js");
+    additionnalJsCss::set("editAncestor.css");
     mcv::addView("userEditAncestor");
 
     $update = false;
+    $title = "Ajouter un ancêtre"; // default title
+    $btnSave = "Ajouter"; // default submit button text
     if(isset($_GET["id"]) && !validator::isNullOrEmpty($_GET["id"])) { // i check if id is set and not null or empty
         if(is_numeric($_GET["id"])){ // i check if id is an integer
             $id = $_GET["id"];
             $SQLdata = \model\ancestor::get($id); // i get the ancestor informations
+            if(!isset($SQLdata["id"])){ // if the ancestor doesn't exist
+                header("location: /userEditAncestor/");
+                exit();
+            }
+            $title = "Modifier la fiche d'un ancêtre";
+            $btnSave = "Enregistrer les modifications";
+            $update = true;
         }
-        $update = true;
     }
+
+    metaTitle::setTitle($title); // i set the title page + separator + website name
+    metaTitle::setRobot(array("noindex", "nofollow"));
 
     $ancestorForm = new form(
         array(
@@ -35,9 +45,11 @@
             "maxsize" => MAX_FILE_SIZE // used by the JS validator (js/form.js)
         ),
         array(
-            "before" => "<p class='bold'>Fichier:</p>",
+            "before" => "<br><h2>Photo d'identité:</h2><p class='bold'>Fichier:</p>",
+            "after" => (isset($SQLdata["photo"]) ? "<div class='bold inline-block'>Fichier actuel:<br><div class='picture-block'><img src='/picture/ancestor/".$SQLdata["photo"]."'><a class='fas fa-trash' title='Supprimer la photo' href='/userDeleteAncestorPicture/".$SQLdata["id"]."'></a></div></div>" : "")
         )
     );
+
 
     $ancestorForm->setElement("input", array(
         "type" => "text",
@@ -273,7 +285,7 @@
     $ancestorForm->setElement("input", array(
         "type" => "submit",
         "name" => "submit",
-        "value" => "Ajouter l&apos;ancêtre",
+        "value" => $btnSave,
         "class" => "btn btn-primary form-control w100",
     ));
 

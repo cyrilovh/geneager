@@ -1,7 +1,6 @@
 // check file size before upload (works with single file per input)
 var uploadField = document.querySelectorAll("input[type='file']");
 for (var i = 0; i < uploadField.length; i++) {
-
     uploadField[i].addEventListener("change", function() {
         if (this.hasAttribute('maxsize')) {
             if (this.files[0].size > this.getAttribute('maxsize')) { // check if file size is bigger than maxsize

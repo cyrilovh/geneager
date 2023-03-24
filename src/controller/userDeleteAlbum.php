@@ -7,8 +7,8 @@
 
 
     if(isset($_GET['id'])){
-        if(is_numeric($_GET['id'])){
-            $id = $_GET['id'];
+        $id = security::cleanStr($_GET['id']);
+        if(is_numeric($id)){
 
             $album = album::getByID($id);
 
@@ -29,7 +29,8 @@
                         ),
                         // add content after or before the element
                         array(
-                            "after" => " <span class='bold red'>Supprimer l&apos;album &laquo; abc &raquo; définitivement et ses photos</span><br>",
+                            "before" => "<p>",
+                            "after" => " <span class='bold red'>Supprimer l&apos;album &laquo; ".$album["title"]." &raquo; définitivement.</span></p><br>",
                         )
                     );
                 
@@ -42,8 +43,11 @@
                 
                     if(isset($_POST['submit'])){
                         if($formDeleteAlbum->check()){
-                            //$album->deleteAlbum($_GET['id']);
-                
+                            if(\model\album::delete($_GET['id'])){
+                                $msgSuccess = "L'album a bien été supprimé.";
+                            }else{
+                                $errorList = array("Une erreur est survenue lors de la suppression de l'album.<br>Assurez-vous que l'album soit vide avant de le supprimer.");
+                            }
                         }else{
                             $errorList =$formDeleteAlbum->check(false);
                         }

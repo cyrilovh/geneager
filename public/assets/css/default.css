@@ -268,6 +268,14 @@ img.e40x {
     padding-bottom: 8px;
 }
 
+.txt-red {
+    color: rgb(201, 68, 68);
+}
+
+.txt-green {
+    color: #00b761;
+}
+
 .float-left {
     float: left;
 }
@@ -330,6 +338,23 @@ img.e40x {
 
 .bar {
     padding: 8px 0px;
+}
+
+.inline-block {
+    display: inline-block !important;
+}
+
+img[src^="/picture/ancestor"] {
+    max-width: 162px;
+    max-height: 192px;
+    float: right;
+    cursor: pointer;
+    border-radius: 4px;
+    -o-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border: 1px solid silver;
+    background-color: #fff;
 }
 
 

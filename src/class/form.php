@@ -100,11 +100,11 @@ class form{
                                 }
                             }
                             
-                            if(array_key_exists("type", $arrayElement["attributList"])){
-                                if($arrayElement["attributList"]["type"]=="file"){
-                                    echo '<script src="assets/js/form.js" type="text/javascript" async></script>';
-                                }
-                            }
+                            // if(array_key_exists("type", $arrayElement["attributList"])){
+                            //     if($arrayElement["attributList"]["type"]=="file"){
+                            //         echo '<script src="assets/js/form.js" type="text/javascript"></script>';
+                            //     }
+                            // }
                             $return .= "$htmlBefore<$tag $attr />$htmlAfter";
                         }elseif($tag=="textarea" || $tag=="button"){
                             foreach($arrayElement["attributList"] as $attribute => $attrValue){
