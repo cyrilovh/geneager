@@ -44,4 +44,13 @@ class userInfo{
         return $query->fetch(\PDO::FETCH_ASSOC);
         $query->closeCursor();
     }
+
+    public static function getByEmail(string $email, array $filter=array("*")):array|bool{
+        global $db;
+        $filter_str = implode(",", $filter);
+        $query = $db->prepare("SELECT $filter_str FROM user WHERE email=:email");
+        $query->execute(['email' => \class\security::cleanStr($email)]);
+        return $query->fetch(\PDO::FETCH_ASSOC);
+        $query->closeCursor();
+    }
 }

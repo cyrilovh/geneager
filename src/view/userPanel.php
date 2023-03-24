@@ -46,6 +46,15 @@
                 </div>
             </div>
 
+            <div class="persoBtn" data-href="/userLocation">
+                <div>
+                    <i class="fas fa-location-dot"></i>
+                </div>
+                <div>
+                    Lieux
+                </div>
+            </div>
+
     </div><!-- End of div.userPanel -->
     <h2>Paramètres</h2>
     <div class="userPanel">
