@@ -1,8 +1,6 @@
 <?php
     namespace class;
-
-    use model\album;
-    $title = "Supprimer un album";
+    $title = "Supprimer un ancêtre";
     $meta_title = $title." ".$meta_separator.$meta_title;
 
 
@@ -10,17 +8,17 @@
         $id = security::cleanStr($_GET['id']);
         if(is_numeric($id)){
 
-            $album = album::getByID($id);
+            $ancestor = \model\ancestor::get($id);
 
-            if($album){
-
-                if(userInfo::isAuthorOrAdmin($album["author"])){
+            if($ancestor){
+                if(userInfo::isAuthorOrAdmin($ancestor["author"])){
                     $form = new form(array( // i declare my new object
                         "method" => "post", // i give the method attr
                         "action" => "", // i give action attr
                         "class"=>"", // i give className ou className list (not required)
                     ));
                 
+                    $photo = (validator::isNullOrEmpty($ancestor["photo"])) ? "/assets/img/unknownAncestor.webp" : "/picture/ancestor/".$ancestor["photo"];
                     $form->setElement("input", array(
                         "type" => "checkbox", // i give the type of input
                         "name" => "confirm", // i give a className
@@ -29,8 +27,8 @@
                         ),
                         // add content after or before the element
                         array(
-                            "before" => "<p>",
-                            "after" => " <span class='bold red'>Supprimer l&apos;album &laquo; ".$album["title"]." &raquo; définitivement.</span></p><br>",
+                            "before" => "<p style='display:flex;'><img src='".$photo."' ></p><p>",
+                            "after" => " <span class='bold red'>Oui, supprimer la fiche d'identité n&deg;".$id." ( ".$ancestor["firstNameList"]." ".$ancestor["lastName"]." ".$ancestor["birthNameList"]." ".$ancestor["maidenNameList"]." )</span></p><br>",
                         )
                     );
                 
@@ -43,25 +41,26 @@
                 
                     if(isset($_POST['submit'])){
                         if($form->check()){
-                            if(\model\album::delete($_GET['id'])){
-                                $msgSuccess = "L'album a bien été supprimé.";
+                            $delete = db::delete("ancestor", array("id"=>$id));
+
+                            if($delete){
+                                $msgSuccess = "L'ancêtre a bien été supprimé.<br><a href='/ancestorList' class='btn btn-success'><span class='far fa-id-card'></span> Retour à la liste des ancêtres</a>";
                             }else{
-                                $errorList = array("Une erreur est survenue lors de la suppression de l'album.<br>Assurez-vous que l'album soit vide avant de le supprimer.");
+                                $msgError = "Une erreur est survenue lors de la suppression de l'ancêtre.<br><a href='/ancestor/".$ancestor["id"]."' class='btn btn-success'><span class='far fa-id-card'></span> Retour à la fiche de l'ancêtre</a>";
                             }
                         }else{
-                            $errorList =$form->check(false);
+                            $errorList = $form->check(false);
                         }
                     }
                 
                     mcv::addView("userDeleteForm");
                 }else{
-                    $msgError = "Vous n'avez pas les droits pour supprimer cet album.";
+                    $msgError = "Vous n'avez pas les droits pour supprimer cet fiche d'identité.<br><a href='/ancestor/".$ancestor["id"]."' class='btn btn-success'><span class='far fa-id-card'></span> Retour à la fiche de l'ancêtre</a>";
                     mcv::addView("403");
                 }
-                
             }else{
-                $msgError = "L'album n'existe pas.";
-                mcv::addView("noContent"); // if the album doesn't exist, i display a message
+                $msgError = "L'ancêtre n'existe pas.<br><a href='/ancestorList' class='btn btn-success'><span class='far fa-id-card'></span> Retour à la liste des ancêtres</a>";
+                mcv::addView("noContent"); // if the ancestor doesn't exist, i display a message
             }
         }else{
             $msgError = "ID invalide.";

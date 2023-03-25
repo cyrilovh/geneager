@@ -315,6 +315,7 @@
             }
 
             if(!$update){
+                $data["createDate"] = date("Y-m-d H:i:s");
                 if(db::insert($data, "ancestor")){
                     (!isset($successMsg)) ? $successMsg = "" : $successMsg = $successMsg;
                     $successMsg .= "<p>Ancêtre ajouté avec succès !</p>";

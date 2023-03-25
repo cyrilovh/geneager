@@ -1,7 +1,7 @@
 <?php
     namespace class;
-
-    $meta_title = "Supprimer une photo d'un ancêtre ".$meta_separator.$meta_title;
+    $title = "Supprimer la photo d'un ancêtre";
+    $meta_title = $title." ".$meta_separator.$meta_title;
 
 
     if(isset($_GET['id'])){
@@ -13,13 +13,13 @@
             if($ancestor){
                 if(!validator::isNullOrEmpty($ancestor["photo"])){
                     if(userInfo::isAuthorOrAdmin($ancestor["author"])){
-                        $formDeleteAncestorPicture = new form(array( // i declare my new object
+                        $form = new form(array( // i declare my new object
                             "method" => "post", // i give the method attr
                             "action" => "", // i give action attr
                             "class"=>"", // i give className ou className list (not required)
                         ));
                     
-                        $formDeleteAncestorPicture->setElement("input", array(
+                        $form->setElement("input", array(
                             "type" => "checkbox", // i give the type of input
                             "name" => "confirm", // i give a className
                             "required" => "required", // i add the attr required
@@ -32,7 +32,7 @@
                             )
                         );
                     
-                        $formDeleteAncestorPicture->setElement("input", array(
+                        $form->setElement("input", array(
                             "type" => "submit",
                             "value" => "Supprimer",
                             "name" => "submit",
@@ -40,7 +40,7 @@
                         ));
                     
                         if(isset($_POST['submit'])){
-                            if($formDeleteAncestorPicture->check()){
+                            if($form->check()){
                                 $file = UPLOAD_DIR_FULLPATH."picture/ancestor/".$ancestor["photo"];
                                 if(file_exists($file)){
                                     if(unlink($file)){
@@ -58,11 +58,11 @@
                                     $errorList = array("Une erreur est survenue lors de la suppression de la photo: le fichier est introuvable.");
                                 }
                             }else{
-                                $errorList = $formDeleteAncestorPicture->check(false);
+                                $errorList = $form->check(false);
                             }
                         }
                     
-                        mcv::addView("userDeleteAncestorPicture");
+                        mcv::addView("userDeleteForm");
                     }else{
                         $msgError = "Vous n'avez pas les droits pour supprimer cet photo.<br><a href='/ancestor/".$ancestor["id"]."' class='btn btn-success'><span class='far fa-id-card'></span> Retour à la fiche de l'ancêtre</a>";
                         mcv::addView("403");

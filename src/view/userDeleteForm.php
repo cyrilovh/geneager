@@ -1,6 +1,8 @@
+<!-- use like a template for delete forms -->
 <aside>
-    <h2>Supprimer une photo d'un ancêtre</h2>
+    <h2><?=$title; ?></h2>
     <?=isset($msgSuccess) ? die("<div class='alert alert-success'>".$msgSuccess."</div>") : ""; ?> <!-- success message -->
+    <?=(isset($msgError)) ? die("<div class='alert alert-danger'>".$msgError) : ""; ?> <!-- form errors -->
     <?=(isset($errorList)) ? die("<div class='alert alert-danger'>".implode("<br>",$errorList)."</div>") : ""; ?> <!-- form errors -->
-    <?=$formDeleteAncestorPicture->display(); ?>
+    <?=$form->display(); ?>
 </aside>

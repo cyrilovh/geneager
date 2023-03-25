@@ -71,7 +71,7 @@
     $meta_robots = ""; // empty, "nofollow", "noindex" or "noindex, nofollow"
 
     /* list of pages (views) not directly accessible via a query */
-    const DENIEDVIEWS = array('router', '404', 'noContent', '403', '500'); // list of views not accessibles from URL bar or query
+    const DENIEDVIEWS = array('router', '404', 'noContent', '403', '500', 'userDeleteForm'); // list of views not accessibles from URL bar or query
 
     /* PROD/DEV */
     if(PROD==true){

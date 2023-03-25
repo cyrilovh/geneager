@@ -158,8 +158,13 @@ class db
         return false;
     }
 
-
-    public static function insert(array $data, string $tableName){
+    /**
+     * Insert data in database
+     * @param array $data Data to insert (key = column name, value = value to insert)
+     * @param string $tableName Table name to insert
+     * @return boolean true if success, else false
+     */
+    public static function insert(array $data, string $tableName):bool{
         global $db;
 
         $tableName = \class\security::cleanStr($tableName);
@@ -207,5 +212,47 @@ class db
 
         return false;
         }
+    }
+
+    /**
+     * Delete data in database
+     * @param string $tableName Table name to delete
+     * @param array $where Where condition (key = column name, value = value to check)
+     * @return boolean true if success, else false
+     */
+    public static function delete(string $tableName, array $where):bool{
+        global $db;
+
+        $tableName = \class\security::cleanStr($tableName);
+
+        if(count($where) > 0 && static::columnListExist($tableName, array_keys($where))){ // i check if there is only one condition in the where array and if all columns exist in the table
+            try{
+                $sql = "DELETE FROM $tableName WHERE ";
+                $i = 0;
+                foreach($where as $key => $value){
+                    if($i > 0){
+                        $sql .= " AND ";
+                    }
+                    $key = \class\security::cleanStr($key);
+                    $value = \class\security::cleanStr($value);
+                    $sql .= "$key ='$value'";
+                    $i++;
+                }
+
+                $query = $db->prepare($sql);
+
+                $query->execute();
+
+                return true;
+            }catch (\PDOException $e) {
+                if(PROD==false){
+                    echo $e->getMessage();
+                }
+                return false;
+            }
+        }else{
+            return false;
+        }
+        return false;
     }
 }

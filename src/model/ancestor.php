@@ -25,7 +25,7 @@
          * @param integer $limit number of results (limit)
          * @return array
          */
-        public static function getList(array $filter = array("*"), int $start=0 ,int $limit=NULL, array $order = array("lastUpdate", "ASC") , array $where = array()):array{
+        public static function getList(array $filter = array("*"), int $start=0 ,int $limit=NULL, array $order = array("lastUpdate", "DESC") , array $where = array()):array{
             global $db;
             $filter = implode(",", $filter);
 

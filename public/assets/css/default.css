@@ -344,7 +344,8 @@ img.e40x {
     display: inline-block !important;
 }
 
-img[src^="/picture/ancestor"] {
+img[src^="/picture/ancestor"],
+img[src^="/assets/img/unknownAncestor.webp"] {
     max-width: 162px;
     max-height: 192px;
     float: right;
