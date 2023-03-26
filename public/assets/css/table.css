@@ -13,3 +13,17 @@ table img {
 .tr4 td {
     width: 25%;
 }
+
+tr>th {
+    background-color: var(--primary);
+    color: #fff;
+    text-align: left;
+}
+
+tr:nth-child(odd)>td {
+    background: #e7e7e7;
+}
+
+tr:nth-child(even)>td {
+    background: #f5f5f5;
+}

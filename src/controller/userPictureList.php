@@ -16,8 +16,10 @@
         $output = template::autoReplace(template::get("userPictureList"), $data, true, "Picture");
         mcv::addView("userPictureList");
     }else{
-        $msgError = "Aucune photo n'a été trouvée pour cet album.";
-        $msgError .= (userInfo::isConnected() ? "<br><a href='/userNewPicture/$id' class='btn btn-success'><i class='fas fa-plus'></i> Ajouter une photo</a>" : "");
+        $msgError = "Aucune photo n'a été trouvée...";
+        if(validator::isId()){
+            $msgError .= (userInfo::isConnected() ? "<br><a href='/userNewPicture/$id' class='btn btn-success'><i class='fas fa-plus'></i> Ajouter une photo</a>" : "");
+        }
         mcv::addView("noContent");
     }
 ?>

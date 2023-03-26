@@ -1,6 +1,6 @@
 <aside>
 <div class="bar">
-        <a href='/userAlbumList' class="btn btn-info"><i class="fas fa-images"></i> Albums</a>
+        <a href='/albumList' class="btn btn-info"><i class="fas fa-images"></i> Albums</a>
     </div>
     <h2>Nouvel album</h2>
     <!-- messages -->

@@ -60,6 +60,21 @@ class format{
     }
 
     /**
+     * Remove a value from an array
+     *
+     * @param array $arr data array
+     * @param string $value value to remove
+     * @return array
+     */
+    public static function removeValueFromArray(array $arr, string $value):array{
+        $key = array_search(static::normalize($value), $arr);
+        if($key !== false){
+            unset($arr[$key]);
+        }
+        return $arr;
+    }
+
+    /**
      * Returns the entire all first letters of all words in uppercase from string
      *
      * @param string $str
