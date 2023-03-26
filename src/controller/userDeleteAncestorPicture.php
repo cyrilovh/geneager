@@ -54,8 +54,13 @@
                                         $errorList = array("Une erreur est survenue lors de la suppression de la photo: le fichier n'a pas pu être supprimé.");
                                     }
                                 }else{
-                                    db::update(array("photo" => ""), "ancestor", array("id" => $ancestor["id"]), true); // if the file doesn't exist, i delete the link in the database
-                                    $errorList = array("Une erreur est survenue lors de la suppression de la photo: le fichier est introuvable.");
+                                    $sql = db::update(array("photo" => ""), "ancestor", array("id" => $ancestor["id"]), true); // if the file doesn't exist, i delete the link in the database
+                                    if($sql){
+                                        $errorList = array("Une erreur est survenue lors de la suppression de la photo: le fichier est introuvable mais la base de données a été mise à jour.");
+                                    }else{
+                                        $errorList = array("Une erreur est survenue lors de la suppression de la photo: le fichier est introuvable et la base de données n'a pas pu être mise à jour.");
+                                    }
+                                    
                                 }
                             }else{
                                 $errorList = $form->check(false);

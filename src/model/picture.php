@@ -120,26 +120,15 @@
         }
 
         /**
-         * Check if user have write access to a picture
+         * Get informations of a picture and the album where it is
+         * @param int $id id of the picture
          */
-        public static function authorOrAdmin(string $filename){
-            $getByFilename = picture::getByFilename($filename, array("folder")); // return id album in array if file exist in database
-            if($getByFilename){
-                $idAlbum = $getByFilename['folder'];
-
-                $result = \model\album::getByID($idAlbum, array("author")); // return author of the album
-
-                if($result){
-                    return \class\userInfo::isAuthorOrAdmin($result['author']);
-                }else{
-                    if(PROD==false){
-                        throw new \Exception("Album non trouvé");
-                    }
-                    return false;
-                }
-            }else{
-                return false;
-            }
+        public static function getPictureAndAlbumByID(int $id):array|bool{
+            global $db;
+            $query = $db->prepare("SELECT picture.*, picturefolder.id as idAlbum, picturefolder.title as titleAlbum, picturefolder.descript as descriptAlbum, picturefolder.author as authorAlbum, picturefolder.cover as coverAlbum, picturefolder.lastUpdate as lastUpdateAlbum, picturefolder.createDate as createDateAlbum, picturefolder.public as publicAlbum FROM picture INNER JOIN picturefolder ON picture.folder = picturefolder.id WHERE picture.id=:id");
+            $query->execute(['id' => $id]);
+            return $query->fetch(\PDO::FETCH_ASSOC);
+            $query->closeCursor();
         }
     }
 ?>
