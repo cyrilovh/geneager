@@ -48,6 +48,8 @@
                     "type" => "text",
                     "name" => "email",
                     "label" => "Adresse email",
+                    "minlength" => "11",
+                    "maxlength" => "200",
                     "value" => $userData["email"],
                     "class" => "form-control w100",
                     "required" => true
@@ -62,6 +64,8 @@
                     "type" => "text",
                     "name" => "emailConfirm",
                     "label" => "Adresse email",
+                    "minlength" => "11",
+                    "maxlength" => "200",
                     "value" => $userData["email"],
                     "class" => "form-control w100",
                     "required" => true

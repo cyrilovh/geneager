@@ -108,4 +108,13 @@ class userInfo{
         return $query->fetch(\PDO::FETCH_ASSOC);
         $query->closeCursor();
     }
+
+    public static function getRoleList($filter = array("*")):array|bool{
+        global $db;
+        $filter_str = implode(",", $filter);
+        $query = $db->prepare("SELECT $filter_str FROM role");
+        $query->execute();
+        return $query->fetchAll(\PDO::FETCH_ASSOC);
+        $query->closeCursor();
+    }
 }

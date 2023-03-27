@@ -20,7 +20,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/<?=$obj_MetaTitle->getData("favicon"); ?>-16x16.png">
     <link rel="manifest" href="/assets/favicon/site.webmanifest">
     <meta name="author" content="<?=$obj_MetaTitle->getData("author"); ?>">
-    <?=(!empty($meta_robots)? "<meta name='robots' content='$meta_robots'>" : ""); ?>
+    <?=(!empty($meta_robot)? "<meta name='robots' content='$meta_robot'>" : ""); ?>
 </head>
 <body>
     <?php

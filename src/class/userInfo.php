@@ -13,6 +13,19 @@ class userInfo{
     }
 
     /**
+     * Return user role list as array role => role
+     *
+     * @return array
+     */
+    public static function getRoleListArr():array{
+        $roleList = array();
+        foreach(\model\userInfo::getRoleList() as $k => $role){
+            $roleList[$role["name"]] = $role["name"];
+        }
+        return $roleList;
+    }
+
+    /**
      * Return if user connected is a admin
      *
      * @return int
