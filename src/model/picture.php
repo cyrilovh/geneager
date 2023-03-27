@@ -130,5 +130,17 @@
             return $query->fetch(\PDO::FETCH_ASSOC);
             $query->closeCursor();
         }
+
+        /**
+         * Get informations of a picture and the album where it is
+         * @param int $filename filename of the picture
+         */
+        public static function getPictureAndAlbumByName(string $filename):array|bool{
+            global $db;
+            $query = $db->prepare("SELECT picture.*, picturefolder.id as idAlbum, picturefolder.title as titleAlbum, picturefolder.descript as descriptAlbum, picturefolder.author as authorAlbum, picturefolder.cover as coverAlbum, picturefolder.lastUpdate as lastUpdateAlbum, picturefolder.createDate as createDateAlbum, picturefolder.public as publicAlbum FROM picture INNER JOIN picturefolder ON picture.folder = picturefolder.id WHERE picture.filename=:filename");
+            $query->execute(['filename' => $filename]);
+            return $query->fetch(\PDO::FETCH_ASSOC);
+            $query->closeCursor();
+        }
     }
 ?>

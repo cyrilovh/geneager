@@ -9,6 +9,6 @@
         $output = template::ancestorReplace(template::get("ancestorCard"), $ancestorList);
     }else{
         mcv::addView("home");
-        $output = (userInfo::isConnected() ? "<p>Pas de fiches d'identité pour le moment. </p> <p><a class='btn btn-sm btn-success' href='/userNewAncestor'><span class='fa fa-plus'></span> Ajouter une fiche d'identité</a></p>" : "Pas encore de fiches d'identité pour le moment.");
+        $output = (userInfo::isConnected() ? "<p>Pas de fiches d'identité pour le moment. </p> <p><a class='btn btn-sm btn-success' href='/userEditAncestor'><span class='fa fa-plus'></span> Ajouter une fiche d'identité</a></p>" : "Pas encore de fiches d'identité pour le moment.");
     }
 ?>

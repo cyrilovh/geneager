@@ -54,7 +54,7 @@
     if(isset($_POST["submit"])){ // check if form is submit
         if($formLogin->check()){ // check if the both input are submit
     
-            $username = $_POST["username"];
+            $username = security::cleanStr($_POST["username"]);
 
             $userInfo = userInfo::getByUsername($username, array("id","username","password","role","passwordAlgo")); // i interrogates the database
 

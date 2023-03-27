@@ -30,6 +30,7 @@
 
     /* encrypt data */
     define('SALT_PASSWORD', "CHANGE-YOUR-TOK3N"); // STATIC SALT FOR ENCRYPT PASSWORD IN DATABASE
+    define('DEFAULT_ALGO', "ripemd320"); // DEFAULT ALGORITHM FOR PASSWORD HASH (see https://www.php.net/manual/en/function.hash-algos.php)
     // define('KEY_EMAIL', "V-J8#JDyz5Ja#!=V"); // STATIC SALT FOR ENCRYPT EMAIL IN DATABASE
 
     /* crsf */
@@ -71,7 +72,7 @@
     $meta_robots = ""; // empty, "nofollow", "noindex" or "noindex, nofollow"
 
     /* list of pages (views) not directly accessible via a query */
-    const DENIEDVIEWS = array('router', '404', 'noContent', '403', '500', 'userDeleteForm'); // list of views not accessibles from URL bar or query
+    const DENIEDVIEWS = array('router', '404', 'noContent', '403', '500', 'userForm'); // list of views not accessibles from URL bar or query
 
     /* PROD/DEV */
     if(PROD==true){

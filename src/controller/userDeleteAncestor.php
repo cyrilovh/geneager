@@ -53,7 +53,7 @@
                         }
                     }
                 
-                    mcv::addView("userDeleteForm");
+                    mcv::addView("userForm");
                 }else{
                     $msgError = "Vous n'avez pas les droits pour supprimer cet fiche d'identité.<br><a href='/ancestor/".$ancestor["id"]."' class='btn btn-success'><span class='far fa-id-card'></span> Retour à la fiche de l'ancêtre</a>";
                     mcv::addView("403");

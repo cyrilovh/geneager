@@ -9,6 +9,6 @@ additionnalJsCss::set("tableSearch.js");
 
 $userList = \model\userInfo::getUserList();
 
-
-
 mcv::addView('adminUserList');
+
+?>

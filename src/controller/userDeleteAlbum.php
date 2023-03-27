@@ -53,7 +53,7 @@
                         }
                     }
                 
-                    mcv::addView("userDeleteForm");
+                    mcv::addView("userForm");
                 }else{
                     $msgError = "Vous n'avez pas les droits pour supprimer cet album.";
                     mcv::addView("403");

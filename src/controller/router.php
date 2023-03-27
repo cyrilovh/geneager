@@ -9,7 +9,7 @@
 
 
     if(str_starts_with(security::cleanStr($_SERVER["REQUEST_URI"]), '/user') && !userInfo::isConnected()){ // if URL start with "/user" but the user is not connected
-        die("<h1>Vous n'avez pas des droits suffisants pour accéder à cette page.</h1>");
+        die("<h1>Vous n'avez pas des droits suffisants pour accéder à cette page.</h1><br><a href='/login'>Connexion</a>");
         http_response_code(403);
     }
 

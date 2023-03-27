@@ -65,7 +65,7 @@
                         }
                     }
                 
-                    mcv::addView("userDeleteForm");
+                    mcv::addView("userForm");
                 }else{
                     $msgError = "Vous n'avez pas les droits pour supprimer cet photo.";
                     mcv::addView("403");

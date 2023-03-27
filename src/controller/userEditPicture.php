@@ -33,9 +33,9 @@
 
     if(isset($_GET["filename"])){
         $filename = security::cleanStr($_GET["filename"]);
-        $pictureData = \model\picture::getByFilename($filename, array("*"), false);
+        $pictureData = \model\picture::getPictureAndAlbumByName($filename);
         if($pictureData){
-            if(\model\picture::authorOrAdmin($filename)){
+            if(\class\userInfo::isAuthorOrAdmin($pictureData["authorAlbum"])){
                 // VIEW
                 mcv::addView("userEditPicture");
 
@@ -87,7 +87,7 @@
                 array(
                     "before" => "<p class='bold'>Album:</p>",
                 )
-            );
+                );
 
                 $form->setElement("input",
                     array(

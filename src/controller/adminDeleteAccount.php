@@ -12,18 +12,18 @@
         $recipientArray = array(""=>"");
         foreach($recipientList as $key => $value){ // create an array with all username except the user to delete
             if($value["id"] != $user["id"]){
-                $recipientArray[$value["id"]] = $value["username"];
+                $recipientArray[$value["username"]] = $value["username"];
             }
         }
 
         if($user){
             if($user["role"] == "admin"){
-                mcv::addView("noContent");
                 if(count(\model\userInfo::getAdminList()) == 1){
                     $msgError = "Vous ne pouvez pas supprimer le dernier compte administrateur.";
                 }elseif($user["username"] == userInfo::getUsername()){
                     $msgError = "Vous ne pouvez pas supprimer votre propre compte administrateur.";
                 }
+                mcv::addView("noContent");
             }
 
             if(!isset($msgError)){
@@ -40,7 +40,7 @@
                     "option" => $recipientArray),
                     array(
                         "before" => "<p class='bold'>Bénéficaire des données:</p>",
-                        "after" => "<small>Utilisateur qui héritera des travaux (photos, albums, fiches d'identités, archives, ...).</small>",
+                        "after" => "<small>Utilisateur désigné ci-dessus héritera des travaux (photos, albums, fiches d'identités, archives, ...).</small>",
                     )
                 );
 
@@ -65,7 +65,36 @@
                     ),
                 );
 
-                mcv::addView("userDeleteForm");
+                if(isset($_POST["submit"])) {
+                    if($form->check()){
+                        // first we update author in all table (replace author by recipient)
+                        $tableList = array("ancestor", "archive", "picturefolder", "video");
+                        $tableUpdated = array();
+
+                        // i update all table with the new author in the tables 
+                        foreach($tableList as $key => $value){
+                            if(db::update(array("author" => $_POST["recipient"]), $value, array("author" => $user["username"]), false)){
+                                $tableUpdated[] = $value;
+                            }
+                        }
+                        
+                        if(count($tableList) == count($tableUpdated)){
+                            // then we delete the user
+                            if(db::delete("user", array("id" => $user["id"]))){
+                                $msgSuccess = "Le compte ".$user["username"]." a été supprimé.";
+                            }else{
+                                $msgError = "Une erreur est survenue lors de la suppression du compte.";
+                            }
+                        }else{
+                            $msgError = "Une erreur est survenue lors de la mise à jour des données dans les tables suivantes: ".implode(", ",array_diff($tableList, $tableUpdated)).".<br>Le compte n'a pas été supprimé.";
+                        }
+                        // then we delete the user if no error
+                    }else{
+                        $errorList = $form->check(false);
+                    }
+                }
+
+                mcv::addView("userForm");
             }
         }else{
             $msgError = "Aucun compte n'a été trouvé.";
