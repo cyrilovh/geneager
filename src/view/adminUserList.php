@@ -1,5 +1,6 @@
 <aside>
     <h1>Liste des utilisateurs</h1>
+    <p class="bar"><a href="/signup" class="btn btn-success"><span class="fas fa-user-plus"></span> Nouvel utilisateur</a></p>
     <input type="text" id="myInput" onkeyup="tableSearch(this, 'userlist')" placeholder="Rechercher dans le tableau" class="w100">
     <table class="w100" id="userlist">
         <tr>

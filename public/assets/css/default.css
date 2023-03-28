@@ -344,6 +344,10 @@ img.e40x {
     display: inline-block !important;
 }
 
+.is-invalid {
+    border: 1px solid #dc3545 !important;
+}
+
 img[src^="/picture/ancestor/"],
 img[src^="/picture/family/"],
 img[src^="/assets/img/unknownAncestor.webp"] {

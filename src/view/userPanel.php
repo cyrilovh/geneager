@@ -87,7 +87,8 @@
                     Liste des utilisateurs
                 </div>
             </div>
-            <div class="persoBtn" data-href="/adminUserList" title="Paramètres du site">
+
+            <div class="persoBtn" data-href="/adminParams" title="Paramètres du site">
                 <div>
                     <i class="fas fa-gear"></i>
                 </div>
@@ -96,12 +97,21 @@
                 </div>
             </div>
 
+            <div class="persoBtn" data-href="/adminSecurity" title="Sécurité">
+                <div>
+                    <i class="fas fa-lock"></i>
+                </div>
+                <div>
+                    Paramètres de sécurité
+                </div>
+            </div>
+
             <div class="persoBtn" data-href="/adminHealth" title="Sécurité et santé du site">
                 <div>
                     <i class="fas fa-heart-pulse"></i>
                 </div>
                 <div>
-                    Sécurité &amp; Santé
+                    Santé du site
                 </div>
             </div>
         <?php

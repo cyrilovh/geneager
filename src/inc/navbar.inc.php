@@ -12,12 +12,8 @@
             <div class="dropdown">
                 <button class="dropbtn"><i class="far fa-user"></i> Mon compte</button>
                 <div class="dropdown-content">
-                    <?php if(isset($_SESSION["username"])){ ?>
-                    <a href="/userPanel">Administration</a>
-                    <a href="/logout">Déconnexion</a>
-                    <?php }else{ ?>
-                        <a href="/login">Connexion</a>
-                    <?php } ?>
+                    <?=\class\userInfo::isConnected() ? '<a href="/userPanel">Administration</a><a href="/logout">Déconnexion</a>' : '<a href="/login">Connexion</a>' ?>
+                    <?=(!\class\userInfo::isConnected() && $gng_paramList->get("signup") == "1") ? '<a href="/signup">Inscription</a>' : '' ?>
                 </div>
             </div>
             <!-- end dropdown -->

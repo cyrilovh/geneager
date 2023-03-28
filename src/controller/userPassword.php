@@ -6,6 +6,8 @@
     metaTitle::setTitle($title);
     metaTitle::setDescription("Changer le mot de passe d'un compte utilisateur.");
 
+    additionnalJsCss::set("form.js");
+
     $username = (userInfo::isAdmin() && isset($_GET["username"])) ? security::cleanStr($_GET["username"]) : userInfo::getUserName(); // i get the username (if admin
     $title .= " de ".$username;
 

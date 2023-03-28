@@ -158,6 +158,28 @@ class db
         return false;
     }
 
+    public static function updateParameter(array $data):bool|array{
+        // firstly i read all parameters in database
+        global $db;
+        $parametersToCheck = array();
+        foreach($data as $key){
+            $parametersToCheck[] = security::cleanStr($key);       
+        }
+
+        $query = $db->prepare("SELECT parameter, value FROM parameter WHERE name IN ('".implode("','", $parametersToCheck)."')");
+        $query->execute();
+
+        $select = $query->fetchAll(\PDO::FETCH_ASSOC);
+        $query->closeCursor(); 
+
+        var_dump($select);
+
+        return true;
+        // then i check wich value has changed
+
+        // then i update the database
+    }
+
     /**
      * Insert data in database
      * @param array $data Data to insert (key = column name, value = value to insert)
