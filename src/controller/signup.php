@@ -120,7 +120,6 @@
 
         if(userInfo::isAdmin()){
             $form->setElement("select",array( // i declare my new input
-                "type"=>"text", // i give the type attr
                 "name"=>"role", // i give the name attr
                 "class"=>"w100", // i give className ou className list (not required)
                 "placeholder"=>"Rôle", // i give the placeholder attr

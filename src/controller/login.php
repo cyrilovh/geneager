@@ -24,12 +24,7 @@
         "minlength" => $gng_paramList->get("usernameMinLength"), // i add the attr minlength
         "maxlength" => $gng_paramList->get("usernameMaxLength"), // i add the attr maxlength
         "class" => "form-control"
-        ),
-        // add content after or before the element
-        // array( 
-        //     "before" => "before",
-        //     "after" => "after"
-        // )
+        )
     );
 
     $formLogin->setElement("input", array(
@@ -47,9 +42,6 @@
         "name" => "submit",
         "class" => "btn btn-primary form-control" // i add a class to the element
     ));
-
-    //print_r($formLogin);
-    //print_r($formLogin->check());
 
     if(isset($_POST["submit"])){ // check if form is submit
         if($formLogin->check()){ // check if the both input are submit

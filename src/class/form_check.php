@@ -223,6 +223,7 @@ class form{
                         if(array_key_exists("type", $element["attributList"])){
                             if($element["attributList"]["type"]=="checkbox"){
                                 $checkboxNameList[] = $element["attributList"]["name"]; // i add the name of the checkbox in the array
+                                echo "<p>add ".$element["attributList"]["name"]." in the array</p>";
                             }
                         }
                     }
@@ -265,10 +266,11 @@ class form{
                     }
                 }
             }
-            for($i=0; $i<count($checkboxNameList); $i++){
-                if(!array_key_exists($checkboxNameList[$i], $methodUsed)){
-                    unset($checkboxNameList[$i]);
-                }
+        }
+
+        for($i=0; $i<count($checkboxNameList); $i++){
+            if(!array_key_exists($checkboxNameList[$i], $methodUsed)){
+                unset($checkboxNameList[$i]);
             }
         }
 

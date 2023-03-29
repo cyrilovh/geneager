@@ -158,26 +158,35 @@ class db
         return false;
     }
 
-    public static function updateParameter(array $data):bool|array{
+    /**
+     * Permit to insert or update data (website parameters) in database
+     *
+     * @param array $data ($key = parameter name, $value = parameter value)
+     * @return boolean
+     */
+    public static function updateParameter(array $data):bool{
         // firstly i read all parameters in database
         global $db;
-        $parametersToCheck = array();
-        foreach($data as $key){
-            $parametersToCheck[] = security::cleanStr($key);       
+
+        try{
+        $str = "";
+        foreach($data as $key => $value){
+            $str .= ($str != "" ? ", " : "");
+            $str .= "('".\class\security::cleanStr($key)."', '".\class\security::cleanStr($value)."')";
         }
 
-        $query = $db->prepare("SELECT parameter, value FROM parameter WHERE name IN ('".implode("','", $parametersToCheck)."')");
+        $query = $db->prepare("INSERT INTO parameter (parameter, value) VALUES $str ON DUPLICATE KEY UPDATE value= VALUES(value)");
         $query->execute();
 
-        $select = $query->fetchAll(\PDO::FETCH_ASSOC);
         $query->closeCursor(); 
 
-        var_dump($select);
-
         return true;
-        // then i check wich value has changed
-
-        // then i update the database
+        }catch (\PDOException $e) {
+            if(PROD==false){
+                echo $e->getMessage();
+            }
+            return false;
+        }
     }
 
     /**

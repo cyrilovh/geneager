@@ -3,6 +3,7 @@
 
     $title = "Paramètres de sécurité";
     metaTitle::setTitle($title);
+    
 
     $form = new \class\form(array(
         "action" => "",
@@ -11,42 +12,53 @@
     ));
 
 
-    $form->setElement("input", array(
-        "type" => "checkbox",
+    $form->setElement("select", array(
         "name" => "captcha",
-        ($gng_paramList->get("captcha") == "1" ? "checked" : "off") => ($gng_paramList->get("captcha") == "1" ? "checked" : "true"),
-        ),
+        "required" => "required",
+        "option" => \enumList\yesNo::array(),
+        "value" => $gng_paramList->get("captcha")),
         array(
-            "before" => "<h2 class='mt10'>Général:</h2><p><label class='switch'>",
-            "after" => "<span class='slider round'></span></label> Activer le captcha<p>"
+            "before" => "<h2 class='mt10'>Général:</h2><p>",
+            "after" => " Captcha</p>"
         )
     );
 
 
-    $form->setElement("input", array(
-        "type" => "checkbox",
+    $form->setElement("select", array(
         "name" => "signup",
-        ($gng_paramList->get("signup") == "1" ? "checked" : "off") => ($gng_paramList->get("signup") == "1" ? "checked" : "true"),
-        ),
+        "required" => "required",
+        "option" => \enumList\yesNo::array(),
+        "value" => $gng_paramList->get("signup")),
         array(
-            "before" => "<p><label class='switch'>",
-            "after" => "<span class='slider round'></span></label> Inscriptions ouvertes au public<p>"
+            "before" => "<p class='mt10'>",
+            "after" => " Inscriptions ouvertes au public</p>"
         )
     );
 
-    $form->setElement("input", array(
-        "type" => "checkbox",
+    $form->setElement("select", array(
+        "name" => "emailConfirm",
+        "required" => "required",
+        "option" => \enumList\yesNo::array(),
+        "value" => $gng_paramList->get("emailConfirm")),
+        array(
+            "before" => "<p class='mt10'>",
+            "after" => " Validation obligatoire de l'adresse e-mail (inscription et mise à jour)</p>"
+        )
+    );
+    
+    $form->setElement("select", array(
         "name" => "signupIndexFollow",
-        ($gng_paramList->get("signupIndexFollow") == "1" ? "checked" : "off") => ($gng_paramList->get("signupIndexFollow") == "1" ? "checked" : "true"),
-        ),
+        "required" => "required",
+        "option" => \enumList\yesNo::array(),
+        "value" => $gng_paramList->get("signupIndexFollow")),
         array(
-            "before" => "<p><label class='switch'>",
-            "after" => "<span class='slider round'></span></label> Autoriser les moteurs de recherche à indexer la page d'inscription<p>"
+            "before" => "<p class='mt10'>",
+            "after" => " Autoriser les moteurs de recherche à indexer la page d'inscription</p>"
         )
     );
 
     $form->setElement("input", array(
-        "type" => "text",
+        "type" => "number",
         "name" => "usernameMinLength",
         "value" => $gng_paramList->get("usernameMinLength"),
         "class" => "",
@@ -60,7 +72,7 @@
     );
 
     $form->setElement("input", array(
-            "type" => "text",
+            "type" => "number",
             "name" => "usernameMaxLength",
             "value" => $gng_paramList->get("usernameMaxLength"),
             "class" => "",
@@ -74,7 +86,7 @@
     );
 
     $form->setElement("input", array(
-            "type" => "text",
+            "type" => "number",
             "name" => "passwordMinLength",
             "value" => $gng_paramList->get("passwordMinLength"),
             "class" => "",
@@ -88,7 +100,7 @@
     );
 
     $form->setElement("input", array(
-            "type" => "text",
+            "type" => "number",
             "name" => "passwordMaxLength",
             "value" => $gng_paramList->get("passwordMaxLength"),
             "class" => "",
@@ -112,9 +124,13 @@
     if(isset($_POST["submit"])){
         if($form->check()){
             $data = $form->getData();
-            db::updateParameter($data);
+            if(db::updateParameter($data)){
+                $msgSuccess = "<p>Les paramètres ont été mis à jour.</p><a href='".url::current()."' class='btn btn-primary mt10'>OK</a>";
+            }else{
+                $msgError = "Une erreur est survenue lors de l'enregistrement des paramètres.";
+            }
         }else{
-            $errorList = $form->check(true);
+            $msgError = $form->check(true);
         }
         
     }

@@ -8,6 +8,7 @@
         <h1>Authentification</h1>
         <p class="websiteName"><?=$gng_paramList->get("websiteName"); ?></p>
         <?=$formLogin->display(); ?>
+        <?=($gng_paramList->get("signup") == 1 )? "<p class='mt10'><a href='/signup'>Inscription</a></p>" : ''; ?>
         <p class="forgot"><a href='/forgot'>Mot de passe oublié ?</a></p>
     <div>
 </div>
