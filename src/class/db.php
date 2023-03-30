@@ -88,6 +88,7 @@ class db
         global $db;
 
         $tableName = \class\security::cleanStr($tableName);
+        $data = security::cleanArr($data);
 
         if(count($where) > 0 && static::columnListExist($tableName, array_keys($where))){ // i check if there is only one condition in the where array and if all columns exist in the table
             try{
@@ -199,6 +200,7 @@ class db
         global $db;
 
         $tableName = \class\security::cleanStr($tableName);
+        $data = security::cleanArr($data);
 
         if(static::columnListExist($tableName, array_keys($data))){ // if all columns exist in the table
 
@@ -265,7 +267,6 @@ class db
                         $sql .= " AND ";
                     }
                     $key = \class\security::cleanStr($key);
-                    $value = \class\security::cleanStr($value);
                     $sql .= "$key ='$value'";
                     $i++;
                 }

@@ -85,7 +85,7 @@
         public static function insert(array $data):bool{
             global $db;
             $query = $db->prepare("INSERT INTO picture (id, filename, folder, createDate) VALUES (NULL, :filename, :folder, :createDate)");
-            $query->execute($data);
+            $query->execute(\class\security::cleanArr($data));
             return $query->fetch(\PDO::FETCH_ASSOC); // string
             $query->closeCursor();
         }

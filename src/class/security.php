@@ -55,16 +55,17 @@ class security{
      * @param array $arr
      * @return array
      */
-    public static function cleanArr(array $arr):array{
+    public static function cleanArr(array $arr, $uniqueValue = false):array{
         $cleanArr = [];
 
         // first i clean all values and insert into new array
         foreach($arr as $key => $value){
-            $cleanValue = static::cleanStr($value);
-            $cleanArr[] = $cleanValue;
+            $cleanValue = htmlentities($value, ENT_QUOTES, "UTF-8");
+            $cleanArr[$key] = $cleanValue;
         }
         // i remove duplicate values
-        array_unique($cleanArr);
+        var_dump($cleanArr);
+        $cleanArr = ($uniqueValue) ? array_unique($cleanArr) : $cleanArr;
         return $cleanArr;
     }
 

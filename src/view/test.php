@@ -8,4 +8,4 @@ if(email::send("Test", "cyrilhovh@gmail.com",  "Cyril", "<b>Test</b> via class P
 }else{
     echo "Email not sent";
 }
-?>
+?> 
