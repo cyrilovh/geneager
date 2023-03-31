@@ -5,7 +5,7 @@
     metaTitle::setTitle($title);
     
 
-    $form = new \class\form(array(
+    $form = new form(array(
         "action" => "",
         "method" => "post",
         "class" => "form",

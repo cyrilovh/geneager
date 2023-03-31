@@ -114,6 +114,15 @@
                     Santé du site
                 </div>
             </div>
+
+            <div class="persoBtn" data-href="/adminSpeed" title="Journal des actions">
+                <div>
+                    <i class="fas fa-gauge-simple"></i>
+                </div>
+                <div>
+                    Performances
+                </div>
+            </div>
         <?php
             }
         ?>

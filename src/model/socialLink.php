@@ -6,7 +6,7 @@ class socialLink{
      *
      * @return mixed
      */
-    public static function get() :mixed{
+    public static function get():string{
         global $db;
         $return = array(); // string to return
         $query = $db->query("SELECT * FROM parameter WHERE parameter LIKE 'sn%'"); // i check all line with the parameter start with "sn"
@@ -19,8 +19,21 @@ class socialLink{
         }
         if(count($return)>0){ // if there is 1 link or more
             return "<p class='title'>Réseaux sociaux</p><p>".implode(" ", $return)."</p>"; // i return a string
+        }else{
+            return "";
         }
         $query->closeCursor();
+    }
+
+    public static function usernameList(){
+        global $db;
+        $return = array();
+        $query = $db->query("SELECT * FROM parameter WHERE parameter LIKE 'sn%'");
+        while($row = $query->fetch(\PDO::FETCH_ASSOC)){
+            $return[$row["parameter"]] = $row["value"];
+        }
+        $query->closeCursor();
+        return $return;
     }
 }
 ?>
