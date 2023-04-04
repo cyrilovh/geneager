@@ -336,6 +336,11 @@ img.e40x {
     background-color: #f4f4f4 !important;
 }
 
+.unavailable {
+    pointer-events: none;
+    background-color: #ffb0b0 !important;
+}
+
 .bar {
     padding: 8px 0px;
 }

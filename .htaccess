@@ -26,6 +26,10 @@ RewriteRule ^(.*)/(.*)$ /public/index.php?page=$1&id=$2&%{QUERY_STRING} [NC]
 RewriteCond %{REQUEST_URI} ^/picture/
 RewriteRule ^(.*)/(.*)/(.*)$ /public/photo.php?name=$3&%{QUERY_STRING} [NC,L]
 
+# CAPTCHA
+RewriteCond %{REQUEST_URI} ^/captcha
+RewriteRule ^(.*)$ /public/captcha.php [NC,L]
+
 <Files .htaccess>
     order allow,deny
     deny from all

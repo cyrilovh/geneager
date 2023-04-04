@@ -23,6 +23,17 @@
         )
     );
 
+    $form->setElement("select", array(
+        "name" => "browserCheck",
+        "required" => "required",
+        "option" => \enumList\yesNo::array(),
+        "class" => "unavailable",
+        "value" => $gng_paramList->get("browserCheck")),
+        array(
+            "before" => "<p class='mt10'>",
+            "after" => " Bloquer les navigateurs suspects</p>"
+        )
+    );
 
     $form->setElement("select", array(
         "name" => "signup",
@@ -38,6 +49,7 @@
     $form->setElement("select", array(
         "name" => "emailConfirm",
         "required" => "required",
+        "class" => "unavailable",
         "option" => \enumList\yesNo::array(),
         "value" => $gng_paramList->get("emailConfirm")),
         array(

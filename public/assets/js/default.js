@@ -85,3 +85,24 @@ USE attribure "data-target" with the value "blank" for open the link in new tab
         }
     });
 })();
+
+/**
+   _____          _____ _______ _____ _    _          
+  / ____|   /\   |  __ \__   __/ ____| |  | |   /\    
+ | |       /  \  | |__) | | | | |    | |__| |  /  \   
+ | |      / /\ \ |  ___/  | | | |    |  __  | / /\ \  
+ | |____ / ____ \| |      | | | |____| |  | |/ ____ \ 
+  \_____/_/    \_\_|      |_|  \_____|_|  |_/_/    \_\
+                                                      
+                                                      
+ */
+/*
+    REFRESH CAPTCHA
+*/
+function refreshCaptcha() {
+    let img = document.querySelectorAll("img[src^='/captcha']");
+    for (let i = 0; i < img.length; i++) {
+        img[i].src = "/captcha?rand=" + Math.random() * 1000;
+    }
+
+}

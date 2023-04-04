@@ -36,15 +36,45 @@
         "class" => "form-control"
     ));
 
+    if($gng_paramList->get("captcha")){ // if captcha is enable
+        $formLogin->setElement("input", array(
+            "type" => "text",
+            "placeholder" => "Captcha",
+            "name" => "captcha",
+            "required" => "required",
+            "minlength" => 1,
+            "maxlength" => 50,
+            "class" => "form-control mt10"
+        ),
+        array(
+            "before" => "<p class='txt-center'><img src='/captcha' alt='captcha' class='captcha' class='mt10'><a href='javascript:refreshCaptcha();' class='refreshCaptcha'><i class='fas fa-sync-alt'></i></a></p><p>Recopîez le code affiché:</p>",
+        ));
+    }
+
     $formLogin->setElement("input", array(
         "type" => "submit",
         "value" => "Connexion",
         "name" => "submit",
-        "class" => "btn btn-primary form-control" // i add a class to the element
+        "class" => "btn btn-primary form-control mt10" // i add a class to the element
     ));
 
     if(isset($_POST["submit"])){ // check if form is submit
-        if($formLogin->check()){ // check if the both input are submit
+
+        if($gng_paramList->get("captcha")){
+            if(isset($_POST["captcha"])){
+                if(!captcha::check($_POST['captcha'])){
+                    $msg_mismatch = "Le captcha est incorrect.";
+                    //die("le captcha est incorrect");
+                }
+            }else{
+                $msg_mismatch = "Veuillez remplir correctement le formulaire.";
+                //die("Veuillez remplir correctement le formulaire.");
+            }
+        }
+
+        //die("STOP.");
+
+        if($formLogin->check() && !(isset($msg_mismatch))){ // check if the both input are submit
     
             $username = security::cleanStr($_POST["username"]);
 
@@ -66,7 +96,7 @@
                 mcv::addView("login");
             }
         }else{ // password input or username input missing
-            $msg_mismatch = "Veuillez remplir correctement le formulaire."; 
+            $msg_mismatch = (!isset($msg_mismatch)) ? "Veuillez remplir correctement le formulaire." : $msg_mismatch; 
             mcv::addView("login");
         }
     }else{ // if form is not submit
