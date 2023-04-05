@@ -60,11 +60,11 @@ class security{
 
         // first i clean all values and insert into new array
         foreach($arr as $key => $value){
-            $cleanValue = htmlentities($value, ENT_QUOTES, "UTF-8");
+            $cleanValue = is_null($value) ? "" : htmlentities($value, ENT_QUOTES, "UTF-8");
             $cleanArr[$key] = $cleanValue;
         }
         // i remove duplicate values
-        var_dump($cleanArr);
+
         $cleanArr = ($uniqueValue) ? array_unique($cleanArr) : $cleanArr;
         return $cleanArr;
     }

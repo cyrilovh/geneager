@@ -1,6 +1,8 @@
 <?php
     namespace class;
 
+    captcha::$captchaName = "captchaLogin";
+
     use model\{userInfo,parameter};
     metaTitle::setTitle("Connexion"); // i set the title page + separator + website name
     metaTitle::setRobot(array("noindex","nofollow"));
@@ -36,7 +38,7 @@
         "class" => "form-control"
     ));
 
-    if($gng_paramList->get("captcha")){ // if captcha is enable
+    if($gng_paramList->get("captchaLogin")){ // if captcha is enable
         $formLogin->setElement("input", array(
             "type" => "text",
             "placeholder" => "Captcha",
@@ -47,7 +49,7 @@
             "class" => "form-control mt10"
         ),
         array(
-            "before" => "<p class='txt-center'><img src='/captcha' alt='captcha' class='captcha' class='mt10'><a href='javascript:refreshCaptcha();' class='refreshCaptcha'><i class='fas fa-sync-alt'></i></a></p><p>Recopîez le code affiché:</p>",
+            "before" => "<p class='txt-center'><img src='/captcha?name=".captcha::$captchaName."' alt='captcha' class='captcha' class='mt10' /><p>Recopîez le code affiché:</p>",
         ));
     }
 
@@ -60,33 +62,40 @@
 
     if(isset($_POST["submit"])){ // check if form is submit
 
-        if($gng_paramList->get("captcha")){
+        if($gng_paramList->get(captcha::$captchaName)){
             if(isset($_POST["captcha"])){
                 if(!captcha::check($_POST['captcha'])){
                     $msg_mismatch = "Le captcha est incorrect.";
-                    //die("le captcha est incorrect");
                 }
             }else{
                 $msg_mismatch = "Veuillez remplir correctement le formulaire.";
-                //die("Veuillez remplir correctement le formulaire.");
             }
         }
-
-        //die("STOP.");
 
         if($formLogin->check() && !(isset($msg_mismatch))){ // check if the both input are submit
     
             $username = security::cleanStr($_POST["username"]);
 
-            $userInfo = userInfo::getByUsername($username, array("id","username","password","role","passwordAlgo")); // i interrogates the database
+            $userInfo = userInfo::getByUsername($username, array("id","username","password","role","passwordAlgo","banned","tokenEmailVerified")); // i interrogates the database
 
             if($userInfo){ // if i 1 user matching
                 if(password::match($userInfo["password"], $_POST["password"], $userInfo["passwordAlgo"])){ // if the passwords match
-                    $_SESSION["username"] = $userInfo["username"];
-                    $_SESSION["userid"] = $userInfo["id"];
-                    $_SESSION["role"] = $userInfo["role"];
-                    header('Location: /');
-                    exit();
+                    if(!$userInfo["banned"]){ // if user is banned
+                        if(validator::isNullOrEmpty($userInfo["tokenEmailVerified"])){ // if user email is not verified
+                            $_SESSION["username"] = $userInfo["username"];
+                            $_SESSION["userid"] = $userInfo["id"];
+                            $_SESSION["role"] = $userInfo["role"];
+                            header('Location: /');
+                            exit();
+                        }else{
+                            $msg_mismatch = "Vous devez confirmez votre e-mail avant d'accéder à votre compte.";
+                            $msg_mismatch .= "<br><a href='/resendEmailVerification'>Renvoyer le mail de confirmation</a>";
+                            mcv::addView("login");
+                        }
+                    }else{
+                        $msg_mismatch = "Votre compte a été désactivé par l'administrateur."; 
+                        mcv::addView("login");
+                    }
                 }else{ // if password x username mismatch
                     $msg_mismatch = "Identifiant ou mot de passe incorrect."; 
                     mcv::addView("login"); 

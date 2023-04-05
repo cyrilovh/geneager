@@ -13,25 +13,24 @@
 
 
     $form->setElement("select", array(
-        "name" => "captcha",
+        "name" => "captchaLogin",
         "required" => "required",
         "option" => \enumList\yesNo::array(),
-        "value" => $gng_paramList->get("captcha")),
+        "value" => $gng_paramList->get("captchaLogin")),
         array(
-            "before" => "<h2 class='mt10'>Général:</h2><p>",
-            "after" => " Captcha</p>"
+            "before" => "<h2 class='mt10'>Authentification:</h2><p>",
+            "after" => " Captcha requis pour l'authentification</p>"
         )
     );
 
     $form->setElement("select", array(
-        "name" => "browserCheck",
+        "name" => "captchaSignup",
         "required" => "required",
         "option" => \enumList\yesNo::array(),
-        "class" => "unavailable",
-        "value" => $gng_paramList->get("browserCheck")),
+        "value" => $gng_paramList->get("captchaSignup")),
         array(
-            "before" => "<p class='mt10'>",
-            "after" => " Bloquer les navigateurs suspects</p>"
+            "before" => "<h2 class='mt10'>Inscription:</h2><p class='mt10'>",
+            "after" => " Captcha requis pour s'inscrire</p>"
         )
     );
 
@@ -49,12 +48,34 @@
     $form->setElement("select", array(
         "name" => "emailConfirm",
         "required" => "required",
-        "class" => "unavailable",
         "option" => \enumList\yesNo::array(),
         "value" => $gng_paramList->get("emailConfirm")),
         array(
             "before" => "<p class='mt10'>",
             "after" => " Validation obligatoire de l'adresse e-mail (inscription et mise à jour)</p>"
+        )
+    );
+
+    $form->setElement("select", array(
+        "name" => "captchaForgetPassword",
+        "required" => "required",
+        "option" => \enumList\yesNo::array(),
+        "value" => $gng_paramList->get("captchaForgetPassword")),
+        array(
+            "before" => "<h2>Autres:</h2><p class='mt10'>",
+            "after" => " Captcha pour les mots de passes oubliés</p>"
+        )
+    );
+
+    $form->setElement("select", array(
+        "name" => "browserCheck",
+        "required" => "required",
+        "option" => \enumList\yesNo::array(),
+        "class" => "unavailable",
+        "value" => 0),
+        array(
+            "before" => "<p class='mt10'>",
+            "after" => " Bloquer les navigateurs suspects</p>"
         )
     );
     

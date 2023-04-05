@@ -3,6 +3,7 @@
     namespace class;
 
     $title = "Inscription";
+    captcha::$captchaName = "captchaSignup";
     metaTitle::setTitle($title);
 
     $canRegister = false;
@@ -135,15 +136,42 @@
             );
         }
 
+        if($gng_paramList->get(captcha::$captchaName)){ // if captcha is enable
+            $form->setElement("input", array(
+                "type" => "text",
+                "placeholder" => "Captcha",
+                "name" => "captcha",
+                "required" => "required",
+                "minlength" => 1,
+                "maxlength" => 50,
+                "class" => "form-control mt10 w100"
+            ),
+            array(
+                "before" => "<hr><p class='mt10'><img src='/captcha?name=".captcha::$captchaName."' alt='captcha' class='captcha' class='mt10' /><p>Recopîez le code affiché:</p>",
+                "after" => "<hr>"
+            ));
+        }
+
         $form->setElement("input", array(
             "type" => "submit",
             "name" => "submit",
             "value" => $btnTxt,
-            "class" => "btn btn-primary w100",
+            "class" => "btn btn-primary w100 mt10",
         ));
 
         if(isset($_POST["submit"])){
-            if($form->check()){
+
+            if($gng_paramList->get(captcha::$captchaName)){
+                if(isset($_POST["captcha"])){
+                    if(!captcha::check($_POST['captcha'])){
+                        $msgError = "Le captcha est incorrect.";
+                    }
+                }else{
+                    $msgError = "Veuillez remplir correctement le formulaire.";
+                }
+            }
+
+            if($form->check() && !isset($msgError)){
                 $username = format::normalize(security::cleanStr($_POST["username"]));
                 $email = format::normalize(security::cleanStr($_POST["email"]));
                 $password = password::hash($_POST["password"]);
@@ -152,7 +180,6 @@
                 }else{
                     $role = "user";
                 }
-                
                 
 
                 $errorList = array();
@@ -181,8 +208,22 @@
                         "banned" => "0",
                         "passwordAlgo" => DEFAULT_ALGO,
                     );
-                    if(db::insert($data, "user")){
-                        $msgSuccess = "L'utilisateur ".$username." a bien été inscrit.";
+
+                    if($gng_paramList->get("emailConfirm")){
+                        $data["tokenEmailVerified"] = random::alphaNum(10, 12);
+                    }
+
+                    if(db::insert($data, "user")){ // if new user is added into database
+                        if($gng_paramList->get("emailConfirm")){
+                            $template = templateEmail::autoReplace("signup", $data);
+                            if(email::send("Inscription - ".$gng_paramList->get("websiteName"), $email, $username, $template, "Veuillez activer la prise en charge du format HTML des emails pour voir le contenu de ce message.")){
+                                $msgSuccess = "L'utilisateur ".$username." a bien été inscrit. Un lien à été envoyé par e-mail pour confirmer votre adresse électronique.";
+                            }else{
+                                $msgError = "Erreur d'envoi de l'email. Lors de la prochaine connexion cliquez sur le lien 'Renvoyer le mail de confirmation' si un message d'erreur s'affiche.";
+                            }
+                        }else{
+                            $msgSuccess = "L'utilisateur ".$username." a bien été inscrit.";
+                        }
                     }else{
                         $msgError = "Une erreur est survenue de l'ajout de l'utilisateur.";
                     }

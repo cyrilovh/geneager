@@ -10,12 +10,16 @@
             <th>Role</th>
             <th>Actions</th>
         </tr>
-        <?php foreach ($userList as $user) : ?>
+        <?php
+
+use class\validator;
+
+ foreach ($userList as $user) : ?>
             <tr>
-                <td><?php echo $user['identity']; ?></td>
-                <td><?=($user["banned"]==1) ? "<span class='txt-red'>Banni</span>" : "<span class='txt-green'>Actif</span>"; ?></td>
-                <td><?php echo $user['email']; ?></td>
-                <td><?php echo $user['role']; ?></td>
+                <td><?=$user['identity']; ?></td>
+                <td><?=($user["banned"]==1) ? "<span class='txt-red'>Banni</span>" : "<span class='txt-green'>Actif</span>"; ?>  <?=(!validator::isNullOrEmpty($user["tokenEmailVerified"])) ? "/ e-mail non validée)" : ""; ?></td>
+                <td><?=$user['email']; ?></td>
+                <td><?=$user['role']; ?></td>
                 <td>
                     <a href="/userEdit/?username=<?=$user['username'];?>" class="btn btn-primary btn-sm"><span class="fas fa-pen" title="Modifier l'utilisateur"></span></a>
                     <a href="/adminDeleteAccount/<?=$user['id']; ?>" class="btn btn-danger btn-sm"><span class="fa fa-trash" title="Supprimer le compte"></span></a>

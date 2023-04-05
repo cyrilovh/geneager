@@ -105,7 +105,6 @@ class db
                 $i = 0;
                 foreach ($data as $key => $value) {
                     $key = \class\security::cleanStr($key);
-                    $value = \class\security::cleanStr($value);
                     if($i > 0){
                         $sql .= ", ";
                     }

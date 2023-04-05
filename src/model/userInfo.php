@@ -8,7 +8,7 @@ class userInfo{
      * @param array $filter
      * @return array
      */
-    public static function getUserList(array $filter = array("id", "username", "role", "identity", "signupDate", "banned", "email", "passwordAlgo")) :array|bool{ // username: username/nickname; filter: columns to filter (default: all) exemple: array("id", "username","password").
+    public static function getUserList(array $filter = array("id", "username", "role", "identity", "signupDate", "banned", "email", "passwordAlgo", "tokenEmailVerified")) :array|bool{ // username: username/nickname; filter: columns to filter (default: all) exemple: array("id", "username","password").
         
         if(!\class\userInfo::isAdmin()){
             trigger_error("Erreur interne: Accès à la methode suivante refusée: model\userInfo::getUserList().", E_USER_ERROR);
@@ -54,7 +54,6 @@ class userInfo{
      */
     public static function getUsernameList():array|bool{ // username: username/nickname; filter: columns to filter (default: all) exemple: array("id", "username","password").
 
-        // if method called by admin, we can get all users
         global $db;
 
         $query = $db->prepare("SELECT id, username FROM user");
