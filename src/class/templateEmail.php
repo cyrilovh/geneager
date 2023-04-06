@@ -35,6 +35,7 @@ class templateEmail
 
         $data["websiteName"] = $gng_paramList->get("websiteName");
         $data["domain"] = $_SERVER['HTTP_HOST'];
+        $data["forgetPasswordTokenLifetime"] = $gng_paramList->get("forgetPasswordTokenLifetime");
 
         foreach ($data as $key => $value) {
             $template = str_replace("{" . $key . "}", $value, $template);

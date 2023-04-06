@@ -11,6 +11,8 @@
 
     if(!userInfo::isConnected()){
 
+        $messageSuccess = "Un e-mail avec un lien vous a été envoyé à l'adresse e-mail indiquée si elle est associé à un compte.";
+
         $form = new form(array(
             "action" => "",
             "method" => "post",
@@ -67,6 +69,23 @@
             }
 
             if($form->check() && !isset($msgError)){
+                $user = \model\userInfo::getByEmail($_POST["email"], array("username", "email"));
+                    if($user){ // If user exist
+                        $user["token"] = random::alphaNum(20, 30).",".time(); // Generate a random token + timestamp
+                        $template = templateEmail::autoReplace("forgetPassword", $user);
+
+                        if(db::update(array("tokenForgetPassword" => $user["token"]), "user", array("email" => $user["email"]), false)){
+                            if(email::send("Mot de passe oublié", $user["email"], $user["username"], $template, "Veuillez activer la prise en charge des e-mails HTML pour voir le contenu de ce message.")){
+                                $msgSuccess = $messageSuccess;
+                            }else{
+                                $msgError = "Une erreur est survenue lors de l'étape de l'envoi de l'e-mail. Veuillez réessayer.";
+                            }
+                        }else{
+                            $msgError = "Une erreur est survenue lors de l'étape de la génération du jeton. Veuillez réessayer.";
+                        }
+                    }else{
+                        $msgSuccess = $messageSuccess;
+                    }
 
             }else{
                 $errorList = $form->check(true);

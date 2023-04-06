@@ -27,6 +27,7 @@ class email{
         
         
             //Content
+            $mail->charSet = ENCODE;
             $mail->isHTML(true);                                  //Set email format to HTML
             $mail->Subject = $subject;
             $mail->Body    = $HTMLContent;

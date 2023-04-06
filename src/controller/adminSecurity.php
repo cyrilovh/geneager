@@ -56,13 +56,27 @@
         )
     );
 
+    $form->setElement("input", array(
+        "type" => "number",
+        "name" => "forgetPasswordTokenLifetime",
+        "value" => $gng_paramList->get("forgetPasswordTokenLifetime"),
+        "placeholder" => "5-120",
+        "class" => "w100",
+        "min" => 5,
+        "max" => 120,
+    ),
+    array(
+        "before" => "<h2>Mot de passe oublié:</h2><p>Durée de vie du jeton en minutes:</p>",
+        "after" => ""
+    ));
+
     $form->setElement("select", array(
         "name" => "captchaForgetPassword",
         "required" => "required",
         "option" => \enumList\yesNo::array(),
         "value" => $gng_paramList->get("captchaForgetPassword")),
         array(
-            "before" => "<h2>Autres:</h2><p class='mt10'>",
+            "before" => "<p class='mt10'>",
             "after" => " Captcha pour les mots de passes oubliés</p>"
         )
     );
@@ -74,7 +88,7 @@
         "class" => "unavailable",
         "value" => 0),
         array(
-            "before" => "<p class='mt10'>",
+            "before" => "<h2>Autres:</h2><p class='mt10'>",
             "after" => " Bloquer les navigateurs suspects</p>"
         )
     );

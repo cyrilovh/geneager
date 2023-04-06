@@ -35,7 +35,7 @@
 
     /* crsf */
     define('PASSWORD_TOKEN', 'CHANGE-YOUR-TOK3N'); // TOKEN FOR FORMS (ANTI-CSRF)
-    define('TOKEN_LIFETIME', '10');   // TOKEN LIFE TIME MINUTES
+    define('TOKEN_LIFETIME', '10');   // TOKEN LIFE TIME MINUTES (FORMS ONLY)
 
     /* DEV MODE */
     define("PROD", true);

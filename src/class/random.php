@@ -34,7 +34,7 @@
         public static function alphaNum(int $min = 4 , int $max = 5):string{
             $max = ($max < $min) ? $min+1 : $max; // If $max is lower than $min, $max is set to $min+1
             $length = rand($min, $max);
-            $characters = '123456789abcdefghjkmnpqrstuvwxyzABCDEFGHIJKMNPQRSTUVWXYZ';
+            $characters = '23456789abcdefghjkmnpqrstuvwxyzABCDEFGHIJKMNPQRSTUVWXYZ';
             $charactersLength = strlen($characters);
             $randomString = '';
             for ($i = 0; $i < $length; $i++){

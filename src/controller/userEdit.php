@@ -29,6 +29,22 @@
                     "class" => "form"
                 )
             );
+
+            if(userInfo::isAdmin() && $username != userInfo::getUsername()){ // if admin edit other user
+                $userForm->setElement("select", array(
+                    "value" => $userData["banned"],
+                    "name" => "banned",
+                    "class" => "form-control w100",
+                    "required" => true,
+                    "option" => array(
+                        "0" => "Non",
+                        "1" => "Oui"
+                    )
+                ),
+                array(
+                    "before" => "<p>Banni:</p>",
+                ));
+            }
             
             $userForm->setElement("input",
                 array(
@@ -111,6 +127,12 @@
                     }
     
                     $outputData["identity"] = security::cleanStr($_POST["identity"]);
+
+                    if(isset($_POST["banned"])){
+                        if(userInfo::isAdmin() && $username != userInfo::getUsername()){
+                            $outputData["banned"] = security::cleanStr($_POST["banned"]);
+                        }
+                    }
     
                     $update = db::update($outputData, "user", array("id" => $userData["id"]));
     

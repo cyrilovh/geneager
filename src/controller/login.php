@@ -23,7 +23,7 @@
         "placeholder" => "Nom d&apos;utilisateur", // i set a placeholder
         "name" => "username", // i give a className
         "required" => "required", // i add the attr required
-        "minlength" => $gng_paramList->get("usernameMinLength"), // i add the attr minlength
+        "minlength" => 1, // i add the attr minlength
         "maxlength" => $gng_paramList->get("usernameMaxLength"), // i add the attr maxlength
         "class" => "form-control"
         )
