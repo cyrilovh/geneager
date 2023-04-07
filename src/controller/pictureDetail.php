@@ -3,31 +3,45 @@
     
     if(isset($_GET["id"]) && !empty($_GET["id"])){
         $filename = security::cleanStr($_GET["id"]);  
-        if(file_exists(UPLOAD_DIR_FULLPATH."picture/".$filename)){
-            $data = \model\picture::getByFilename($filename);
+        if(file_exists(UPLOAD_DIR_FULLPATH."picture/family/".$filename)){
+            $data = \model\picture::getPictureAndAlbumByNameAndLocation($filename);
 
             if($data){ // if exist in DB 
 
-                $title = (is_null($data["title"])) ? "Sans titre" : $data["title"];
-                $titleHTML = "<h1><i class='fa-solid fa-heading'></i> $title</h1>";
+                // FIRSTLY I CREATE MY OBJECT
+                $picture = new picture();
+                $picture::$html = true;
+                $picture->setID($data["id"]);
+                $picture->setTitle($data["title"]);
+                $picture->setDescript($data["descript"]);
+                $picture->setFilename($data["filename"]);
+                $picture->setLocationID($data["location"]);
+                $picture->setYearEvent($data["yearEvent"]);
+                $picture->setMonthEvent($data["monthEvent"]);
+                $picture->setDayEvent($data["dayEvent"]);
+                $picture->setSourceText($data["sourceText"]);
+                $picture->setSourceLink($data["sourceLink"]);
+                $picture->setFolderID($data["idAlbum"]);
+                $picture->setFolderTitle($data["titleAlbum"]);
+                $picture->setLastUpdate($data["lastUpdate"]);
+                $picture->setCreateDate($data["createDate"]);
+                $picture->setAccuracyLocation($data["accuracyLocation"]);
+                $picture->setLocationCity($data["cityName"]);
+                $picture->setLocationStateDepartement($data["stateDepartementName"]);
+                $picture->setLocationCountry($data["country"]);
+                $picture->setLastUpdate($data["lastUpdate"]);
+                $picture->setCreateDate($data["createDate"]);
 
-                $description = (validator::isNullOrEmpty($data["descript"])) ? "Aucune description" : $data["descript"];
-                $descriptionHTML = "<p class='txt-disabled'><i class='fa-solid fa-align-left'></i> $description</p>";
+                // THEN I USE THE OBJECT TO CREATE THE HTML
+                $output = null;
+                $output .= $picture->getTitle();
+                $output .= $picture->getFolderTitle();
+                $output .= $picture->getDateEvent();
+                $output .= $picture->getDescript();
+                $output .= $picture->getFullLocation();
 
-                if(!validator::isNullOrEmpty($data["location"])){ // if location is not null
-                    $dataLocation = \model\location::getByID($data["location"]); // get location data
-                    if(is_array($dataLocation)){ // if location exist
-                        $city = format::htmlToUpperFirst($dataLocation["cityName"]);
-                        $stateDepartement = format::htmlToUpperFirst($dataLocation["stateDepartement"]);
-                        $country = format::htmlToUpper($dataLocation["country"]);
-                        $location = "$city, $stateDepartement, $country";
-                        $locationHTML = "<p><i class='fa-solid fa-location-dot'></i> $location</p>";
-                    }
-                }
-                $locationHTML = (isset($locationHTML)) ? $locationHTML : ""; // if location is null
-
-                metaTitle::setTitle($title." — Photo");
-                metaTitle::setDescription($description);
+                metaTitle::setTitle($data["title"]." — Photo");
+                metaTitle::setDescription($data["descript"]);
                 
                 mcv::addView("pictureDetail");
             }else{

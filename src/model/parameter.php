@@ -10,7 +10,7 @@ class parameter{
     public function get(string $str, bool $btnEdit = false):mixed{
         if($btnEdit){
             if(\class\userInfo::isAdmin()){
-                return $this->data[$str]." <a class='btn btn-outline-info btn-sm' href='/adminEditParameter/?key=".$str."'><i class='fas fa-pen'></i></a>";
+                return $this->data[$str]." <a class='btn btn-outline-info btn-sm' href='/adminEditParams/'><i class='fas fa-pen'></i></a>";
             }
         }
         return $this->data[$str];

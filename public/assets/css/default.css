@@ -349,6 +349,13 @@ img.e40x {
     display: inline-block !important;
 }
 
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+}
+
 .is-invalid {
     border: 1px solid #dc3545 !important;
 }

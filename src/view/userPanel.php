@@ -106,21 +106,30 @@
                 </div>
             </div>
 
-            <div class="persoBtn" data-href="/adminHealth" title="Sécurité et santé du site">
-                <div>
-                    <i class="fas fa-heart-pulse"></i>
-                </div>
-                <div>
-                    Santé du site
-                </div>
-            </div>
-
             <div class="persoBtn" data-href="/adminSpeed" title="Journal des actions">
                 <div>
                     <i class="fas fa-gauge-simple"></i>
                 </div>
                 <div>
                     Performances
+                </div>
+            </div>
+
+            <div class="persoBtn" data-href="/adminUpdate" title="Mise(s) à jour du site">
+                <div>
+                    <i class="fas fa-arrows-rotate"></i>
+                </div>
+                <div>
+                    Mise(s) à jour
+                </div>
+            </div>
+
+            <div class="persoBtn" data-href="/adminHealth" title="Sécurité et santé du site">
+                <div>
+                    <i class="fas fa-heart-pulse"></i>
+                </div>
+                <div>
+                    Santé du site
                 </div>
             </div>
         <?php

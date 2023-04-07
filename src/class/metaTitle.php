@@ -52,9 +52,11 @@
          * @param string $description
          * @return void
          */
-        public static function setDescription(string $description):void{
+        public static function setDescription(string|null $description):void{
             global $meta_description;
-            $meta_description = $description;
+            if(!is_null($description)){
+                $description = $description;
+            }
         }
 
         public static function setRobot(array $flags):void{

@@ -161,20 +161,20 @@ class format{
      * 
      * 20221201 => 01 décembre2022
      */
-    public static function strToDate(string|null $strDate):string{
+    public static function strToDate(string|null $strDate):string|null{
         $monthArr = array(
-            "01" => "janvier",
-            "02" => "février",
-            "03" => "mars",
-            "04" => "avril",
-            "05" => "mai",
-            "06" => "juin",
-            "07" => "juillet",
-            "08" => "août",
-            "09" => "septembre",
-            "10" => "octobre",
-            "11" => "novembre",
-            "12" => "décembre"
+            "01" => "Janvier",
+            "02" => "Février",
+            "03" => "Mars",
+            "04" => "Avril",
+            "05" => "Mai",
+            "06" => "Juin",
+            "07" => "Juillet",
+            "08" => "Août",
+            "09" => "Septembre",
+            "10" => "Octobre",
+            "11" => "Novembre",
+            "12" => "Décembre"
         );
 
         if(validator::isStrDate($strDate)){
@@ -191,7 +191,7 @@ class format{
                 return $day." ".$monthArr[$month]." ".$year;
             }
         }else{
-            return "--/--/----";
+            return NULL;
         }
     }
 

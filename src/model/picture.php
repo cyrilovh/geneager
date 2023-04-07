@@ -142,5 +142,17 @@
             return $query->fetch(\PDO::FETCH_ASSOC);
             $query->closeCursor();
         }
+
+                /**
+         * Get informations of a picture and the album where it is
+         * @param int $filename filename of the picture
+         */
+        public static function getPictureAndAlbumByNameAndLocation(string $filename):array|bool{
+            global $db;
+            $query = $db->prepare("SELECT picture.*, picturefolder.id as idAlbum, picturefolder.title as titleAlbum, picturefolder.descript as descriptAlbum, picturefolder.author as authorAlbum, picturefolder.cover as coverAlbum, picturefolder.lastUpdate as lastUpdateAlbum, picturefolder.createDate as createDateAlbum, picturefolder.public as publicAlbum, city.id as idCity, city.name as cityName, stateDepartement.id as idStateDepartement, stateDepartement.name as stateDepartementName, stateDepartement.country as country FROM picture INNER JOIN picturefolder ON picture.folder = picturefolder.id LEFT JOIN city ON picture.location = city.id LEFT JOIN stateDepartement ON city.stateDepartement = stateDepartement.id WHERE picture.filename=:filename");
+            $query->execute(['filename' => $filename]);
+            return $query->fetch(\PDO::FETCH_ASSOC);
+            $query->closeCursor();
+        }
     }
 ?>
