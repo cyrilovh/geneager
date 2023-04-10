@@ -1,22 +1,45 @@
 <?php
   namespace enumList;
 
+use class\validator;
+
   trait getGender
   {
-
-    public static function names(): array
-    {
+    /**
+     * Return values (int) as array
+     *
+     * @return array
+     */
+    public static function names():array{
       return array_column(self::cases(), 'name');
     }
 
-    public static function values(): array
-    {
+    /**
+    * Return gender names as array
+    * @return array
+    */
+    public static function values():array{
       return array_column(self::cases(), 'value');
     }
 
-    public static function array(): array
-    {
+    /**
+    * Return an array with the name of the enum as key and the value as value
+    * n => gender
+    * @return array
+    */
+    public static function array():array{
       return array_combine(self::values(), self::names());
+    }
+    
+    /**
+     * Return gender as string since the value (int)
+     *
+     * @param integer $n
+     * @return string
+     */
+    public static function getByName(int $n):string{
+      $gender = array_search($n, array_flip(self::array()));
+      return (!validator::isNullOrEmpty($gender)) ? $gender : "???";
     }
 
   }

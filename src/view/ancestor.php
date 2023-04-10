@@ -7,7 +7,7 @@
         <?=(userInfo::isAuthorOrAdmin($ancestor->get()["id"])) ? "<p class='bar'><a href='/userEditAncestor/".$ancestor->get()["id"]."' class='btn btn-info btn-sm'><i class='fas fa-edit'></i> Modifier</a> <a href='/userDeleteAncestor/".$ancestor->get()["id"]."' class='btn btn-danger btn-sm'><i class='fas fa-trash'></i> Supprimer</a></p>" : ""; ?>
         <img class="picture" src="<?=($ancestor->get()["photo"]) ? "/picture/ancestor/".$ancestor->get()["photo"]: "/assets/img/unknownAncestor.webp" ;?>" onerror="this.src='/assets/img/unknownAncestor.webp'" alt="" title="">
         <h1><?=$ancestor->getFullIdentity(true); ?></h1>
-        <p class="txt-disabled"><i class="fas fa-venus-mars"></i> <?=($ancestor->get()["gender"]==1) ? "Homme" : "Femme"; ?></p>
+        <p class="txt-disabled"><i class="fas fa-venus-mars"></i> <?=\enumList\gender::getByName($ancestor->get()["gender"])?></p>
         <h2>Biographie:</h2>
         <p class="biography"><?=(strlen(format::normalize($ancestor->get()["biography"]))>0) ? $ancestor->get()["biography"]: "Aucune biographie pour cet individu."; ?></p>
     </div>

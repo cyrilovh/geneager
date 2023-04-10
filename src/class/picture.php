@@ -256,7 +256,11 @@
             $source = null;
 
             if(!is_null($this->sourceText) && !is_null($this->sourceLink)){
-                $source = '<a href="'.$this->sourceLink.'" target="_blank">'.$this->sourceText.'</a>';
+                $source = '<a href="'.$this->sourceLink.'" target="_blank" class="btn btn-primary btn-sm"><span class="fas fa-link"></span> Source: '.$this->sourceText.'</a>';
+            }elseif(!is_null($this->sourceText)){
+                $source = "<p>Source:".$this->sourceText."</p>";
+            }elseif(!is_null($this->sourceLink)){
+                $source = '<a href="'.$this->sourceLink.'" target="_blank" class="btn btn-primary btn-sm"><span class="fas fa-link"></span> Source</a>';
             }
 
             return $source;

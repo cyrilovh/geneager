@@ -36,7 +36,7 @@ class display{
                 $return = format::htmlToUcfirst($firstNameImplode[0], true);
                 if(count($firstNameImplode)>1){
                     for($i=1; $i<count($firstNameImplode); $i++){
-                        $return .= " ".format::htmlToUpperFirst(substr($firstNameImplode[$i], 0, 1), true).".";
+                        $return .= " ".substr(format::htmlToUpperFirst($firstNameImplode[$i], true), 0, 1).".";
                     }
                 }
             }else{

@@ -39,6 +39,8 @@
                 $output .= $picture->getDateEvent();
                 $output .= $picture->getDescript();
                 $output .= $picture->getFullLocation();
+                $output .= $picture->getPicture();
+                $output .= $picture->getSource();
 
                 metaTitle::setTitle($data["title"]." — Photo");
                 metaTitle::setDescription($data["descript"]);
