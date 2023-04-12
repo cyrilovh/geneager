@@ -37,7 +37,7 @@ use class\validator;
      * @param integer $n
      * @return string
      */
-    public static function getByName(int $n):string{
+    public static function getByID(int $n):string{
       $gender = array_search($n, array_flip(self::array()));
       return (!validator::isNullOrEmpty($gender)) ? $gender : "???";
     }

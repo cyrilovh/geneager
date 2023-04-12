@@ -18,7 +18,7 @@
         // $html = true ----> for return value as HTML_entities format
         public function getFullIdentity(bool $html = true):string{
             $ancestor = $this->get();
-                $allNames = (format::normalize($ancestor["maidenNameList"])!="") ? " ".format::htmlToUpperFirst($ancestor["firstNameList"], $html)." ".format::htmlToUpper($ancestor["lastName"], $html)." (".format::htmlToUpper($ancestor["maidenNameList"], $html).")" : " ".format::htmlToUpperFirst($ancestor["firstNameList"], $html)." ".format::htmlToUpper($ancestor["lastName"], $html);
+                $allNames = (format::normalize($ancestor["maidenNameList"])!="") ? " ".format::htmlToUpperFirst($ancestor["firstNameList"], $html)." ".format::htmlToUpper($ancestor["lastNameList"], $html)." (".format::htmlToUpper($ancestor["maidenNameList"], $html).")" : " ".format::htmlToUpperFirst($ancestor["firstNameList"], $html)." ".format::htmlToUpper($ancestor["lastNameList"], $html);
                 $allNames .= (format::normalize($ancestor["birthNameList"])!="") ? " (".format::normalize($ancestor["birthNameList"]).")" : "";
             return trim($allNames);
         }

@@ -18,7 +18,7 @@
                         "class"=>"", // i give className ou className list (not required)
                     ));
                 
-                    $photo = (validator::isNullOrEmpty($ancestor["photo"])) ? "/assets/img/unknownAncestor.webp" : "/picture/ancestor/".$ancestor["photo"];
+                    $photo = (validator::isNullOrEmpty($ancestor["photo"])) ? DEFAULTPICTUREANCESTOR : "/picture/ancestor/".$ancestor["photo"];
                     $form->setElement("input", array(
                         "type" => "checkbox", // i give the type of input
                         "name" => "confirm", // i give a className
@@ -28,7 +28,7 @@
                         // add content after or before the element
                         array(
                             "before" => "<p style='display:flex;'><img src='".$photo."' ></p><p>",
-                            "after" => " <span class='bold red'>Oui, supprimer la fiche d'identité n&deg;".$id." ( ".$ancestor["firstNameList"]." ".$ancestor["lastName"]." ".$ancestor["birthNameList"]." ".$ancestor["maidenNameList"]." )</span></p><br>",
+                            "after" => " <span class='bold red'>Oui, supprimer la fiche d'identité n&deg;".$id." ( ".$ancestor["firstNameList"]." ".$ancestor["lastNameList"]." ".$ancestor["birthNameList"]." ".$ancestor["maidenNameList"]." )</span></p><br>",
                         )
                     );
                 

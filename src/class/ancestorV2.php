@@ -16,12 +16,12 @@
 
         private int $id;
         private ?string $firstNameList;
-        private ?string $lastName;
+        private ?string $lastNameList;
+        private ?string $otherIdentityList;
         private ?string $maidenNameList;
         private ?string $birthNameList;
         private ?string $nickNameList;
-        private ?string $otherLastNameList;
-        private ?string $otherNameList;
+
         // private ?string $fullIdentity;
 
         private ?string $photo;
@@ -69,12 +69,11 @@
         {
             $this->id = null;
             $this->firstNameList = null;
-            $this->lastName = null;
+            $this->lastNameList = null;
             $this->maidenNameList = null;
             $this->birthNameList = null;
             $this->nickNameList = null;
-            $this->otherLastNameList = null;
-            $this->otherNameList = null;
+            $this->otherIdentityList = null;
             // $this->fullIdentity = null;
 
             $this->photo = null;
@@ -124,28 +123,24 @@
             $this->firstNameList = $firstNameList;
         }
 
-        public function setLastName(string|null $lastName){
-            $this->lastName = $lastName;
-        }
-
-        public function setMaidenNameList(string|null $maidenNameList){
-            $this->maidenNameList = $maidenNameList;
+        public function setlastNameList(string|null $lastNameList){
+            $this->lastNameList = $lastNameList;
         }
 
         public function setBirthNameList(string|null $birthNameList){
             $this->birthNameList = $birthNameList;
         }
 
+        public function setMaidenNameList(string|null $maidenNameList){
+            $this->maidenNameList = $maidenNameList;
+        }
+
         public function setNickNameList(string|null $nickNameList){
             $this->nickNameList = $nickNameList;
         }
 
-        public function setOtherLastNameList(string|null $otherLastNameList){
-            $this->otherLastNameList = $otherLastNameList;
-        }
-
-        public function setOtherNameList(string|null $otherNameList){
-            $this->otherNameList = $otherNameList;
+        public function setotherIdentityList(string|null $otherIdentityList){
+            $this->otherIdentityList = $otherIdentityList;
         }
 
         public function setPhoto(string|null $photo){
@@ -251,5 +246,54 @@
         public function setVideoList(array $videoList){ // WARNING CHANGE TO VIDEO CLASS
             $this->videoList = $videoList;
         }
+
+        public function getID(): int{
+            return $this->id;
+        }
+
+        public function getFirstNameList(): string|null{
+            return format::htmlToUpperFirst($this->firstNameList, self::$html);
+        }
+
+        public function getlastNameList(): string|null{
+            return format::htmlToUpper($this->lastNameList, self::$html);
+        }
+
+        public function getBirthNameList(): string|null{
+            return format::htmlToUpper($this->birthNameList, self::$html);
+        }
+
+        public function getMaidenNameList(): string|null{
+            return format::htmlToUpper($this->maidenNameList, self::$html);
+        }
+
+        public function getotherIdentityList(): string|null{
+            return format::htmlToUpper($this->otherIdentityList, self::$html);
+        }
+
+        public function getNickNameList(): string|null{
+            return format::htmlToUpperFirst($this->nickNameList, self::$html);
+        }
+
+        public function getPhoto(): string|null{
+            $photo = (validator::isNullOrEmpty($this->photo)) ? DEFAULTPICTUREANCESTOR : $this->photo;
+            return (self::$html) ? "<img src='$photo' onerror=\"this.src='".DEFAULTPICTUREANCESTOR."'\">" : $photo; 
+        }
+
+        public function getGender():int|null{
+            return $this->gender;
+        }
+
+        /**
+         * Return gender as string (not as int)
+         *
+         * @return string
+         */
+        public function getGenderStr():string{
+            $genderStr = \enumList\gender::getByID($this->gender);
+            return (self::$html) ? "<i class='fas fa-venus-mars'></i> $genderStr" : $genderStr;
+        }
+
+        
         
     }

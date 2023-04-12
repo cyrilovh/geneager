@@ -5,6 +5,13 @@ namespace class;
  * Advanced formatting methods (project related)
  */
 class display{
+
+    /**
+     * ⚠️ DEPRECATED ⚠️
+     *
+     * @param integer $n
+     * @return string
+     */
     public static function gender(int $n):string{
         $gender = "???";
         if(!is_null($n)){
@@ -18,15 +25,16 @@ class display{
     }
 
     /**
+     * ⚠️ DEPRECATED ⚠️
      * Shortcut to the string (identity of the ancestor)
      * example: Joe Zachary DOE
      * return: Joe Z. DOE
      * @param string $firstNameList
-     * @param string $lastName
+     * @param string $lastNameList
      * @param string $maidenNameList
      * @return string
      */
-    public static function truncateIdentity(string|null $firstNameList, string|null $lastName, string|null $maidenNameList):string{ // A CONTINUER
+    public static function truncateIdentity(string|null $firstNameList, string|null $lastNameList, string|null $maidenNameList):string{ // A CONTINUER
         $return = "";
 
         // first names for start
@@ -47,9 +55,9 @@ class display{
         }
 
         if(strlen(format::normalize($maidenNameList))==0){
-            $return .= " ".format::htmlToUpper($lastName);
+            $return .= " ".format::htmlToUpper($lastNameList);
         }else{
-            $return .= format::htmlToUpper(" ".$lastName." (".$maidenNameList.")");
+            $return .= format::htmlToUpper(" ".$lastNameList." (".$maidenNameList.")");
         }
         
         return $return;

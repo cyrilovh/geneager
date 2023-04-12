@@ -50,7 +50,6 @@
         )
     );
 
-
     $ancestorForm->setElement("input", array(
         "type" => "text",
         "placeholder" => "200 caractères maximum",
@@ -67,13 +66,27 @@
     $ancestorForm->setElement("input", array(
         "type" => "text",
         "placeholder" => "200 caractères maximum",
-        "name" => "lastName",
+        "name" => "lastNameListList",
         "minlength" => 1,
         "maxlength" => 200,
         "class" => "form-control w100",
-        "value" => (isset($SQLdata["lastName"]) ? $SQLdata["lastName"] : "")),
+        "value" => (isset($SQLdata["lastNameListList"]) ? $SQLdata["lastNameListList"] : "")),
         array(
             "before" => "<p class='bold'>Nom de famille/Nom de jeune fille:</p>",
+        )
+    );
+
+    $ancestorForm->setElement("input", array(
+        "type" => "text",
+        "placeholder" => "200 caractères maximum",
+        "name" => "birthNameList",
+        "minlength" => 1,
+        "maxlength" => 200,
+        "class" => "form-control w100",
+        "value" => (isset($SQLdata["birthNameList"]) ? $SQLdata["birthNameList"] : "")
+        ),
+        array(
+            "before" => "<p class='bold'>Autres nom(s) de famille de l'ancêtre (exemple si né sous un autre nom avant d'avoir été reconnu par le père):</p>",
         )
     );
 
@@ -93,6 +106,20 @@
     $ancestorForm->setElement("input", array(
         "type" => "text",
         "placeholder" => "200 caractères maximum",
+        "name" => "otherIdentityList",
+        "minlength" => 1,
+        "maxlength" => 200,
+        "class" => "form-control w100",
+        "value" => (isset($SQLdata["otherIdentityList"]) ? $SQLdata["otherIdentityList"] : "")
+        ),
+        array(
+            "before" => "<p class='bold'>Autres identités (fausse identité, erreur de saisie administrative, ...):</p>",
+        )
+    );
+
+    $ancestorForm->setElement("input", array(
+        "type" => "text",
+        "placeholder" => "200 caractères maximum",
         "name" => "nickNameList",
         "minlength" => 1,
         "maxlength" => 200,
@@ -103,17 +130,6 @@
         )
     );
 
-    $ancestorForm->setElement("input", array(
-        "type" => "text",
-        "placeholder" => "200 caractères maximum",
-        "name" => "birthNameList",
-        "minlength" => 1,
-        "maxlength" => 200,
-        "class" => "form-control w100"),
-        array(
-            "before" => "<p class='bold'>Autres nom(s) de famille de l'ancêtre (exemple si né sous un autre nom avant d'avoir été reconnu par le père):</p>",
-        )
-    );
     $ancestorForm->setElement("select", array(
         "name" => "gender",
         "class" => "form-control w100",
