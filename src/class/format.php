@@ -85,9 +85,9 @@ class format{
         $explode = explode(" ", $str);
         $return = array();
         foreach($explode as $value){
-            $value = mb_convert_case(html_entity_decode($value, ENT_QUOTES, "UTF-8"), MB_CASE_TITLE, "UTF-8");
+            $value = mb_convert_case(html_entity_decode($value, ENT_QUOTES, ENCODE), MB_CASE_TITLE, ENCODE);
             if($html==true){
-                array_push($return, htmlentities($value, ENT_QUOTES, "UTF-8"));
+                array_push($return, htmlentities($value, ENT_QUOTES, ENCODE));
             }else{
                 array_push($return, $value);
             }
@@ -105,9 +105,9 @@ class format{
         if(validator::isNullOrEmpty($str)){
             return "";
         }
-        $str = mb_strtoupper(html_entity_decode($str, ENT_QUOTES, "UTF-8"));
+        $str = mb_strtoupper(html_entity_decode($str, ENT_QUOTES, ENCODE));
         if($html==true){
-            $str = htmlentities($str, ENT_QUOTES, "UTF-8");
+            $str = htmlentities($str, ENT_QUOTES, ENCODE);
         }
         return $str;
     }
@@ -123,9 +123,9 @@ class format{
         if(validator::isNullOrEmpty($str)){
             return "";
         }
-        $str = strtolower(html_entity_decode($str, ENT_QUOTES, "UTF-8"));
+        $str = strtolower(html_entity_decode($str, ENT_QUOTES, ENCODE));
         if($html==true){
-            $str = htmlentities($str, ENT_QUOTES, "UTF-8");
+            $str = htmlentities($str, ENT_QUOTES, ENCODE);
         }
         return $str;
     }
@@ -138,9 +138,9 @@ class format{
      * @return string
      */
     public static function htmlToUcfirst(string $str, bool $html = false):string{
-        $str = ucfirst(html_entity_decode($str, ENT_QUOTES, "UTF-8"));
+        $str = ucfirst(html_entity_decode($str, ENT_QUOTES, ENCODE));
         if($html==true){
-            $str = htmlentities($str, ENT_QUOTES, "UTF-8");
+            $str = htmlentities($str, ENT_QUOTES, ENCODE);
         }
         return $str;
     }
@@ -159,7 +159,7 @@ class format{
      * 6 characters: year + month
      * 8 characters: year + month + day
      * 
-     * 20221201 => 01 décembre2022
+     * 20221201 => 01 décembre 2022
      */
     public static function strToDate(string|null $strDate):string|null{
         $monthArr = array(
@@ -196,20 +196,6 @@ class format{
     }
 
     /**
-     * Convert a date to string YMD format
-     * @param string $date
-     * @return string
-     */
-    public static function dateToStr(string $date):string{
-        if(validator::isDate($date)){
-            $date = new \DateTime($date);
-            return $date->format("Ymd");
-        }else{
-            return "";
-        }
-    }
-
-    /**
      * Convert a string date Y,M,D to a valid string
      * 1999,0,0 => 1999
      * 1999,12,0 => 199912
@@ -220,7 +206,7 @@ class format{
      * @param string|integer|null $day
      * @return string
      */
-    public static function YMDtoStr(string|int|null $year, string|int|null $month, string|int|null $day):string{
+    public static function YMDtoStr(string|int|null $year, string|int|null $month, string|int|null $day, string $separator = ""):string{
         $year = (!validator::isNullOrEmpty($year) ? str_pad($year, 4, "0", STR_PAD_LEFT) : "");
         $month = (!validator::isNullOrEmpty($month) ? str_pad($month, 2, "0", STR_PAD_LEFT) : "");
         $day = (!validator::isNullOrEmpty($day) ? str_pad($day, 2, "0", STR_PAD_LEFT) : "");

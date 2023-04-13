@@ -66,11 +66,11 @@
     $ancestorForm->setElement("input", array(
         "type" => "text",
         "placeholder" => "200 caractères maximum",
-        "name" => "lastNameListList",
+        "name" => "lastNameList",
         "minlength" => 1,
         "maxlength" => 200,
         "class" => "form-control w100",
-        "value" => (isset($SQLdata["lastNameListList"]) ? $SQLdata["lastNameListList"] : "")),
+        "value" => (isset($SQLdata["lastNameList"]) ? $SQLdata["lastNameList"] : "")),
         array(
             "before" => "<p class='bold'>Nom de famille/Nom de jeune fille:</p>",
         )

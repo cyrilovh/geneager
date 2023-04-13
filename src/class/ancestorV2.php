@@ -294,6 +294,138 @@
             return (self::$html) ? "<i class='fas fa-venus-mars'></i> $genderStr" : $genderStr;
         }
 
-        
+        public function getBirthdayY():int|null{
+            return $this->birthdayY;
+        }
+
+        public function getBirthdayM():int|null{
+            return $this->birthdayM;
+        }
+
+        public function getBirthdayD():int|null{
+            return $this->birthdayD;
+        }
+
+        /**
+         * Return birthday as string (not as int)
+         * for example: 
+         * @return string
+         */
+        public function getBirthdayStr():string{
+            $birthdayStr = format::strToDate(format::YMDtoStr($this->birthdayY, $this->birthdayM, $this->birthdayD));
+            if(self::$html){
+                return (is_null($birthdayStr)) ? "" : "<i class='fas fa-baby-carriage'></i> $birthdayStr";
+            }else{
+                return (is_null($birthdayStr)) ? "" : $birthdayStr;
+            }
+        }
+
+        public function getBirthCityID():int|null{
+            return $this->birthCity;
+        }
+
+        public function getBirthCityName():string|null{
+            return format::htmlToUpperFirst($this->birthCityName, self::$html);
+        }
+
+        public function getBirthAccuracyLocation():string|null{
+            return format::htmlToUpperFirst($this->birthAccuracyLocation, self::$html);
+        }
+
+        public function getBirthLocation():string|null{
+            $location = "";
+
+            $location .= (is_null($this->birthAccuracyLocation)) ? "" : $this->birthAccuracyLocation;
+            if(!validator::isNullOrEmpty($location) && !validator::isNullOrEmpty($this->birthCityName)){
+                $location .= ", ";
+            }
+            $location .= (is_null($this->birthCityName)) ? "" : $this->birthCityName;
+            return $location;
+        }
+
+        public function getDeathdayY():int|null{
+            return $this->deathdayY;
+        }
+
+        public function getDeathdayM():int|null{
+            return $this->deathdayM;
+        }
+
+        public function getDeathdayD():int|null{
+            return $this->deathdayD;
+        }
+
+        public function getDeathDateStr():string{
+            $deathDateStr = format::strToDate(format::YMDtoStr($this->deathdayY, $this->deathdayM, $this->deathdayD));
+            if(self::$html){
+                return (is_null($deathDateStr)) ? "" : "<i class='fas fa-skull-crossbones'></i> $deathDateStr";
+            }else{
+                return (is_null($deathDateStr)) ? "" : $deathDateStr;
+            }
+        }
+
+        public function getDeathCityID():int|null{
+            return $this->deathCity;
+        }
+
+        public function getDeathCityName():string|null{
+            return format::htmlToUpperFirst($this->deathCityName, self::$html);
+        }
+
+        public function getDeathAccuracyLocation():string|null{
+            return format::htmlToUpperFirst($this->deathAccuracyLocation, self::$html);
+        }
+
+        public function getDeathLocation():string|null{
+            $location = "";
+
+            $location .= (is_null($this->deathAccuracyLocation)) ? "" : $this->deathAccuracyLocation;
+            if(!validator::isNullOrEmpty($location) && !validator::isNullOrEmpty($this->deathCityName)){
+                $location .= ", ";
+            }
+            $location .= (is_null($this->deathCityName)) ? "" : $this->deathCityName;
+
+            return $location;
+        }
+
+        public function getCemeteryCityID():int|null{
+            return $this->cemeteryCity;
+        }
+
+        public function getCemeteryCityName():string|null{
+            return format::htmlToUpperFirst($this->cemeteryCityName, self::$html);
+        }
+
+        public function getCemeteryAccuracyLocation():string|null{
+            return format::htmlToUpperFirst($this->cemeteryAccuracyLocation, self::$html);
+        }
+
+        public function getCemeteryLocation():string|null{
+            $location = "";
+
+            $location .= (is_null($this->cemeteryAccuracyLocation)) ? "" : $this->cemeteryAccuracyLocation;
+            if(!validator::isNullOrEmpty($location) && !validator::isNullOrEmpty($this->cemeteryCityName)){
+                $location .= ", ";
+            }
+            $location .= (is_null($this->cemeteryCityName)) ? "" : $this->cemeteryCityName;
+            return $location;
+        }
+
+        public function getBiography():string|null{
+            return format::htmlToUpperFirst($this->biography, self::$html);
+        }
+
+        public function getAuthor():string{
+            $author = format::htmlToUpperFirst($this->author, self::$html);
+            return (self::$html) ? "<i class='fas fa-user'>$author</i>" : $author;
+        }
+
+        public function getCreationDate():string{
+            return format::htmlToUpperFirst($this->createDate, self::$html);
+        }
+
+        public function getModificationDate():string{
+            return format::htmlToUpperFirst($this->lastUpdate, self::$html);
+        }
         
     }
