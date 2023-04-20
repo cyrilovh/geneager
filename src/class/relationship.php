@@ -22,6 +22,7 @@
             $this->relationshipTypeStr = \enumlist\RelationshipType::getStringFromRelationshipType($relationshipType);
         }
 
+        // ADD GETERS AND SETERS
         public function getAll(): array
         {
             return [
