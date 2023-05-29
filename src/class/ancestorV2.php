@@ -115,135 +115,135 @@
 
         }
 
-        public function setID(int $id){
+        public function setID(int $id):void{
             $this->id = $id;
         }
 
-        public function setFirstnameList(string|null $firstNameList){
+        public function setFirstnameList(string|null $firstNameList):void{
             $this->firstNameList = $firstNameList;
         }
 
-        public function setlastNameList(string|null $lastNameList){
+        public function setlastNameList(string|null $lastNameList):void{
             $this->lastNameList = $lastNameList;
         }
 
-        public function setBirthNameList(string|null $birthNameList){
+        public function setBirthNameList(string|null $birthNameList):void{
             $this->birthNameList = $birthNameList;
         }
 
-        public function setMaidenNameList(string|null $maidenNameList){
+        public function setMaidenNameList(string|null $maidenNameList):void{
             $this->maidenNameList = $maidenNameList;
         }
 
-        public function setNickNameList(string|null $nickNameList){
+        public function setNickNameList(string|null $nickNameList):void{
             $this->nickNameList = $nickNameList;
         }
 
-        public function setotherIdentityList(string|null $otherIdentityList){
+        public function setotherIdentityList(string|null $otherIdentityList):void{
             $this->otherIdentityList = $otherIdentityList;
         }
 
-        public function setPhoto(string|null $photo){
+        public function setPhoto(string|null $photo):void{
             $this->photo = $photo;
         }
 
-        public function setGender(int|null $gender){
+        public function setGender(int|null $gender):void{
             $this->gender = $gender;
         }
 
-        public function setBirthdayY(int|null $birthdayY){
+        public function setBirthdayY(int|null $birthdayY):void{
             $this->birthdayY = $birthdayY;
         }
 
-        public function setBirthdayM(int|null $birthdayM){
+        public function setBirthdayM(int|null $birthdayM):void{
             $this->birthdayM = $birthdayM;
         }
 
-        public function setBirthdayD(int|null $birthdayD){
+        public function setBirthdayD(int|null $birthdayD):void{
             $this->birthdayD = $birthdayD;
         }
 
-        public function setBirthCity(int|null $birthCity){
+        public function setBirthCity(int|null $birthCity):void{
             $this->birthCity = $birthCity;
         }
 
-        public function setBirthCityName(string|null $birthCityName){
+        public function setBirthCityName(string|null $birthCityName):void{
             $this->birthCityName = $birthCityName;
         }
 
-        public function setBirthAccuracyLocation(string|null $birthAccuracyLocation){
+        public function setBirthAccuracyLocation(string|null $birthAccuracyLocation):void{
             $this->birthAccuracyLocation = $birthAccuracyLocation;
         }
 
-        public function setDeathdayY(int|null $deathdayY){
+        public function setDeathdayY(int|null $deathdayY):void{
             $this->deathdayY = $deathdayY;
         }
 
-        public function setDeathdayM(int|null $deathdayM){
+        public function setDeathdayM(int|null $deathdayM):void{
             $this->deathdayM = $deathdayM;
         }
 
-        public function setDeathdayD(int|null $deathdayD){
+        public function setDeathdayD(int|null $deathdayD):void{
             $this->deathdayD = $deathdayD;
         }
 
-        public function setDeathCity(int|null $deathCity){
+        public function setDeathCity(int|null $deathCity):void{
             $this->deathCity = $deathCity;
         }
 
-        public function setDeathCityName(string|null $deathCityName){
+        public function setDeathCityName(string|null $deathCityName):void{
             $this->deathCityName = $deathCityName;
         }
 
-        public function setDeathAccuracyLocation(string|null $deathAccuracyLocation){
+        public function setDeathAccuracyLocation(string|null $deathAccuracyLocation):void{
             $this->deathAccuracyLocation = $deathAccuracyLocation;
         }
 
-        public function setCemeteryCity(int|null $cemeteryCity){
+        public function setCemeteryCity(int|null $cemeteryCity):void{
             $this->cemeteryCity = $cemeteryCity;
         }
 
-        public function setCemeteryCityName(string|null $cemeteryCityName){
+        public function setCemeteryCityName(string|null $cemeteryCityName):void{
             $this->cemeteryCityName = $cemeteryCityName;
         }
 
-        public function setCemeteryAccuracyLocation(string|null $cemeteryAccuracyLocation){
+        public function setCemeteryAccuracyLocation(string|null $cemeteryAccuracyLocation):void{
             $this->cemeteryAccuracyLocation = $cemeteryAccuracyLocation;
         }
 
-        public function setBiography(string|null $biography){
+        public function setBiography(string|null $biography):void{
             $this->biography = $biography;
         }
 
-        public function setAuthor(string $author){
+        public function setAuthor(string $author):void{
             $this->author = $author;
         }
 
-        public function setLastUpdate(string $lastUpdate){
+        public function setLastUpdate(string $lastUpdate):void{
             $this->lastUpdate = $lastUpdate;
         }
 
-        public function setCreateDate(string $createDate){
+        public function setCreateDate(string $createDate):void{
             $this->createDate = $createDate;
         }
 
-        public function setRelationList(array $relationList){
+        public function setRelationList(array $relationList):void{
             $this->relationList = $relationList;
         }
 
-        public function setEventList(array $eventList){ // WARNING CHANGE TO EVENT CLASS
+        public function setEventList(array $eventList):void{ // WARNING CHANGE TO EVENT CLASS
             $this->eventList = $eventList;
         }
 
-        public function setDocumentList(array $documentList){ // WARNING CHANGE TO DOCUMENT CLASS
+        public function setDocumentList(array $documentList):void{ // WARNING CHANGE TO DOCUMENT CLASS
             $this->documentList = $documentList;
         }
 
-        public function setPictureList(picture $pictureList){
+        public function setPictureList(picture $pictureList):void{
             $this->pictureList = $pictureList;
         }
 
-        public function setVideoList(array $videoList){ // WARNING CHANGE TO VIDEO CLASS
+        public function setVideoList(array $videoList):void{ // WARNING CHANGE TO VIDEO CLASS
             $this->videoList = $videoList;
         }
 

@@ -2,6 +2,8 @@
 namespace class;
 
 class document{
+    public static ?bool $html = false;
+
     private int $id;
     private string  $filename;
     private ?string $title;
@@ -60,8 +62,63 @@ class document{
         ];
     }
 
+    public function setID(int $id):void{
+        $this->id = $id;
+    }
 
+    public function setFilename(string $filename):void{
+        $this->filename = $filename;
+    }
 
+    public function setTitle(string|null $title):void{
+        $this->title = $title;
+    }
+
+    public function setDescription(string|null $description):void{
+        $this->description = $description;
+    }
+
+    public function setCityID(string|null $cityID):void{
+        $this->cityID = $cityID;
+    }
+
+    public function setCityName(string|null $cityName):void{
+        $this->cityName = $cityName;
+    }
+
+    public function setAccuracyLocation(string|null $accuracyLocation):void{
+        $this->accuracyLocation = $accuracyLocation;
+    }
+
+    public function setDateEvent(string|null $dateEvent):void{
+        $this->dateEvent = $dateEvent;
+    }
+
+    public function setCreateDate(string $createDate):void{
+        $this->createDate = $createDate;
+    }
+
+    public function setAuthor(string $author):void{
+        $this->author = $author;
+    }
+
+    public function setSourceText(string|null $sourceText):void{
+        $this->sourceText = $sourceText;
+    }
+
+    public function setSourceLink(string|null $sourceLink):void{
+        $this->sourceLink = $sourceLink;
+    }
+
+    public function setCallNumber(string|null $callNumber):void{
+        $this->callNumber = $callNumber;
+    }
+
+    public function setTags(array|null $tags):void{
+        $this->tags = $tags;
+    }
+
+    // AJOUTER GETTERS ET VOIR POUR METHOD addTag()
 
 
 }

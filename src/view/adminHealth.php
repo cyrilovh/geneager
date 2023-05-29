@@ -1,5 +1,6 @@
 <aside>
-    <h2>Fichier de configuration général:</h2>
+    <h2>Configuration général:</h2>
+    <p>Version de Geneager: v<?=$gng_paramList->get("version"); ?></p>
     <h3>Alerte(s) critique(s):</h3>
     <?=$msgCritical ?>
     <p>&nbsp;</p>
