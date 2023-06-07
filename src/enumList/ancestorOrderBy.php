@@ -1,37 +1,44 @@
 <?php
-  namespace enumList;
 
-  trait getAncestorOrderBy
-  {
+namespace enumList;
 
+trait getAncestorOrderBy
+{
     public static function names(): array
     {
-      return array_column(self::cases(), 'name');
+        return array_column(self::cases(), 'value');
     }
 
     public static function values(): array
     {
-      return array_column(self::cases(), 'value');
+        return array_column(self::cases(), 'name');
     }
 
     public static function array(): array
     {
-      return array_combine(self::names(), self::values());
+        return array_combine(self::values(), self::names());
     }
+}
 
-  }
-
-  enum ancestorOrderBy: string
-  {
-
+abstract class ancestorOrderBy
+{
     use getAncestorOrderBy;
 
-    case lastUpdate = 'Date de mise à jour';
-    case createDate = 'Date de creation';
-    case birthDay = 'Date de naissance';
-    case deathDate = 'Date de décès';
+    public const LAST_UPDATE = 'Date de mise à jour';
+    public const CREATE_DATE = 'Date de création';
+    public const BIRTHDAY = 'Date de naissance';
+    public const DEATH_DATE = 'Date de décès';
 
-  }
+    public static function cases(): array
+    {
+        return [
+            ['name' => 'lastUpdate', 'value' => self::LAST_UPDATE],
+            ['name' => 'createDate', 'value' => self::CREATE_DATE],
+            ['name' => 'birthDay', 'value' => self::BIRTHDAY],
+            ['name' => 'deathDate', 'value' => self::DEATH_DATE],
+        ];
+    }
+}
 
 ?>
 

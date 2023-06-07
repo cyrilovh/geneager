@@ -26,7 +26,7 @@
 
         private ?string $photo;
         private ?int $gender; // check for use EnumList INT ?
-        // private ?\enumList\gender $genderStr;
+        private ?\enumList\gender $genderStr;
 
         private ?int $birthdayY;
         private ?int $birthdayM;

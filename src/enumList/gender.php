@@ -1,57 +1,70 @@
 <?php
-  namespace enumList;
+namespace enumList;
 
 use class\validator;
 
-  trait getGender
-  {
+trait getGender
+{
     /**
-     * Return values (int) as array
+     * Retourne les noms (string) en tant qu'array
      *
      * @return array
      */
-    public static function names():array{
-      return array_column(self::cases(), 'name');
+    public static function names(): array
+    {
+        return array_column(self::cases(), 'value');
     }
 
     /**
-    * Return gender names as array
-    * @return array
-    */
-    public static function values():array{
-      return array_column(self::cases(), 'value');
+     * Retourne les valeurs (int) en tant qu'array
+     *
+     * @return array
+     */
+    public static function values(): array
+    {
+        return array_column(self::cases(), 'name');
     }
 
     /**
-    * Return an array with the name of the enum as key and the value as value
-    * n => gender
-    * @return array
-    */
-    public static function array():array{
-      return array_combine(self::values(), self::names());
+     * Retourne un array avec le nom de l'énumération comme clé et la valeur comme valeur
+     *
+     * @return array
+     */
+    public static function array(): array
+    {
+        return array_combine(self::names(), self::values());
     }
-    
+
     /**
-     * Return gender as string since the value (int)
+     * Retourne le genre en tant que chaîne de caractères correspondant à la valeur (int)
      *
      * @param integer $n
      * @return string
      */
-    public static function getByID(int $n):string{
-      $gender = array_search($n, array_flip(self::array()));
-      return (!validator::isNullOrEmpty($gender)) ? $gender : "???";
+    public static function getByID(int $n): string
+    {
+        $gender = array_search($n, self::array());
+        return (!empty($gender)) ? $gender : "???";
     }
+}
 
-  }
-
-  enum gender:int
-  {
-
+abstract class gender
+{
     use getGender;
-    case inconnu = 2;
-    case femme = 0;
-    case homme = 1;
-  }
+
+    public const INCONNU = 2;
+    public const FEMME = 0;
+    public const HOMME = 1;
+
+    public static function cases(): array
+    {
+        return [
+            ['name' => 'inconnu', 'value' => self::INCONNU],
+            ['name' => 'femme', 'value' => self::FEMME],
+            ['name' => 'homme', 'value' => self::HOMME],
+        ];
+    }
+}
 
 ?>
 

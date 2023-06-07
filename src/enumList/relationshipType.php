@@ -4,7 +4,6 @@ namespace enumList;
 
 trait getRelationshipType
 {
-
     public static function names(): array
     {
         return array_column(self::cases(), 'name');
@@ -20,7 +19,7 @@ trait getRelationshipType
         return array_combine(self::names(), self::values());
     }
 
-    public function getValue():string
+    public function getValue(): string
     {
         return $this->value;
     }
@@ -29,24 +28,49 @@ trait getRelationshipType
     {
         return $relationshipType->getValue();
     }
-
-
 }
 
-enum relationshipType: string
+abstract class relationshipType
 {
-
     use getRelationshipType;
 
-    case PARENT = "Parent";
-    case CHILD = "Enfant";
-    case SPOUSE = "Conjoint(e)";
-    case SIBLING = "Fraterie";
-    case GRANDPARENT = "Grand-parent";
-    case GRANDCHILD = "Petit-enfant";
-    case COUSIN = "Cousin";
-    case AUNT_UNCLE = "Oncle/Tante";
-    case NIECE_NEPHEW = "Nièce/Neveu";
-    case PARENT_INLAW = "Beau-parent";
-    case OTHER = "AUTRE";
+    public const PARENT = "Parent";
+    public const CHILD = "Enfant";
+    public const SPOUSE = "Conjoint(e)";
+    public const SIBLING = "Fraterie";
+    public const GRANDPARENT = "Grand-parent";
+    public const GRANDCHILD = "Petit-enfant";
+    public const COUSIN = "Cousin";
+    public const AUNT_UNCLE = "Oncle/Tante";
+    public const NIECE_NEPHEW = "Nièce/Neveu";
+    public const PARENT_INLAW = "Beau-parent";
+    public const OTHER = "AUTRE";
+
+    public static function cases(): array
+    {
+        return [
+            ['name' => 'PARENT', 'value' => self::PARENT],
+            ['name' => 'CHILD', 'value' => self::CHILD],
+            ['name' => 'SPOUSE', 'value' => self::SPOUSE],
+            ['name' => 'SIBLING', 'value' => self::SIBLING],
+            ['name' => 'GRANDPARENT', 'value' => self::GRANDPARENT],
+            ['name' => 'GRANDCHILD', 'value' => self::GRANDCHILD],
+            ['name' => 'COUSIN', 'value' => self::COUSIN],
+            ['name' => 'AUNT_UNCLE', 'value' => self::AUNT_UNCLE],
+            ['name' => 'NIECE_NEPHEW', 'value' => self::NIECE_NEPHEW],
+            ['name' => 'PARENT_INLAW', 'value' => self::PARENT_INLAW],
+            ['name' => 'OTHER', 'value' => self::OTHER],
+        ];
+    }
 }
+
+// Exemple d'utilisation
+// $names = RelationshipType::names();
+// $values = RelationshipType::values();
+// $array = RelationshipType::array();
+
+// print_r($names);
+// print_r($values);
+// print_r($array);
+
+?>

@@ -1,32 +1,38 @@
 <?php
-  namespace enumList;
+namespace enumList;
 
-  trait getVisibility
-  {
-
+trait getVisibility
+{
     public static function names(): array
     {
-      return array_column(self::cases(), 'name');
+        return array_column(self::cases(), 'name');
     }
 
     public static function values(): array
     {
-      return array_column(self::cases(), 'value');
+        return array_column(self::cases(), 'value');
     }
 
     public static function array(): array
     {
-      return array_combine(self::values(), self::names());
+        return array_combine(self::names(), self::values());
     }
+}
 
-  }
-
-  enum visibility:string
-  {
-
+abstract class visibility
+{
     use getVisibility;
-    case public = "1";
-    case privé = '0';
-  }
+
+    public const PUBLIC = "1";
+    public const PRIVATE = "0";
+
+    public static function cases(): array
+    {
+        return [
+            ['name' => 'public', 'value' => self::PUBLIC],
+            ['name' => 'privé', 'value' => self::PRIVATE],
+        ];
+    }
+}
 
 ?>

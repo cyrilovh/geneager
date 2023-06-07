@@ -12,6 +12,7 @@ class document{
     private ?string $cityID;
     private ?string $cityName;
     private ?string $accuracyLocation;
+    private ?string $locationCountry;
 
     private ?string $dateEvent;
     
@@ -47,10 +48,11 @@ class document{
         return [
             'id' => $this->id,
             'filename' => $this->filename,
-            'title' => $this->title,
-            'description' => $this->description,
+            'title' => self::getTitle(),
+            'description' => self::getDescription(),
             'cityID' => $this->cityID,
             'cityName' => $this->cityName,
+            'locationCountry' => $this->locationCountry,
             'accuracyLocation' => $this->accuracyLocation,
             'dateEvent' => $this->dateEvent,
             'createDate' => $this->createDate,
@@ -119,6 +121,65 @@ class document{
     }
 
     // AJOUTER GETTERS ET VOIR POUR METHOD addTag()
+
+    public function getID():int{
+        return $this->id;
+    }
+
+    public function getFilename():string{
+        return $this->filename;
+    }
+
+    public function getTitle():string|null{
+        global $gng_paramList;
+        return ($this->title == null) ? $gng_paramList->get("untitleText") : $this->title;
+    }
+
+    public function getDescription():string|null{
+        global $gng_paramList;
+        return ($this->title == null) ? $gng_paramList->get("noDescriptionText") : $this->title;
+    }
+
+    public function getCityID():string|null{
+        return $this->cityID;
+    }
+
+    public function getCityName():string|null{
+        return $this->cityName;
+    }
+
+    public function getAccuracyLocation():string|null{
+        return $this->accuracyLocation;
+    }
+
+    public function getFullLocation():string|null{
+        $location = null;
+
+        if(!is_null($this->accuracyLocation)){
+            $location = $this->accuracyLocation;
+        }
+
+        if(!is_null($this->cityName)){
+            $location .= (!is_null($location)) ? ', ' : '';
+            $location = $this->cityName;
+        }
+
+        if(!is_null($this->locationCountry)){
+            $location .= (!is_null($location)) ? ', ' : '';
+            $location = $this->locationCountry;
+        }
+
+        if(self::$html && !is_null($location)){
+            return '<p><span class="fa-solid fa-location-dot"></span> '.$location.'</p>';
+        }else{
+            return $location;
+        }
+    }
+
+    // TO CONTINUE
+    // TO CONTINUE
+    // TO CONTINUE
+    // TO CONTINUE
 
 
 }

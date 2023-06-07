@@ -59,6 +59,8 @@ class PHPMailer
     const ICAL_METHOD_COUNTER = 'COUNTER';
     const ICAL_METHOD_DECLINECOUNTER = 'DECLINECOUNTER';
 
+    public $charSet = self::CHARSET_UTF8;
+
     /**
      * Email priority.
      * Options: null (default), 1 = High, 3 = Normal, 5 = low.

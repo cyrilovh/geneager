@@ -9,9 +9,10 @@
         private string $identyiAncestor1;
         private int $idAncestor2;
         private string $identyiAncestor2;
-        private \enumlist\relationshipType $relationshipType;
+        private string $relationshipType;
+        private ?\enumlist\relationshipType $relationshipTypeStr;
 
-        public function __construct(int $id, int $idAncestor1, string $identyiAncestor1, int $idAncestor2, string $identyiAncestor2, \enumlist\relationshipType $relationshipType)
+        public function __construct(int $id, int $idAncestor1, string $identyiAncestor1, int $idAncestor2, string $identyiAncestor2, string $relationshipType = "OTHER")
         {
             $this->id = $id;
             $this->idAncestor1 = $idAncestor1;
@@ -19,7 +20,7 @@
             $this->idAncestor2 = $idAncestor2;
             $this->identyiAncestor2 = $identyiAncestor2;
             $this->relationshipType = $relationshipType;
-            $this->relationshipTypeStr = \enumlist\RelationshipType::getStringFromRelationshipType($relationshipType);
+            $this->relationshipTypeStr = \enumList\relationshipType::array()[$relationshipType];
         }
 
         // ADD GETERS AND SETERS
@@ -37,3 +38,5 @@
         }
         
     }
+
+?>

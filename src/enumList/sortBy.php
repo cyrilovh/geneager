@@ -1,35 +1,39 @@
 <?php
-  namespace enumList;
+namespace enumList;
 
-  trait getSortBy
-  {
-
+trait getSortBy
+{
     public static function names(): array
     {
-      return array_column(self::cases(), 'name');
+        return array_column(self::cases(), 'name');
     }
 
     public static function values(): array
     {
-      return array_column(self::cases(), 'value');
+        return array_column(self::cases(), 'value');
     }
 
     public static function array(): array
     {
-      return array_combine(self::names(), self::values());
+        return array_combine(self::names(), self::values());
     }
+}
 
-  }
-
-  enum sortBy: string
-  {
-
+abstract class sortBy
+{
     use getSortBy;
 
-    case ASC = 'Croissant';
-    case DESC = 'Décroissant';
+    public const ASC = 'Croissant';
+    public const DESC = 'Décroissant';
 
-  }
+    public static function cases(): array
+    {
+        return [
+            ['name' => 'ASC', 'value' => self::ASC],
+            ['name' => 'DESC', 'value' => self::DESC],
+        ];
+    }
+}
 
 ?>
 

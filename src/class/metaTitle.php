@@ -5,6 +5,14 @@
  */
     namespace class;
     class metaTitle{
+
+        private string $title;
+        private string $description;
+        private string $keyword;
+        private string $favicon;
+        private string $author;
+        private string $robot;
+
         /**
          * Constructor
          *

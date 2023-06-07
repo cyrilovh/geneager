@@ -225,7 +225,7 @@
                 $location .= $this->locationStateDepartement;
             }
             if(!is_null($this->locationCountry)){
-                $location .= (!is_null($this->locationCountry)) ? ', ' : '';
+                $location .= (!is_null($location)) ? ', ' : '';
                 $location .= $this->locationCountry;
             }
 

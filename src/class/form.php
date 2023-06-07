@@ -23,6 +23,12 @@ class form{
      * @param boolean $token CRSF token
      */
 
+    private $method;
+    private $action;
+    private $class;
+    private $enctype;
+    private $token;
+
     public function __construct(array $attr, array $element = array(), bool $token = true){
         $this->method = (array_key_exists('method', $attr)) ? $attr["method"] : "";
         $this->action = (array_key_exists('action', $attr)) ? $attr["action"] : "";

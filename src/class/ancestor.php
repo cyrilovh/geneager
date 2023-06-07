@@ -1,6 +1,10 @@
 <?php
     namespace class;
     class ancestor{
+
+        private $ancestor;
+        private $relation;
+
         public function __construct(array $infoList, string $relation = null){
             $this->ancestor = $infoList;
             $this->relation = $relation;
