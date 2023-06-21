@@ -1,5 +1,4 @@
 <?php
-
     namespace class;
 
     class picture{
@@ -10,6 +9,7 @@
         private string $title;
         private ?string $descript;
         private ?string $filename;
+        private ?string $author;        
         private ?int $locationID;
         private ?string $locationCity;
         private ?string $locationStateDepartement;
@@ -25,11 +25,14 @@
         private ?string $lastUpdate;
         private ?string $createDate;
 
-        public function __construct(){
-            $this->id = null;
-            $this->title = "Sans titre";
-            $this->descript = null;
-            $this->filename = null;
+        public function __construct(int $id, string $filename, string $createDate, string $author){
+            global $gng_paramList;
+
+            $this->id = $id;
+            $this->title = $gng_paramList->get("untitleText");
+            $this->descript = $gng_paramList->get("noDescriptionText");
+            $this->filename = $filename;
+            $this->author = $author;
             $this->locationID = null;
             $this->locationCity = null;
             $this->locationStateDepartement = null;
@@ -43,7 +46,7 @@
             $this->folderID = null;
             $this->folderTitle = null;
             $this->lastUpdate = null;
-            $this->createDate = null;
+            $this->createDate = $createDate;
         }
 
         /* SETTERS */
@@ -64,6 +67,10 @@
 
         public function setFilename(string $filename):void{
             $this->filename = $filename;
+        }
+
+        public function setAuthor(string $author):void{
+            $this->author = $author;
         }
 
         public function setLocationID(int|null $locationID):void{
@@ -144,6 +151,12 @@
 
         public function getFilename():string{
             return $this->filename;
+        }
+
+        public function getAuthor():string|null{
+            global $gng_paramList;
+            $author = (is_null($this->author)) ? $gng_paramList->get("undefinedText") : $this->author;
+            return (self::$html) ? "<p><i class='fas fa-user'></i>$author</p>" : $author;
         }
 
         public function getLocationID():int|null{
@@ -241,9 +254,10 @@
          *
          * @return string|null
          */
-        public function getDateEvent():string|null|int{
+        public function getDateEvent():string|int{
+            global $gng_paramList;
             $date = format::strToDate(format::YMDtoStr($this->yearEvent, $this->monthEvent, $this->dayEvent));
-
+            $date = is_null($date) ? $gng_paramList->get("undefinedText"): $date; 
             return (self::$html) ? "<p><i class='fas fa-calendar-days'></i> ".$date."</p>" : $date;
         }
 

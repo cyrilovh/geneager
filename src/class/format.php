@@ -206,7 +206,7 @@ class format{
      * @param string|integer|null $day
      * @return string
      */
-    public static function YMDtoStr(string|int|null $year, string|int|null $month, string|int|null $day, string $separator = ""):string{
+    public static function YMDtoStr(string|int|null $year, string|int|null $month, string|int|null $day, string $separator = ""):string|null{
         $year = (!validator::isNullOrEmpty($year) ? str_pad($year, 4, "0", STR_PAD_LEFT) : "");
         $month = (!validator::isNullOrEmpty($month) ? str_pad($month, 2, "0", STR_PAD_LEFT) : "");
         $day = (!validator::isNullOrEmpty($day) ? str_pad($day, 2, "0", STR_PAD_LEFT) : "");

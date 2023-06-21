@@ -14,7 +14,9 @@ class document{
     private ?string $accuracyLocation;
     private ?string $locationCountry;
 
-    private ?string $dateEvent;
+    private ?string $yearEvent;
+    private ?string $monthEvent;
+    private ?string $dayEvent;
     
     private string $createDate;
     private string $author;
@@ -34,7 +36,10 @@ class document{
         $this->cityID = null;
         $this->cityName = null;
         $this->accuracyLocation = null;
-        $this->dateEvent = null;
+        $this->locationCountry = null;
+        $this->yearEvent = null;
+        $this->monthEvent = null;
+        $this->dayEvent = null;
         $this->createDate = $createDate;
         $this->author = $author;
         $this->sourceText = null;
@@ -54,7 +59,9 @@ class document{
             'cityName' => $this->cityName,
             'locationCountry' => $this->locationCountry,
             'accuracyLocation' => $this->accuracyLocation,
-            'dateEvent' => $this->dateEvent,
+            'yearEvent' => $this->yearEvent,
+            'monthEvent' => $this->monthEvent,
+            'dayEvent' => $this->dayEvent,
             'createDate' => $this->createDate,
             'author' => $this->author,
             'sourceText' => $this->sourceText,
@@ -92,8 +99,17 @@ class document{
         $this->accuracyLocation = $accuracyLocation;
     }
 
-    public function setDateEvent(string|null $dateEvent):void{
-        $this->dateEvent = $dateEvent;
+    public function setYearEvent(string|null $dateEvent):void{
+        $this->yearEvent = $dateEvent;
+    }
+
+
+    public function setMonthEvent(string|null $monthEvent):void{
+        $this->monthEvent = $monthEvent;
+    }
+
+    public function setDayEvent(string|null $dayEvent):void{
+        $this->dayEvent = $dayEvent;
     }
 
     public function setCreateDate(string $createDate):void{
@@ -176,10 +192,59 @@ class document{
         }
     }
 
-    // TO CONTINUE
-    // TO CONTINUE
-    // TO CONTINUE
-    // TO CONTINUE
+    /**
+     * Get the date of the event as default format (ex: YMD)
+     *
+     * @return string|null
+     */
+    public function getDateEvent():string|int{
+        global $gng_paramList;
+        $date = format::strToDate(format::YMDtoStr($this->yearEvent, $this->monthEvent, $this->dayEvent));
+        $date = is_null($date) ? $gng_paramList->get("undefinedText"): $date; 
+        return (self::$html) ? "<p><i class='fas fa-calendar-days'></i> ".$date."</p>" : $date;
+    }
+
+    /**
+     * Get the source of the event
+     *
+     * @return string|null
+     */
+    public function getSource():string|null{
+        $source = null;
+        $cote = (!is_null($this->callNumber)) ? " (C&ocirc;te: ".$this->callNumber.")" : "";
+        if(!is_null($this->sourceText) && !is_null($this->sourceLink)){
+            $source = "<a href='".$this->sourceLink."' target='_blank' class='btn btn-primary btn-sm'><span class='fas fa-link'></span> Source: $this->sourceText $cote</a>";
+        }elseif(!is_null($this->sourceText)){
+            $source = "<p>Source: $this->sourceText $cote</p>";
+        }elseif(!is_null($this->sourceLink)){
+            $source = "<a href='$this->sourceLink' target='_blank' class='btn btn-primary btn-sm'><span class='fas fa-link'></span> Source $cote</a>";
+        }
+
+        return $source;
+    }
+
+    public function getTagList():array|null{
+        if(!self::$html){
+            return $this->tags;
+        }else{
+            if(!is_null($this->tags)){
+                $tags = "<p><span class='fa-solid fa-user'></span> ";
+                foreach($this->tags as $tag){
+                    $ancestor = new ancestor($tag);
+                    $identity = $ancestor->getFullIdentity(false);
+                    $idAncestor = $tag["ancestorID"];
+                    $identityLink = "<a href='/ancestor/$idAncestor'>$identity</a>";
+                    $tags .= "<span class='badge badge-primary'>$identityLink</span> ";
+                }
+                $tags .= "</p>";
+                return $tags;
+            }else{
+                return "";
+            }
+        }
+    }
+    // inclure tags (identifications)
+    // relire la classe
 
 
 }
