@@ -103,7 +103,6 @@ class document{
         $this->yearEvent = $dateEvent;
     }
 
-
     public function setMonthEvent(string|null $monthEvent):void{
         $this->monthEvent = $monthEvent;
     }
@@ -153,7 +152,7 @@ class document{
 
     public function getDescription():string|null{
         global $gng_paramList;
-        return ($this->title == null) ? $gng_paramList->get("noDescriptionText") : $this->title;
+        return ($this->description == null) ? $gng_paramList->get("noDescriptionText") : $this->description;
     }
 
     public function getCityID():string|null{
@@ -223,6 +222,9 @@ class document{
         return $source;
     }
 
+    /**
+     * Retrieves photo identifiers (contact details, identity, etc.)
+     */
     public function getTagList():array|null{
         if(!self::$html){
             return $this->tags;
@@ -243,8 +245,5 @@ class document{
             }
         }
     }
-    // inclure tags (identifications)
-    // relire la classe
-
 
 }
