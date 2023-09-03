@@ -1,6 +1,6 @@
 <aside>
     <h2>Ajouter une photo</h2>
-    <p><i class="fas fa-folder"></i> <?=$albumData["title"]; ?></p>
+    <p><a href="/userPictureList/<?=$albumData["id"]; ?>"><i class="fas fa-folder"></i> <?=$albumData["title"]; ?></a></p>
     <?=(isset($errorList)) ? "<div class='alert alert-danger'>$errorList</div>" : ""; ?> <!-- form errors -->
     <?=(isset($successMsg)) ? "<div class='alert alert-success'>$successMsg</div>" : ""; ?> <!-- form success -->
     <?=(isset($warningList)) ? "<div class='alert alert-warning'>$warningList</div>" : ""; ?> <!-- form warning -->
