@@ -84,13 +84,14 @@ class template
             foreach($element as $key => $value){
                 if($editBtn){
                     if(userInfo::isConnected()){
-                        if($key=="author" && isset($element["id"])){
+                        if(str_contains($key, "author") && isset($element["id"])){ // IF KEY IS ARRAY ????????????????????????????????????????????????????????????????
                             $id = $element["id"];
                             $template_tmp = str_replace("{editBtn}", (userInfo::isAuthorOrAdmin($value) ? "<a class='btn btn-outline-info btn-sm mt10' href='/userEdit$pageEditBtn/$id'><i class='fa-solid fa-edit'></i></a> <a class='btn btn-outline-danger btn-sm mt10' href='/userDelete$pageEditBtn/$id'><i class='fa-solid fa-trash'></i></a> <a class='btn btn-outline-success btn-sm mt10' href='/userNew$pageEditBtn/$id'><i class='fa-solid fa-plus'></i></a>" : "") , $template_tmp);
                             $template_tmp = str_replace("{editBtnAlbum}", (userInfo::isAuthorOrAdmin($value) ? "<a class='btn btn-outline-info btn-sm mt10' href='/userEdit$pageEditBtn/$id'><i class='fa-solid fa-edit'></i></a> <a class='btn btn-outline-danger btn-sm mt10' href='/userDelete$pageEditBtn/$id'><i class='fa-solid fa-trash'></i></a> <a class='btn btn-outline-success btn-sm mt10' href='/userNewPicture/$id'><i class='fa-solid fa-plus'></i></a>" : "") , $template_tmp);
                         }
                     }else{
-                        $template_tmp = str_replace("{editBtn}", "", $template_tmp);
+                        $template_tmp = str_replace(array("{editBtn}", "{editBtnAlbum}"), "", $template_tmp);
+                        //$template_tmp = str_replace
                     }
                 }
                 $template_tmp = str_replace("{".$key."}", (is_null($value) ? $alternativeText : $value ), $template_tmp);

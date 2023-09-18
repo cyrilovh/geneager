@@ -11,6 +11,7 @@
         private string $identyiAncestor2;
         private string $relationshipType;
         private ?\enumlist\relationshipType $relationshipTypeStr;
+        // add date
 
         public function __construct(int $id, int $idAncestor1, string $identyiAncestor1, int $idAncestor2, string $identyiAncestor2, string $relationshipType = "OTHER")
         {

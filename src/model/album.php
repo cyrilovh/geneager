@@ -7,7 +7,7 @@ use class\validator;
 class 
 album{
     /**
-     * Return an album list
+     * Return the album list
      *
      * @param array $filter
      * @param integer $start
@@ -94,6 +94,19 @@ album{
         $query->closeCursor();
     }
 
+        /**
+         * BETA METHOD
+         * Get album data + his own pictures list with basic informations
+         * @param int $id id of the picture
+         */
+        public static function getPictureListAndAlbumInfoByID(int $id):array|bool{
+            global $db;
+            $query = $db->prepare("SELECT picture.*, picturefolder.id as idAlbum, picturefolder.title as titleAlbum, picturefolder.descript as descriptAlbum, picturefolder.author as authorAlbum, picturefolder.cover as coverAlbum, picturefolder.lastUpdate as lastUpdateAlbum, picturefolder.createDate as createDateAlbum, picturefolder.public as publicAlbum FROM picture INNER JOIN picturefolder ON picture.folder = picturefolder.id WHERE picture.folder=:id");
+            $query->execute(['id' => $id]);
+            return $query->fetchAll(\PDO::FETCH_ASSOC);
+            $query->closeCursor();
+        } 
+
     /*
     * Get the album data
     * @param bool $outputSelect (optional) IF TRUE: return data as a specific array: KEY => Album ID, $VALUE => Album name
@@ -156,6 +169,12 @@ album{
         return true;
     }
 
+    /**
+     * Undocumented function
+     * Album to delete
+     * @param integer $id ID Album
+     * @return boolean
+     */
     static function delete(int $id):bool{
         global $db;
         $query = $db->prepare("DELETE FROM picturefolder WHERE id = :id");

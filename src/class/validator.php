@@ -97,6 +97,30 @@
             return false;
         }
 
+        /**
+         * return true is the string is a valid number month
+         *
+         * @param integer|string $month
+         * @return boolean
+         */
+        public static function isIntMonth(int|string $month):bool{
+            if(is_numeric($month)){
+                if($month >= 1 && $month <= 12){
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static function isIntDay(int|string $day):bool{
+            if(is_numeric($day)){
+                if($day >= 1 && $day <= 31){
+                    return true;
+                }
+            }
+            return false;
+        }
+
 
         /**
          * Check if ID is isset and valid.
