@@ -1,7 +1,7 @@
 <?php
     namespace class;
     // "Sub" class for timeline
-    class event{
+    class event extends timeline{
 
         public bool $html = false;
         public string $defaultIcon = "fas fa-location-dot";
@@ -19,7 +19,6 @@
         private ?string $attachmentText; // text for link
         private ?string $attachmentLink; // URL to document or other media
 
-        // string $icon, string $date, ?string $title = null, ?string $description = null, ?int $cityID = null, ?string $cityName = null, ?string $locationAccuracy = null, ?string $attachmentText = null, ?string $attachmentLink = null
         public function __construct(){
             $this->id = 0;
             $this->icon = null;
@@ -35,7 +34,6 @@
             $this->attachmentLink = null;
         }
 
-        // ADD GETERS AND SETERS
         public function getAll(){
             return [
                 "id" => $this->id,
@@ -51,9 +49,7 @@
             ];
         }
 
-
         // GETTERS
-
         public function getID():int{
             return $this->id;
         }
@@ -167,24 +163,5 @@
         public function setAttachmentLink(string $attachmentLink):void{
             $this->attachmentLink = (validator::isNullOrEmpty($attachmentLink)) ? NULL : $attachmentLink;
         }
-
-        public getXXXXXXX(){
-            return $this->XXXXXXX;
-        }
-        /**
-
-        _____ ____  _   _ _______ _____ _   _ _    _ ______ _____  
-        / ____/ __ \| \ | |__   __|_   _| \ | | |  | |  ____|  __ \ 
-        | |   | |  | |  \| |  | |    | | |  \| | |  | | |__  | |__) |
-        | |   | |  | | . ` |  | |    | | | . ` | |  | |  __| |  _  / 
-        | |___| |__| | |\  |  | |   _| |_| |\  | |__| | |____| | \ \ 
-        \_____\____/|_| \_|  |_|  |_____|_| \_|\____/|______|_|  \_\
-                                                                    
-                                                                    
-
-        */
-
-
-
     }
 ?>
