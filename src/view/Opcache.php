@@ -1,0 +1,2 @@
+<?=isset($msgSuccess) ? die("<div class='alert alert-success'>".$msgSuccess.$link."</div>") : ""; ?> <!-- success message -->
+    <?=(isset($msgError)) ? die("<div class='alert alert-danger'>".$msgError.$link."</div>") : ""; ?> <!-- form errors -->

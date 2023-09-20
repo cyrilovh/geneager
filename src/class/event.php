@@ -167,6 +167,10 @@
         public function setAttachmentLink(string $attachmentLink):void{
             $this->attachmentLink = (validator::isNullOrEmpty($attachmentLink)) ? NULL : $attachmentLink;
         }
+
+        public getXXXXXXX(){
+            return $this->XXXXXXX;
+        }
         /**
 
         _____ ____  _   _ _______ _____ _   _ _    _ ______ _____  

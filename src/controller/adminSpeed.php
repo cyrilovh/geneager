@@ -25,6 +25,11 @@
         )
     );
 
+    if(!performance::opcacheIsEnabled()){
+        $text = "<h2>OPCache</h2><p class='txt-disabled italic txt-red mt10'>Le module PHP OPcache n'est pas activé.</p>";
+    }else{
+        $text = "<h2>OPCache</h2><button class='btn btn-primary' onclick='window.location.href=\"/adminOpcacheReset\"'>Réinitialiser l'OPCache</button>";
+    }
 
     $form->setElement("input", array(
         "type" => "submit",
@@ -39,7 +44,7 @@
             if(db::updateParameter($form->getData())){
                 $msgSuccess = "<p>Les paramètres ont été mis à jour.</p><a href='".url::current()."' class='btn btn-primary'>OK</a>";
             }else{
-                $msgError = "Une erreur est survenue";
+                $msgError = "Une erreur est survenue.";
             }
         }else{
             $errorList = $form->check(true);

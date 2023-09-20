@@ -1,16 +1,17 @@
 <?php
 namespace enumList;
 
-trait getVisibility
+trait getYesNo
 {
     public static function names(): array
     {
-        return array_column(self::cases(), 'name');
+
+        return array_column(self::cases(), 'value');
     }
 
     public static function values(): array
     {
-        return array_column(self::cases(), 'value');
+        return array_column(self::cases(), 'name'); 
     }
 
     public static function array(): array
@@ -19,18 +20,18 @@ trait getVisibility
     }
 }
 
-abstract class Visibility
+abstract class YesNo
 {
-    use getVisibility;
+    use getYesNo;
 
-    public const PUBLIC = "1";
-    public const PRIVATE = "0";
+    public const YES = "1";
+    public const NO = "0";
 
     public static function cases(): array
     {
         return [
-            ['name' => 'public', 'value' => self::PUBLIC],
-            ['name' => 'privé', 'value' => self::PRIVATE],
+            ['name' => 'Oui', 'value' => self::YES],
+            ['name' => 'Non', 'value' => self::NO],
         ];
     }
 }
