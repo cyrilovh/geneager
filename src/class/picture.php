@@ -204,7 +204,7 @@
         }
 
         public function getFolderTitle():string{
-            return (self::$html) ? "<p ><a href='/userPictureList/".$this->folderID."'><i class='fas fa-folder'></i> ".htmlspecialchars($this->folderTitle)."</a></p>" : $this->folderTitle;
+            return (self::$html) ? "<p ><a href='/pictureList".$this->folderID."'><i class='fas fa-folder'></i> ".htmlspecialchars($this->folderTitle)."</a></p>" : $this->folderTitle;
         }
 
         public function getLastUpdate():string|null{

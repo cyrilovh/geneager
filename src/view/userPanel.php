@@ -19,7 +19,7 @@
             </div>
         </div>
 
-        <div class="persoBtn" data-href="/userPictureList">
+        <div class="persoBtn" data-href="/pictureList">
             <div>
                 <i class="fas fa-camera"></i>
             </div>

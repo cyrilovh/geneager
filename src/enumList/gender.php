@@ -12,7 +12,7 @@ trait getGender
      */
     public static function names(): array
     {
-        return array_column(self::cases(), 'value');
+        return array_column(self::cases(), 'name');
     }
 
     /**
@@ -22,7 +22,7 @@ trait getGender
      */
     public static function values(): array
     {
-        return array_column(self::cases(), 'name');
+        return array_column(self::cases(), 'value');
     }
 
     /**

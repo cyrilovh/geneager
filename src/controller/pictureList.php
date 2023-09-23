@@ -15,8 +15,8 @@
     }
 
     if(count($data) > 0){
-        $output = template::autoReplace(template::get("userPictureList"), $data, true, "Picture");
-        mcv::addView("userPictureList");
+        $output = template::autoReplace(template::get("pictureList"), $data, true, "Picture");
+        mcv::addView("pictureList");
     }else{
         $msgError = "Aucune photo n'a été trouvée...";
         if(validator::isId()){

@@ -49,7 +49,7 @@ class template
                     $template_tmp = str_replace("{editBtn}", "", $template_tmp);
                 }
 
-                $template_tmp = str_replace("{gender}", (!is_null($ancestor["gender"]) ? display::gender($ancestor["gender"]) : ""), $template_tmp);
+                $template_tmp = str_replace("{gender}", (!is_null($ancestor["gender"]) ? \enumList\gender::getByID($ancestor["gender"]) : ""), $template_tmp);
 
                 $template_tmp = str_replace("{birthdayY}", (!is_null($ancestor["birthdayY"]) ? '<p class="dates">Né(e) en '.$ancestor["birthdayY"].'</p>' : ""), $template_tmp);
 

@@ -59,7 +59,7 @@
         }
 
         public function getDate():string{
-            $dateStr = format::strToDate(format::YMDtoStr($this->yearEvent, $this->monthEvent, $this->dayEvent));
+            $dateStr = format::strToDate(format::YMDtoStr($this->yearEvent, $this->monthEvent, $this->dayEvent)); *************************************
             return $dateStr;
         }
 

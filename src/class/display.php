@@ -12,6 +12,7 @@ class display{
      * @param integer $n
      * @return string
      */
+    /*
     public static function gender(int $n):string{
         $gender = "???";
         if(!is_null($n)){
@@ -23,6 +24,7 @@ class display{
         }
         return $gender;
     }
+    */
 
     /**
      * ⚠️ DEPRECATED ⚠️

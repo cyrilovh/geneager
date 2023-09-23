@@ -44,15 +44,14 @@ Apache2:
 - RewriteEngine required
 
 PHP mods: 
-- Imagick recommened
-- Curl recommended
+- opcache extension recommanded
 - openssl required (encrypt/decrypt data from database)
 
 ## Website (FR)
 https://geneager.cyril.ovh
 
 ## PHP
-Dev with PHP 8.1.2
+Dev with PHP 8.0.6
 
 ## New features implemented or improvements in the next versions:
 - Multiple upload
