@@ -20,10 +20,11 @@
         }
 
         /**
+         * ⚠️ WILL BE DEPRECATED -> POO ⚠️
          * Check if date exist
          * @param string $date FORMAT: YYYY-MM-DD
          * example: 2018-06-31 returns false (there 30 days in June)
-         * @return boolean
+         *  @return boolean
          */
         public static function isDate(string $date):bool{
             $date = explode("-", $date);
@@ -37,6 +38,7 @@
 
 
         /**
+         * ⚠️ Unsed ⚠️
          * Check if time exist
          * @param string $time FORMAT: HH:MM:SS
          * example: 25:00:00 returns false (there is no 25 hours in a day)
@@ -93,30 +95,6 @@
                     }
                 }
                 return false;
-            }
-            return false;
-        }
-
-        /**
-         * return true is the string is a valid number month
-         *
-         * @param integer|string $month
-         * @return boolean
-         */
-        public static function isIntMonth(int|string $month):bool{
-            if(is_numeric($month)){
-                if($month >= 1 && $month <= 12){
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public static function isIntDay(int|string $day):bool{
-            if(is_numeric($day)){
-                if($day >= 1 && $day <= 31){
-                    return true;
-                }
             }
             return false;
         }

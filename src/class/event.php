@@ -8,28 +8,20 @@
 
         private ?int $id = 0;
         private string $icon = "fas fa-location-dot";
-        private ?int $dayEvent;
-        private ?int $monthEvent;
-        private ?int $yearEvent;
+        private ?date $date;
         private ?string $title;
         private ?string $description;
-        private ?int $cityID;
-        private ?string $cityName;
-        private ?string $locationAccuracy;
+        private ?location $location;
         private ?string $attachmentText; // text for link
         private ?string $attachmentLink; // URL to document or other media
 
         public function __construct(){
             $this->id = 0;
             $this->icon = null;
-            $this->dayEvent = null;
-            $this->monthEvent = null;
-            $this->yearEvent = null;
+            $this->date = null;
             $this->title = null;
             $this->description = null;
-            $this->cityID = null;
-            $this->cityName = null;
-            $this->locationAccuracy = null;
+            $this->location = null;
             $this->attachmentText = null;
             $this->attachmentLink = null;
         }
@@ -41,9 +33,7 @@
                 "date" => self::getDate(),
                 "title" => $this->title,
                 "description" => $this->description,
-                "cityID" => $this->cityID,
-                "cityName" => $this->cityName,
-                "locationAccuracy" => $this->locationAccuracy,
+                "location" => $this->location,
                 "attachmentText" => $this->attachmentText,
                 "attachmentLink" => $this->attachmentLink
             ];
@@ -59,8 +49,7 @@
         }
 
         public function getDate():string{
-            $dateStr = format::strToDate(format::YMDtoStr($this->yearEvent, $this->monthEvent, $this->dayEvent)); *************************************
-            return $dateStr;
+            return $this->date->getDate();
         }
 
         public function getTitle():string|null{
@@ -71,16 +60,8 @@
             return $this->description;
         }
 
-        public function getCityID():int|null{
-            return $this->cityID;
-        }
-
-        public function getCityName():string|null{
-            return $this->cityName;
-        }
-
-        public function getLocationAccuracy():string|null{
-            return $this->locationAccuracy;
+        public function getLocation():location|null{
+            return $this->location;
         }
 
         public function getAttachmentText():string|null{
@@ -116,22 +97,8 @@
             $this->icon = (validator::isNullOrEmpty($icon)) ? self::$defaultIcon : $icon;
         }
 
-        public function setDate(int $dayEvent, int $monthEvent, int $yearEvent):void{
-            self::setDayEvent($dayEvent);
-            self::setMonthEvent($monthEvent);
-            self::setYearEvent($yearEvent);
-        }
-
-        public function setDayEvent(int $dayEvent):void{
-            $this->dayEvent = (validator::isIntDay($dayEvent)) ? $dayEvent : NULL;
-        }
-
-        public function setMonthEvent(int $monthEvent):void{
-            $this->monthEvent = (validator::isIntMonth($monthEvent)) ? $monthEvent : NULL;
-        }
-
-        public function setYearEvent(int $yearEvent):void{
-            $this->yearEvent = (is_numeric($yearEvent)) ? $yearEvent : NULL;
+        public function setDate(date $date):void{
+            $this->date = $date;
         }
 
         public function setTitle(string $title):void{
@@ -144,16 +111,8 @@
             $this->description = (validator::isNullOrEmpty($description)) ? $gng_paramList->get("noDescriptionText") : $description;
         }
 
-        public function setCityID(int $cityID):void{
-            $this->cityID = (is_numeric($cityID)) ? $cityID : NULL;
-        }
-
-        public function setCityName(string $cityName):void{
-            $this->cityName = (validator::isNullOrEmpty($cityName)) ? NULL : $cityName;
-        }
-
-        public function setLocationAccuracy(string $locationAccuracy):void{
-            $this->locationAccuracy = (validator::isNullOrEmpty($locationAccuracy)) ? NULL : $locationAccuracy;
+        public function setLocation(location $location):void{
+            $this->location = $location;
         }
 
         public function setAttachmentText(string $attachmentText):void{

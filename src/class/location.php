@@ -5,6 +5,23 @@
      * Location class = birthplace, event place, ...
      */
     class location{
+
+        private int $id;
+        private string $city;
+        private string $stateDepartement;
+        private string $country;
+        private ?string $accuracy = null;
+
+        public function __construct(int $id, ?string $city, ?string $stateDepartement, ?string $country, ?string $accuracy=null)
+        {
+            $this->id = $id;
+            $this->city = $city;
+            $this->stateDepartement = $stateDepartement;
+            $this->country = $country;
+            $this->accuracy = $accuracy;
+        }
+
+        /** SELECT OPTION/MODEL */
         public static function cityAsKeyValue(bool $addNull = true):array{
             $list = \model\location::getLocationList();
             $output = array();

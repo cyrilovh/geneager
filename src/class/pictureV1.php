@@ -1,7 +1,7 @@
 <?php
     namespace class;
 
-    class picture{
+    class pictureV1{
 
         public static $html = true;
 

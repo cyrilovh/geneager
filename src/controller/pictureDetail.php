@@ -9,12 +9,10 @@
             if($data){ // if exist in DB 
 
                 // FIRSTLY I CREATE MY OBJECT
-                $picture = new picture();
+                $picture = new pictureV1($data["id"], $data["filename"], $data["createDate"], $data["author"]);
                 $picture::$html = true;
-                $picture->setID($data["id"]);
                 $picture->setTitle($data["title"]);
                 $picture->setDescript($data["descript"]);
-                $picture->setFilename($data["filename"]);
                 $picture->setLocationID($data["location"]);
                 $picture->setYearEvent($data["yearEvent"]);
                 $picture->setMonthEvent($data["monthEvent"]);
@@ -24,13 +22,12 @@
                 $picture->setFolderID($data["idAlbum"]);
                 $picture->setFolderTitle($data["titleAlbum"]);
                 $picture->setLastUpdate($data["lastUpdate"]);
-                $picture->setCreateDate($data["createDate"]);
                 $picture->setAccuracyLocation($data["accuracyLocation"]);
                 $picture->setLocationCity($data["cityName"]);
                 $picture->setLocationStateDepartement($data["stateDepartementName"]);
                 $picture->setLocationCountry($data["country"]);
                 $picture->setLastUpdate($data["lastUpdate"]);
-                $picture->setCreateDate($data["createDate"]);
+
 
                 // THEN I USE THE OBJECT TO CREATE THE HTML
                 $output = null;

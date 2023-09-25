@@ -2,6 +2,7 @@
 namespace class;
 /**
  * Class contain basic methods for format strings
+ * ⚠️ ALL METHODS "date" WILL BE DEPRECATED (check out POO) ⚠️
  */
 class format{
     /**
