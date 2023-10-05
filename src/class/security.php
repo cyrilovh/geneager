@@ -45,7 +45,7 @@ class security{
      * @param string $str
      * @return string
      */
-    public static function cleanStr(string $str):string|null{
+    public static function cleanStr(string $str):?string{
         return is_null($str) ? "" : htmlentities(trim(preg_replace('/\s+/', ' ', $str)), ENT_QUOTES, "UTF-8");
     }
 

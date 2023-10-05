@@ -1,16 +1,6 @@
 <?php
     namespace class;
 
- /*
-  ____  ______ _______       
- |  _ \|  ____|__   __|/\    
- | |_) | |__     | |  /  \   
- |  _ <|  __|    | | / /\ \  
- | |_) | |____   | |/ ____ \ 
- |____/|______|  |_/_/    \_\
-                             
-*/
-
     class ancestor{
         public static ?bool $html = false;
 
@@ -18,15 +8,12 @@
         private ?string $firstNameList;
         private ?string $lastNameList;
         private ?string $otherIdentityList;
-        private ?string $maidenNameList;
+        private ?string $marriedNameList;
         private ?string $birthNameList;
         private ?string $nickNameList;
 
-        // private ?string $fullIdentity;
-
         private ?string $photo;
-        private ?int $gender; // check for use EnumList INT ?
-        private ?\enumList\gender $genderStr;
+        private ?int $gender;
 
         private ?string $biography;
 
@@ -40,7 +27,7 @@
 
         private ?array $relationList; // array of array: array( array("idRelationship"=> 0, "idAncestor"=> 0, "strRelashipType" => "uncle"),  ... )
         private ?array $eventList; //   special class event ???
-        private ?array $documentList; // object document ???
+        private ?array $archiveList; // object archive ???
         private ?array $pictureList; // object picture ???
         private ?array $videoList; // Object video ???
         
@@ -49,15 +36,13 @@
             $this->id = null;
             $this->firstNameList = null;
             $this->lastNameList = null;
-            $this->maidenNameList = null;
+            $this->marriedNameList = null;
             $this->birthNameList = null;
             $this->nickNameList = null;
             $this->otherIdentityList = null;
-            // $this->fullIdentity = null;
 
             $this->photo = null;
             $this->gender = null;
-            $this->genderStr = null;
 
             $this->biography = null;
 
@@ -66,12 +51,12 @@
             $this->cemetery = null;
 
             $this->author = $author;
-            $this->lastUpdate = $createDate;
-            $this->createDate = $lastUpdate;
+            $this->createDate = $createDate;
+            $this->lastUpdate = $lastUpdate;
 
             $this->relationList = array();
             $this->eventList = array();
-            $this->documentList = array();
+            $this->archiveList = array();
             $this->pictureList = array();
             $this->videoList = array();
 
@@ -93,8 +78,8 @@
             $this->birthNameList = $birthNameList;
         }
 
-        public function setMaidenNameList(string|null $maidenNameList):void{
-            $this->maidenNameList = $maidenNameList;
+        public function setMarriedNameList(string|null $marriedNameList):void{
+            $this->marriedNameList = $marriedNameList;
         }
 
         public function setNickNameList(string|null $nickNameList):void{
@@ -149,8 +134,8 @@
             $this->eventList = $eventList;
         }
 
-        public function setDocumentList(array $documentList):void{ // WARNING CHANGE TO DOCUMENT CLASS
-            $this->documentList = $documentList;
+        public function setarchiveList(array $archiveList):void{ // WARNING CHANGE TO DOCUMENT CLASS
+            $this->archiveList = $archiveList;
         }
 
         public function setPictureList(array $pictureList):void{
@@ -165,31 +150,97 @@
             return $this->id;
         }
 
-        public function getFirstNameList(): string|null{
+        public function getFirstNameList():?string{
             return format::htmlToUpperFirst($this->firstNameList, self::$html);
         }
 
-        public function getlastNameList(): string|null{
+        public function getlastNameList():?string{
             return format::htmlToUpper($this->lastNameList, self::$html);
         }
 
-        public function getBirthNameList(): string|null{
+        public function getBirthNameList():?string{
             return format::htmlToUpper($this->birthNameList, self::$html);
         }
 
-        public function getMaidenNameList(): string|null{
-            return format::htmlToUpper($this->maidenNameList, self::$html);
+        public function getMarriedNameList():?string{
+            return format::htmlToUpper($this->marriedNameList, self::$html);
         }
 
-        public function getotherIdentityList(): string|null{
+        public function getotherIdentityList():?string{
             return format::htmlToUpper($this->otherIdentityList, self::$html);
         }
 
-        public function getNickNameList(): string|null{
+        public function getNickNameList():?string{
             return format::htmlToUpperFirst($this->nickNameList, self::$html);
         }
 
-        public function getPhoto(): string|null{
+        /**
+         * Give standard identity of the ancestor (firstnames, lastnames, birthname, marriedname and nicknames)
+         * can be used for search
+         * @return string|null
+         */
+        public function getFullIdentityUnformatted():?string
+        {
+            $allNames = array_filter([
+                $this->firstNameList,
+                $this->lastNameList,
+                $this->birthNameList,
+                $this->marriedNameList,
+                $this->otherIdentityList,
+                $this->nickNameList
+            ]);
+            return implode(" ", $allNames);
+        }
+
+        /**
+         * Give standard identity of the ancestor (firstnames, lastnames, birthname, marriedname)
+         * firstnames = prénoms
+         * lastnames = noms de famille/JF
+         * birthname = nom de naissance (né sous un autre nom, pb orthographe, ...)
+         * marriedname = nom marital
+         * @param boolean $html
+         * @return string
+         */
+        public function getFullIdentityDisplay(bool $html = true): string
+        {
+            $allNames = array_filter([
+                format::htmlToUpperFirst($this->firstNameList, $html),
+                format::htmlToUpper($this->lastNameList, $html),
+                format::htmlToUpper($this->birthNameList, $html),
+                format::htmlToUpper($this->marriedNameList, $html)
+            ]);
+        
+            return $allNames ? implode(" ", $allNames) : "Anonyme";
+        }
+
+        /**
+         * Return same as getFullIdentityDisplay but with shorter 2nd, 3rd [...] lastname
+         * example Pierre Richard Freddy JACKSON => Pierre R. F. JACKSON
+         *
+         * @param boolean $html
+         * @return void
+         */
+        public function getFullIdentityDisplayShorter(bool $html): string
+        {
+            $allNames = [];
+        
+            if (!validator::isNullOrEmpty($this->firstNameList)) {
+                $lastNamesListArr = explode(" ", $this->lastNameList);
+                foreach ($lastNamesListArr as $i => $lastName) {
+                    $allNames[] = ($i === 0)
+                        ? format::htmlToUpperFirst($lastName, $html)
+                        : substr(format::htmlToUpper($lastName, $html), 0, 1) . ".";
+                }
+            }
+        
+            $allNames[] = format::htmlToUpper($this->lastNameList, $html);
+            $allNames[] = format::htmlToUpper($this->birthNameList, $html);
+            $allNames[] = format::htmlToUpper($this->marriedNameList, $html);
+        
+            return $allNames ? implode(" ", $allNames) : "Anonyme";
+        }
+
+        public function getPhoto():?string{
             $photo = (validator::isNullOrEmpty($this->photo)) ? DEFAULTPICTUREANCESTOR : $this->photo;
             return (self::$html) ? "<img src='$photo' onerror=\"this.src='".DEFAULTPICTUREANCESTOR."'\">" : $photo; 
         }
@@ -208,7 +259,7 @@
             return (self::$html) ? "<i class='fas fa-venus-mars'></i> $genderStr" : $genderStr;
         }
 
-        public function getBiography():string|null{
+        public function getBiography():?string{
             return format::htmlToUpperFirst($this->biography, self::$html);
         }
 

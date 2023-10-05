@@ -162,7 +162,7 @@ class format{
      * 
      * 20221201 => 01 décembre 2022
      */
-    public static function strToDate(string|null $strDate):string|null{
+    public static function strToDate(string|null $strDate):?string{
         $monthArr = array(
             "01" => "Janvier",
             "02" => "Février",
@@ -207,7 +207,7 @@ class format{
      * @param string|integer|null $day
      * @return string
      */
-    public static function YMDtoStr(string|int|null $year, string|int|null $month, string|int|null $day, string $separator = ""):string|null{
+    public static function YMDtoStr(string|int|null $year, string|int|null $month, string|int|null $day, string $separator = ""):?string{
         $year = (!validator::isNullOrEmpty($year) ? str_pad($year, 4, "0", STR_PAD_LEFT) : "");
         $month = (!validator::isNullOrEmpty($month) ? str_pad($month, 2, "0", STR_PAD_LEFT) : "");
         $day = (!validator::isNullOrEmpty($day) ? str_pad($day, 2, "0", STR_PAD_LEFT) : "");

@@ -51,7 +51,7 @@
 
     
     if($ancestorCount > 0 && $page <= $pageCount){
-        $ancestorList = \model\ancestor::getList(array("id", "firstNameList", "lastNameList", "photo",  "maidenNameList", "gender", "birthdayY", "author"), $start, $resultPerPage, array($ancestorOrderBy, $sortBy), $filter);
+        $ancestorList = \model\ancestor::getList(array("id", "firstNameList", "lastNameList", "photo",  "marriedNameList", "gender", "birthdayY", "author"), $start, $resultPerPage, array($ancestorOrderBy, $sortBy), $filter);
         
         $output = template::ancestorReplace(template::get("ancestorCard"), $ancestorList);
         

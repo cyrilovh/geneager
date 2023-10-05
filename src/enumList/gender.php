@@ -36,6 +36,17 @@ trait getGender
     }
 
     /**
+     * Retourne un array avec le nom en valeur et la valeur en clé
+     *
+     * @param integer $n
+     * @return string
+     */
+    public static function arrayVN(): array
+    {
+        return array_combine(self::values(), self::names());
+    }
+
+    /**
      * Retourne le genre en tant que chaîne de caractères correspondant à la valeur (int)
      *
      * @param integer $n

@@ -2,7 +2,7 @@
     namespace class;
     additionnalJsCss::set("ancestorLabel.css");
 
-    $ancestorList = \model\ancestor::getList(array("id", "firstNameList", "lastNameList", "photo",  "maidenNameList", "gender", "birthdayY", "author"), 0, 6);
+    $ancestorList = \model\ancestor::getList(array("id", "firstNameList", "lastNameList", "photo",  "marriedNameList", "gender", "birthdayY", "author"), 0, 6);
 
     if(count($ancestorList) > 0){
         mcv::addView("home");

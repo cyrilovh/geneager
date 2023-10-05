@@ -135,14 +135,14 @@
             return $this->id;
         }
 
-        public function getTitle():string|null{
+        public function getTitle():?string{
             if(is_null($this->title)){
                 return null;
             }
             return (self::$html) ? "<h1><i class='fas fa-heading'></i> ".htmlentities($this->title, ENT_QUOTES, ENCODE)."</h1>" : $this->title;
         }
 
-        public function getDescript():string|null{
+        public function getDescript():?string{
             if(is_null($this->descript)){
                 return null;
             }
@@ -153,7 +153,7 @@
             return $this->filename;
         }
 
-        public function getAuthor():string|null{
+        public function getAuthor():?string{
             global $gng_paramList;
             $author = (is_null($this->author)) ? $gng_paramList->get("undefinedText") : $this->author;
             return (self::$html) ? "<p><i class='fas fa-user'></i>$author</p>" : $author;
@@ -163,19 +163,19 @@
             return $this->locationID;
         }
 
-        public function getLocationCity():string|null{
+        public function getLocationCity():?string{
             return $this->locationCity;
         }
 
-        public function getLocationStateDepartement():string|null{
+        public function getLocationStateDepartement():?string{
             return $this->locationStateDepartement;
         }
 
-        public function getLocationCountry():string|null{
+        public function getLocationCountry():?string{
             return $this->locationCountry;
         }
 
-        public function getAccuracyLocation():string|null{
+        public function getAccuracyLocation():?string{
             return $this->accuracyLocation;
         }
 
@@ -191,11 +191,11 @@
             return $this->dayEvent;
         }
 
-        public function getSourceText():string|null{
+        public function getSourceText():?string{
             return $this->sourceText;
         }
 
-        public function getSourceLink():string|null{
+        public function getSourceLink():?string{
             return $this->sourceLink;
         }
 
@@ -207,7 +207,7 @@
             return (self::$html) ? "<p ><a href='/pictureList".$this->folderID."'><i class='fas fa-folder'></i> ".htmlspecialchars($this->folderTitle)."</a></p>" : $this->folderTitle;
         }
 
-        public function getLastUpdate():string|null{
+        public function getLastUpdate():?string{
             return $this->lastUpdate;
         }
 
@@ -222,7 +222,7 @@
          *
          * @return string|null
          */
-        public function getFullLocation():string|null{
+        public function getFullLocation():?string{
             $location = null;
 
             if(!is_null($this->accuracyLocation)){
@@ -266,7 +266,7 @@
          *
          * @return string|null
          */
-        public function getSource():string|null{
+        public function getSource():?string{
             $source = null;
 
             if(!is_null($this->sourceText) && !is_null($this->sourceLink)){

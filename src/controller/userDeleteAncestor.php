@@ -28,7 +28,7 @@
                         // add content after or before the element
                         array(
                             "before" => "<p style='display:flex;'><img src='".$photo."' ></p><p>",
-                            "after" => " <span class='bold red'>Oui, supprimer la fiche d'identité n&deg;".$id." ( ".$ancestor["firstNameList"]." ".$ancestor["lastNameList"]." ".$ancestor["birthNameList"]." ".$ancestor["maidenNameList"]." )</span></p><br>",
+                            "after" => " <span class='bold red'>Oui, supprimer la fiche d'identité n&deg;".$id." ( ".$ancestor["firstNameList"]." ".$ancestor["lastNameList"]." ".$ancestor["birthNameList"]." ".$ancestor["marriedNameList"]." )</span></p><br>",
                         )
                     );
                 

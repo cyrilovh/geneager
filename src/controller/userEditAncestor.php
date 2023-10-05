@@ -93,11 +93,11 @@
     $ancestorForm->setElement("input", array(
         "type" => "text",
         "placeholder" => "200 caractères maximum",
-        "name" => "maidenNameList",
+        "name" => "marriedNameList",
         "minlength" => 1,
         "maxlength" => 200,
         "class" => "form-control w100",
-        "value" => (isset($SQLdata["maidenNameList"]) ? $SQLdata["maidenNameList"] : "")),
+        "value" => (isset($SQLdata["marriedNameList"]) ? $SQLdata["marriedNameList"] : "")),
         array(
             "before" => "<p class='bold'>Nom(s) marital(s):</p>",
         )
@@ -133,7 +133,7 @@
     $ancestorForm->setElement("select", array(
         "name" => "gender",
         "class" => "form-control w100",
-        "option" => \enumList\gender::array()),
+        "option" => \enumList\gender::arrayVN()),
         array(
             "before" => "<p class='bold'>Genre:</p>",
         )

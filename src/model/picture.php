@@ -161,7 +161,7 @@
          */
         public static function getTagListFromPicture(int $id):array{
             global $db;
-            $query = $db->prepare("SELECT ancestor.id as ancestorID, ancestor.firstNameList, ancestor.lastNameList, ancestor.birthNameList, ancestor.maidenNameList, ancestor.nickNameList, ancestor.otherIdentityList, picturetag.coordinates, picturetag.pictureID FROM ancestor JOIN picturetag ON ancestor.id = picturetag.ancestor WHERE picturetag.pictureID = :id");
+            $query = $db->prepare("SELECT ancestor.id as ancestorID, ancestor.firstNameList, ancestor.lastNameList, ancestor.birthNameList, ancestor.marriedNameList, ancestor.nickNameList, ancestor.otherIdentityList, picturetag.coordinates, picturetag.pictureID FROM ancestor JOIN picturetag ON ancestor.id = picturetag.ancestor WHERE picturetag.pictureID = :id");
             $query->execute(['id' => $id]);
             return $query->fetchAll(\PDO::FETCH_ASSOC);
             $query->closeCursor();

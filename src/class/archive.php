@@ -10,6 +10,14 @@ class archive extends document{
         $this->callNumber = null;
     }
 
+    public function setCallNumber(string $callNumber):void{
+        $this->callNumber = $callNumber;
+    }
+
+    public function getCallNumber():?string{
+        return $this->callNumber;
+    }
+
     public function getAll(){
         return [
             'id' => $this->id,

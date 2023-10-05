@@ -44,7 +44,7 @@
             return $this->id;
         }
 
-        public function getIcon():string|null{
+        public function getIcon():?string{
             return (validator::isNullOrEmpty($this->icon)) ? self::$defaultIcon : $this->icon;
         }
 
@@ -52,11 +52,11 @@
             return $this->date->getDate();
         }
 
-        public function getTitle():string|null{
+        public function getTitle():?string{
             return $this->title;
         }
 
-        public function getDescription():string|null{
+        public function getDescription():?string{
             return $this->description;
         }
 
@@ -64,15 +64,15 @@
             return $this->location;
         }
 
-        public function getAttachmentText():string|null{
+        public function getAttachmentText():?string{
             return $this->attachmentText;
         }
 
-        public function getAttachmentLink():string|null{
+        public function getAttachmentLink():?string{
             return $this->attachmentLink;
         }
 
-        public function getSource():string|null{
+        public function getSource():?string{
             $attachment = null;
 
             if(!is_null($this->attachmentText) && !is_null($this->attachmentLink)){

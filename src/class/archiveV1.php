@@ -145,29 +145,29 @@ class archiveV1{
         return $this->filename;
     }
 
-    public function getTitle():string|null{
+    public function getTitle():?string{
         global $gng_paramList;
         return ($this->title == null) ? $gng_paramList->get("untitleText") : $this->title;
     }
 
-    public function getDescription():string|null{
+    public function getDescription():?string{
         global $gng_paramList;
         return ($this->description == null) ? $gng_paramList->get("noDescriptionText") : $this->description;
     }
 
-    public function getCityID():string|null{
+    public function getCityID():?string{
         return $this->cityID;
     }
 
-    public function getCityName():string|null{
+    public function getCityName():?string{
         return $this->cityName;
     }
 
-    public function getAccuracyLocation():string|null{
+    public function getAccuracyLocation():?string{
         return $this->accuracyLocation;
     }
 
-    public function getFullLocation():string|null{
+    public function getFullLocation():?string{
         $location = null;
 
         if(!is_null($this->accuracyLocation)){
@@ -208,7 +208,7 @@ class archiveV1{
      *
      * @return string|null
      */
-    public function getSource():string|null{
+    public function getSource():?string{
         $source = null;
         $cote = (!is_null($this->callNumber)) ? " (C&ocirc;te: ".$this->callNumber.")" : "";
         if(!is_null($this->sourceText) && !is_null($this->sourceLink)){
