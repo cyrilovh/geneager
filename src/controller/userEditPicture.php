@@ -66,7 +66,7 @@
                     array(
                         "type" => "text",
                         "name" => "create",
-                        "value" => format::date($pictureData["createDate"], "d/m/Y à H:i"),
+                        "value" => date::format($pictureData["createDate"], "d/m/Y à H:i"),
                         "class" => "form-control w100 ",
                         "disabled" => "disabled"
                     ),

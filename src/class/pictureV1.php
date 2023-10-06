@@ -256,7 +256,7 @@
          */
         public function getDateEvent():string|int{
             global $gng_paramList;
-            $date = format::strToDate(format::YMDtoStr($this->yearEvent, $this->monthEvent, $this->dayEvent));
+            $date = date::strToDate(date::YMDtoStr($this->yearEvent, $this->monthEvent, $this->dayEvent));
             $date = is_null($date) ? $gng_paramList->get("undefinedText"): $date; 
             return (self::$html) ? "<p><i class='fas fa-calendar-days'></i> ".$date."</p>" : $date;
         }
