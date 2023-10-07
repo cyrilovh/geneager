@@ -24,6 +24,7 @@ class archive extends document{
             'filename' => $this->filename,
             'title' => $this->title,
             'description' => $this->description,
+            'folder' => $this->folder,
             'event' => $this->event,
             'tags' => $this->tags,
             'author' => $this->author,

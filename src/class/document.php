@@ -11,6 +11,7 @@ abstract class document{
     protected string  $filename;
     protected ?string $title;
     protected ?string $description;
+    protected ?folder $folder;
     protected ?event $event;
     protected ?array $tags; // ID ancestor identified in this document (picture, archive, ...)
     protected string $author;
@@ -24,6 +25,7 @@ abstract class document{
         $this->filename = $filename;
         $this->title = null;
         $this->description = null;
+        $this->folder = null;
         $this->event = null;
         $this->tags = null;
         $this->author = $author;
@@ -46,6 +48,10 @@ abstract class document{
 
     public function setDescription(string $description):void{
         $this->description = $description;
+    }
+
+    public function setFolder(folder $folder):void{
+        $this->folder = $folder;
     }
     
     public function setEvent(event $event):void{
@@ -76,5 +82,54 @@ abstract class document{
         $this->author = $author;
     }
 
-    // DATE POO -----> TYPAGE
+    public function setCreateDate(string $createDate):void{
+        $this->createDate = $createDate;
+    }
+
+    public function setLastUpdate(string $lastUpdate):void{
+        $this->lastUpdate = $lastUpdate;
+    }
+
+    // GETTERS
+
+
+    public function getID():int{
+        return $this->id;
+    }
+
+    public function getFilename():string{
+        return $this->filename;
+    }
+
+    public function getTitle():?string{
+        return $this->title;
+    }
+
+    public function getDescription():?string{
+        return $this->description;
+    }
+
+    public function getFolder():?folder{
+        return $this->folder;
+    }
+
+    public function getEvent():?event{
+        return $this->event;
+    }
+
+    public function getTags():?array{
+        return $this->tags;
+    }
+
+    public function getAuthor():string{
+        return $this->author;
+    }
+
+    public function getCreateDate():string{
+        return $this->createDate;
+    }
+
+    public function getLastUpdate():?string{
+        return $this->lastUpdate;
+    }
 }
