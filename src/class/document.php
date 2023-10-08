@@ -102,11 +102,13 @@ abstract class document{
     }
 
     public function getTitle():?string{
-        return $this->title;
+        global $gng_paramList;
+        return is_null($this->title) ? $gng_paramList->get("untitleText") : $this->title;
     }
 
     public function getDescription():?string{
-        return $this->description;
+        global $gng_paramList;
+        return is_null($this->description) ? $gng_paramList->get("noDescriptionText") : $this->description;
     }
 
     public function getFolder():?folder{
