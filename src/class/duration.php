@@ -1,6 +1,9 @@
 <?php
     namespace class;
 
+    /**
+     * POO class: video/audio duration
+     */
     class duration{
         private int $duration; // in seconds
 

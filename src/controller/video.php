@@ -35,9 +35,25 @@
             $this->conversation = $conversation;
         }
 
-        // CONTINUE HERE GETTERS
-        // CONTINUE HERE GETTERS
-        // CONTINUE HERE GETTERS
-        // CONTINUE HERE GETTERS
-        // CONTINUE HERE GETTERS
+        /**
+         * Return object
+         * Use submethods to get specific data
+         *
+         * @return duration
+         */
+        public function getDuration():duration{
+            return $this->duration;
+        }
+
+        public function getCover():?string{
+            return $this->cover;
+        }
+
+        public function getResume():?string{
+            return $this->resume;
+        }
+
+        public function getConversation():?string{
+            return $this->conversation;
+        }
     }
