@@ -6,47 +6,6 @@ use class\validator;
 trait getGender
 {
     /**
-     * Retourne les noms (string) en tant qu'array
-     *
-     * @return array
-     */
-    public static function names(): array
-    {
-        return array_column(self::cases(), 'name');
-    }
-
-    /**
-     * Retourne les valeurs (int) en tant qu'array
-     *
-     * @return array
-     */
-    public static function values(): array
-    {
-        return array_column(self::cases(), 'value');
-    }
-
-    /**
-     * Retourne un array avec le nom de l'énumération comme clé et la valeur comme valeur
-     *
-     * @return array
-     */
-    public static function array(): array
-    {
-        return array_combine(self::names(), self::values());
-    }
-
-    /**
-     * Retourne un array avec le nom en valeur et la valeur en clé
-     *
-     * @param integer $n
-     * @return string
-     */
-    public static function arrayVN(): array
-    {
-        return array_combine(self::values(), self::names());
-    }
-
-    /**
      * Retourne le genre en tant que chaîne de caractères correspondant à la valeur (int)
      *
      * @param integer $n
@@ -61,7 +20,7 @@ trait getGender
 
 abstract class gender
 {
-    use getGender;
+    use getGender, \trait\enumList;
 
     public const INCONNU = 2;
     public const FEMME = 0;

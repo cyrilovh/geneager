@@ -4,21 +4,6 @@ namespace enumList;
 
 trait getRelationshipType
 {
-    public static function names(): array
-    {
-        return array_column(self::cases(), 'name');
-    }
-
-    public static function values(): array
-    {
-        return array_column(self::cases(), 'value');
-    }
-
-    public static function array(): array
-    {
-        return array_combine(self::names(), self::values());
-    }
-
     public function getValue(): string
     {
         return $this->value;
@@ -32,7 +17,7 @@ trait getRelationshipType
 
 abstract class relationshipType
 {
-    use getRelationshipType;
+    use getRelationshipType, \trait\enumList;
 
     public const PARENT = "Parent";
     public const CHILD = "Enfant";

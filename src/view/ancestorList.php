@@ -25,7 +25,7 @@ use class\display, class\format, class\UserInfo; ?>
         Filtrer genre:
         <select name="gender" class="filter removable">
             <?php
-            foreach (enumList\gender::array() as $key => $value) {
+            foreach (\enumList\gender::arrayVN() as $key => $value) {
                 echo "<option value='$key'>" . format::htmlToUpperFirst($value) . "</option>";
             }
             ?>

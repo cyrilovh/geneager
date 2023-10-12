@@ -15,7 +15,7 @@
     $form->setElement("select", array(
         "name" => "captchaLogin",
         "required" => "required",
-        "option" => \enumList\yesNo::array(),
+        "option" => \enumList\yesNo::arrayVN(),
         "value" => $gng_paramList->get("captchaLogin")),
         array(
             "before" => "<h2 class='mt10'>Authentification:</h2><p>",
@@ -26,7 +26,7 @@
     $form->setElement("select", array(
         "name" => "captchaSignup",
         "required" => "required",
-        "option" => \enumList\yesNo::array(),
+        "option" => \enumList\yesNo::arrayVN(),
         "value" => $gng_paramList->get("captchaSignup")),
         array(
             "before" => "<h2 class='mt10'>Inscription:</h2><p class='mt10'>",
@@ -37,7 +37,7 @@
     $form->setElement("select", array(
         "name" => "signup",
         "required" => "required",
-        "option" => \enumList\yesNo::array(),
+        "option" => \enumList\yesNo::arrayVN(),
         "value" => $gng_paramList->get("signup")),
         array(
             "before" => "<p class='mt10'>",
@@ -48,7 +48,7 @@
     $form->setElement("select", array(
         "name" => "emailConfirm",
         "required" => "required",
-        "option" => \enumList\yesNo::array(),
+        "option" => \enumList\yesNo::arrayVN(),
         "value" => $gng_paramList->get("emailConfirm")),
         array(
             "before" => "<p class='mt10'>",
@@ -73,7 +73,7 @@
     $form->setElement("select", array(
         "name" => "captchaForgetPassword",
         "required" => "required",
-        "option" => \enumList\yesNo::array(),
+        "option" => \enumList\yesNo::arrayVN(),
         "value" => $gng_paramList->get("captchaForgetPassword")),
         array(
             "before" => "<p class='mt10'>",
@@ -84,7 +84,7 @@
     $form->setElement("select", array(
         "name" => "browserCheck",
         "required" => "required",
-        "option" => \enumList\yesNo::array(),
+        "option" => \enumList\yesNo::arrayVN(),
         "class" => "unavailable",
         "value" => 0),
         array(
@@ -96,7 +96,7 @@
     $form->setElement("select", array(
         "name" => "signupIndexFollow",
         "required" => "required",
-        "option" => \enumList\yesNo::array(),
+        "option" => \enumList\yesNo::arrayVN(),
         "value" => $gng_paramList->get("signupIndexFollow")),
         array(
             "before" => "<p class='mt10'>",
