@@ -42,11 +42,11 @@ abstract class document{
         $this->filename = $filename;
     }
 
-    public function setTitle(string $title):void{
+    public function setTitle(?string $title):void{
         $this->title = $title;
     }
 
-    public function setDescription(string $description):void{
+    public function setDescription(?string $description):void{
         $this->description = $description;
     }
 

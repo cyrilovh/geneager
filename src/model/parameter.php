@@ -2,6 +2,8 @@
 namespace model;
 class parameter{
 
+    private mixed $data;
+
     public function __construct()
     {
         $this->data = parameter::getDataFromDB();

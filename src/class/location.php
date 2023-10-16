@@ -55,19 +55,19 @@
             $this->id = $id;
         }
 
-        public function setCity(string $city):void{
+        public function setCity(?string $city):void{
             $this->city = $city;
         }
 
-        public function setStateDepartement(string $stateDepartement):void{
+        public function setStateDepartement(?string $stateDepartement):void{
             $this->stateDepartement = $stateDepartement;
         }
 
-        public function setCountry(string $country):void{
+        public function setCountry(?string $country):void{
             $this->country = $country;
         }
 
-        public function setAccuracy(string $accuracy):void{
+        public function setAccuracy(?string $accuracy):void{
             $this->accuracy = $accuracy;
         }
 
