@@ -2,7 +2,7 @@
     namespace class;
 
     class picture extends document{
-        public static $html = true;
+        public static ?bool $html = true;
 
         public function __construct(int $id, string $filename, string $createDate, string $author)
         {

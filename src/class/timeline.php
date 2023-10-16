@@ -54,7 +54,7 @@ class timeline{
     }
 
     public function genHTMLTimeline():string{
-        *** CODE ***
+        return "toto";
     }
 
 }

@@ -6,7 +6,7 @@ namespace class;
  * Class template
  * @package class
  */
-class template
+abstract class template
 {
     /**
      * Get the template by name into the template folder
@@ -26,6 +26,8 @@ class template
             return "<!-- Template $templateName not found -->";
         }
     }
+
+    //USE data::isArrOfArr();
 
     /**
      * Replace the variables in the template by the values (adapted for the ancestors template)

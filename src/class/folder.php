@@ -39,7 +39,7 @@
             $this->author = $author;
         }
 
-        public function setCover(string $cover):void{
+        public function setCover(?string $cover):void{
             $this->cover = $cover;
         }
 

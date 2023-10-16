@@ -68,7 +68,7 @@
                 if(isset($_POST["submit"])) {
                     if($form->check()){
                         // first we update author in all table (replace author by recipient)
-                        $tableList = array("ancestor", "archive", "picturefolder", "video");
+                        $tableList = array("ancestor", "archive", "pictureFolder", "video");
                         $tableUpdated = array();
 
                         // i update all table with the new author in the tables 

@@ -1,10 +1,10 @@
 <?php
     namespace class;
-    // "Sub" class for timeline
-    class event extends timeline{
+  
+    class event{
 
-        public bool $html = false;
-        public string $defaultIcon = "fas fa-location-dot";
+        public static ?bool $html = false;
+        public static string $defaultIcon = "fas fa-location-dot";
 
         private ?int $id = 0;
         private string $icon = "fas fa-location-dot";
@@ -17,7 +17,7 @@
 
         public function __construct(){
             $this->id = 0;
-            $this->icon = null;
+            $this->icon = self::$defaultIcon;
             $this->date = null;
             $this->title = null;
             $this->description = null;
