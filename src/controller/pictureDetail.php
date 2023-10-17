@@ -52,6 +52,8 @@
                 $outputData[0]["descript"] = $picture->getDescription();
                 $outputData[0]["location"] = $event->getLocation()->getString();
                 $outputData[0]["filename"] = $picture->getFilename();
+                $outputData[0]["createDate"] = $picture->getCreateDate(); // FORMATTER / ET SI NULL
+                $outputData[0]["lastUpdate"] = $picture->getLastUpdate(); // FORMATTER / ET SI NULL
                 // //$output .= $picture->getSource();
 
                 $output = template::autoReplace(template::get("pictureDetail"), $outputData);

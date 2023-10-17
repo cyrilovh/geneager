@@ -77,9 +77,17 @@
          * @return string
          */
         public function getString():string{
-            $city = (!is_null($this->accuracy)) ? format::htmlToUcfirst($this->accuracy).", ": ""; // i check if the city is null or not (can be null if the city can't be determined by user)
-            $city .= (!is_null($this->city)) ? format::htmlToUcfirst($this->city).", ": ""; // i check if the city is null or not (can be null if the city can't be determined by user)
-            return $city.format::htmlToUpper($this->stateDepartement." - ".$this->country);
+            global $gng_paramList;
+            $location = array();
+
+            $location[] = (!is_null($this->accuracy)) ? format::htmlToUcfirst($this->accuracy): ""; 
+            $location[] = (!is_null($this->city)) ? format::htmlToUcfirst($this->city): ""; // i check if the city is null or not (can be null if the city can't be determined by user)
+            $location[] = (!is_null($this->stateDepartement)) ? format::htmlToUpper($this->stateDepartement): "";
+            $location[] = (!is_null($this->country)) ? format::htmlToUpper($this->country): "";
+            $location = format::removeValueFromArray($location, ""); // i remove empty value from the array
+            $locationStr = implode(", ", array_filter($location)); // i remove empty value from the array and i implode the array with a comma
+
+            return (validator::isNullOrEmpty($locationStr)) ? $gng_paramList->get("unlocatedText") : $locationStr;
         }
 
         /** SELECT OPTION/MODEL */

@@ -4,8 +4,21 @@
     /**
     * Static functions to check is a string or other type is valid.
     */
-    class validator{
+    abstract class validator{
+
         /**
+         * Check if it's an array of array
+         *
+         * @param [type] $variable
+         * @return boolean
+         */
+        function isArrOfArr($variable) {
+            return !empty(array_filter($variable, 'is_array'));
+        }
+
+
+        /**
+         * ⚠️ WILL BE DEPRECATED -> POO ⚠️
          * Check if a string (date, time or dateTime) is valid.
          * More informations: https://www.php.net/manual/fr/function.checkdate.php
          *
@@ -38,7 +51,7 @@
 
 
         /**
-         * ⚠️ Unsed ⚠️
+         * ⚠️ WILL BE DEPRECATED -> POO ⚠️
          * Check if time exist
          * @param string $time FORMAT: HH:MM:SS
          * example: 25:00:00 returns false (there is no 25 hours in a day)
@@ -59,6 +72,7 @@
         }
 
         /**
+         * ⚠️ WILL BE DEPRECATED -> POO ⚠️
          * Check if the string (YMD) can be a true date
          * 4 characters: year
          * 6 characters: year + month
