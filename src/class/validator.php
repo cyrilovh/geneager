@@ -12,8 +12,8 @@
          * @param [type] $variable
          * @return boolean
          */
-        function isArrOfArr($variable) {
-            return !empty(array_filter($variable, 'is_array'));
+        public static function isArrOfArr(mixed $variable):bool {
+            return is_array($variable) && count(array_filter($variable, 'is_array')) > 0;
         }
 
 

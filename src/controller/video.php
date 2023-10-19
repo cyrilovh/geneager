@@ -1,6 +1,8 @@
 <?php
     namespace class;
 
+    // ABSTRACT CLASS OF PICTURE ??????
+
     class video extends document{
         public static $html = true;
 

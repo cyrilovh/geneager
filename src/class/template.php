@@ -27,8 +27,6 @@ abstract class template
         }
     }
 
-    //USE data::isArrOfArr();
-
     /**
      * Replace the variables in the template by the values (adapted for the ancestors template)
      * @param array $data (array of data: from the database)
@@ -69,37 +67,58 @@ abstract class template
     }
 
     /**
-     * Replace automatically the variables in the template by the values
+     * Replace the variables in the template by the values 
+     * WARNING: PRIVATE FUNCTION (use autoreplace method instead)
      *
-     * @param string $template Template in HTML format
-     * @param array $data from SQL request (array of array)
-     * @param bool $editBtn if true, the edit button will be added
-     * @param string $pageEditBtn the page where the edit button will redirect (just before the id in URL)
-     * @param string $alternativeText the text to display if the value is null (for automatic replace)
+     * @param string $template
+     * @param array $element
+     * @param boolean $editBtn
+     * @param string $pageEditBtn
+     * @param string $alternativeText
      * @return string
      */
-    public static function autoReplace(string $template, array $data, bool $editBtn = false, string $pageEditBtn = "404", string $alternativeText = ""):string{
-        $output = "";
-        foreach($data as $element){ 
-            $template_tmp = $template;
+    private static function replace(string $template, array $element, bool $editBtn = false, string $pageEditBtn = "404", string $alternativeText = ""):string{
+        $template_tmp = $template;
             
-            foreach($element as $key => $value){
-                if($editBtn){
-                    if(userInfo::isConnected()){
-                        if(str_contains($key, "author") && isset($element["id"])){ // IF KEY IS ARRAY ????????????????????????????????????????????????????????????????
-                            $id = $element["id"];
-                            $template_tmp = str_replace("{editBtn}", (userInfo::isAuthorOrAdmin($value) ? "<a class='btn btn-outline-info btn-sm mt10' href='/userEdit$pageEditBtn/$id'><i class='fa-solid fa-edit'></i></a> <a class='btn btn-outline-danger btn-sm mt10' href='/userDelete$pageEditBtn/$id'><i class='fa-solid fa-trash'></i></a> <a class='btn btn-outline-success btn-sm mt10' href='/userNew$pageEditBtn/$id'><i class='fa-solid fa-plus'></i></a>" : "") , $template_tmp);
-                            $template_tmp = str_replace("{editBtnAlbum}", (userInfo::isAuthorOrAdmin($value) ? "<a class='btn btn-outline-info btn-sm mt10' href='/userEdit$pageEditBtn/$id'><i class='fa-solid fa-edit'></i></a> <a class='btn btn-outline-danger btn-sm mt10' href='/userDelete$pageEditBtn/$id'><i class='fa-solid fa-trash'></i></a> <a class='btn btn-outline-success btn-sm mt10' href='/userNewPicture/$id'><i class='fa-solid fa-plus'></i></a>" : "") , $template_tmp);
-                        }
-                    }else{
-                        $template_tmp = str_replace(array("{editBtn}", "{editBtnAlbum}"), "", $template_tmp);
-                        //$template_tmp = str_replace
+        foreach($element as $key => $value){
+            if($editBtn){
+                if(userInfo::isConnected()){
+                    if(str_contains($key, "author") && isset($element["id"])){
+                        $id = $element["id"];
+                        $template_tmp = str_replace("{editBtn}", (userInfo::isAuthorOrAdmin($value) ? "<a class='btn btn-outline-info btn-sm mt10' href='/userEdit$pageEditBtn/$id'><i class='fa-solid fa-edit'></i></a> <a class='btn btn-outline-danger btn-sm mt10' href='/userDelete$pageEditBtn/$id'><i class='fa-solid fa-trash'></i></a> <a class='btn btn-outline-success btn-sm mt10' href='/userNew$pageEditBtn/$id'><i class='fa-solid fa-plus'></i></a>" : "") , $template_tmp);
+                        $template_tmp = str_replace("{editBtnAlbum}", (userInfo::isAuthorOrAdmin($value) ? "<a class='btn btn-outline-info btn-sm mt10' href='/userEdit$pageEditBtn/$id'><i class='fa-solid fa-edit'></i></a> <a class='btn btn-outline-danger btn-sm mt10' href='/userDelete$pageEditBtn/$id'><i class='fa-solid fa-trash'></i></a> <a class='btn btn-outline-success btn-sm mt10' href='/userNewPicture/$id'><i class='fa-solid fa-plus'></i></a>" : "") , $template_tmp);
                     }
+                }else{
+                    $template_tmp = str_replace(array("{editBtn}", "{editBtnAlbum}"), "", $template_tmp);
+
                 }
-                $template_tmp = str_replace("{".$key."}", (is_null($value) ? $alternativeText : $value ), $template_tmp);
             }
-            $output .= $template_tmp;
+            $template_tmp = str_replace("{".$key."}", (is_null($value) ? $alternativeText : $value ), $template_tmp);
         }
+        return $template_tmp;      
+    }
+
+    /**
+     * Replace automatically the variables in the template by the values 
+     *
+     * @param string $template HTML template with {variableName}
+     * @param array $data Data from object or database (can be array OR array of array)
+     * @param boolean $editBtn If true, the edit button will be displayed
+     * @param string $pageEditBtn The page where the edit button will redirect
+     * @param string $alternativeText The text that will be displayed if the value is null
+     * @return string
+     */
+    public static function autoreplace(string $template, array $data, bool $editBtn = false, string $pageEditBtn = "404", string $alternativeText = "?"):string{
+        $output = "";
+        var_dump($data);
+        if(validator::isArrOfArr($data)){
+            foreach($data as $element){
+                $output .= self::replace($template, $element, $editBtn, $pageEditBtn, $alternativeText);
+            }
+        }else{
+            $output .= self::replace($template, $data, $editBtn, $pageEditBtn, $alternativeText);
+        }
+
         return $output;
     }
 }

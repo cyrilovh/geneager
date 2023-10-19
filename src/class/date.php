@@ -44,7 +44,7 @@
             return $this->day." ".$monthArr[$this->month]." ".$this->year;
         }
 
-        private function partialDateToStr(){
+        private function partialDateToStr():string{
             global $gng_paramList;
             $day = ($this->day == 0) ? "??" : $this->day;
             $month = ($this->month == 0) ? "??" : $this->month;

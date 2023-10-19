@@ -5,7 +5,6 @@
         $filename = security::cleanStr($_GET["id"]);  
         if(file_exists(UPLOAD_DIR_FULLPATH."picture/family/".$filename)){
             $data = \model\picture::getPictureAndAlbumByNameAndLocation($filename);
-            // var_dump($data);
 
             if($data){ // if exist in DB 
 
@@ -44,16 +43,16 @@
 
 
                 // THEN I USE THE OBJECT TO CREATE THE HTML
-                $outputData = array(array()); // ATTENTION BRICOLAGE
-                $outputData[0]["title"] = $picture->getTitle();
-                $outputData[0]["folderTitle"] = $picture->getFolder()->getTitle();
-                $outputData[0]["author"] = $picture->getAuthor();
-                $outputData[0]["dateEvent"] = $picture->getEvent()->getDate();
-                $outputData[0]["descript"] = $picture->getDescription();
-                $outputData[0]["location"] = $event->getLocation()->getString();
-                $outputData[0]["filename"] = $picture->getFilename();
-                $outputData[0]["createDate"] = $picture->getCreateDate(); // FORMATTER / ET SI NULL
-                $outputData[0]["lastUpdate"] = $picture->getLastUpdate(); // FORMATTER / ET SI NULL
+                $outputData = array(); // ATTENTION BRICOLAGE
+                $outputData["title"] = $picture->getTitle();
+                $outputData["folderTitle"] = $picture->getFolder()->getTitle();
+                $outputData["author"] = $picture->getAuthor();
+                $outputData["dateEvent"] = $picture->getEvent()->getDate();
+                $outputData["descript"] = $picture->getDescription();
+                $outputData["location"] = $event->getLocation()->getString();
+                $outputData["filename"] = $picture->getFilename();
+                $outputData["createDate"] = $picture->getCreateDate(); // FORMATTER / ET SI NULL
+                $outputData["lastUpdate"] = $picture->getLastUpdate(); // FORMATTER / ET SI NULL
                 // //$output .= $picture->getSource();
 
                 $output = template::autoReplace(template::get("pictureDetail"), $outputData);
