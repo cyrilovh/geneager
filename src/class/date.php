@@ -25,6 +25,11 @@
             return false;
         }
 
+        /**
+         * Return a string date (ex: 31 Décembre 2018)
+         *
+         * @return string
+         */
         private function dateToStr():string{
             $monthArr = array(
                 "01" => "Janvier",
@@ -44,6 +49,11 @@
             return $this->day." ".$monthArr[$this->month]." ".$this->year;
         }
 
+        /**
+         * Return a string date (ex: 31/12/2018)
+         *
+         * @return string
+         */
         private function partialDateToStr():string{
             global $gng_paramList;
             $day = ($this->day == 0) ? "??" : $this->day;
@@ -126,48 +136,6 @@
         public static function format(string $datetime, string $format="d/m/Y"):string{
             $date = new \DateTime($datetime);
             return $date->format($format);
-        }
-
-        /**
-         * Convert a string YMD format (form DB for example) to date (format: d/m/Y for example) if the string contains 4, 6 or 8 characters
-         * 4 characters: year
-         * 6 characters: year + month
-         * 8 characters: year + month + day
-         * 
-         * 20221201 => 01 décembre 2022
-         */
-        public static function strToDate(string|null $strDate):?string{
-            $monthArr = array(
-                "01" => "Janvier",
-                "02" => "Février",
-                "03" => "Mars",
-                "04" => "Avril",
-                "05" => "Mai",
-                "06" => "Juin",
-                "07" => "Juillet",
-                "08" => "Août",
-                "09" => "Septembre",
-                "10" => "Octobre",
-                "11" => "Novembre",
-                "12" => "Décembre"
-            );
-
-            if(validator::isStrDate($strDate)){
-                if(strlen($strDate)==4){
-                    return $strDate;
-                }elseif(strlen($strDate)==6){
-                    $year = substr($strDate, 0, 4);
-                    $month = substr($strDate, 4, 2);
-                    return $monthArr[$month]." ".$year;
-                }elseif(strlen($strDate)==8){
-                    $year = substr($strDate, 0, 4);
-                    $month = substr($strDate, 4, 2);
-                    $day = substr($strDate, 6, 2);
-                    return $day." ".$monthArr[$month]." ".$year;
-                }
-            }else{
-                return NULL;
-            }
         }
 
         /**
