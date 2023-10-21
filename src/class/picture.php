@@ -4,7 +4,7 @@
     class picture extends document{
         public static ?bool $html = true;
 
-        public function __construct(int $id, string $filename, string $createDate, string $author)
+        public function __construct(int $id, string $filename, date $createDate, string $author)
         {
             parent::__construct($id, $filename, $createDate, $author);
         }

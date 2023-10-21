@@ -15,11 +15,11 @@ abstract class document{
     protected ?event $event;
     protected ?array $tags; // ID ancestor identified in this document (picture, archive, ...)
     protected string $author;
-    protected string $createDate;
-    protected ?string $lastUpdate;
+    protected date $createDate;
+    protected ?date$lastUpdate;
 
 
-    public function __construct(int $id, string $filename, string $createDate, string $author)
+    public function __construct(int $id, string $filename, date $createDate, string $author)
     {
         $this->id = $id;
         $this->filename = $filename;
@@ -82,11 +82,11 @@ abstract class document{
         $this->author = $author;
     }
 
-    public function setCreateDate(string $createDate):void{
+    public function setCreateDate(date $createDate):void{
         $this->createDate = $createDate;
     }
 
-    public function setLastUpdate(string $lastUpdate):void{
+    public function setLastUpdate(?date $lastUpdate):void{
         $this->lastUpdate = $lastUpdate;
     }
 
@@ -127,11 +127,11 @@ abstract class document{
         return $this->author;
     }
 
-    public function getCreateDate():string{
+    public function getCreateDate():date{
         return $this->createDate;
     }
 
-    public function getLastUpdate():?string{
+    public function getLastUpdate():?date{
         return $this->lastUpdate;
     }
 }

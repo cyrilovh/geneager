@@ -97,6 +97,26 @@
             $this->day = (self::isIntDay($day)) ? $day : 0;
         }
 
+        /**
+         * SET YEAR, MONTH, DAY FROM A MYSQL TIMESTAMP (YYYY-MM-DD HH:MM:SS)
+         *
+         * @param string $date
+         * @return void
+         */
+        public function setMySQLDateAsPoo(?string $date){
+            if(!validator::isNullOrEmpty($date)){
+                $timestamp = strtotime($date);
+
+                $day = date("d", $timestamp);
+                $month = date("m", $timestamp);
+                $year = date("Y", $timestamp);
+    
+                self::setYear($year);
+                self::setMonth($month);
+                self::setDay($day);
+            }
+        }
+
         // static functions
 
         /**

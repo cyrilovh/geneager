@@ -8,8 +8,17 @@
 
             if($data){ // if exist in DB 
 
+                // create date object
+                $createDate = new date();
+                $createDate->setMySQLDateAsPoo($data["createDate"]);
+
+                // last upDate object
+                $lastUpdate = new date();
+                $lastUpdate->setMySQLDateAsPoo($data["lastUpdate"]);
+
                 // FIRSTLY I CREATE MY OBJECT
-                $picture = new picture($data["id"], $data["filename"], $data["createDate"], $data["authorAlbum"]);
+                $picture = new picture($data["id"], $data["filename"], $createDate, $data["authorAlbum"]);
+                $picture->setLastUpdate($lastUpdate);
                 $picture::$html = true;
                 // BASIC DATA
                 $picture->setTitle($data["title"]);
@@ -21,6 +30,7 @@
                 // PUT THE FOLDER IN THE PICTURE
                 $picture->setFolder($folder);
 
+                // CREATE THE EVENT
                 $date = new date($data["yearEvent"], $data["monthEvent"], $data["dayEvent"]);
 
                 $location = new location();
@@ -35,7 +45,7 @@
                 $event->setDate($date);
                 $event->setLocation($location);
 
-                // PUT THE EVENT IN THE PICTURE
+                // put the event in the picture
                 $picture->setEvent($event);
 
                 // PUT THE AUTHOR IN THE PICTURE (= author of the album)
@@ -51,8 +61,10 @@
                 $outputData["descript"] = $picture->getDescription();
                 $outputData["location"] = $event->getLocation()->getString();
                 $outputData["filename"] = $picture->getFilename();
-                $outputData["createDate"] = $picture->getCreateDate(); // FORMATTER / ET SI NULL
-                $outputData["lastUpdate"] = $picture->getLastUpdate(); // FORMATTER / ET SI NULL
+                // new date($picture->getCreateDate())->getdate()
+
+                $outputData["createDate"] = $picture->getCreateDate()->getdate(); 
+                $outputData["lastUpdate"] = $picture->getLastUpdate()->getdate();
                 // //$output .= $picture->getSource();
 
                 $output = template::autoReplace(template::get("pictureDetail"), $outputData);

@@ -110,7 +110,6 @@ abstract class template
      */
     public static function autoreplace(string $template, array $data, bool $editBtn = false, string $pageEditBtn = "404", string $alternativeText = "?"):string{
         $output = "";
-        var_dump($data);
         if(validator::isArrOfArr($data)){
             foreach($data as $element){
                 $output .= self::replace($template, $element, $editBtn, $pageEditBtn, $alternativeText);
