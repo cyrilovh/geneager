@@ -46,7 +46,8 @@
                 "12" => "Décembre"
             );
 
-            return $this->day." ".$monthArr[$this->month]." ".$this->year;
+            $month = (is_numeric($this->month)) ? str_pad($this->month, 2, "0", STR_PAD_LEFT) : "??";
+            return $this->day." ".$monthArr[$month]." ".$this->year;
         }
 
         /**

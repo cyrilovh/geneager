@@ -27,6 +27,11 @@
                 $folder = new folder($data["idAlbum"], $data["authorAlbum"], $data["createDateAlbum"], $data["lastUpdateAlbum"]);
                 $folder->setTitle($data["titleAlbum"]);
                 $folder->setDescript($data["descriptAlbum"]);
+
+                // PUT THE SOURCE IN THE PICTURE
+                $source = new source($data["sourceText"], $data["sourceLink"]);
+                $picture->setSource($source);
+
                 // PUT THE FOLDER IN THE PICTURE
                 $picture->setFolder($folder);
 
@@ -42,6 +47,7 @@
                 $event = new event(); // EVENT = ?date + ?location
 
                 $date = new date($data["yearEvent"], $data["monthEvent"], $data["dayEvent"]);
+
                 $event->setDate($date);
                 $event->setLocation($location);
 
@@ -55,17 +61,20 @@
                 // THEN I USE THE OBJECT TO CREATE THE HTML
                 $outputData = array(); // ATTENTION BRICOLAGE
                 $outputData["title"] = $picture->getTitle();
+                $outputData["descript"] = $picture->getDescription();
+                $outputData["location"] = $event->getLocation()->getString();
+                $outputData["date"] = $event->getDate(); // PROBLEME ICI
+
+                $outputData["source"] = $picture->getSource()->toHTML();
+                $outputData["folderID"] = $picture->getFolder()->getID();
                 $outputData["folderTitle"] = $picture->getFolder()->getTitle();
                 $outputData["author"] = $picture->getAuthor();
                 $outputData["dateEvent"] = $picture->getEvent()->getDate();
-                $outputData["descript"] = $picture->getDescription();
-                $outputData["location"] = $event->getLocation()->getString();
+
                 $outputData["filename"] = $picture->getFilename();
-                // new date($picture->getCreateDate())->getdate()
 
                 $outputData["createDate"] = $picture->getCreateDate()->getdate(); 
                 $outputData["lastUpdate"] = $picture->getLastUpdate()->getdate();
-                // //$output .= $picture->getSource();
 
                 $output = template::autoReplace(template::get("pictureDetail"), $outputData);
 

@@ -15,6 +15,7 @@ abstract class document{
     protected ?event $event;
     protected ?array $tags; // ID ancestor identified in this document (picture, archive, ...)
     protected string $author;
+    protected ?source $source;
     protected date $createDate;
     protected ?date$lastUpdate;
 
@@ -29,6 +30,7 @@ abstract class document{
         $this->event = null;
         $this->tags = null;
         $this->author = $author;
+        $this->source = null;
         $this->createDate = $createDate;
         $this->lastUpdate = null;
     }
@@ -82,6 +84,10 @@ abstract class document{
         $this->author = $author;
     }
 
+    public function setSource(source $source):void{
+        $this->source = $source;
+    }
+
     public function setCreateDate(date $createDate):void{
         $this->createDate = $createDate;
     }
@@ -125,6 +131,10 @@ abstract class document{
 
     public function getAuthor():string{
         return $this->author;
+    }
+
+    public function getSource():?source{
+        return $this->source;
     }
 
     public function getCreateDate():date{
