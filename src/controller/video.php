@@ -12,7 +12,7 @@
         protected string $conversation;
 
 
-        public function __construct(int $id, string $filename, string $createDate, string $author, duration $duration)
+        public function __construct(int $id, string $filename, date $createDate, string $author, duration $duration)
         {
             parent::__construct($id, $filename, $createDate, $author);
             $this->duration = $duration;

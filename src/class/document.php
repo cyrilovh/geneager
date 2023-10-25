@@ -13,7 +13,7 @@ abstract class document{
     protected ?string $description;
     protected ?folder $folder;
     protected ?event $event;
-    protected ?array $tags; // ID ancestor identified in this document (picture, archive, ...)
+    protected ?array $tagList; // ID ancestor identified in this document (picture, archive, ...)
     protected string $author;
     protected ?source $source;
     protected date $createDate;
@@ -28,7 +28,7 @@ abstract class document{
         $this->description = null;
         $this->folder = null;
         $this->event = null;
-        $this->tags = null;
+        $this->tagList = null;
         $this->author = $author;
         $this->source = null;
         $this->createDate = $createDate;
@@ -63,11 +63,11 @@ abstract class document{
     /**
      * set the tags of the document as array
      *
-     * @param array $tags
+     * @param array $tagList
      * @return void
      */
-    public function setTags(array $tags):void{
-        $this->tags = $tags;
+    public function setTagList(tag $tagList):void{
+        $this->tagList[] = $tagList;
     }
 
     /**
@@ -76,8 +76,8 @@ abstract class document{
      * @param integer $tagID
      * @return void
      */
-    public function addTag(int $tagID):void{
-        $this->tags[] = $tagID;
+    public function addTag(tag $tag):void{
+        $this->tagList[] = $tag;
     }
 
     public function setAuthor(string $author):void{
@@ -125,8 +125,17 @@ abstract class document{
         return $this->event;
     }
 
-    public function getTags():?array{
-        return $this->tags;
+    public function getTagList():?array{
+        return $this->tagList;
+    }
+
+    public function getTagString():string{
+        global $gng_paramList;
+        $output = array();
+        foreach($this->tagList as $tag){
+            $output[] = $tag->getText();
+        }
+        return (empty($output)) ? $gng_paramList->get("noTagText") : implode(", ", $output);
     }
 
     public function getAuthor():string{

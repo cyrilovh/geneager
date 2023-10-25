@@ -54,6 +54,14 @@
                 // put the event in the picture
                 $picture->setEvent($event);
 
+                // TAGS
+                // TEST
+                // TEST
+                $tagList = new tag($data["id"]);
+                $tagList->setText("toto");
+
+                $picture->setTagList($tagList);
+
                 // PUT THE AUTHOR IN THE PICTURE (= author of the album)
                 $picture->setAuthor($data["authorAlbum"]);
 
@@ -63,7 +71,9 @@
                 $outputData["title"] = $picture->getTitle();
                 $outputData["descript"] = $picture->getDescription();
                 $outputData["location"] = $event->getLocation()->getString();
-                $outputData["date"] = $event->getDate(); // PROBLEME ICI
+                $outputData["date"] = $event->getDate();
+
+                $outputData["tagList"] = $picture->getTagString();
 
                 $outputData["source"] = $picture->getSource()->toHTML();
                 $outputData["folderID"] = $picture->getFolder()->getID();
