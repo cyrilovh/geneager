@@ -66,6 +66,17 @@
             return $this->coordinates;
         }
 
+        /* ADVANCED METHODS */
+        /**
+         * Get the link to the ancestor
+         *
+         * @return string
+         */
+        public function getLink():string{
+            $text = (validator::isNullOrEmpty($this->text))? "Anc&eacute;tre n°".$this->idAncestor: $this->text;
+            return "<a href='/ancestor/{$this->idAncestor}'>{$text}</a>";
+        }
+
 
     }
 ?>

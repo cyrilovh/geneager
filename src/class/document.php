@@ -133,7 +133,7 @@ abstract class document{
         global $gng_paramList;
         $output = array();
         foreach($this->tagList as $tag){
-            $output[] = $tag->getText();
+            $output[] = $tag->getLink();
         }
         return (empty($output)) ? $gng_paramList->get("noTagText") : implode(", ", $output);
     }
