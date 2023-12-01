@@ -57,10 +57,22 @@
                 // TAGS
                 // TEST
                 // TEST
-                $tagList = new tag($data["id"]);
-                $tagList->setText("toto");
+                $dataTag = \model\tag::getByIDPicture($data["id"]);
+                echo "<pre>";
+                print_r($dataTag);
+                echo "</pre>";
 
-                $picture->setTagList($tagList);
+                if($dataTag){
+                    foreach($dataTag as $tag){
+                        $tagList = new tag($data["ancestor"]);
+                        $tagList->setText($tag["ancestor"]);
+                        $coordinatesStr = explode(",", $tag["coordinates"]);
+                        $coordinates = new coordinates($coordinatesStr[0], $coordinatesStr[1], $coordinatesStr[2], $coordinatesStr[3]);
+                        $tagList->setCoordinates($coordinates);
+
+                        $picture->setTagList($tagList);
+                    }
+                }
 
                 // PUT THE AUTHOR IN THE PICTURE (= author of the album)
                 $picture->setAuthor($data["authorAlbum"]);

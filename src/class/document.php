@@ -129,13 +129,17 @@ abstract class document{
         return $this->tagList;
     }
 
-    public function getTagString():string{
+    public function getTagString():string|null{
         global $gng_paramList;
-        $output = array();
-        foreach($this->tagList as $tag){
-            $output[] = $tag->getLink();
+        if(!is_null($this->tagList)){
+            $output = array();
+            foreach($this->tagList as $tag){
+                $output[] = $tag->getLink();
+            }
+            return implode(", ", $output);
         }
-        return (empty($output)) ? $gng_paramList->get("noTagText") : implode(", ", $output);
+
+        return $gng_paramList->get("noTagText");
     }
 
     public function getAuthor():string{
