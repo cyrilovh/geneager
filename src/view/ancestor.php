@@ -4,12 +4,12 @@
 <aside>
     <!-- IDENTITY, GENDER, SUMMARY -->
     <div class="ancestorBio">
-        <?=(userInfo::isAuthorOrAdmin($ancestor->get()["id"])) ? "<p class='bar'><a href='/userEditAncestor/".$ancestor->get()["id"]."' class='btn btn-info btn-sm'><i class='fas fa-edit'></i> Modifier</a> <a href='/userDeleteAncestor/".$ancestor->get()["id"]."' class='btn btn-danger btn-sm'><i class='fas fa-trash'></i> Supprimer</a></p>" : ""; ?>
-        <img class="picture" src="<?=($ancestor->get()["photo"]) ? "/picture/ancestor/".$ancestor->get()["photo"]: DEFAULTPICTUREANCESTOR ;?>" onerror="this.src='<?=DEFAULTPICTUREANCESTOR;?>'" alt="" title="">
-        <h1><?=$ancestor->getFullIdentity(true); ?></h1>
-        <p class="txt-disabled"><i class="fas fa-venus-mars"></i> <?=\enumList\gender::getByID($ancestor->get()["gender"])?></p>
+        <?=(userInfo::isAuthorOrAdmin($ancestor->getAuthor())) ? "<p class='bar'><a href='/userEditAncestor/".$ancestor->getID()."' class='btn btn-info btn-sm'><i class='fas fa-edit'></i> Modifier</a> <a href='/userDeleteAncestor/".$ancestor->getID()."' class='btn btn-danger btn-sm'><i class='fas fa-trash'></i> Supprimer</a></p>" : ""; ?>
+        <img class="picture" src="<?=($ancestor->getPhoto()) ? "/picture/ancestor/".$ancestor->getPhoto(): DEFAULTPICTUREANCESTOR ;?>" onerror="this.src='<?=DEFAULTPICTUREANCESTOR;?>'" alt="" title="">
+        <h1><?=$ancestor->getFullIdentityDisplayShorter(true); ?></h1>
+        <p class="txt-disabled"><i class="fas fa-venus-mars"></i> <?=\enumList\gender::getByID($ancestor->getGender())?></p>
         <h2>Biographie:</h2>
-        <p class="biography"><?=(strlen(format::normalize($ancestor->get()["biography"]))>0) ? $ancestor->get()["biography"]: "Aucune biographie pour cet individu."; ?></p>
+        <p class="biography"><?=(strlen(format::normalize($ancestor->getBiography()))>0) ? $ancestor->getBiography(): "Aucune biographie pour cet individu."; ?></p>
     </div>
     <!-- Timeline -->
     <!-- créer class getTimeline() -->

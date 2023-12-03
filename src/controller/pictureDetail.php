@@ -64,7 +64,7 @@
 
                 if($dataTag){
                     foreach($dataTag as $tag){
-                        $tagList = new tag($data["ancestor"]);
+                        $tagList = new tag($tag["ancestor"]);
                         $tagList->setText($tag["ancestor"]);
                         $coordinatesStr = explode(",", $tag["coordinates"]);
                         $coordinates = new coordinates($coordinatesStr[0], $coordinatesStr[1], $coordinatesStr[2], $coordinatesStr[3]);

@@ -82,7 +82,7 @@ class format{
      * @param boolean $html
      * @return string
      */
-    public static function htmlToUpperFirst(string $str, bool $html = false):string{
+    public static function htmlToUpperFirst(?string $str, bool $html = false):string{
         $explode = explode(" ", $str);
         $return = array();
         foreach($explode as $value){

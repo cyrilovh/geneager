@@ -6,7 +6,7 @@
      */
     class tag{
         protected int $idAncestor;
-        protected ?string $text;
+        protected ?string $ancestor;
 
         protected ?time $startTime;
         protected ?time $endTime;
@@ -16,7 +16,7 @@
         public function __construct(int $idAncestor)
         {
             $this->idAncestor = $idAncestor;
-            $this->text = null;
+            $this->ancestor = null;
             $this->startTime = null;
             $this->endTime = null;
             $this->coordinates = null;
@@ -28,8 +28,8 @@
             $this->idAncestor = $idAncestor;
         }
 
-        public function setText(?string $text):void{
-            $this->text = $text;
+        public function setAncestor(?string $Ancestor):void{
+            $this->ancestor = $Ancestor;
         }
 
         public function setStartTime(?time $startTime):void{
@@ -50,8 +50,8 @@
             return $this->idAncestor;
         }
 
-        public function getText():?string{
-            return $this->text;
+        public function getAncestor():?string{
+            return $this->ancestor;
         }
 
         public function getStartTime():?time{
@@ -73,8 +73,8 @@
          * @return string
          */
         public function getLink():string{
-            $text = (validator::isNullOrEmpty($this->text))? "Anc&eacute;tre n°".$this->idAncestor: $this->text;
-            return "<a href='/ancestor/{$this->idAncestor}'>{$text}</a>";
+            $Ancestor = (validator::isNullOrEmpty($this->ancestor))? "Anc&eacute;tre n°".$this->idAncestor: $this->ancestor;
+            return "<a href='/ancestor/{$this->idAncestor}'>{$Ancestor}</a>";
         }
 
 
