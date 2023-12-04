@@ -55,17 +55,24 @@
                 $picture->setEvent($event);
 
                 // TAGS
-                // TEST
-                // TEST
-                $dataTag = \model\tag::getByIDPicture($data["id"]);
+                $dataTag = \model\tag::getByIDPictureWithIdentity($data["id"]);
                 echo "<pre>";
                 print_r($dataTag);
                 echo "</pre>";
 
                 if($dataTag){
                     foreach($dataTag as $tag){
-                        $tagList = new tag($tag["ancestor"]);
-                        $tagList->setText($tag["ancestor"]);
+                        $tagList = new tag();
+
+                        // i define the ancestor to put in the tagList
+                        $ancestor = new ancestor($tag["ancestorID"]);
+                        $ancestor->setFirstNameList($tag["firstNameList"]);
+                        $ancestor->setLastNameList($tag["lastNameList"]);
+                        $ancestor->setBirthNameList($tag["birthNameList"]);
+                        $ancestor->setMarriedNameList($tag["marriedNameList"]);
+
+                        $tagList->setAncestor($ancestor);
+    
                         $coordinatesStr = explode(",", $tag["coordinates"]);
                         $coordinates = new coordinates($coordinatesStr[0], $coordinatesStr[1], $coordinatesStr[2], $coordinatesStr[3]);
                         $tagList->setCoordinates($coordinates);

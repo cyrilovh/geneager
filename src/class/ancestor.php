@@ -218,7 +218,7 @@
          * example Pierre Richard Freddy JACKSON => Pierre R. F. JACKSON
          *
          * @param boolean $html
-         * @return void
+         * @return string
          */
         public function getFullIdentityDisplayShorter(bool $html): string
         {
