@@ -21,7 +21,7 @@
 
         public static function getByIDPictureWithIdentity(int $idPicture):array{
             global $db;
-            $query = $db->prepare("SELECT picturetag.id, picturetag.coordinates, picturetag.pictureID, ancestor.id as ancestorID, ancestor.firstNameList, ancestor.lastNameList, ancestor.birthNameList, ancestor.marriedNameList FROM picturetag INNER JOIN ancestor ON picturetag.ancestor = ancestor.id WHERE picturetag.pictureID=:idPicture");
+            $query = $db->prepare("SELECT picturetag.coordinates, ancestor.id as ancestorID, ancestor.firstNameList, ancestor.lastNameList, ancestor.birthNameList, ancestor.marriedNameList FROM picturetag INNER JOIN ancestor ON picturetag.ancestor = ancestor.id WHERE picturetag.pictureID=:idPicture");
             $query->execute(['idPicture' => $idPicture]);
             return $query->fetchAll(\PDO::FETCH_ASSOC);
             $query->closeCursor();
