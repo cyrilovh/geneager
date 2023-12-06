@@ -15,13 +15,13 @@
         private ?string $attachmentText; // text for link
         private ?string $attachmentLink; // URL to document or other media
 
-        public function __construct(){
+        public function __construct(?string $title = null, ?date $date = null, ?location $location = null){
             $this->id = 0;
             $this->icon = self::$defaultIcon;
-            $this->date = null;
-            $this->title = null;
+            $this->date = $date;
+            $this->title = $title;
             $this->description = null;
-            $this->location = null;
+            $this->location = $location;
             $this->attachmentText = null;
             $this->attachmentLink = null;
         }

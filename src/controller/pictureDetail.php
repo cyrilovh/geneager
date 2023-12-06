@@ -37,21 +37,10 @@
 
                 // CREATE THE EVENT
                 $date = new date($data["yearEvent"], $data["monthEvent"], $data["dayEvent"]);
+                $location = new location($data["country"], $data["stateDepartementName"], $data["cityName"], $data["accuracyLocation"]);
 
-                $location = new location();
-                $location->setAccuracy($data["accuracyLocation"]);
-                $location->setCity($data["cityName"]);
-                $location->setStateDepartement($data["stateDepartementName"]);
-                $location->setCountry($data["country"]);
+                $event = new event(null, $date, $location); // EVENT = ?date + ?location
 
-                $event = new event(); // EVENT = ?date + ?location
-
-                $date = new date($data["yearEvent"], $data["monthEvent"], $data["dayEvent"]);
-
-                $event->setDate($date);
-                $event->setLocation($location);
-
-                // put the event in the picture
                 $picture->setEvent($event);
 
                 // TAGS
@@ -86,24 +75,22 @@
 
 
                 // THEN I USE THE OBJECT TO CREATE THE HTML
-                $outputData = array(); // ATTENTION BRICOLAGE
-                $outputData["title"] = $picture->getTitle();
-                $outputData["descript"] = $picture->getDescription();
-                $outputData["location"] = $event->getLocation()->getString();
-                $outputData["date"] = $event->getDate();
-
-                $outputData["tagList"] = $picture->getTagString();
-
-                $outputData["source"] = $picture->getSource()->toHTML();
-                $outputData["folderID"] = $picture->getFolder()->getID();
-                $outputData["folderTitle"] = $picture->getFolder()->getTitle();
-                $outputData["author"] = $picture->getAuthor();
-                $outputData["dateEvent"] = $picture->getEvent()->getDate();
-
-                $outputData["filename"] = $picture->getFilename();
-
-                $outputData["createDate"] = $picture->getCreateDate()->getdate(); 
-                $outputData["lastUpdate"] = $picture->getLastUpdate()->getdate();
+                $outputData = [
+                    "title" => $picture->getTitle(),
+                    "descript" => $picture->getDescription(),
+                    "location" => $event->getLocation()->getString(),
+                    "date" => $event->getDate(),
+                    "tagList" => $picture->getTagString(),
+                    "source" => $picture->getSource()->toHTML(),
+                    "folderID" => $picture->getFolder()->getID(),
+                    "folderTitle" => $picture->getFolder()->getTitle(),
+                    "author" => $picture->getAuthor(),
+                    "dateEvent" => $picture->getEvent()->getDate(),
+                    "filename" => $picture->getFilename(),
+                    "createDate" => $picture->getCreateDate()->getdate(),
+                    "lastUpdate" => $picture->getLastUpdate()->getdate()
+                ];
+                
 
                 $output = template::autoReplace(template::get("pictureDetail"), $outputData);
 
@@ -125,4 +112,3 @@
     }else{
         mcv::addView("404");
     }
-
