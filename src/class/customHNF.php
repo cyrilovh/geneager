@@ -8,6 +8,10 @@ Basic function if user want change the default header, navbar or footer in the p
 */
 namespace class;
 class customHNF{
+    private string $header;
+    private string $navbar;
+    private string $footer;
+
     public function __construct($include_header, $include_navbar, $include_footer){
         $this->header = $include_header;
         $this->navbar = $include_navbar;
