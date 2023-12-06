@@ -9,36 +9,36 @@
             if($data){ // if exist in DB 
 
                 // create date object
-                $createDate = new date();
-                $createDate->setMySQLDateAsPoo($data["createDate"]);
+                $createDateObj = new date();
+                $createDateObj->setMySQLDateAsPoo($data["createDate"]);
 
                 // last upDate object
-                $lastUpdate = new date();
-                $lastUpdate->setMySQLDateAsPoo($data["lastUpdate"]);
+                $lastUpdateObj = new date();
+                $lastUpdateObj->setMySQLDateAsPoo($data["lastUpdate"]);
 
                 // FIRSTLY I CREATE MY OBJECT
-                $picture = new picture($data["id"], $data["filename"], $createDate, $data["authorAlbum"]);
-                $picture->setLastUpdate($lastUpdate);
+                $picture = new picture($data["id"], $data["filename"], $createDateObj, $data["authorAlbum"]);
+                $picture->setLastUpdate($lastUpdateObj);
                 $picture::$html = true;
                 // add basic data
                 $picture->setTitle($data["title"]);
                 $picture->setDescription($data["descript"]);
 
                 // FOLDER OF THE PICTURE
-                $folder = new folder($data["idAlbum"], $data["authorAlbum"], $data["createDateAlbum"], $data["lastUpdateAlbum"]);
-                $folder->setTitle($data["titleAlbum"]);
-                $folder->setDescript($data["descriptAlbum"]);
-                $picture->setFolder($folder);
+                $folderObj = new folder($data["idAlbum"], $data["authorAlbum"], $data["createDateAlbum"], $data["lastUpdateAlbum"]);
+                $folderObj->setTitle($data["titleAlbum"]);
+                $folderObj->setDescript($data["descriptAlbum"]);
+                $picture->setFolder($folderObj);
 
                 // PICTURE SOURCE
-                $source = new source($data["sourceText"], $data["sourceLink"]);
-                $picture->setSource($source);
+                $sourceObj = new source($data["sourceText"], $data["sourceLink"]);
+                $picture->setSource($sourceObj);
 
                 // EVENT
-                $date = new date($data["yearEvent"], $data["monthEvent"], $data["dayEvent"]);
-                $location = new location($data["country"], $data["stateDepartementName"], $data["cityName"], $data["accuracyLocation"]);
-                $event = new event(null, $date, $location);
-                $picture->setEvent($event);
+                $dateObj = new date($data["yearEvent"], $data["monthEvent"], $data["dayEvent"]);
+                $locationObj = new location($data["country"], $data["stateDepartementName"], $data["cityName"], $data["accuracyLocation"]);
+                $eventObj = new event(null, $dateObj, $locationObj);
+                $picture->setEvent($eventObj);
 
                 // AUTHOR (= author of the album)
                 $picture->setAuthor($data["authorAlbum"]);
@@ -54,17 +54,17 @@
                         $tagList = new tag();
 
                         // i define the ancestor to put in the tagList
-                        $ancestor = new ancestor($tag["ancestorID"]);
-                        $ancestor->setFirstNameList($tag["firstNameList"]);
-                        $ancestor->setLastNameList($tag["lastNameList"]);
-                        $ancestor->setBirthNameList($tag["birthNameList"]);
-                        $ancestor->setMarriedNameList($tag["marriedNameList"]);
+                        $ancestorObj = new ancestor($tag["ancestorID"]);
+                        $ancestorObj->setFirstNameList($tag["firstNameList"]);
+                        $ancestorObj->setLastNameList($tag["lastNameList"]);
+                        $ancestorObj->setBirthNameList($tag["birthNameList"]);
+                        $ancestorObj->setMarriedNameList($tag["marriedNameList"]);
 
-                        $tagList->setAncestor($ancestor);
+                        $tagList->setAncestor($ancestorObj);
     
                         $coordinatesStr = explode(",", $tag["coordinates"]);
-                        $coordinates = new coordinates($coordinatesStr[0], $coordinatesStr[1], $coordinatesStr[2], $coordinatesStr[3]);
-                        $tagList->setCoordinates($coordinates);
+                        $coordinatesObj = new coordinates($coordinatesStr[0], $coordinatesStr[1], $coordinatesStr[2], $coordinatesStr[3]);
+                        $tagList->setCoordinates($coordinatesObj);
 
                         $picture->addTag($tagList);
                         
@@ -75,8 +75,8 @@
                 $outputData = [
                     "title" => $picture->getTitle(),
                     "descript" => $picture->getDescription(),
-                    "location" => $event->getLocation()->getString(),
-                    "date" => $event->getDate(),
+                    "location" => $eventObj->getLocation()->getString(),
+                    "date" => $eventObj->getDate(),
                     "tagList" => $picture->getTagString(),
                     "source" => $picture->getSource()->toHTML(),
                     "folderID" => $picture->getFolder()->getID(),
