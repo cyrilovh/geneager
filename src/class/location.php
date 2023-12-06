@@ -12,13 +12,22 @@
         private ?string $country;
         private ?string $accuracy = null;
 
-        public function __construct()
+        /**
+         * Constructor of the location class
+         * Sort parameters in descending order of importance: country, state-department, city, precision
+         *
+         * @param string|null $country
+         * @param string|null $stateDepartement
+         * @param string|null $city
+         * @param string|null $accuracy
+         */
+        public function __construct(?string $country = null, ?string $stateDepartement = null, ?string $city = null, ?string $accuracy = null)
         {
             $this->id = null;
-            $this->city = null;
-            $this->stateDepartement = null;
-            $this->country = null;
-            $this->accuracy = null;
+            $this->city = $city;
+            $this->stateDepartement = $stateDepartement;
+            $this->country = $country;
+            $this->accuracy = $accuracy;
         }
 
         public function getAll(){

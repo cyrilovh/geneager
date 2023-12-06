@@ -56,9 +56,9 @@
 
                 // TAGS
                 $dataTag = \model\tag::getByIDPictureWithIdentity($data["id"]);
-                echo "<pre>";
-                print_r($dataTag);
-                echo "</pre>";
+                // echo "<pre>";
+                // print_r($dataTag);
+                // echo "</pre>";
 
                 if($dataTag){
                     foreach($dataTag as $tag){
