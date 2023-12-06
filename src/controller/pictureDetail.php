@@ -45,9 +45,9 @@
 
                 // TAGS
                 $dataTag = \model\tag::getByIDPictureWithIdentity($data["id"]);
-                // echo "<pre>";
-                // print_r($dataTag);
-                // echo "</pre>";
+                echo "<pre>";
+                print_r($dataTag);
+                echo "</pre>";
 
                 if($dataTag){
                     foreach($dataTag as $tag){
@@ -66,6 +66,7 @@
                         $coordinates = new coordinates($coordinatesStr[0], $coordinatesStr[1], $coordinatesStr[2], $coordinatesStr[3]);
                         $tagList->setCoordinates($coordinates);
 
+                        $picture->addTag($tagList);
                         
                     }
                 }
