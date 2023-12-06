@@ -20,28 +20,28 @@
                 $picture = new picture($data["id"], $data["filename"], $createDate, $data["authorAlbum"]);
                 $picture->setLastUpdate($lastUpdate);
                 $picture::$html = true;
-                // BASIC DATA
+                // add basic data
                 $picture->setTitle($data["title"]);
                 $picture->setDescription($data["descript"]);
 
+                // FOLDER OF THE PICTURE
                 $folder = new folder($data["idAlbum"], $data["authorAlbum"], $data["createDateAlbum"], $data["lastUpdateAlbum"]);
                 $folder->setTitle($data["titleAlbum"]);
                 $folder->setDescript($data["descriptAlbum"]);
+                $picture->setFolder($folder);
 
-                // PUT THE SOURCE IN THE PICTURE
+                // PICTURE SOURCE
                 $source = new source($data["sourceText"], $data["sourceLink"]);
                 $picture->setSource($source);
 
-                // PUT THE FOLDER IN THE PICTURE
-                $picture->setFolder($folder);
-
-                // CREATE THE EVENT
+                // EVENT
                 $date = new date($data["yearEvent"], $data["monthEvent"], $data["dayEvent"]);
                 $location = new location($data["country"], $data["stateDepartementName"], $data["cityName"], $data["accuracyLocation"]);
-
-                $event = new event(null, $date, $location); // EVENT = ?date + ?location
-
+                $event = new event(null, $date, $location);
                 $picture->setEvent($event);
+
+                // AUTHOR (= author of the album)
+                $picture->setAuthor($data["authorAlbum"]);
 
                 // TAGS
                 $dataTag = \model\tag::getByIDPictureWithIdentity($data["id"]);
@@ -66,13 +66,9 @@
                         $coordinates = new coordinates($coordinatesStr[0], $coordinatesStr[1], $coordinatesStr[2], $coordinatesStr[3]);
                         $tagList->setCoordinates($coordinates);
 
-                        $picture->setTagList($tagList);
+                        
                     }
                 }
-
-                // PUT THE AUTHOR IN THE PICTURE (= author of the album)
-                $picture->setAuthor($data["authorAlbum"]);
-
 
                 // THEN I USE THE OBJECT TO CREATE THE HTML
                 $outputData = [
@@ -97,8 +93,6 @@
                 metaTitle::setTitle($data["title"]." — Photo");
                 metaTitle::setDescription($data["descript"]);
 
-
-                
                 mcv::addView("pictureDetail");
             }else{
                 $msgError = "Le fichier existe sur le serveur mais pas dans la base de données.";
