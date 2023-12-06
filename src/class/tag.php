@@ -7,16 +7,11 @@
     class tag{
         protected ?ancestor $ancestor;
 
-        protected ?time $startTime;
-        protected ?time $endTime;
-
         protected ?coordinates $coordinates;
 
         public function __construct()
         {
             $this->ancestor = null;
-            $this->startTime = null;
-            $this->endTime = null;
             $this->coordinates = null;
         }
 
@@ -24,14 +19,6 @@
 
         public function setAncestor(ancestor $ancestor):void{
             $this->ancestor = $ancestor;
-        }
-
-        public function setStartTime(?time $startTime):void{
-            $this->startTime = $startTime;
-        }
-
-        public function setEndTime(?time $endTime):void{
-            $this->endTime = $endTime;
         }
 
         public function setCoordinates(?coordinates $coordinates):void{
@@ -50,14 +37,6 @@
 
         public function getAncestorName():string{
             return $this->ancestor->getFullIdentityDisplayShorter(true);
-        }
-
-        public function getStartTime():?time{
-            return $this->startTime;
-        }
-
-        public function getEndTime():?time{
-            return $this->endTime;
         }
 
         public function getCoordinates():?coordinates{
