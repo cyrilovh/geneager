@@ -51,7 +51,7 @@
 
                 if($dataTag){
                     foreach($dataTag as $tag){
-                        $tagList = new tag();
+                        $tagPoo = new tag();
 
                         // i define the ancestor to put in the tagList
                         $ancestorObj = new ancestor($tag["ancestorID"]);
@@ -60,13 +60,13 @@
                         $ancestorObj->setBirthNameList($tag["birthNameList"]);
                         $ancestorObj->setMarriedNameList($tag["marriedNameList"]);
 
-                        $tagList->setAncestor($ancestorObj);
+                        $tagPoo->setAncestor($ancestorObj);
     
                         $coordinatesStr = explode(",", $tag["coordinates"]);
                         $coordinatesObj = new coordinates($coordinatesStr[0], $coordinatesStr[1], $coordinatesStr[2], $coordinatesStr[3]);
-                        $tagList->setCoordinates($coordinatesObj);
+                        $tagPoo->setCoordinates($coordinatesObj);
 
-                        $picture->addTag($tagList);
+                        $picture->addTag($tagPoo);
                         
                     }
                 }
