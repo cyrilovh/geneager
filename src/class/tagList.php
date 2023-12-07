@@ -17,6 +17,19 @@
             return $this->tagList;
         }
 
+        /**
+         * Return a string linkable with all tags separated by a comma
+         *
+         * @return string
+         */
+        public function getTagListString():string{
+            $tagListString = "";
+            foreach($this->tagList as $tag){
+                $tagListString .= $tag->getLink().", ";
+            }
+            return substr($tagListString, 0, -2);
+        }
+
         public function getTagListByType(string $type):array{
             $tagList = [];
             foreach($this->tagList as $tag){

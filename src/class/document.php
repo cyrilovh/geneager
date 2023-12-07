@@ -13,7 +13,7 @@ abstract class document{
     protected ?string $description;
     protected ?folder $folder;
     protected ?event $event;
-    protected ?array $tagList; // ID ancestor identified in this document (picture, archive, ...)
+    protected ?tagList $tagList; // ID ancestor identified in this document (picture, archive, ...)
     protected string $author;
     protected ?source $source;
     protected date $createDate;
@@ -66,18 +66,8 @@ abstract class document{
      * @param array $tagList
      * @return void
      */
-    public function setTagList(tag $tagList):void{
-        $this->tagList[] = $tagList;
-    }
-
-    /**
-     * Add a tag to the document (in array)
-     *
-     * @param integer $tagID
-     * @return void
-     */
-    public function addTag(tag $tag):void{
-        $this->tagList[] = $tag;
+    public function setTagList(tagList $tagList):void{
+        $this->tagList = $tagList;
     }
 
     public function setAuthor(string $author):void{
@@ -125,21 +115,8 @@ abstract class document{
         return $this->event;
     }
 
-    public function getTagList():?array{
+    public function getTagList():?tagList{
         return $this->tagList;
-    }
-
-    public function getTagString():string|null{
-        global $gng_paramList;
-        if(!is_null($this->tagList)){
-            $output = array();
-            foreach($this->tagList as $tag){
-                $output[] = $tag->getLink();
-            }
-            return implode(", ", $output);
-        }
-
-        return $gng_paramList->get("noTagText");
     }
 
     public function getAuthor():string{

@@ -49,6 +49,7 @@
                 print_r($dataTag);
                 echo "</pre>";
 
+                $tagListPoo = new tagList();
                 if($dataTag){
                     foreach($dataTag as $tag){
                         $tagPoo = new tag();
@@ -66,18 +67,20 @@
                         $coordinatesObj = new coordinates($coordinatesStr[0], $coordinatesStr[1], $coordinatesStr[2], $coordinatesStr[3]);
                         $tagPoo->setCoordinates($coordinatesObj);
 
-                        $picture->addTag($tagPoo);
+                        //$picture->addTag($tagPoo);
+                        $tagListPoo->addTag($tagPoo);
                         
                     }
                 }
 
+                $picture->setTagList($tagListPoo);
                 // THEN I USE THE OBJECT TO CREATE THE HTML
                 $outputData = [
                     "title" => $picture->getTitle(),
                     "descript" => $picture->getDescription(),
                     "location" => $eventObj->getLocation()->getString(),
                     "date" => $eventObj->getDate(),
-                    "tagList" => $picture->getTagString(),
+                    "tagList" => $picture->getTagList()->getTagListString(),
                     "source" => $picture->getSource()->toHTML(),
                     "folderID" => $picture->getFolder()->getID(),
                     "folderTitle" => $picture->getFolder()->getTitle(),
