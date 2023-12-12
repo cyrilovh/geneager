@@ -70,27 +70,29 @@ abstract class template
      * Replace the variables in the template by the values 
      * WARNING: PRIVATE FUNCTION (use autoreplace method instead)
      *
-     * @param string $template
-     * @param array $element
-     * @param boolean $editBtn
-     * @param string $pageEditBtn
-     * @param string $alternativeText
+     * @param string $template HTML template with {variableName}
+     * @param array $element Data from array or database
+     * @param boolean $editBtn If true, the edit buttons will be displayed
+     * @param string $pageEditBtn The page where the edit button will redirect
+     * @param string $alternativeText The text that will be displayed if the value is null
      * @return string
      */
     private static function replace(string $template, array $element, bool $editBtn = false, string $pageEditBtn = "404", string $alternativeText = ""):string{
         $template_tmp = $template;
-            
+        echo "<pre>";
+        print_r($element);
+        echo "</pre>";
         foreach($element as $key => $value){
+            echo "OK";
             if($editBtn){
                 if(userInfo::isConnected()){
                     if(str_contains($key, "author") && isset($element["id"])){
                         $id = $element["id"];
-                        $template_tmp = str_replace("{editBtn}", (userInfo::isAuthorOrAdmin($value) ? "<a class='btn btn-outline-info btn-sm mt10' href='/userEdit$pageEditBtn/$id'><i class='fa-solid fa-edit'></i></a> <a class='btn btn-outline-danger btn-sm mt10' href='/userDelete$pageEditBtn/$id'><i class='fa-solid fa-trash'></i></a> <a class='btn btn-outline-success btn-sm mt10' href='/userNew$pageEditBtn/$id'><i class='fa-solid fa-plus'></i></a>" : "") , $template_tmp);
+                        $template_tmp = str_replace("{editBtn}", (userInfo::isAuthorOrAdmin($value) ? "<span><a class='btn btn-outline-info btn-sm mt10' href='/userEdit$pageEditBtn/$id'><i class='fa-solid fa-edit'></i></a> <a class='btn btn-outline-danger btn-sm mt10' href='/userDelete$pageEditBtn/$id'><i class='fa-solid fa-trash'></i></a> <a class='btn btn-outline-success btn-sm mt10' href='/userNew$pageEditBtn/$id'><i class='fa-solid fa-plus'></i></a></span>" : "") , $template_tmp);
                         $template_tmp = str_replace("{editBtnAlbum}", (userInfo::isAuthorOrAdmin($value) ? "<a class='btn btn-outline-info btn-sm mt10' href='/userEdit$pageEditBtn/$id'><i class='fa-solid fa-edit'></i></a> <a class='btn btn-outline-danger btn-sm mt10' href='/userDelete$pageEditBtn/$id'><i class='fa-solid fa-trash'></i></a> <a class='btn btn-outline-success btn-sm mt10' href='/userNewPicture/$id'><i class='fa-solid fa-plus'></i></a>" : "") , $template_tmp);
                     }
                 }else{
                     $template_tmp = str_replace(array("{editBtn}", "{editBtnAlbum}"), "", $template_tmp);
-
                 }
             }
             $template_tmp = str_replace("{".$key."}", (is_null($value) ? $alternativeText : $value ), $template_tmp);

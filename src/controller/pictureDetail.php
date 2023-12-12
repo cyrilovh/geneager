@@ -45,9 +45,6 @@
 
                 // TAGS
                 $dataTag = \model\tag::getByIDPictureWithIdentity($data["id"]);
-                echo "<pre>";
-                print_r($dataTag);
-                echo "</pre>";
 
                 $tagListPoo = new tagList();
                 if($dataTag){
@@ -76,6 +73,7 @@
                 $picture->setTagList($tagListPoo);
                 // THEN I USE THE OBJECT TO CREATE THE HTML
                 $outputData = [
+                    "id" => $picture->getID(),
                     "title" => $picture->getTitle(),
                     "descript" => $picture->getDescription(),
                     "location" => $eventObj->getLocation()->getString(),
@@ -92,7 +90,7 @@
                 ];
                 
 
-                $output = template::autoReplace(template::get("pictureDetail"), $outputData);
+                $output = template::autoReplace(template::get("pictureDetail"), $outputData, true, "Picture");
 
                 metaTitle::setTitle($data["title"]." — Photo");
                 metaTitle::setDescription($data["descript"]);
