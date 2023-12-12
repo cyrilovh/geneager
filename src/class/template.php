@@ -79,11 +79,8 @@ abstract class template
      */
     private static function replace(string $template, array $element, bool $editBtn = false, string $pageEditBtn = "404", string $alternativeText = ""):string{
         $template_tmp = $template;
-        echo "<pre>";
-        print_r($element);
-        echo "</pre>";
+
         foreach($element as $key => $value){
-            echo "OK";
             if($editBtn){
                 if(userInfo::isConnected()){
                     if(str_contains($key, "author") && isset($element["id"])){
