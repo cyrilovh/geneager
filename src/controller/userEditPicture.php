@@ -1,6 +1,6 @@
 <?php
     namespace class;
-    /* TEST METAS */
+
     metaTitle::setTitle("Editer une photo");
     $include_footer = "none";
 
@@ -23,7 +23,7 @@
             )
         );
 
-        // check if adminMode is provided: else it's enabled by default
+        // Check if "adminMode" is missing in the URL, if yes, add it for add all privileges
         if(userInfo::adminModeMissing()){
             $redirect = url::addParam(url::current(), "adminMode", "1", false);
             header("Location: $redirect");
@@ -31,15 +31,22 @@
         }
     }
 
-    if(isset($_GET["filename"])){
-        $filename = security::cleanStr($_GET["filename"]);
-        $pictureData = \model\picture::getPictureAndAlbumByName($filename);
+    // VIEW + UPDATE SYSTEM
+    if(isset($_GET["filename"]) || isset($_GET["id"])){
+        if(isset($_GET["filename"])){
+            $filename = security::cleanStr($_GET["filename"]);
+            $pictureData = \model\picture::getPictureAndAlbumByName($filename);
+        }else{
+            $id = is_numeric($_GET["id"]) ? security::cleanStr($_GET["id"]) : 0;
+            $pictureData = \model\picture::getPictureAndAlbumByID($id);
+        }
+
         if($pictureData){
             if(\class\userInfo::isAuthorOrAdmin($pictureData["authorAlbum"])){
                 // VIEW
                 mcv::addView("userEditPicture");
 
-                // MY FORM
+                // Form for update data of the picture
                 $form = new form(
                     array(
                         "action" => "",
@@ -53,7 +60,7 @@
                     array(
                         "type" => "text",
                         "name" => "filename",
-                        "value" => $filename,
+                        "value" => $pictureData["filename"],
                         "class" => "form-control w100",
                         "disabled" => "disabled"
                     ),
@@ -223,7 +230,13 @@
                 // CHECK FORM SUBMIT
                 if(isset($_POST["submit"])){
                     if($form->check(true)){ // if the form is not falsified and all the fields are valid
-                        if(db::update($form->getData(), "picture", array("filename" => $_GET["filename"]), true)){ // update the data in the database
+                        if(isset($_GET["filename"])){
+                            $cond = array("filename" => $filename);
+                        }else if(isset($_GET["id"])){
+                            $cond = array ("id" => $id);
+                        }
+
+                        if(db::update($form->getData(), "picture", $cond, true)){ // update the data in the database
                             $currentURL = \class\url::current();
                             $msgSuccess = "<p class='mt10 bold uppercase'>Les données ont été mises à jour.<p>";
                             $msgSuccess .= "<p><a class='btn btn-success mt10' href='$currentURL'>&#129152; Retour au formulaire.</a></p>";
