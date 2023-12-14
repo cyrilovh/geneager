@@ -16,10 +16,10 @@
                 Sur le site
             </p>
             <p>
-                <a href="/?page=about">Contact</a>
+                <a href="/about">Contact</a>
             </p>
             <p>
-                <a href="/?page=about">Mention légales</a>
+                <a href="/about">Mention légales</a>
             </p>
 		</div>
         <div class="row3">

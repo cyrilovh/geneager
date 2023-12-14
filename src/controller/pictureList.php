@@ -6,10 +6,12 @@
 
     if(validator::isId()){ // i check if ID is provided
         $id = format::normalize($_GET["id"]);
-        $data = \model\picture::getList(array("picture.folder" => $id));
+        $data = \model\album::getPictureListAndAlbumInfoByID($id);
         $btnNewPicture = "<a href='/userNewPicture/$id' class='btn btn-success'><i class='fas fa-plus'></i> Ajouter une photo</a>";
 
-        var_dump(\model\album::getPictureListAndAlbumInfoByID($id));
+        echo "<pre>";
+        print_r($data);
+        echo "</pre>";
     }else{
         $data = \model\picture::getList();
     }
