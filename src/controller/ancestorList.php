@@ -38,7 +38,7 @@
     $filter = array();
 
     if(isset($_GET["gender"])){ // if gender i check if value is in enumList
-        if(in_array($_GET["gender"], \enumList\gender::names())){
+        if(in_array($_GET["gender"], \enumList\gender::values())){
             $filter["gender"] = $_GET["gender"];
         }
     }
