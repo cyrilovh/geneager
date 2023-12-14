@@ -91,7 +91,7 @@ abstract class template
                         $template_tmp = str_replace("{editBtnPicture}", (userInfo::isAuthorOrAdmin($value) ? "<span><a class='btn btn-outline-info btn-sm mt10' href='/userEdit$pageEditBtn/$id'><i class='fa-solid fa-edit'></i></a> <a class='btn btn-outline-danger btn-sm mt10' href='/userDelete$pageEditBtn/$id'><i class='fa-solid fa-trash'></i></a> $btnView</span>" : "") , $template_tmp);
                     }
                 }else{
-                    $template_tmp = str_replace(array("{editBtn}", "{editBtnAlbum}"), "", $template_tmp);
+                    $template_tmp = str_replace(array("{editBtn}", "{editBtnAlbum}", "{editBtnPicture}"), "", $template_tmp);
                 }
             }
             $template_tmp = str_replace("{".$key."}", (is_null($value) ? $alternativeText : $value ), $template_tmp);
