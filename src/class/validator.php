@@ -138,6 +138,20 @@
             }
             return false;
         }
+
+        /**
+         * Return if the string is empty ONLY (NULL is NOT empty)
+         * Used for SQL queries
+         * @param string|null $str
+         * @return boolean
+         */
+        public static function isEmpty(string|null $str):bool{
+            $str = trim($str);
+            if(strlen($str) == 0){
+                return true;
+            }
+            return false;
+        }
     }
 
 ?>

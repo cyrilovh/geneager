@@ -135,7 +135,7 @@ class db
 
                 // SECOND I BIND THE PARAMETERS
                 foreach($data as $key => $value){
-                    $query->bindValue(":$key", (validator::isNullOrEmpty($value) ? NULL : $value));
+                    $query->bindValue(":$key", (validator::isEmpty($value) ? NULL : $value));
                 }
 
                 if(!array_key_exists("lastUpdate", $data) && $changeLastUpdate){

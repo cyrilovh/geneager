@@ -2,7 +2,7 @@
 <div class="bar">
         <a href='/albumList' class="btn btn-info"><i class="fas fa-images"></i> Albums</a>
     </div>
-    <h2>Nouvel album</h2>
+    <h2><?=$title; ?></h2>
     <!-- messages -->
     <?=(isset($errorList)) ? "<div class='alert alert-danger'>$errorList</div>" : ""; ?> <!-- form errors -->
     <?=(isset($errorMessage)) ? "<div class='alert alert-danger'>$errorMessage</div>" : ""; ?> <!-- create album errors -->

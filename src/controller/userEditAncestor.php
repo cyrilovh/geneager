@@ -5,9 +5,12 @@
     additionnalJsCss::set("editAncestor.css");
     mcv::addView("userEditAncestor");
 
+    // default values (new ancestor)
     $update = false;
     $title = "Ajouter un ancêtre"; // default title
     $btnSave = "Ajouter"; // default submit button text
+
+    // if i want to update an ancestor
     if(isset($_GET["id"]) && !validator::isNullOrEmpty($_GET["id"])) { // i check if id is set and not null or empty
         if(is_numeric($_GET["id"])){ // i check if id is an integer
             $id = $_GET["id"];

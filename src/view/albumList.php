@@ -25,7 +25,7 @@
     <!-- END FILTERS-->
 
     <!-- START BUTTONS-->
-        <?= (class\userInfo::isConnected()) ? "<p class='bar'><a class='btn btn-outline-success btn-sm' href='/userNewAlbum'><i class='fa-solid fa-plus'></i> Nouvel album</a></p>" : "" ?>
+        <?= (class\userInfo::isConnected()) ? "<p class='bar'><a class='btn btn-outline-success btn-sm' href='/userEditAlbum'><i class='fa-solid fa-plus'></i> Nouvel album</a></p>" : "" ?>
     <!-- END BUTTONS-->
 
     <!-- START LIST -->
