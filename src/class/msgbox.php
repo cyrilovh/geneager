@@ -1,6 +1,6 @@
 <?php
     namespace class;
-
+    use \enumList\msgboxType as type;
     /*
     *   This class is used to display a message box (success, warning, error, info)
     */
@@ -17,62 +17,61 @@
             $this->info = array();
         }
 
-        public function add($type, $msg){
+        public function add(string $type, string $msg):void{
             switch($type){
-                case "success":
+                case type::SUCCESS:
                     $this->success[] = $msg;
                     break;
-                case "warning":
+                case type::WARNING:
                     $this->warning[] = $msg;
                     break;
-                case "error":
+                case type::ERROR:
                     $this->error[] = $msg;
                     break;
-                case "info":
+                case type::INFO:
                     $this->info[] = $msg;
                     break;
                 default:
-                    $this->info[] = $msg;
-                    break;
+                    trigger_error("msgbox::add(): type not found", E_USER_WARNING);
             }
         }
 
         /* SETTERS */
         /* Add a message to the message box */
         public function setSuccess($msg):void{
-            $this->add("success", $msg);
+            $this->add(type::SUCCESS, $msg);
         }
 
         public function setWarning($msg):void{
-            $this->add("warning", $msg);
+            $this->add(type::WARNING, $msg);
         }
 
         public function setError($msg):void{
-            $this->add("error", $msg);
+            $this->add(type::ERROR, $msg);
         }
 
         public function setInfo($msg):void{
-            $this->add("info", $msg);
+            $this->add(type::INFO, $msg);
         }
         /* Remove all message and one */
         public function replaceSuccess(string $msg):void{
             self::clearSuccess();
-            $this->add("success", $msg);
+            $this->add(type::SUCCESS, $msg);
         }
 
         public function replaceWarning(string $msg):void{
             self::clearWarning();
-            $this->add("warning", $msg);
+            $this->add(type::WARNING, $msg);
         }
 
         public function replaceError(string $msg):void{
             self::clearError();
-            $this->add("error", $msg);
+            $this->add(type::ERROR, $msg);
         }
 
         public function replaceInfo(string $msg):void{
             self::clearInfo();
-            $this->add("info", $msg);
+            $this->add(type::INFO, $msg);
         }
 
         /* Erase list */
