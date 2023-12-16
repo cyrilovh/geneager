@@ -6,7 +6,7 @@
     <!-- messages -->
     <?=(isset($errorList)) ? "<div class='alert alert-danger'>$errorList</div>" : ""; ?> <!-- form errors -->
     <?=(isset($errorMessage)) ? "<div class='alert alert-danger'>$errorMessage</div>" : ""; ?> <!-- create album errors -->
-    <?=(isset($successMessage)) ? "<div class='alert alert-success'>$successMessage</div>" : ""; ?> <!-- create album success -->
+    <?=(isset($successMessage)) ? die("<div class='alert alert-success'>$successMessage</div>") : ""; ?> <!-- create album success -->
     <div class='alert alert-info'>L'image de couverture est automatiquement sélectionnée (la dernière).</div>
     <!-- form -->
     <?=$formNewAlbum->display(); ?>

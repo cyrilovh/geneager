@@ -96,7 +96,9 @@
                 $sql = db::update($data, "picturefolder", array("id" => $id));
 
                 if($sql){
-                    $successMessage = "L&apos;album a bien été modifié.";
+                    $currentURL = \class\url::current();
+                    $successMessage = "<p class='mt10 bold uppercase'>Les données ont été mises à jour.<p>";
+                    $successMessage .= "<p><a class='btn btn-success mt10' href='$currentURL'>&#129152; Retour au formulaire.</a></p>";
                 }else{
                     $errorMessage = "L&apos;album n&apos;a pas pu été modifié.";
                 }
