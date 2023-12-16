@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : lun. 16 oct. 2023 à 22:41
+-- Généré le : sam. 16 déc. 2023 à 18:21
 -- Version du serveur :  10.4.19-MariaDB
 -- Version de PHP : 8.0.6
 
@@ -62,8 +62,8 @@ CREATE TABLE `ancestor` (
 --
 
 INSERT INTO `ancestor` (`id`, `firstNameList`, `lastNameList`, `photo`, `birthNameList`, `marriedNameList`, `nickNameList`, `otherIdentityList`, `gender`, `birthdayY`, `birthdayM`, `birthdayD`, `birthCity`, `birthAccuracyLocation`, `deathdateM`, `deathdateD`, `deathdateY`, `deathCity`, `deathAccuracyLocation`, `cemeteryCity`, `cemeteryAccuracyLocation`, `biography`, `author`, `lastUpdate`, `createDate`) VALUES
-(50, 'Pr&eacute;nom', 'JeuneFille', NULL, 'NomDuP&egrave;re', 'Marital', 'pseudo', 'erreurAdministrative', '2', 1789, '07', '14', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'geneager', '2023-04-13 11:35:01', '2023-04-11 19:04:14'),
-(51, 'Pierre', 'Richard', NULL, NULL, NULL, NULL, NULL, '2', 1789, '07', '14', 100, 'H&ocirc;pital', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'geneager', '2023-09-03 17:59:14', '2023-05-29 19:44:01');
+(50, 'Pr&eacute;nom', 'JeuneFille', NULL, 'NomDuP&egrave;re', 'Marital', 'pseudo', 'erreurAdministrative', '2', 1789, '07', '14', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'geneager', '2023-12-16 15:42:38', '2023-04-11 19:04:14'),
+(51, 'Pierre', 'Richard', NULL, NULL, NULL, NULL, NULL, '1', 1789, '07', '14', 100, 'H&ocirc;pital', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'geneager', '2023-12-14 21:05:50', '2023-05-29 19:44:01');
 
 -- --------------------------------------------------------
 
@@ -447,7 +447,10 @@ INSERT INTO `parameter` (`id`, `parameter`, `value`) VALUES
 (388, 'untitleText', 'Sans titre'),
 (389, 'noDescriptionText', 'Sans description.'),
 (390, 'undefinedText', 'Ind&eacute;fini(e)'),
-(391, 'noDateText', 'Date inconnue');
+(391, 'noDateText', 'Date inconnue'),
+(392, 'unlocatedText', 'Aucune information g&eacute;ographique'),
+(393, 'noSourceText', 'Aucune r&eacute;f&eacute;rence'),
+(394, 'noTagText', 'Aucune identification dans ce document');
 
 -- --------------------------------------------------------
 
@@ -480,8 +483,8 @@ CREATE TABLE `picture` (
   `sourceText` varchar(100) DEFAULT NULL,
   `sourceLink` text DEFAULT NULL,
   `folder` bigint(20) NOT NULL,
-  `lastUpdate` timestamp NOT NULL DEFAULT current_timestamp(),
-  `createDate` timestamp NULL DEFAULT current_timestamp()
+  `lastUpdate` timestamp NULL DEFAULT current_timestamp(),
+  `createDate` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -491,7 +494,7 @@ CREATE TABLE `picture` (
 INSERT INTO `picture` (`id`, `title`, `descript`, `filename`, `location`, `accuracyLocation`, `yearEvent`, `monthEvent`, `dayEvent`, `sourceText`, `sourceLink`, `folder`, `lastUpdate`, `createDate`) VALUES
 (65, 'Mariage de Wiktor et Bronislawa', 'Statuam longos posse et non sit est est quam gravius meruerim Glabrioni Acilio commendari.', 'a19af24a-8cda-47e3-8e9d-72877cea1a52_20230406_052243.webp', 100, 'Mairie', 1936, '07', NULL, 'Calinski', 'https://calinski.com', 42, '2023-04-07 14:49:24', '2023-04-06 15:22:43'),
 (66, '2. Mariage de Wiktor et Bronislawa', '2. Statuam longos posse et non sit est est quam gravius meruerim Glabrioni Acilio commendari.', 'a19af24a-8cda-47e3-8e9d-72877cea1a52_20230406_052243.webp', 100, 'Mairie', 1936, '07', NULL, 'Calinski', 'https://calinski.com', 42, '2023-04-07 14:49:24', '2023-04-06 15:22:43'),
-(67, 'G. Ley', NULL, 'fa48483d-6dbe-4ab7-a068-2ae27e69385b_20231016_103552.webp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 42, '2023-10-16 20:36:03', '2023-10-16 20:35:52');
+(67, 'G... Ley', NULL, 'fa48483d-6dbe-4ab7-a068-2ae27e69385b_20231016_103552.webp', 100, NULL, 1972, '09', '25', 'Havret C.', 'https://Havret.fr', 42, '2023-12-12 21:17:05', '2023-10-16 20:35:52');
 
 -- --------------------------------------------------------
 
@@ -535,7 +538,8 @@ CREATE TABLE `picturetag` (
 --
 
 INSERT INTO `picturetag` (`id`, `ancestor`, `coordinates`, `pictureID`) VALUES
-(2, 51, '0,50,50,50', 65);
+(2, 51, '0,50,50,50', 65),
+(3, 50, '0,30,30,30', 65);
 
 -- --------------------------------------------------------
 
@@ -1033,7 +1037,7 @@ ALTER TABLE `jobname_ancestor`
 -- AUTO_INCREMENT pour la table `parameter`
 --
 ALTER TABLE `parameter`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=392;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=395;
 
 --
 -- AUTO_INCREMENT pour la table `parent`
@@ -1051,13 +1055,13 @@ ALTER TABLE `picture`
 -- AUTO_INCREMENT pour la table `picturefolder`
 --
 ALTER TABLE `picturefolder`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT pour la table `picturetag`
 --
 ALTER TABLE `picturetag`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `relationancestor`
