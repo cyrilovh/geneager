@@ -1,6 +1,6 @@
 <?php
     namespace class;
-    $meta_title = "Panneau utilisateur ".$meta_separator.$meta_title;
+    metaTitle::setTitle("Panneau utilisateur");
     additionnalJsCss::set("userPanel.css");
     mcv::addView("userPanel");
 ?>

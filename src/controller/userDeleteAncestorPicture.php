@@ -1,7 +1,7 @@
 <?php
     namespace class;
     $title = "Supprimer la photo d'un ancêtre";
-    $meta_title = $title." ".$meta_separator.$meta_title;
+    metaTitle::setTitle($title);
 
 
     if(isset($_GET['id'])){

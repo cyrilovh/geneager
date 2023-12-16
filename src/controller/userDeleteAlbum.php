@@ -3,7 +3,7 @@
 
     use model\album;
     $title = "Supprimer un album";
-    $meta_title = $title." ".$meta_separator.$meta_title;
+    metaTitle::setTitle($title);
 
 
     if(isset($_GET['id'])){
