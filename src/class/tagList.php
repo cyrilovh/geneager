@@ -27,7 +27,7 @@
             foreach($this->tagList as $tag){
                 $tagListString .= $tag->getLink().", ";
             }
-            return substr($tagListString, 0, -2);
+            return (!validator::isEmpty($tagListString) > 0 ? substr($tagListString, 0, -2) : "Aucune identification");
         }
 
         public function getTagListByType(string $type):array{

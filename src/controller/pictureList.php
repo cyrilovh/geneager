@@ -8,10 +8,6 @@
         $id = format::normalize($_GET["id"]);
         $data = \model\album::getPictureListAndAlbumInfoByID($id);
         $btnNewPicture = "<a href='/userNewPicture/$id' class='btn btn-success'><i class='fas fa-plus'></i> Ajouter une photo</a>";
-
-        echo "<pre>";
-        print_r($data);
-        echo "</pre>";
     }else{
         $data = \model\picture::getList();
     }
