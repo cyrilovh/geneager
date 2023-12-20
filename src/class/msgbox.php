@@ -17,7 +17,7 @@
             $this->info = array();
         }
 
-        public function add(string $type, string $msg):void{
+        private function add(string $type, string $msg):void{
             switch($type){
                 case type::SUCCESS:
                     $this->success[] = $msg;
