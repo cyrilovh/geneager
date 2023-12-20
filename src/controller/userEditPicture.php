@@ -2,7 +2,7 @@
     namespace class;
 
     metaTitle::setTitle("Editer une photo");
-    $include_footer = "none";
+    $include_footer = "";
 
     
     if(userinfo::isAdmin()){

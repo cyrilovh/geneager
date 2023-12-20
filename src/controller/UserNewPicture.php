@@ -5,7 +5,7 @@
     metaTitle::setTitle("Ajouter une photo");
     metaTitle::setRobot(array("noindex", "nofollow"));
     
-    $include_footer = "none";
+    $include_footer = "";
 
     if(validator::isId()){ // i check if the id is valid and set
 

@@ -40,6 +40,6 @@
 
     $obj_MetaTitle = new metaTitle($meta_title, $meta_description, $meta_keyword, $meta_favicon, $meta_author, $meta_robots); // i create my object "meta title"
 
-    $obj_HNF = new customHNF($include_header, $include_navbar, $include_footer); // i create my object for custom header, navbar and footer
+    $obj_HNF = new HNF("$include_header", $include_navbar, $include_footer); // i create my object for custom header, navbar and footer
     
 ?>

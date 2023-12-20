@@ -24,12 +24,8 @@
 </head>
 <body>
     <?php
-        if(!is_null($obj_HNF->get("header"))){
-            require_once $obj_HNF->get("header");
-        } 
-        if(!is_null($obj_HNF->get("navbar"))){
-            require_once $obj_HNF->get("navbar"); 
-        }
+        (!is_null($obj_HNF->getHeader())? require_once $obj_HNF->getHeader() : ""); // i load the header (if exist
+        (!is_null($obj_HNF->getNavbar())? require_once $obj_HNF->getNavbar() : ""); // i load the navbar (if exist
     ?>
     <main>
         <?php
@@ -42,11 +38,7 @@
             }
         ?>
     </main>
-    <?php
-        if(!is_null($obj_HNF->get("footer"))){
-            require_once $obj_HNF->get("footer"); 
-        }
-    ?>
+    <?php (!is_null($obj_HNF->getFooter())? require_once $obj_HNF->getFooter() : ""); ?>
 </body>
 </html>
 <?php 
