@@ -48,7 +48,7 @@ class HNF{
      * @param string $data
      * @return string
      */
-    private function get(string $file):?string{
+    private function get(?string $file):?string{
 
         if(trim($file)!=""){
             $file = MVC."inc/$file.inc.php";
