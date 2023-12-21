@@ -3,7 +3,7 @@
     <h2><?=$title; ?></h2>
     <?=isset($text) ? $text : ""; ?>
     <?=isset($msgSuccess) ? die("<div class='alert alert-success'>".$msgSuccess."</div>") : ""; ?> <!-- success message -->
-    <?=(isset($msgError)) ? die("<div class='alert alert-danger'>".$msgError) : ""; ?> <!-- form errors -->
+    <?=(isset($msgError)) ? die("<div class='alert alert-danger'>".$msgError)."</div>" : ""; ?> <!-- form errors -->
     <?=(isset($errorList)) ? die("<div class='alert alert-danger'>".implode("<br>",$errorList)."</div>") : ""; ?> <!-- form errors -->
     <?=isset($form) ? $form->display() : "" ?>
 </aside>

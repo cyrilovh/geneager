@@ -91,9 +91,9 @@
                 $sql = \model\album::set($albumTitle, $albumDescript,  $_POST["public"]);
 
                 if($sql){
-                    $messageList->add("success", "L&apos;album a bien été créé.");
+                    $messageList->setSuccess("L&apos;album a bien été créé.");
                 }else{
-                    $messageList->add("error", "L&apos;album n&apos;a pas pu été créé.");
+                    $messageList->setError("L&apos;album n&apos;a pas pu été créé.");
                 }
             }else{
                 $data = $formNewAlbum->getData();
@@ -103,13 +103,13 @@
                     $currentURL = \class\url::current();
                     $msg = "<p class='mt10 bold uppercase'>Les données ont été mises à jour.<p>";
                     $msg .= "<p><a class='btn btn-success mt10' href='$currentURL'>&#129152; Retour au formulaire.</a></p>";
-                    $messageList->add("success", $msg);
+                    $messageList->setSuccess($msg);
                 }else{
-                    $messageList->add("error", "Les données n&apos;ont pas pu être mises à jour.");
+                    $messageList->setError("Les données n&apos;ont pas pu être mises à jour.");
                 }
             }
         }else{
-            $errorList = $formNewAlbum->check(false);
+            $messageList->setError($formNewAlbum->check(false));
         }
     }
 

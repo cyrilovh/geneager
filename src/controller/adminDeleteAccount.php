@@ -5,6 +5,8 @@
     metaTitle::setTitle($title);
     metaTitle::setDescription("Supprimer un compte utilisateur.");
 
+    $messageList = new msgbox();
+
     if(validator::isId()){
         $user = \model\userInfo::getById($_GET["id"], array("id", "username", "role"));
 
@@ -19,14 +21,14 @@
         if($user){
             if($user["role"] == "admin"){
                 if(count(\model\userInfo::getAdminList()) == 1){
-                    $msgError = "Vous ne pouvez pas supprimer le dernier compte administrateur.";
+                    $messageList->setError("Vous ne pouvez pas supprimer le dernier compte administrateur.");
                 }elseif($user["username"] == userInfo::getUsername()){
-                    $msgError = "Vous ne pouvez pas supprimer votre propre compte administrateur.";
+                    $messageList->setError("Vous ne pouvez pas supprimer votre propre compte administrateur.");
                 }
                 mcv::addView("noContent");
             }
 
-            if(!isset($msgError)){
+            if($messageList->isEmptyError()){
                 $form = new form(array(
                     "method" => "post",
                     "action" => "",
@@ -81,26 +83,26 @@
                         if(count($tableList) == count($tableUpdated)){
                             // then we delete the user
                             if(db::delete("user", array("id" => $user["id"]))){
-                                $msgSuccess = "Le compte ".$user["username"]." a été supprimé.";
+                                $messageList->setSuccess("Le compte ".$user["username"]." a été supprimé.");
                             }else{
-                                $msgError = "Une erreur est survenue lors de la suppression du compte.";
+                                $messageList->setError("Une erreur est survenue lors de la suppression du compte.");
                             }
                         }else{
-                            $msgError = "Une erreur est survenue lors de la mise à jour des données dans les tables suivantes: ".implode(", ",array_diff($tableList, $tableUpdated)).".<br>Le compte n'a pas été supprimé.";
+                            $messageList->setError("Une erreur est survenue lors de la mise à jour des données dans les tables suivantes: ".implode(", ",array_diff($tableList, $tableUpdated)).".<br>Le compte n'a pas été supprimé.");
                         }
                         // then we delete the user if no error
                     }else{
-                        $errorList = $form->check(false);
+                        $messageList->setError($form->check(false));
                     }
                 }
 
                 mcv::addView("userForm");
             }
         }else{
-            $msgError = "Aucun compte n'a été trouvé.";
+            $messageList->setError("Aucun compte n'a été trouvé.");
             mcv::addView("noContent");
         }
     }else{
-        $msgError = "ID invalide.";
+        $messageList->setError("ID invalide.");
         mcv::addView("noContent");
     }

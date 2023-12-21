@@ -183,5 +183,4 @@
             return (self::countAll() == 0);
         }
 
-
     }

@@ -165,6 +165,7 @@
                 if(isset($_POST["captcha"])){
                     if(!captcha::check($_POST['captcha'])){
                         $msgError = "Le captcha est incorrect.";
+                        //die("Le captcha est incorrect.");
                     }
                 }else{
                     $msgError = "Veuillez remplir correctement le formulaire.";
@@ -229,7 +230,7 @@
                     }
                 }
             }else{
-                $msgError = $form->check(true);
+                $msgError = $form->check(false);
             }
         }
 
