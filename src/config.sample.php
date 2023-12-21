@@ -33,6 +33,15 @@
     define('DEFAULT_ALGO', "ripemd320"); // DEFAULT ALGORITHM FOR PASSWORD HASH (see https://www.php.net/manual/en/function.hash-algos.php)
     // define('KEY_EMAIL', "V-J8#JDyz5Ja#!=V"); // STATIC SALT FOR ENCRYPT EMAIL IN DATABASE
 
+    /* SMTP */
+    define('SMTP_HOST', 'mail49.lwspanel.com'); // SMTP HOST
+    define('SMTP_PORT', 465); // SMTP PORT TLS = 587, SSL = 465
+    define("SMTP_SECURE", "ssl"); // SMTP SECURE (tls or ssl)
+    define('SMTP_USERNAME', 'test@votredeveloppeurweb.fr'); // SMTP USERNAME (username or email address)
+    define('SMTP_PASSWORD', 'Geneager2!CH'); // SMTP PASSWORD
+    define("SMTP_FROM", "test@votredeveloppeurweb.fr"); // SMTP FROM (email address)
+    define("SMTP_FROM_NAME", "Geneager"); // SMTP FROM NAME (name of the sender or the website)
+
     /* crsf */
     define('PASSWORD_TOKEN', 'CHANGE-YOUR-TOK3N'); // TOKEN FOR FORMS (ANTI-CSRF)
     define('TOKEN_LIFETIME', '10');   // TOKEN LIFE TIME MINUTES (FORMS ONLY)
@@ -64,9 +73,9 @@
 */
 
     /* HEADER, NAVBAR, FOOTER per default */
-    $include_header = ""; // default: header (header = call the file /src/inc/header.inc.php)
-    $include_navbar = ""; // default: navbar (")
-    $include_footer = ""; // default: footer (")
+    $include_header = "header"; // default: header (header = call the file /src/inc/header.inc.php)
+    $include_navbar = "navbar"; // default: navbar (")
+    $include_footer = "footer"; // default: footer (")
 
     /* default values */
     $meta_robots = ""; // empty, "nofollow", "noindex" or "noindex, nofollow"
@@ -87,4 +96,5 @@
     $include_JsCss = array(); // array of js and css files to include in the header
 
     define("DEFAULTPICTURE", "assets/img/defaultPicture_480.webp"); // default picture to display if no picture is found
+    define("DEFAULTPICTUREANCESTOR", "/assets/img/unknownAncestor.webp");
 ?>
