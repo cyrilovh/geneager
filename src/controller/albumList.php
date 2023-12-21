@@ -56,7 +56,9 @@
 
         mcv::addView("albumList");
     }else{ // if any identity card or any result with the filters
-        $msgError = "Aucun album n'a été trouvé...<br><a href='/userEditAlbum' class='btn btn-success'><i class='fas fa-plus'></i> Ajouter un album</a>";
+        $messageList = new msgbox();
+        $messageList->setError("Aucun album n'a été trouvé...<br><a href='/userEditAlbum' class='btn btn-success'><i class='fas fa-plus'></i> Ajouter un album</a>");
+        
         header("HTTP/1.1 404 NOT FOUND");
         mcv::addView("noContent");
     }

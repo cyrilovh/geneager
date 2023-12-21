@@ -16,10 +16,12 @@
         $output = template::autoReplace(template::get("pictureList"), $data, true, "Picture");
         mcv::addView("pictureList");
     }else{
-        $msgError = "Aucune photo n'a été trouvée...";
+        $messageList = new msgbox();
+        $msg = "<p>Aucune photo n'a été trouvée...</p>";
         if(validator::isId()){
-            $msgError .= (userInfo::isConnected() ? "<br><a href='/userNewPicture/$id' class='btn btn-success'><i class='fas fa-plus'></i> Ajouter une photo</a>" : "");
+            $msg .= (userInfo::isConnected() ? "<br><a href='/userNewPicture/$id' class='btn btn-success'><i class='fas fa-plus'></i> Ajouter une photo</a>" : "");
         }
+        $messageList->setError($msg);
         mcv::addView("noContent");
     }
 ?>

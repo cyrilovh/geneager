@@ -3,6 +3,7 @@
     
     if(isset($_GET["id"]) && !empty($_GET["id"])){
         $filename = security::cleanStr($_GET["id"]);  
+        $messageList = new msgbox();
         if(file_exists(UPLOAD_DIR_FULLPATH."picture/family/".$filename)){
             $data = \model\picture::getPictureAndAlbumByNameAndLocation($filename);
 
@@ -97,12 +98,12 @@
 
                 mcv::addView("pictureDetail");
             }else{
-                $msgError = "Le fichier existe sur le serveur mais pas dans la base de données.";
+                $messageList->setError("Le fichier existe sur le serveur mais pas dans la base de données.");
                 mcv::addView("noContent");
             }
 
         }else{
-            $msgError = "Le fichier n'existe pas sur le serveur.";
+            $messageList->setError("Le fichier n'existe pas sur le serveur.");
             mcv::addView("noContent");
         }
     }else{
