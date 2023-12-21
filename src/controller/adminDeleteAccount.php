@@ -10,15 +10,17 @@
     if(validator::isId()){
         $user = \model\userInfo::getById($_GET["id"], array("id", "username", "role"));
 
-        $recipientList = \model\userInfo::getUsernameList(); // get all username
-        $recipientArray = array(""=>"");
-        foreach($recipientList as $key => $value){ // create an array with all username except the user to delete
-            if($value["id"] != $user["id"]){
-                $recipientArray[$value["username"]] = $value["username"];
-            }
-        }
-
         if($user){
+
+            // get all username except the user to delete (recipient user works)
+            $recipientList = \model\userInfo::getUsernameList(); // get all username
+            $recipientArray = array(""=>"");
+            foreach($recipientList as $key => $value){ // create an array with all username except the user to delete
+                if($value["id"] != $user["id"]){
+                    $recipientArray[$value["username"]] = $value["username"];
+                }
+            }
+
             if($user["role"] == "admin"){
                 if(count(\model\userInfo::getAdminList()) == 1){
                     $messageList->setError("Vous ne pouvez pas supprimer le dernier compte administrateur.");
@@ -95,7 +97,6 @@
                         $messageList->setError($form->check(false));
                     }
                 }
-
                 mcv::addView("userForm");
             }
         }else{

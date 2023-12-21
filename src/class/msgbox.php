@@ -141,6 +141,10 @@
             return $html;
         }
 
+        public function getAllHTML():string{
+            return self::getSuccessHTML().self::getWarningHTML().self::getErrorHTML().self::getInfoHTML();
+        }
+
         /* Count */
         public function countSuccess():int{
             return count($this->success);
