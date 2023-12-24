@@ -220,7 +220,7 @@
          * @param boolean $html
          * @return string
          */
-        public function getFullIdentityDisplayShorter(bool $html): string
+        public function getFullIdentityDisplayShorter(bool $htmlFormat = true): string
         {
             $allNames = [];
         
@@ -228,14 +228,14 @@
                 $lastNamesListArr = explode(" ", $this->lastNameList);
                 foreach ($lastNamesListArr as $i => $lastName) {
                     $allNames[] = ($i === 0)
-                        ? format::htmlToUpperFirst($lastName, $html)
-                        : substr(format::htmlToUpper($lastName, $html), 0, 1) . ".";
+                        ? format::htmlToUpperFirst($lastName, $htmlFormat)
+                        : substr(format::htmlToUpper($lastName, $htmlFormat), 0, 1) . ".";
                 }
             }
         
-            $allNames[] = format::htmlToUpper($this->lastNameList, $html);
-            $allNames[] = format::htmlToUpper($this->birthNameList, $html);
-            $allNames[] = format::htmlToUpper($this->marriedNameList, $html);
+            $allNames[] = format::htmlToUpper($this->lastNameList, $htmlFormat);
+            $allNames[] = format::htmlToUpper($this->birthNameList, $htmlFormat);
+            $allNames[] = format::htmlToUpper($this->marriedNameList, $htmlFormat);
         
             return $allNames ? implode(" ", $allNames) : "Anonyme";
         }

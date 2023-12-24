@@ -3,7 +3,7 @@
     $title = "Supprimer un ancêtre";
     metaTitle::setTitle($title);
 
-
+    $messageList = new msgbox();
     if(isset($_GET['id'])){
         $id = security::cleanStr($_GET['id']);
         if(is_numeric($id)){

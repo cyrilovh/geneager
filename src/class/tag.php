@@ -43,6 +43,10 @@
             return $this->coordinates;
         }
 
+        public function getCoordinatesString():string{
+            return $this->coordinates->getString();
+        }
+
         /* ADVANCED METHODS */
         /**
          * Get the link to the ancestor

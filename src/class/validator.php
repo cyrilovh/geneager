@@ -61,6 +61,31 @@
             return false;
         }
 
+        /**
+         * Check if the string is a valid coordinates string (scare)
+         * @param string $input FORMAT: X1,Y1,X2,Y2
+         * example: 0,0,100,100 returns true
+         * example: 100,100,0,0 returns false
+         * 
+         * @return boolean
+         */
+        public static function isValidCoordinates($input) {
+            // Vérifie le format X1,Y1,X2,Y2
+            if (!preg_match('/^\d+,\d+,\d+,\d+$/', $input)) {
+                return false;
+            }
+        
+            // Sépare la chaîne en valeurs X et Y
+            $coordinates = explode(',', $input);
+        
+            // Vérifie X1 < X2 et Y1 < Y2
+            if ($coordinates[0] >= $coordinates[2] || $coordinates[1] >= $coordinates[3]) {
+                return false;
+            }
+        
+            return true;
+        }
+
 
         /* Currently unused */
 

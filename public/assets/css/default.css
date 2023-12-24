@@ -363,8 +363,8 @@ img.e40x {
 img[src^="/picture/ancestor/"],
 img[src^="/picture/family/"],
 img[src^="/assets/img/unknownAncestor.webp"] {
-    max-width: 162px;
-    max-height: 192px;
+    /* max-width: 162px;
+    max-height: 192px; */
     float: right;
     cursor: pointer;
     border-radius: 4px;
@@ -375,10 +375,10 @@ img[src^="/assets/img/unknownAncestor.webp"] {
     background-color: #fff;
 }
 
-img[src^="/picture/family/"] {
+/* img[src^="/picture/family/"] {
     max-width: 100vw;
     max-height: 50vh;
-}
+} */
 
 
 /*

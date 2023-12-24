@@ -30,5 +30,13 @@
             );
         }
 
+        public function getString():string{
+            return $this->x1.",".$this->y1.",".$this->x2.",".$this->y2;
+        }
+
+        public function getCSS():string{
+            return "top:".$this->y1."px; left:".$this->x1."px; width:".($this->x2 - $this->x1)."px; height:".($this->y2 - $this->y1)."px;";
+        }
+
     }
 ?>
