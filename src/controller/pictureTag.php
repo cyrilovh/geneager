@@ -22,6 +22,7 @@
 
         if($picture){ // if picture exist
             
+            // FIRST I RETRIEVE ALL TAGS IN DATABASE FOR DISPLAY THEM
             $tag = \model\tag::getByIDPictureWithIdentity($idPicture);
 
             if($tag){
@@ -51,6 +52,7 @@
                         $messageList->setError("Les coordonnées de l'identification sont invalides.");
                     }
                 }
+
             }
 
             mcv::addView("pictureTag");
