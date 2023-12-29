@@ -73,5 +73,23 @@
             return $query->fetchAll(\PDO::FETCH_ASSOC); // string
             $query->closeCursor(); 
         }
+
+        public static function suggestByIdentity(string $search, ?int $limit = null, array $order = ["lastUpdate", "DESC"]): array {
+            global $db;
+            $search = \class\security::cleanStr($search);
+            $orderStr = implode(" ", $order);
+            $limitStr = ($limit !== null && is_int($limit)) ? "LIMIT " . \class\security::cleanStr($limit) : "";
+            $query = $db->prepare("SELECT * FROM ancestor WHERE 
+                firstNameList LIKE :search OR 
+                lastNameList LIKE :search OR 
+                birthNameList LIKE :search OR 
+                marriedNameList LIKE :search OR 
+                otherIdentityList LIKE :search ORDER BY $orderStr $limitStr");
+            $query->execute(['search' => "%$search%"]);
+            $results = $query->fetchAll(\PDO::FETCH_ASSOC);
+            $query->closeCursor();
+            return $results;
+        }
+        
     }
 ?>

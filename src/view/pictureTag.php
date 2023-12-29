@@ -1,3 +1,5 @@
+<?=print_r(model\ancestor::suggestByIdentity("pierre")); ?>
+
 <img src="/picture/family/<?=$picture['filename'];?>" title="<?=$picture['title']; ?>" id="picture" usemap="#workmap" />
 <div class="popup addTag">
     <div class="window addTagd">

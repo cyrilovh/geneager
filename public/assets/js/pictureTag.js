@@ -92,6 +92,31 @@ function mousePos(event, axis) {
     }
 }
 
+function XHR_(url, data, callback) {
+
+    var xhr;
+    if (window.XMLHttpRequest) {
+        xhr = new XMLHttpRequest();
+    } else if (window.ActiveXObject) {
+        xhr = new ActiveXObject("Msxml2.XMLHTTP");
+    } else {
+        throw new Error("Ajax is not supported by this browser");
+    }
+    
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.send(data);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            callback(xhr.responseText);
+        }
+    };
+}
+
+function getList(){
+
+}
+
 // Appeler resizePicture une première fois pour redimensionner l'image initiale
 window.onload = function () {
     resizePicture();
