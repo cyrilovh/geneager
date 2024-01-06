@@ -62,6 +62,20 @@
         }
 
         /**
+         * Check if ID is query and valid.
+         * @return boolean
+         */
+        public static function isQuery(int $minlength = 0, int $maxlength = 255):bool
+        {
+            if(isset($_GET["q"])){
+                if(strlen($_GET["q"]) > $minlength && strlen($_GET["q"]) < $maxlength && !empty($_GET["q"])){
+                    return !is_null($_GET["q"]);
+                }
+            }
+            return false;
+        }
+
+        /**
          * Check if the string is a valid coordinates string (scare)
          * @param string $input FORMAT: X1,Y1,X2,Y2
          * example: 0,0,100,100 returns true

@@ -1,0 +1,27 @@
+<?php
+namespace enumList;
+/**
+ * Status of JSON response for example
+ */
+
+abstract class status
+{
+    use \trait\enumList;
+
+    public const SUCCESS = 'Succès';
+    public const WARNING = 'Avertissement';
+    public const ERROR = 'Erreur';
+
+    public static function cases(): array
+    {
+        return [
+            ['name' => 'SUCCESS', 'value' => self::SUCCESS],
+            ['name' => 'WARNING', 'value' => self::WARNING],
+            ['name' => 'ERROR', 'value' => self::ERROR],
+        ];
+    }
+}
+
+?>
+
+
