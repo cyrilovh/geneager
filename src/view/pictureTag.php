@@ -1,11 +1,9 @@
-<?=print_r(model\ancestor::suggestByIdentity("pierre")); ?>
-
 <img src="/picture/family/<?=$picture['filename'];?>" title="<?=$picture['title']; ?>" id="picture" usemap="#workmap" />
 <div class="popup addTag">
     <div class="window addTag">
         <h1>Ajouter un individu:</h1>
         <form method="post" action="/">
-            <p>Coordonnées:<br><input type="text" id="coordonnees" pattern="\d{1,5},\d{1,5},\d{1,5},\d{1,5}"></p>
+            <p>Coordonnées:<br><input type="text" id="coordonnees" pattern="\d{1,5},\d{1,5},\d{1,5},\d{1,5}" class="field-disabled"></p>
             <div>
                 <p>Individu:</p>
                 <div class="inputLabel" id="inputLabel">

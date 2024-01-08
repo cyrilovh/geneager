@@ -1,5 +1,6 @@
 // Sélection de tous les éléments avec la classe "item"
 const items = document.querySelectorAll('.item');
+const trashIcon = ' <i class="fa-solid fa-trash"></i>';
 
 // Ajout d'un écouteur d'événements à chaque élément
 items.forEach(item => {
@@ -19,7 +20,7 @@ items.forEach(item => {
         searchInput.style.display = 'none'; // hide suggestion list
         searchInput.value = getText; // input value
         inputLabelLabel.style.display = 'block'; // show input label
-        inputLabelLabel.innerHTML = getText; // input label
+        inputLabelLabel.innerHTML = getText + trashIcon; // input label
         inputLabel.value = getData; // input data (id ancestor, ...)
         
     });
