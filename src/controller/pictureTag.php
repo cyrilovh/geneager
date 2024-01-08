@@ -12,6 +12,9 @@
     additionnalJsCss::set("pictureTag.css");
     additionnalJsCss::set("dialbox.css");
 
+    additionnalJsCss::set("suggestionList.css");
+    additionnalJsCss::set("suggestionList.js");
+
     $messageList = new msgbox();
 
     if(validator::isId()){

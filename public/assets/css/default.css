@@ -411,7 +411,6 @@ div.inputLabel{
     flex-direction: row;
     align-items: center;
     flex-wrap: nowrap;
-    margin-bottom: 10px;
     align-content: center;
     border:1px solid silver;
 }
@@ -429,6 +428,17 @@ div.inputLabel > .label{
     color: var(--text);
     width: -webkit-fill-available;
     display: none;
+}
+
+div.inputLabel > .data{
+    border: 0px;
+    outline: none;
+    background-color: transparent;
+    margin: 0px;
+    padding: 0px;
+    color: transparent;
+    width: 0px;
+    height: 0px;
 }
 
 div.inputLabel input[type="text"]{

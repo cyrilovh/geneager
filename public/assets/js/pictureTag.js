@@ -1,4 +1,6 @@
 const img = document.getElementById("picture");
+const btnSubmit = document.querySelector(".addTag input[type='submit']");
+const coordonneesEl = document.getElementById("coordonnees");
 var countClick = 0;
 
 function getPictureWidth() {
@@ -56,6 +58,47 @@ function updateCoordinates(ratio) {
     }
 }
 
+/**+
+ * Vérifie si les coordonnées saisies sont valides
+ * @returns {boolean} Optionnel: retourne true si les coordonnées sont valides, false sinon.
+ */
+function checkCoordinates() {
+    // Récupérer la valeur du champ coordonnées
+    var coordonnees = coordonneesEl.value;
+    let isValide = true;
+    // Séparer les valeurs en un tableau en utilisant la virgule comme séparateur
+    var valeurs = coordonnees.split(',');
+
+    // Vérifier si 4 valeurs ont été saisies
+    if (valeurs.length === 4) {
+        // Convertir les valeurs en nombres entiers
+        var x1 = parseInt(valeurs[0]);
+        var y1 = parseInt(valeurs[1]);
+        var x2 = parseInt(valeurs[2]);
+        var y2 = parseInt(valeurs[3]);
+
+        // Vérifier les conditions X1 > X2 et Y1 > Y2
+        if (x2 > x1 && y2 > y1) {
+            // coordonnées valides
+            isValide = true;
+        } else {
+            alert('Les coordonnées ne respectent pas les conditions suivantes: \r- X1,Y1,X2,Y2\r- X1 > X2 et Y1 > Y2\r- X et Y sont des entiers.');
+            isValide = false;
+        }
+    } else {
+        alert('Veuillez saisir 4 valeurs séparées par des virgules (X1, Y1, X2, Y2).');
+        isValide = false;
+    }
+
+    if (isValide) {
+        btnSubmit.disabled = false;
+        return true;
+    } else {
+        btnSubmit.disabled = true;
+        return false;
+    }
+}
+
 /**
  * MESSAGE BOX
  */
@@ -83,11 +126,11 @@ function mousePos(event, axis) {
 
     var posimg = img.getBoundingClientRect();
 
-    if(axis == "x"){
+    if (axis == "x") {
         return event.clientX - posimg.left;
-    }else if(axis == "y"){
+    } else if (axis == "y") {
         return event.clientY - posimg.top;
-    }else{
+    } else {
         return false;
     }
 }
@@ -102,7 +145,7 @@ function XHR_(url, data, callback) {
     } else {
         throw new Error("Ajax is not supported by this browser");
     }
-    
+
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.send(data);
@@ -113,12 +156,13 @@ function XHR_(url, data, callback) {
     };
 }
 
-function getList(){
+function getList() {
 
 }
 
 // Appeler resizePicture une première fois pour redimensionner l'image initiale
 window.onload = function () {
+    btnSubmit.disabled = true;
     resizePicture();
 
     /**
@@ -135,7 +179,7 @@ window.onload = function () {
             var separateur = "";
             document.getElementById("coordonnees").value = "";
         }
-        
+
         /**
          * get mouse position
          */
@@ -143,11 +187,21 @@ window.onload = function () {
         var posy = mousePos(event, "y");
 
         document.getElementById("coordonnees").value += separateur + posx + "," + posy; // save coordinates in input
-        
+
         // second click
         if (coin >= 2) {
+            
             coin = 0;
-            document.querySelector("div.addTag").style.display = "block";
+            if(checkCoordinates()) {
+                document.querySelector("div.addTag").style.display = "block";
+            }
         }
+    });
+
+    /***
+     * CHECK OUT IF COORDINATES ARE WRONG OR TRUE
+     */
+    coordonneesEl.addEventListener("focusout", function () { 
+        checkCoordinates();
     });
 };
