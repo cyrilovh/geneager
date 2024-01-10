@@ -2,7 +2,9 @@
 <div class="popup addTag">
     <div class="window addTag">
         <h1>Ajouter un individu:</h1>
-        <form method="post" action="/">
+        <div class="alert alert-danger"></div>
+        <div class="alert alert-info"></div>
+        <form>
             <p>Coordonnées:<br><input type="text" id="coordonnees" pattern="\d{1,5},\d{1,5},\d{1,5},\d{1,5}" class="field-disabled"></p>
             <div>
                 <p>Individu:</p>
@@ -49,7 +51,7 @@
 
                 </div>
             </div>
-            <p class="mt10 float-right"><input type="submit" class="btn btn-success" value="Ajouter" /></p>
+            <p class="mt10 float-right"><button class="btn btn-danger" onclick="closeMessage();"><i class="fa-solid fa-circle-xmark"></i> Fermer</button> <input type="submit" class="btn btn-success" value="Ajouter" /></p>
         </form>
     </div>
 </div>

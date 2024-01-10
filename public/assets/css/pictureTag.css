@@ -7,7 +7,7 @@ a, a:hover, a:visited, a:active{
     color: var(--text) !important;
 }
 
-img{
+img#picture{
     z-index:0;
     float: left !important;
     border: 0px none !important;

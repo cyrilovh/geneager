@@ -28,7 +28,7 @@ if(validator::isQuery(2)){
     }
 }else{
     $status = new status();
-    $status->setSuccess();
+    $status->setError();
 
     $json->setMessage("Requête invalide.");
 }

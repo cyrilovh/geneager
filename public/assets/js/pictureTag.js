@@ -1,16 +1,31 @@
 const img = document.getElementById("picture");
 const btnSubmit = document.querySelector(".addTag input[type='submit']");
 const coordonneesEl = document.getElementById("coordonnees");
+const searchEL = document.querySelector("input#search");
+const dialboxEl = document.querySelector(".popup");
+const errorEl = document.querySelector(".alert-danger");
+const infoEl = document.querySelector(".alert-info");
 var countClick = 0;
 
+/**
+ * Return the width of the picture
+ * @returns int
+ */
 function getPictureWidth() {
     return img.naturalWidth;
 }
 
+/**
+ * Return the height of the picture
+ * @returns int
+ */
 function getPictureHeight() {
     return img.naturalHeight;
 }
 
+/**
+ * Resize the picture to fit the screen
+ */
 function resizePicture() {
     const screenWidth = window.innerWidth;
     const screenHeight = window.innerHeight;
@@ -102,14 +117,22 @@ function checkCoordinates() {
 /**
  * MESSAGE BOX
  */
+/**
+ * set the message box
+ * @param {*} titre 
+ * @param {*} message 
+ */
 function setMessage(titre, message) {
     document.querySelector(".message .titre").innerHTML = titre;
     document.querySelector(".message .message").innerHTML = message;
     document.querySelector(".message").style.display = "block";
 }
 
+/**
+ * close the message box
+ */
 function closeMessage() {
-    document.querySelector(".message").style.display = "none";
+    document.querySelector(".popup").style.display = "none";
 }
 
 window.addEventListener("resize", function () {
@@ -135,7 +158,7 @@ function mousePos(event, axis) {
     }
 }
 
-function XHR_(url, data, callback) {
+function suggestsXHR(url, callback) {
 
     var xhr;
     if (window.XMLHttpRequest) {
@@ -146,9 +169,9 @@ function XHR_(url, data, callback) {
         throw new Error("Ajax is not supported by this browser");
     }
 
-    xhr.open("POST", url, true);
+    xhr.open("GET", url + '?q=' + searchEL.value, true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhr.send(data);
+    xhr.send();
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
             callback(xhr.responseText);
@@ -157,7 +180,9 @@ function XHR_(url, data, callback) {
 }
 
 function getList() {
-
+    XHR_("getList.php", "", function (data) {
+        document.querySelector(".list").innerHTML = data;
+    });
 }
 
 // Appeler resizePicture une première fois pour redimensionner l'image initiale
@@ -203,5 +228,43 @@ window.onload = function () {
      */
     coordonneesEl.addEventListener("focusout", function () { 
         checkCoordinates();
+    });
+
+    searchEL.addEventListener("keyup", function () {
+        var search = searchEL.value;
+        suggestsXHR("/userXHRsuggestByIdentity/", function (data) {
+            if(data){
+                obj = JSON.parse(data);
+
+                if(obj.status){
+                    if(obj.status == "success"){
+                        errorEl.style.display = "none";
+                        infoEl.style.display = "block";
+                        if(obj.message){
+                            infoEl.innerHTML = obj.message;
+                        }
+                        console.table(obj.data);
+                    }else if(obj.status == "error"){
+                        if(obj.message){
+                            errorEl.style.display = "block";
+                            infoEl.style.display = "none";
+                            errorEl.innerHTML = obj.message;
+                        }
+                    }else if(obj.status == "info"){
+                        if(obj.message){
+                            errorEl.style.display = "none";
+                            infoEl.style.display = "block";
+                            infoEl.innerHTML = obj.message;
+                        }
+                    }else{
+                        console.log(data);
+                    }
+                }else{
+                    alert("oups");
+                }
+            }else{
+                alert("Erreur lors de la récupération des données.")
+            }
+        });
     });
 };
