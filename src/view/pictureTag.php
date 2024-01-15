@@ -17,7 +17,7 @@
 
                 <div class="suggestionList" data-idAttachment="inputLabel">
 
-                    <div class="item" data-data="1">
+                    <!-- <div class="item" data-data="1">
                         <img src="<?=DEFAULTPICTUREANCESTOR; ?>" class="thumbnail" />
                         <div class="label">
                             <div class="identity text">Identité 1</div>
@@ -47,7 +47,7 @@
                             <div class="identity text">Identité 4</div>
                             <div class="dates">1918-1969</div>
                         </div>
-                    </div>
+                    </div> -->
 
                 </div>
             </div>

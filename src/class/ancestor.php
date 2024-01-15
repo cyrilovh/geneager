@@ -291,12 +291,13 @@
 
         /**
          * Return basic information of the ancestor as ARRAY
-         *
+         * In particular for JSON response: $json->addData( $ancestorObj->getBasicAsArray() );
+         * 
          * @return array
          */
         public function getBasicAsArray(): array {
-            $birthYear = $this->getBirth() ? $this->getBirth()->getYearStr() : "???";
-            $deathYear = $this->getDeath() ? $this->getDeath()->getYearStr() : "???";
+            $birthYear = !is_null($this->getBirth()->getYear()) ? strval($this->getBirth()->getYear()) : "???";
+            $deathYear = !is_null($this->getDeath()->getYear()) ? strval($this->getDeath()->getYear()) : "???";
 
             return array(
                 "id" => $this->getID(),

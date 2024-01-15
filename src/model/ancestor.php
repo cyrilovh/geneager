@@ -74,6 +74,15 @@
             $query->closeCursor(); 
         }
 
+        /**
+         * Get basics informations of ancestor from Query (search)
+         * Using: JSON system
+         * 
+         * @param string $search
+         * @param integer|null $limit
+         * @param array $order
+         * @return array
+         */
         public static function suggestByIdentity(string $search, ?int $limit = null, array $order = ["lastUpdate", "DESC"]): array {
             global $db;
             $search = \class\security::cleanStr($search);

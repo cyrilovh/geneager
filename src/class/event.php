@@ -52,7 +52,7 @@
             return $this->date->getDate();
         }
 
-        public function getYearStr():?int{
+        public function getYear():?int{
             return $this->date->getYear();
         }
 

@@ -233,12 +233,32 @@ window.onload = function () {
 
                 if(obj.status){
                     if(obj.status == "success"){
+                        // SUCCESS: there suggestions so i display them
                         errorEl.style.display = "none";
                         infoEl.style.display = "block";
                         if(obj.message){
                             infoEl.innerHTML = obj.message;
                         }
-                        console.table(obj.data);
+
+                        const countResult  = Object.keys(obj.data).length;
+                        var output = "";
+
+                        // loop on each result
+                        for (let i = 0; i < countResult; i++) {
+                            output += `
+                            <div class="item" data-data="${obj.data[i].id}">
+                                <img src="${obj.data[i].picture}" class="thumbnail" />
+                                <div class="label">
+                                    <div class="identity text">${obj.data[i].identity}</div>
+                                    <div class="dates">${obj.data[i].birthYear}-${obj.data[i].deathYear}</div>
+                                </div>
+                            </div>
+                            `;
+                        }
+
+                        // display the result
+                        document.querySelector(".suggestionList").innerHTML = output;
+
                     }else if(obj.status == "error"){
                         if(obj.message){
                             errorEl.style.display = "block";

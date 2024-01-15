@@ -9,7 +9,7 @@ header('Content-Type: application/json; charset=utf-8');
 $json = new json();
 
 if(userInfo::isConnected()){
-    if(validator::isQuery(2)){
+    if(validator::isQuery(0)){
         $query = security::cleanStr($_GET["q"]);
         $sqlData = \model\ancestor::suggestByIdentity($query);
     
@@ -27,6 +27,7 @@ if(userInfo::isConnected()){
                 $ancestor->setMarriedNameList($dataAncestor["marriedNameList"]);
                 $ancestor->setOtherIdentityList($dataAncestor["otherIdentityList"]);
 
+                // set birth and death
                 $eventBirth = new event();
                 $dateBirth = new date();
                 $dateBirth->setYear($dataAncestor["birthdayY"]);
