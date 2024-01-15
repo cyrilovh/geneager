@@ -79,7 +79,7 @@
             $search = \class\security::cleanStr($search);
             $orderStr = implode(" ", $order);
             $limitStr = ($limit !== null && is_int($limit)) ? "LIMIT " . \class\security::cleanStr($limit) : "";
-            $query = $db->prepare("SELECT id, photo, firstNameList, lastNameList, birthNameList, marriedNameList, otherIdentityList  FROM ancestor WHERE 
+            $query = $db->prepare("SELECT id, photo, firstNameList, lastNameList, birthNameList, marriedNameList, otherIdentityList, birthdayY, deathdateY  FROM ancestor WHERE 
                 firstNameList LIKE :search OR 
                 lastNameList LIKE :search OR 
                 birthNameList LIKE :search OR 

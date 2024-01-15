@@ -66,15 +66,15 @@
             return $day."/".$month."/".$year;
         }
 
-        public function getYear():int{
+        public function getYear():?int{
             return $this->year;
         }
 
-        public function getMonth():int{
+        public function getMonth():?int{
             return $this->month;
         }
 
-        public function getDay():int{
+        public function getDay():?int{
             return $this->day;
         }
 
@@ -86,15 +86,15 @@
             }
         }
 
-        public function setYear(int $year){
+        public function setYear(?int $year){
             $this->year = $year;
         }
 
-        public function setMonth(int $month){
+        public function setMonth(?int $month){
             $this->month = (self::isIntMonth($month)) ? $month : 0;
         }
 
-        public function setDay(int $day){
+        public function setDay(?int $day){
             $this->day = (self::isIntDay($day)) ? $day : 0;
         }
 

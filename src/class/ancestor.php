@@ -263,15 +263,15 @@
             return format::htmlToUpperFirst($this->biography, self::$html);
         }
 
-        public function getBirth():event|null{
+        public function getBirth():?event{
             return $this->birth;
         }
 
-        public function getDeath():event|null{
+        public function getDeath():?event{
             return $this->death;
         }
 
-        public function getCemetery():location|null{
+        public function getCemetery():?location{
             return $this->cemetery;
         }
 
@@ -288,4 +288,24 @@
             return format::htmlToUpperFirst($this->lastUpdate, self::$html);
         }
         
+
+        /**
+         * Return basic information of the ancestor as ARRAY
+         *
+         * @return array
+         */
+        public function getBasicAsArray(): array {
+            $birthYear = $this->getBirth() ? $this->getBirth()->getYearStr() : "???";
+            $deathYear = $this->getDeath() ? $this->getDeath()->getYearStr() : "???";
+
+            return array(
+                "id" => $this->getID(),
+                "picture" => $this->getPhoto(),
+                "identity" => $this->getFullIdentityDisplayShorter(),
+                "birthYear" => $birthYear,
+                "deathYear" => $deathYear
+            );
+        }
+        
     }
+?>

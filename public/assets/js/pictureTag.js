@@ -179,11 +179,6 @@ function suggestsXHR(url, callback) {
     };
 }
 
-function getList() {
-    XHR_("getList.php", "", function (data) {
-        document.querySelector(".list").innerHTML = data;
-    });
-}
 
 // Appeler resizePicture une première fois pour redimensionner l'image initiale
 window.onload = function () {
@@ -232,7 +227,7 @@ window.onload = function () {
 
     searchEL.addEventListener("keyup", function () {
         var search = searchEL.value;
-        suggestsXHR("/userXHRsuggestByIdentity/", function (data) {
+        suggestsXHR("/XHRsuggestByIdentity/", function (data) {
             if(data){
                 obj = JSON.parse(data);
 

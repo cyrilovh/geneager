@@ -56,3 +56,7 @@ img#picture{
 .fa-edit:hover, .fa-eye:hover{
     color:var(--primary);
 }
+
+.alert{
+    display: none;
+}

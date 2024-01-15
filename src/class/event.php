@@ -52,6 +52,10 @@
             return $this->date->getDate();
         }
 
+        public function getYearStr():?int{
+            return $this->date->getYear();
+        }
+
         public function getTitle():?string{
             return $this->title;
         }
