@@ -4,55 +4,40 @@
         <h1>Ajouter un individu:</h1>
         <div class="alert alert-danger"></div>
         <div class="alert alert-info"></div>
-        <form>
-            <p>Coordonnées:<br><input type="text" id="coordonnees" pattern="\d{1,5},\d{1,5},\d{1,5},\d{1,5}" class="field-disabled"></p>
-            <div>
-                <p>Individu:</p>
-                <div class="inputLabel" id="inputLabel">
-                    <img src="<?=DEFAULTPICTUREANCESTOR; ?>" id="pictureAncestor" />
-                    <span class="label"></span>
-                    <input type="number" class="data" required/> 
-                    <input type="text" id="search" autocomplete="off"/>
-                </div>
 
-                <div class="suggestionList" data-idAttachment="inputLabel">
-
-                    <!-- <div class="item" data-data="1">
-                        <img src="<?=DEFAULTPICTUREANCESTOR; ?>" class="thumbnail" />
-                        <div class="label">
-                            <div class="identity text">Identité 1</div>
-                            <div class="dates">1900-1959</div>
-                        </div>
-                    </div>
-
-                    <div class="item" data-data="2">
-                        <img src="<?=DEFAULTPICTUREANCESTOR; ?>" class="thumbnail" />
-                        <div class="label">
-                            <div class="identity text">Identité 2</div>
-                            <div class="dates">1910-1968</div>
-                        </div>
-                    </div>
-
-                    <div class="item" data-data="3">
-                        <img src="<?=DEFAULTPICTUREANCESTOR; ?>" class="thumbnail" />
-                        <div class="label">
-                            <div class="identity text">Identité 3</div>
-                            <div class="dates">1900-1970</div>
-                        </div>
-                    </div>
-
-                    <div class="item" data-data="4">
-                        <img src="<?=DEFAULTPICTUREANCESTOR; ?>" class="thumbnail" />
-                        <div class="label">
-                            <div class="identity text">Identité 4</div>
-                            <div class="dates">1918-1969</div>
-                        </div>
-                    </div> -->
-
-                </div>
+        <p>Coordonnées:<br><input type="text" id="coordonnees" pattern="\d{1,5},\d{1,5},\d{1,5},\d{1,5}" class="field-disabled"></p>
+        <div>
+            <p>Individu:</p>
+            <div class="inputLabel" id="inputLabel">
+                <img src="<?=DEFAULTPICTUREANCESTOR; ?>" id="pictureAncestor" />
+                <span class="label"></span>
+                <input type="number" class="data" required/> 
+                <input type="text" id="search" autocomplete="off"/>
             </div>
-            <p class="mt10 float-right"><button class="btn btn-danger" onclick="closeMessage();"><i class="fa-solid fa-circle-xmark"></i> Fermer</button> <input type="submit" class="btn btn-success" value="Ajouter" /></p>
-        </form>
+
+            <div class="suggestionList" data-idAttachment="inputLabel">
+
+                <!-- <div class="item" data-data="1">
+                    <img src="<?=DEFAULTPICTUREANCESTOR; ?>" class="thumbnail" />
+                    <div class="label">
+                        <div class="identity text">Identité 1</div>
+                        <div class="dates">1900-1959</div>
+                    </div>
+                </div>
+
+                <div class="item" data-data="2">
+                    <img src="<?=DEFAULTPICTUREANCESTOR; ?>" class="thumbnail" />
+                    <div class="label">
+                        <div class="identity text">Identité 2</div>
+                        <div class="dates">1910-1968</div>
+                    </div>
+                </div>
+                -->
+
+            </div>
+        </div>
+        <p class="mt10 float-right"><button class="btn btn-danger" onclick="closeMessage();"><i class="fa-solid fa-circle-xmark"></i> Fermer</button> <button class="btn btn-success submit" onclick="addTag();"><i class="fa-solid fa-check"></i> Ajouter</button></p>
+
     </div>
 </div>
 <div class="popup message">

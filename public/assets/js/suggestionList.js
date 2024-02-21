@@ -1,7 +1,10 @@
 // I select all suggestion list who can be modified
 const listList = document.querySelectorAll('[data-idAttachment]');
 
-const trashIcon = ' <i class="fa-solid fa-trash" onclick="removeLabel();"></i>';
+// I select all input label who can be modified
+const inputLabel = document.querySelectorAll('.inputLabel');
+
+const trashIcon = ' <i class="fa-solid fa-trash"></i>';
 
 // for each suggestion list i check if there is a modification for item be clicked
 listList.forEach(list => {
@@ -37,13 +40,22 @@ listList.forEach(list => {
     });
     
     // Configurez les options de l'observateur (observez les modifications du contenu de l'élément et les sous-arbres)
-    const options = { childList: true, subtree: true };
+    const optionList = { childList: true, subtree: true };
     
     // Commencez à observer la div avec les options spécifiées
-    observerList.observe(list, options);
+    observerList.observe(list, optionList);
     
 });
 
+inputLabel.forEach(input => {
+    const observerLabel = new MutationObserver(() => {
+        alert('ok');
+    });
+});
+
+const inputList = { childList: true, subtree: true };
+
+observerLabel.observe(inputLabel, inputList);
 
 
 

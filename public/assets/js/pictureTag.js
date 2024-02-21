@@ -1,5 +1,5 @@
 const img = document.getElementById("picture");
-const btnSubmit = document.querySelector(".addTag input[type='submit']");
+const btnSubmit = document.querySelector(".addTag button.submit");
 const coordonneesEl = document.getElementById("coordonnees");
 const searchEL = document.querySelector("input#search");
 const dialboxEl = document.querySelector(".popup");
@@ -179,6 +179,42 @@ function suggestsXHR(url, callback) {
     };
 }
 
+function addTag() {
+    const coordonnees = coordonneesEl.value;
+    const search = searchEL.value;
+    const picture = img.src;
+
+    const data = {
+        coordonnees: coordonnees,
+        search: search,
+        picture: picture
+    };
+
+    const url = "/XHRaddTag";
+
+    var xhr;
+    if (window.XMLHttpRequest) {
+        xhr = new XMLHttpRequest();
+    } else if (window.ActiveXObject) {
+        xhr = new ActiveXObject("Msxml2.XMLHTTP");
+    } else {
+        throw new Error("Ajax is not supported by this browser");
+    }
+
+    xhr.open("POST", url);
+    xhr.setRequestHeader("Content-type", "application/json;charset=UTF-8");
+    xhr.send(JSON.stringify(data));
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            const response = JSON.parse(xhr.responseText);
+            if (response.status == "success") {
+                setMessage("Succès", response.message);
+            } else {
+                setMessage("Erreur", response.message);
+            }
+        }
+    };
+}
 
 // Appeler resizePicture une première fois pour redimensionner l'image initiale
 window.onload = function () {
