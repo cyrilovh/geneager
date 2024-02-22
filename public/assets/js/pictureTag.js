@@ -208,7 +208,7 @@ function addTag() {
         if (xhr.readyState == 4 && xhr.status == 200) {
             const response = JSON.parse(xhr.responseText);
             if (response.status == "success") {
-                setMessage("Succès", response.message);
+                setMessage("Information", response.message);
             } else {
                 setMessage("Erreur", response.message);
             }

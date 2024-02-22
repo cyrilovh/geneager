@@ -16,6 +16,15 @@
             return is_array($variable) && count(array_filter($variable, 'is_array')) > 0;
         }
 
+        /**
+         * Check if it's an array of array and not empty
+         * If a sub-array is empty, it will return false
+         * @param array $variable
+         * @return boolean
+         */
+        public static function isArrOfArrNotEmpty(array $variable): bool {
+            return self::isArrOfArr($variable) && !empty(array_filter($variable));
+        }
 
         /**
          * ⚠️ WILL BE DEPRECATED -> POO ⚠️
@@ -100,6 +109,15 @@
             return true;
         }
 
+        /**
+         * Check if the string is a valid JSON string.
+         * @param string $string
+         * @return boolean
+         */
+        public static function isJSON(string $string):bool{
+            json_decode($string);
+            return (json_last_error() == JSON_ERROR_NONE);
+        }
 
         /* Currently unused */
 
