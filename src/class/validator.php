@@ -27,6 +27,24 @@
         }
 
         /**
+         * Return if all keys are in the array
+         * $myKeys = array("id", "nom");
+         * $array1 = array("nom", "id");
+         * $array2 = array("id", "nom");
+         * $array3 = array("id");
+         * $array4 = array("'toto");
+         * var_dump(keylistInArray($myKeys, $array1)); // return true
+         * var_dump(keylistInArray($myKeys, $array2)); // return true
+         * var_dump(keylistInArray($myKeys, $array3)); // return false
+         * var_dump(keylistInArray($myKeys, $array4)); // return false
+         *
+         * @return boolean
+         */
+        public static function keylistInArray(array $myKeys, array $array):bool{
+            return count(array_intersect($myKeys, array_keys($array))) === count($myKeys);
+        }
+
+        /**
          * ⚠️ WILL BE DEPRECATED -> POO ⚠️
          * Check if a string (date, time or dateTime) is valid.
          * More informations: https://www.php.net/manual/fr/function.checkdate.php

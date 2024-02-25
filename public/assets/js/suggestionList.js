@@ -25,14 +25,15 @@ listList.forEach(list => {
 
                 const searchInput = document.querySelector('#'+getidAttachment+' #search'); // search input
                 const inputLabelLabel = document.querySelector('#'+getidAttachment+' .label');
-                const inputLabel = document.querySelector('#'+getidAttachment+' .data'); // input data (id ancestor, ...)
+                const inputLabel = document.querySelector('#'+getidAttachment+' .idAncestor'); // input data (id ancestor, ...)
 
                 list.style.display = 'none'; // hide suggestion list
                 searchInput.style.display = 'none'; // hide suggestion list
                 searchInput.value = getText; // input value
                 inputLabelLabel.style.display = 'block'; // show input label
                 inputLabelLabel.innerHTML = getText + trashIcon; // input label
-                inputLabel.value = getData; // input data (id ancestor, ...)
+
+                inputLabel.value = parseInt(getData); // input data (id ancestor, ...)
                 
             });
         });

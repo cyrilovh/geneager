@@ -1,4 +1,5 @@
-<img src="/picture/family/<?=$picture['filename'];?>" title="<?=$picture['title']; ?>" id="picture" usemap="#workmap" />
+<img src="/picture/family/<?=$picture['filename'];?>" title="<?=$picture['title']; ?>" id="picture" data-pictureID="<?=$picture['id']; ?>" usemap="#workmap" />
+<span id="live"></span>
 <div class="popup addTag">
     <div class="window addTag">
         <h1>Ajouter un individu:</h1>
@@ -11,7 +12,7 @@
             <div class="inputLabel" id="inputLabel">
                 <img src="<?=DEFAULTPICTUREANCESTOR; ?>" id="pictureAncestor" />
                 <span class="label"></span>
-                <input type="number" class="data" required/> 
+                <input type="number" class="idAncestor data" required/> 
                 <input type="text" id="search" autocomplete="off"/>
             </div>
 

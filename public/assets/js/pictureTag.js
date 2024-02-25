@@ -1,11 +1,14 @@
 const img = document.getElementById("picture");
 const btnSubmit = document.querySelector(".addTag button.submit");
 const coordonneesEl = document.getElementById("coordonnees");
+const ancestorID = document.querySelector(".idAncestor");
 const searchEL = document.querySelector("input#search");
 const dialboxEl = document.querySelector(".popup");
 const errorEl = document.querySelector(".alert-danger");
 const infoEl = document.querySelector(".alert-info");
 var countClick = 0;
+let globalWidthRatio = 1;
+let globalHeightRatio = 1;
 
 /**
  * Return the width of the picture
@@ -44,10 +47,12 @@ function resizePicture() {
             newWidth = screenWidth;
             newHeight = pictureHeight * widthRatio;
             updateCoordinates(widthRatio);
+            globalWidthRatio = widthRatio;
         } else {
             newHeight = screenHeight;
             newWidth = pictureWidth * heightRatio;
             updateCoordinates(heightRatio);
+            globalHeightRatio = heightRatio;
         }
     }
 
@@ -158,6 +163,7 @@ function mousePos(event, axis) {
     }
 }
 
+
 function suggestsXHR(url, callback) {
 
     var xhr;
@@ -181,13 +187,13 @@ function suggestsXHR(url, callback) {
 
 function addTag() {
     const coordonnees = coordonneesEl.value;
-    const search = searchEL.value;
-    const picture = img.src;
+    const ancestor = ancestorID.value;
+    const picture = img.getAttribute("data-pictureid");
 
     const data = {
         coordonnees: coordonnees,
-        search: search,
-        picture: picture
+        ancestorID: ancestor,
+        pictureID: picture
     };
 
     const url = "/XHRaddTag";
@@ -241,6 +247,19 @@ window.onload = function () {
          */
         var posx = mousePos(event, "x");
         var posy = mousePos(event, "y");
+
+        if (globalWidthRatio > globalHeightRatio) {
+            alert("largeur révisée");
+            outputRatio = globalWidthRatio;
+            var posx = parseInt(mousePos(event, "x") * outputRatio);
+            var posy = mousePos(event, "y");
+        } else {
+            alert("hauteur révisée");
+            outputRatio = globalHeightRatio;
+            var posx = mousePos(event, "x");
+            var posy = parseInt(mousePos(event, "y") * outputRatio);
+        }
+        
 
         document.getElementById("coordonnees").value += separateur + posx + "," + posy; // save coordinates in input
 

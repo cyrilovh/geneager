@@ -26,4 +26,28 @@
             return $query->fetchAll(\PDO::FETCH_ASSOC);
             $query->closeCursor();
         }
+
+        /**
+         * Check if tag exist for a picture
+         * If exist return true, else return false
+         *
+         * @param integer $idPicture
+         * @param integer $idAncestor
+         * @return boolean
+         */
+        public static function checkIfTagExist(int $idPicture, int $idAncestor):bool{
+            global $db;
+            $query = $db->prepare("SELECT * FROM picturetag WHERE pictureID=:idPicture AND ancestor=:idAncestor");
+            $query->execute(['idPicture' => $idPicture, 'idAncestor' => $idAncestor]);
+            return $query->rowCount() > 0;
+            $query->closeCursor();
+        }
+
+        public static function addTag(int $idPicture, int $idAncestor, string $coordinates):bool{
+            global $db;
+            $query = $db->prepare("INSERT INTO picturetag (pictureID, ancestor, coordinates) VALUES (:idPicture, :idAncestor, :coordinates)");
+            $query->execute(['idPicture' => $idPicture, 'idAncestor' => $idAncestor, 'coordinates' => $coordinates]);
+            return $query->rowCount() > 0;
+            $query->closeCursor();
+        }
      }
